@@ -64,26 +64,27 @@ namespace ModTechMaster.Logic.Services
         private ManifestEntry ProcessManifestEntry(Manifest manifest, dynamic manifestEntrySrc)
         {
             ManifestEntryType entryType;
-            if (!Enum.TryParse((string)manifestEntrySrc.Type, out entryType))
+            if (!Enum.TryParse((string) manifestEntrySrc.Type, out entryType))
             {
                 _messageService.PushMessage(
                     $"Failed to parse Manifest Entry Type [{manifestEntrySrc.Type.ToString()}].", MessageType.Error);
                 return null;
             }
 
-            var manifestEntry = new ManifestEntry(manifest, entryType, (string)manifestEntrySrc.Path, manifestEntrySrc);
+            var manifestEntry =
+                new ManifestEntry(manifest, entryType, (string) manifestEntrySrc.Path, manifestEntrySrc);
             var di = new DirectoryInfo(Path.Combine(manifest.Mod.SourceDirectoryPath, manifestEntry.Path));
             di.GetFiles("*.json").ToList().ForEach(
                 fi =>
                 {
-                    var objectDefinition = ProcessObjectDefinition(manifestEntry, di, fi);
+                    var objectDefinition = ProcessObjectDefinition(di, fi);
                     manifestEntry.Objects.Add(objectDefinition);
                 });
 
             return manifestEntry;
         }
 
-        private IObjectDefinition ProcessObjectDefinition(ManifestEntry manifestEntry, DirectoryInfo di, FileInfo fi)
+        private IObjectDefinition ProcessObjectDefinition(DirectoryInfo di, FileInfo fi)
         {
             dynamic json = JsonConvert.DeserializeObject(File.ReadAllText(fi.FullName));
             return new ObjectDefinition(ProcessObjectDescription(json.Description), json, fi.FullName);
@@ -102,10 +103,21 @@ namespace ModTechMaster.Logic.Services
 
         private Mod InitModFromJson(dynamic src, string path)
         {
-            var depends = new HashSet<string>(((JArray) src.DependsOn).Select(token => token.ToString()));
-            var conflicts = new HashSet<string>(((JArray) src.ConflictsWith).Select(token => token.ToString()));
-            return new Mod(src.Name.ToString(), (bool)src.Enabled, src.Version.ToString(),
-                src.Description.ToString(), src.Author.ToString(), src.Website.ToString(), src.Contact.ToString(),
+            var depends = src.DependsOn == null
+                ? new HashSet<string>()
+                : new HashSet<string>(((JArray) src.DependsOn).Select(token => token.ToString()));
+            var conflicts = src.ConflictsWith == null
+                ? new HashSet<string>()
+                : new HashSet<string>(((JArray) src.ConflictsWith).Select(token => token.ToString()));
+            var name = src.Name.ToString();
+            var enabled = (bool?) src.Enabled;
+            var version = src.Version?.ToString();
+            var description = src.Description?.ToString();
+            var author = src.Author?.ToString();
+            var website = src.Website?.ToString();
+            var contact = src.Contact?.ToString();
+            return new Mod(name, enabled, version,
+                description, author, website, contact,
                 depends, conflicts, path, src);
         }
 
