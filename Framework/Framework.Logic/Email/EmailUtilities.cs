@@ -1,93 +1,96 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Aspose.Email.Mail;
-using AutoMapper;
-using Framework.Domain.Email.Models;
-using Framework.Utils.Extensions.MailMessage;
-
-namespace Framework.Logic.Email
+﻿namespace Framework.Logic.Email
 {
-    using AsposeAttachment = Attachment;
-    using AsposeAttachmentCollection = AttachmentCollection;
-    using AsposeMailAddress = MailAddress;
-    using AsposeMailAddressCollection = MailAddressCollection;
-    using AsposeMailMessage = MailMessage;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Aspose.Email.Mail;
+    using AutoMapper;
+    using Domain.Email.Models;
+    using Utils.Extensions.MailMessage;
+    using AsposeAttachment = Aspose.Email.Mail.Attachment;
+    using AsposeAttachmentCollection = Aspose.Email.Mail.AttachmentCollection;
+    using AsposeMailAddress = Aspose.Email.Mail.MailAddress;
+    using AsposeMailAddressCollection = Aspose.Email.Mail.MailAddressCollection;
+    using AsposeMailMessage = Aspose.Email.Mail.MailMessage;
+    using Attachment = System.Net.Mail.Attachment;
+    using MailAddress = System.Net.Mail.MailAddress;
+    using MailAddressCollection = System.Net.Mail.MailAddressCollection;
+    using MailMessage = System.Net.Mail.MailMessage;
 
     public static class EmailUtilities
     {
         static EmailUtilities()
         {
-            Mapper.CreateMap<string, System.Net.Mail.MailAddress>()
-                .ConvertUsing(
-                    emailAddress => null == emailAddress ? null : new System.Net.Mail.MailAddress(emailAddress));
+            Mapper.CreateMap<string, MailAddress>()
+                  .ConvertUsing(emailAddress => null == emailAddress ? null : new MailAddress(emailAddress));
 
-            Mapper.CreateMap<List<string>, System.Net.Mail.MailAddressCollection>().ConvertUsing(
-                emailAddressList =>
-                {
-                    var mailAddressCollection = new System.Net.Mail.MailAddressCollection();
-                    if (null != emailAddressList && emailAddressList.Any())
-                    {
-                        mailAddressCollection.Add(string.Join(",", emailAddressList));
-                    }
+            Mapper.CreateMap<List<string>, MailAddressCollection>().ConvertUsing(
+                                                                                 emailAddressList =>
+                                                                                 {
+                                                                                     var mailAddressCollection = new MailAddressCollection();
+                                                                                     if (null != emailAddressList &&
+                                                                                         emailAddressList.Any())
+                                                                                     {
+                                                                                         mailAddressCollection.Add(string.Join(",", emailAddressList));
+                                                                                     }
 
-                    return mailAddressCollection;
-                });
+                                                                                     return mailAddressCollection;
+                                                                                 });
 
-            Mapper.CreateMap<Domain.Email.Models.Email, System.Net.Mail.MailMessage>()
-                .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
-                .ForMember(dest => dest.From, opt => opt.MapFrom(src => src.FromAddress))
-                .ForMember(dest => dest.IsBodyHtml, opt => opt.MapFrom(src => src.IsContentHtml))
-                .ForMember(dest => dest.Subject, opt => opt.MapFrom(src => src.Subject))
-                .ForMember(dest => dest.To, opt => opt.MapFrom(src => src.ToAddresses))
-                .ForMember(dest => dest.Bcc, opt => opt.MapFrom(src => src.BCCAddresses))
-                .ForMember(dest => dest.CC, opt => opt.MapFrom(src => src.CCAddresses));
+            Mapper.CreateMap<Email, MailMessage>()
+                  .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
+                  .ForMember(dest => dest.From, opt => opt.MapFrom(src => src.FromAddress))
+                  .ForMember(dest => dest.IsBodyHtml, opt => opt.MapFrom(src => src.IsContentHtml))
+                  .ForMember(dest => dest.Subject, opt => opt.MapFrom(src => src.Subject))
+                  .ForMember(dest => dest.To, opt => opt.MapFrom(src => src.ToAddresses))
+                  .ForMember(dest => dest.Bcc, opt => opt.MapFrom(src => src.BCCAddresses))
+                  .ForMember(dest => dest.CC, opt => opt.MapFrom(src => src.CCAddresses));
 
             // Aspose...
             Mapper.CreateMap<AsposeMailAddress, string>()
-                .ConvertUsing(emailAddress => null == emailAddress ? string.Empty : emailAddress.Address);
+                  .ConvertUsing(emailAddress => null == emailAddress ? string.Empty : emailAddress.Address);
 
             Mapper.CreateMap<AsposeMailAddressCollection, List<string>>().ConvertUsing(
-                mailAddressCollection =>
-                {
-                    var emailAddressList = new List<string>();
-                    if (null != mailAddressCollection && mailAddressCollection.Any())
-                    {
-                        emailAddressList.AddRange(mailAddressCollection.Select(Mapper.Map<string>));
-                    }
+                                                                                       mailAddressCollection =>
+                                                                                       {
+                                                                                           var emailAddressList = new List<string>();
+                                                                                           if (null != mailAddressCollection &&
+                                                                                               mailAddressCollection.Any())
+                                                                                           {
+                                                                                               emailAddressList.AddRange(mailAddressCollection.Select(Mapper.Map<string>));
+                                                                                           }
 
-                    return emailAddressList;
-                });
+                                                                                           return emailAddressList;
+                                                                                       });
 
-            Mapper.CreateMap<AsposeMailMessage, Domain.Email.Models.Email>()
-                .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
-                .ForMember(dest => dest.FromAddress, opt => opt.MapFrom(src => src.From))
-                .ForMember(dest => dest.IsContentHtml, opt => opt.MapFrom(src => src.IsBodyHtml))
-                .ForMember(dest => dest.Subject, opt => opt.MapFrom(src => src.Subject))
-                .ForMember(dest => dest.ToAddresses, opt => opt.MapFrom(src => src.To))
-                .ForMember(dest => dest.BCCAddresses, opt => opt.MapFrom(src => src.Bcc))
-                .ForMember(dest => dest.CCAddresses, opt => opt.MapFrom(src => src.CC))
-                .ForMember(dest => dest.DateReceived, opt => opt.MapFrom(src => src.Date));
+            Mapper.CreateMap<AsposeMailMessage, Email>()
+                  .ForMember(dest => dest.Body, opt => opt.MapFrom(src => src.Body))
+                  .ForMember(dest => dest.FromAddress, opt => opt.MapFrom(src => src.From))
+                  .ForMember(dest => dest.IsContentHtml, opt => opt.MapFrom(src => src.IsBodyHtml))
+                  .ForMember(dest => dest.Subject, opt => opt.MapFrom(src => src.Subject))
+                  .ForMember(dest => dest.ToAddresses, opt => opt.MapFrom(src => src.To))
+                  .ForMember(dest => dest.BCCAddresses, opt => opt.MapFrom(src => src.Bcc))
+                  .ForMember(dest => dest.CCAddresses, opt => opt.MapFrom(src => src.CC))
+                  .ForMember(dest => dest.DateReceived, opt => opt.MapFrom(src => src.Date));
         }
 
-        public static byte[] GetEmailBytes(Domain.Email.Models.Email email)
+        public static byte[] GetEmailBytes(Email email)
         {
-            var mailMessage = Mapper.Map<System.Net.Mail.MailMessage>(email);
+            var mailMessage = Mapper.Map<MailMessage>(email);
             foreach (var emailFileAttachment in email.FileAttachments)
-            {
                 mailMessage.Attachments.Add(
-                    new System.Net.Mail.Attachment(new MemoryStream(emailFileAttachment.Content),
-                        emailFileAttachment.Name));
-            }
+                                            new Attachment(
+                                                           new MemoryStream(emailFileAttachment.Content),
+                                                           emailFileAttachment.Name));
 
             return mailMessage.GetEmailContentBytes();
         }
 
-        public static Domain.Email.Models.Email LoadFromDisk(string filePath)
+        public static Email LoadFromDisk(string filePath)
         {
             //// var mailMessage = AsposeMailMessage.Load(filePath, MailMessageLoadOptions.DefaultEml);
             var mailMessage = AsposeMailMessage.Load(filePath, new EmlLoadOptions());
-            var email = Mapper.Map<Domain.Email.Models.Email>(mailMessage);
+            var email = Mapper.Map<Email>(mailMessage);
             foreach (var att in mailMessage.Attachments)
             {
                 byte[] bytes = null;
@@ -98,14 +101,7 @@ namespace Framework.Logic.Email
                 }
 
                 email.FileAttachments = email.FileAttachments ?? new List<EmailFileAttachment>();
-                email.FileAttachments.Add(
-                    new EmailFileAttachment
-                    {
-                        Email = email,
-                        Name = att.Name,
-                        Length = (int) att.ContentStream.Length,
-                        Content = bytes
-                    });
+                email.FileAttachments.Add(new EmailFileAttachment {Email = email, Name = att.Name, Length = (int)att.ContentStream.Length, Content = bytes});
             }
 
             return email;

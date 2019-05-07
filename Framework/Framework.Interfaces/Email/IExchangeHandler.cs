@@ -1,6 +1,8 @@
 ﻿namespace Framework.Interfaces.Email
 {
-    public delegate bool ProcessEmailEventHandler(Domain.Email.Models.Email emailMessage);
+    using Domain.Email.Models;
+
+    public delegate bool ProcessEmailEventHandler(Email emailMessage);
 
     public delegate void MailboxMonitoringStartedEventHandler();
 

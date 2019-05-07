@@ -1,7 +1,7 @@
-using System;
-
 namespace Framework.Interfaces.Tasks
 {
+    using System;
+
     public interface ITaskScheduler
     {
         /// <summary>

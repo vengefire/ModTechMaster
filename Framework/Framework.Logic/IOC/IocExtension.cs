@@ -1,13 +1,10 @@
-﻿using System.Security.Principal;
-using Framework.Interfaces.Injection;
-
-namespace Framework.Logic.IOC
+﻿namespace Framework.Logic.IOC
 {
+    using System.Security.Principal;
+    using Interfaces.Injection;
+
     public static class IocExtension
     {
-        public static IIdentity Identity
-        {
-            get { return Container.Instance.GetInstance<IIdentity>(); }
-        }
+        public static IIdentity Identity => Container.Instance.GetInstance<IIdentity>();
     }
 }

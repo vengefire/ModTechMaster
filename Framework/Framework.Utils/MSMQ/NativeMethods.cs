@@ -1,9 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Transactions;
-
-namespace Framework.Utils.MSMQ
+﻿namespace Framework.Utils.MSMQ
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Transactions;
+
     public static class NativeMethods
     {
         [Flags]
@@ -37,12 +37,17 @@ namespace Framework.Utils.MSMQ
         public static extern int MQCloseQueue(IntPtr queue);
 
         [DllImport("mqrt.dll")]
-        public static extern int MQMoveMessage(IntPtr sourceQueue, IntPtr targetQueue, long lookupID,
+        public static extern int MQMoveMessage(
+            IntPtr sourceQueue,
+            IntPtr targetQueue,
+            long lookupID,
             IDtcTransaction transaction);
 
         [DllImport("mqrt.dll")]
-        internal static extern int MQMgmtGetInfo([MarshalAs(UnmanagedType.BStr)] string computerName,
-            [MarshalAs(UnmanagedType.BStr)] string objectName, ref MQMGMTPROPS mgmtProps);
+        internal static extern int MQMgmtGetInfo(
+            [MarshalAs(UnmanagedType.BStr)] string computerName,
+            [MarshalAs(UnmanagedType.BStr)] string objectName,
+            ref MQMGMTPROPS mgmtProps);
 
         // size must be 16
         [StructLayout(LayoutKind.Sequential)]

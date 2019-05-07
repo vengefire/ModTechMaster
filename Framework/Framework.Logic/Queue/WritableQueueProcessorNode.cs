@@ -1,11 +1,11 @@
-﻿using Castle.Core.Logging;
-using Framework.Interfaces.Factories;
-using Framework.Interfaces.Queue;
-
-namespace Framework.Logic.Queue
+﻿namespace Framework.Logic.Queue
 {
+    using Castle.Core.Logging;
+    using Interfaces.Factories;
+    using Interfaces.Queue;
+
     public class WritableQueueProcessorNode<TRequestType> : QueueProcessorNode<TRequestType>,
-        IWritableQueueProcessorNode<TRequestType>
+                                                            IWritableQueueProcessorNode<TRequestType>
         where TRequestType : class
     {
         private readonly IWriteQueueFactory<TRequestType> writeQueueFactory;
@@ -18,14 +18,14 @@ namespace Framework.Logic.Queue
             : base(requestQueue, logicFactory)
         {
             this.writeQueueFactory = writeQueueFactory;
-            WriteQueue = this.writeQueueFactory.Create();
+            this.WriteQueue = this.writeQueueFactory.Create();
         }
 
         public IWriteQueue<TRequestType> WriteQueue { get; }
 
         public override void Dispose()
         {
-            writeQueueFactory.Dispose();
+            this.writeQueueFactory.Dispose();
             base.Dispose();
         }
     }

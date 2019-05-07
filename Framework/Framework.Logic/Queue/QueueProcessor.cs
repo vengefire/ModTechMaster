@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Castle.Core.Logging;
-using Framework.Domain.Queue;
-using Framework.Interfaces.Factories;
-using Framework.Interfaces.Queue;
-
-namespace Framework.Logic.Queue
+﻿namespace Framework.Logic.Queue
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Castle.Core.Logging;
+    using Domain.Queue;
+    using Interfaces.Factories;
+    using Interfaces.Queue;
+
     public sealed class QueueProcessor<TRequestType> : IQueueProcessor<TRequestType>, IDisposable
         where TRequestType : class
     {
@@ -40,9 +40,10 @@ namespace Framework.Logic.Queue
             if (numWorkers < 1)
             {
                 throw new InvalidProgramException(
-                    string.Format(
-                        "Queue Processor [{0}] has in invalid number of workers specified [{1}], minumum is 1", this,
-                        numWorkers));
+                                                  string.Format(
+                                                                "Queue Processor [{0}] has in invalid number of workers specified [{1}], minumum is 1",
+                                                                this,
+                                                                numWorkers));
             }
 
             this.logger = logger;
@@ -52,52 +53,49 @@ namespace Framework.Logic.Queue
             this.writeQueueFactory = writeQueueFactory;
             this.messageProcessingMode = messageProcessingMode;
 
-            this.logger.InfoFormat("[{0}] creating [{1}] processor nodes...", ToString(), numWorkers);
-            processorNodes = new List<IQueueProcessorNode<TRequestType>>(numWorkers);
+            this.logger.InfoFormat("[{0}] creating [{1}] processor nodes...", this.ToString(), numWorkers);
+            this.processorNodes = new List<IQueueProcessorNode<TRequestType>>(numWorkers);
 
             switch (this.messageProcessingMode)
             {
                 case MessageProcessingMode.LocalChildNodeConcurrent:
                 {
-                    for (var i = 0; i < numWorkers; i++)
-                    {
-                        processorNodes.Add(CreateProcessorNode());
-                    }
+                    for (var i = 0; i < numWorkers; i++) this.processorNodes.Add(this.CreateProcessorNode());
 
                     break;
                 }
             }
 
-            this.logger.InfoFormat("Created Queue Processor [{0}].", ToString());
+            this.logger.InfoFormat("Created Queue Processor [{0}].", this.ToString());
         }
 
         public void Dispose()
         {
-            logicFactory.Dispose();
-            queueProcessorNodeFactory.Dispose();
-            readQueueFactory.Dispose();
-            writeQueueFactory.Dispose();
+            this.logicFactory.Dispose();
+            this.queueProcessorNodeFactory.Dispose();
+            this.readQueueFactory.Dispose();
+            this.writeQueueFactory.Dispose();
         }
 
         public Task ProcessingTask { get; private set; }
 
         public async Task StartProcessing()
         {
-            switch (messageProcessingMode)
+            switch (this.messageProcessingMode)
             {
                 case MessageProcessingMode.LocalChildNodeConcurrent:
-                    processorTasks.AddRange(processorNodes.Select(node => node.StartProcessing()));
+                    this.processorTasks.AddRange(this.processorNodes.Select(node => node.StartProcessing()));
                     break;
             }
 
-            logger.DebugFormat("[{0}] - Processing messages...", this);
-            ProcessingTask = Task.WhenAll(processorTasks.ToArray());
-            await ProcessingTask;
+            this.logger.DebugFormat("[{0}] - Processing messages...", this);
+            this.ProcessingTask = Task.WhenAll(this.processorTasks.ToArray());
+            await this.ProcessingTask;
         }
 
         private IQueueProcessorNode<TRequestType> CreateProcessorNode()
         {
-            return queueProcessorNodeFactory.Create(readQueueFactory.Create(), logicFactory);
+            return this.queueProcessorNodeFactory.Create(this.readQueueFactory.Create(), this.logicFactory);
         }
     }
 }

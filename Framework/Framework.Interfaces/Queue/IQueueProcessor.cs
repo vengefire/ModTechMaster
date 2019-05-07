@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-
-namespace Framework.Interfaces.Queue
+﻿namespace Framework.Interfaces.Queue
 {
+    using System.Threading.Tasks;
+
     public interface IQueueProcessor
     {
         Task ProcessingTask { get; }

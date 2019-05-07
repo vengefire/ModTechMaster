@@ -3,6 +3,7 @@
     public interface IJsonObjectBase
     {
         dynamic JsonObject { get; }
+
         string JsonString { get; }
     }
 }

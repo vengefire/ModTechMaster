@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Framework.Interfaces.Tasks
+﻿namespace Framework.Interfaces.Tasks
 {
+    using System;
+
     public interface ITaskEventTrigger<TEventArgs>
     {
         event Action<TEventArgs> TriggerEventHandler;

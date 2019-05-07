@@ -1,9 +1,9 @@
-﻿using System;
-using System.Messaging;
-using System.Threading.Tasks;
-
-namespace Framework.Interfaces.Queue
+﻿namespace Framework.Interfaces.Queue
 {
+    using System;
+    using System.Messaging;
+    using System.Threading.Tasks;
+
     public interface IReadQueue : IQueueBase
     {
         event Action<Message, object, string, string> QueueMessageHandlerEvent;
@@ -21,6 +21,7 @@ namespace Framework.Interfaces.Queue
         where TRequestType : class
     {
         Task ReadTask { get; }
+
         new event Action<Message, TRequestType, string, string> QueueMessageHandlerEvent;
 
         new TRequestType ReceiveMessage();

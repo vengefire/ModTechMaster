@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using ModTechMaster.Core.Interfaces.Models;
-using ModTechMaster.Core.Interfaces.Services;
-using ModTechMaster.Logic.Services;
-
-namespace MTM
+﻿namespace MTM
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
+    using ModTechMaster.Logic.Services;
+
     internal class Program
     {
         private static int Main(string[] args)
@@ -23,11 +23,12 @@ namespace MTM
             var mods = new HashSet<IMod>();
 
             Console.WriteLine($"Processing mods from [{di.FullName}]");
-            di.GetDirectories().ToList().ForEach(sub =>
-            {
-                Console.Write(".");
-                mods.Add(modService.TryLoadFromPath(sub.FullName));
-            });
+            di.GetDirectories().ToList().ForEach(
+                                                 sub =>
+                                                 {
+                                                     Console.Write(".");
+                                                     mods.Add(modService.TryLoadFromPath(sub.FullName));
+                                                 });
 
             return 0;
         }

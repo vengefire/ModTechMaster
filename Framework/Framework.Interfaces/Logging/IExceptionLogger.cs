@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Framework.Interfaces.Logging
+﻿namespace Framework.Interfaces.Logging
 {
+    using System;
+
     /// <summary>
     ///     Log exceptions without throwing.
     /// </summary>

@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Castle.Core.Internal;
-
-namespace Framework.Utils.Extensions.String
+﻿namespace Framework.Utils.Extensions.String
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+    using System.Text.RegularExpressions;
+    using Castle.Core.Internal;
+
     public static class StringExtensions
     {
         public static string StripWhiteSpace(this string theString)
@@ -27,14 +28,14 @@ namespace Framework.Utils.Extensions.String
         /// </summary>
         /// <param name="theString">A string in the format of "1900-01-01" (yyyy-MM-dd).</param>
         /// <returns>An instance of DateTime constructed from the input string.</returns>
-        public static System.DateTime DateStringToToDateTime(this string theString)
+        public static DateTime DateStringToToDateTime(this string theString)
         {
-            return System.DateTime.ParseExact(theString, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return DateTime.ParseExact(theString, "yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
 
-        public static System.DateTime CompactDateStringToToDateTime(this string theString)
+        public static DateTime CompactDateStringToToDateTime(this string theString)
         {
-            return System.DateTime.ParseExact(theString, "yyyyMMdd", CultureInfo.InvariantCulture);
+            return DateTime.ParseExact(theString, "yyyyMMdd", CultureInfo.InvariantCulture);
         }
 
         public static bool IsAlphaNumeric(this string strToCheck)

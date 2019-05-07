@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Castle.Core;
-using Castle.MicroKernel;
-using Castle.MicroKernel.Context;
-using Framework.Interfaces.Queue;
-using Framework.Logic.Queue.Config;
-using Framework.Logic.Queue.Config.QueueProcessor;
-
-namespace Framework.Logic.Queue.SubResolvers
+﻿namespace Framework.Logic.Queue.SubResolvers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Castle.Core;
+    using Castle.MicroKernel;
+    using Castle.MicroKernel.Context;
+    using Config;
+    using Config.QueueProcessor;
+    using Interfaces.Queue;
+
     public class OpenQueueProcessorArraySubResolver : ISubDependencyResolver
     {
         private readonly IKernel kernel;
@@ -26,26 +26,31 @@ namespace Framework.Logic.Queue.SubResolvers
         {
             this.kernel = kernel;
             var messageTypes = new List<Type>(queueConfig.QueueProcessors.Count);
-            messageTypes.AddRange(from QueueProcessorElement processor in queueConfig.QueueProcessors
-                select queueConfig.MessageTypes[queueConfig.MessageQueues[processor.MessageQueue].MessageType].Type);
-            queueProcessorTypes = messageTypes;
+            messageTypes.AddRange(
+                                  from QueueProcessorElement processor in queueConfig.QueueProcessors
+                                  select queueConfig.MessageTypes[queueConfig.MessageQueues[processor.MessageQueue].MessageType].Type);
+            this.queueProcessorTypes = messageTypes;
         }
 
-        public bool CanResolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
-            ComponentModel model, DependencyModel dependency)
+        public bool CanResolve(
+            CreationContext context,
+            ISubDependencyResolver contextHandlerResolver,
+            ComponentModel model,
+            DependencyModel dependency)
         {
             var canResolve = dependency.TargetItemType != null && dependency.TargetItemType.IsArray &&
                              dependency.TargetItemType.GetElementType() == typeof(IQueueProcessor);
             return canResolve;
         }
 
-        public object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver,
-            ComponentModel model, DependencyModel dependency)
+        public object Resolve(
+            CreationContext context,
+            ISubDependencyResolver contextHandlerResolver,
+            ComponentModel model,
+            DependencyModel dependency)
         {
-            return
-                queueProcessorTypes.Select(
-                    type => kernel.Resolve(typeof(IQueueProcessor<>).MakeGenericType(type)) as IQueueProcessor)
-                    .ToArray();
+            return this.queueProcessorTypes.Select(type => this.kernel.Resolve(typeof(IQueueProcessor<>).MakeGenericType(type)) as IQueueProcessor)
+                       .ToArray();
         }
     }
 }

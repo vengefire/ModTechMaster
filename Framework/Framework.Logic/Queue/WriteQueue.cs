@@ -1,13 +1,13 @@
-﻿using System;
-using System.Messaging;
-using System.Transactions;
-using Castle.Core.Logging;
-using Framework.Interfaces.Data.Services;
-using Framework.Interfaces.Environment;
-using Framework.Interfaces.Queue;
-
-namespace Framework.Logic.Queue
+﻿namespace Framework.Logic.Queue
 {
+    using System;
+    using System.Messaging;
+    using System.Transactions;
+    using Castle.Core.Logging;
+    using Interfaces.Data.Services;
+    using Interfaces.Environment;
+    using Interfaces.Queue;
+
     public class WriteQueue<TRequestType> : QueueBase<TRequestType>, IWriteQueue<TRequestType>
         where TRequestType : class
     {
@@ -22,63 +22,65 @@ namespace Framework.Logic.Queue
             bool defaultRecoverable = true,
             string multicastAddress = null)
             : base(
-                logger, environment, queueName, messageQueueHostServerName, multicastAddress, QueueMode.Send,
-                isTransactional, auditActivity, defaultRecoverable, messageQueueService)
+                   logger,
+                   environment,
+                   queueName,
+                   messageQueueHostServerName,
+                   multicastAddress,
+                   QueueMode.Send,
+                   isTransactional,
+                   auditActivity,
+                   defaultRecoverable,
+                   messageQueueService)
         {
         }
 
         public string SendMessage(TRequestType message)
         {
-            return SendMessage(message, null);
+            return this.SendMessage(message, null);
         }
 
         public string SendMessage(TRequestType message, string correlationId, TimeSpan timeToBeReceived)
         {
-            return SendMessageImpl(message, correlationId, timeToBeReceived);
+            return this.SendMessageImpl(message, correlationId, timeToBeReceived);
         }
 
         public string SendMessage(TRequestType message, string correlationId)
         {
-            return SendMessage(message, correlationId, Message.InfiniteTimeout);
+            return this.SendMessage(message, correlationId, Message.InfiniteTimeout);
         }
 
         public string SendMessage(object message)
         {
-            return SendMessage((TRequestType) message);
+            return this.SendMessage((TRequestType)message);
         }
 
         private string SendMessageImpl(object message, string correlationId, TimeSpan timeToBeReceived)
         {
-            var transactionOptions = new TransactionOptions
-            {
-                IsolationLevel = IsolationLevel.ReadCommitted
-            };
-            var transactionScope = !IsTransactional
+            var transactionOptions = new TransactionOptions {IsolationLevel = IsolationLevel.ReadCommitted};
+            var transactionScope = !this.IsTransactional
                 ? null
                 : new TransactionScope(TransactionScopeOption.Required, transactionOptions);
             using (transactionScope)
             {
                 try
                 {
-                    var msg = new Message
-                    {
-                        Body = message,
-                        TimeToBeReceived = timeToBeReceived
-                    };
+                    var msg = new Message {Body = message, TimeToBeReceived = timeToBeReceived};
 
                     if (!string.IsNullOrEmpty(correlationId))
                     {
                         msg.CorrelationId = correlationId;
                     }
 
-                    MsmqMessageQueue.Send(msg,
-                        IsTransactional ? MessageQueueTransactionType.Automatic : MessageQueueTransactionType.None);
-                    lock (Synch)
+                    this.MsmqMessageQueue.Send(
+                                               msg,
+                                               this.IsTransactional ? MessageQueueTransactionType.Automatic : MessageQueueTransactionType.None);
+                    lock (QueueBase<TRequestType>.Synch)
                     {
-                        AddMessageAudit(msg);
+                        this.AddMessageAudit(msg);
                     }
 
-                    Logger.DebugFormat("Sent message to [{0}]...", QueueName);
+                    this.Logger.DebugFormat("Sent message to [{0}]...", this.QueueName);
                     if (transactionScope != null)
                     {
                         transactionScope.Complete();
@@ -88,7 +90,7 @@ namespace Framework.Logic.Queue
                 }
                 catch (Exception ex)
                 {
-                    Logger.ErrorFormat(ex, "Exception encountered by [{0}] sending Message [{1}].", this, message);
+                    this.Logger.ErrorFormat(ex, "Exception encountered by [{0}] sending Message [{1}].", this, message);
                     throw;
                 }
             }

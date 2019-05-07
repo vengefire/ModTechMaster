@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Framework.Interfaces.Services
+﻿namespace Framework.Interfaces.Services
 {
+    using System;
+
     public interface IDataService : IDisposable
     {
         void SaveChanges();

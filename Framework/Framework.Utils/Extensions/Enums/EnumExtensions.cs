@@ -1,14 +1,14 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
-
-namespace Framework.Utils.Extensions.Enums
+﻿namespace Framework.Utils.Extensions.Enums
 {
+    using System;
+    using System.ComponentModel;
+    using System.Linq;
+
     public static class EnumExtensions
     {
         public static TEnumType EnumValueFromString<TEnumType>(this TEnumType value, string val)
         {
-            return (TEnumType) Enum.Parse(typeof(TEnumType), val);
+            return (TEnumType)Enum.Parse(typeof(TEnumType), val);
         }
 
         public static T GetAttribute<T>(this Enum value) where T : Attribute
@@ -19,7 +19,7 @@ namespace Framework.Utils.Extensions.Enums
                 return null;
             }
 
-            var attribute = (T) info.GetCustomAttributes(typeof(T), false).FirstOrDefault();
+            var attribute = (T)info.GetCustomAttributes(typeof(T), false).FirstOrDefault();
             return attribute;
         }
 

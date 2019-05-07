@@ -1,37 +1,35 @@
-﻿using System.Configuration;
-using Castle.Core.Internal;
-using Framework.Domain;
-using Framework.Interfaces.Environment;
-
-namespace Framework.Logic.Environment
+﻿namespace Framework.Logic.Environment
 {
+    using System.Configuration;
+    using Castle.Core.Internal;
+    using Domain;
+    using Interfaces.Environment;
+
     public class EnvironmentImpl : IEnvironment
     {
         public EnvironmentImpl()
         {
             var env = ConfigurationManager.AppSettings["Environment"];
-            if (!env.IsNullOrEmpty() && env == "Production")
+            if (!env.IsNullOrEmpty() &&
+                env == "Production")
             {
-                EnvironmentType = EnvironmentType.Production;
+                this.EnvironmentType = EnvironmentType.Production;
             }
             else
             {
-                EnvironmentType = EnvironmentType.Dev;
+                this.EnvironmentType = EnvironmentType.Dev;
             }
 
             var devStream = ConfigurationManager.AppSettings["DevStream"];
-            DevStream = devStream ?? string.Empty;
-            MessageQueueHostServerName = ConfigurationManager.AppSettings["MessageQueueHostServerName"];
+            this.DevStream = devStream ?? string.Empty;
+            this.MessageQueueHostServerName = ConfigurationManager.AppSettings["MessageQueueHostServerName"];
         }
 
         public EnvironmentType EnvironmentType { get; }
 
         public string MessageQueueHostServerName { get; }
 
-        public string NedBankNcrRefNo
-        {
-            get { return "NCRCP16"; }
-        }
+        public string NedBankNcrRefNo => "NCRCP16";
 
         public string DevStream { get; }
     }

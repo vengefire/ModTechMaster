@@ -1,8 +1,8 @@
-﻿using System;
-using Framework.Interfaces.Queue;
-
-namespace Framework.Interfaces.Factories
+﻿namespace Framework.Interfaces.Factories
 {
+    using System;
+    using Queue;
+
     public interface IQueueProcessorFactory<TRequestType> : IDisposable
         where TRequestType : class
     {

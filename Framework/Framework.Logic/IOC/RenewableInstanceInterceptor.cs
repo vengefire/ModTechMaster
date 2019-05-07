@@ -1,9 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using Castle.DynamicProxy;
-
-namespace Framework.Logic.IOC
+﻿namespace Framework.Logic.IOC
 {
+    using System;
+    using System.Diagnostics;
+    using Castle.DynamicProxy;
+
     /// <summary>
     ///     Interceptor to make a target fault tolerant.
     /// </summary>
@@ -27,9 +27,9 @@ namespace Framework.Logic.IOC
         /// <param name="cleanUp">Clean up action to execute against old object before disposal.</param>
         public RenewableInstanceInterceptor(Func<T> builder, Func<T, bool> expired, Action<T> cleanUp = null)
         {
-            _builder = builder;
-            _expired = expired;
-            _cleanUp = cleanUp;
+            this._builder = builder;
+            this._expired = expired;
+            this._cleanUp = cleanUp;
         }
 
         /// <summary>
@@ -37,8 +37,8 @@ namespace Framework.Logic.IOC
         /// </summary>
         public void Dispose()
         {
-            DisposeInstance(_instance);
-            _instance = null;
+            this.DisposeInstance(this._instance);
+            this._instance = null;
         }
 
         /// <summary>
@@ -47,32 +47,34 @@ namespace Framework.Logic.IOC
         /// <param name="invocation">The invocation.</param>
         public void Intercept(IInvocation invocation)
         {
-            var localInstance = _instance;
-            if ((localInstance == null) || _expired(localInstance))
+            var localInstance = this._instance;
+            if (localInstance == null ||
+                this._expired(localInstance))
             {
                 lock (this)
                 {
-                    if (_instance == localInstance)
+                    if (this._instance == localInstance)
                     {
-                        DisposeInstance(localInstance);
+                        this.DisposeInstance(localInstance);
 
-                        Trace.WriteLine(string.Format("Creating new instance of '{0}'.", typeof(T).FullName),
-                            GetType().Name);
+                        Trace.WriteLine(
+                                        string.Format("Creating new instance of '{0}'.", typeof(T).FullName),
+                                        this.GetType().Name);
 
-                        _instance = _builder();
-                        localInstance = _instance;
+                        this._instance = this._builder();
+                        localInstance = this._instance;
 
                         Debug.Assert(localInstance != null, "instance cannot be null");
                     }
                     else
                     {
-                        localInstance = _instance;
+                        localInstance = this._instance;
                     }
                 }
             }
 
             // ReSharper disable once SuspiciousTypeConversion.Global
-            var target = (IChangeProxyTarget) invocation;
+            var target = (IChangeProxyTarget)invocation;
             target.ChangeInvocationTarget(localInstance);
             invocation.Proceed();
         }
@@ -84,9 +86,9 @@ namespace Framework.Logic.IOC
                 return;
             }
 
-            if (_cleanUp != null)
+            if (this._cleanUp != null)
             {
-                _cleanUp(localInstance);
+                this._cleanUp(localInstance);
             }
 
             var disposable = localInstance as IDisposable;
@@ -95,7 +97,7 @@ namespace Framework.Logic.IOC
                 return;
             }
 
-            Trace.WriteLine(string.Format("Disposing of old instance '{0}'.", typeof(T).FullName), GetType().Name);
+            Trace.WriteLine(string.Format("Disposing of old instance '{0}'.", typeof(T).FullName), this.GetType().Name);
             disposable.Dispose();
         }
     }

@@ -1,7 +1,7 @@
-﻿using System.Configuration;
-
-namespace Framework.Logic.Tasks.Config.Background.Task
+﻿namespace Framework.Logic.Tasks.Config.Background.Task
 {
+    using System.Configuration;
+
     /// <summary>
     ///     Provides a configuration collection of named queues.
     /// </summary>
@@ -11,15 +11,9 @@ namespace Framework.Logic.Tasks.Config.Background.Task
         /// <summary>
         ///     Gets the number of named queue elements in this instance.
         /// </summary>
-        public new int Count
-        {
-            get { return base.Count; }
-        }
+        public new int Count => base.Count;
 
-        public new bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public new bool IsReadOnly => false;
 
         /// <summary>
         ///     Gets or sets the named queue element for the given index.
@@ -28,16 +22,15 @@ namespace Framework.Logic.Tasks.Config.Background.Task
         /// <returns>The named queue element.</returns>
         public BackgroundTaskElement this[int index]
         {
-            get { return (BackgroundTaskElement) BaseGet(index); }
-
+            get => (BackgroundTaskElement)this.BaseGet(index);
             set
             {
-                if (BaseGet(index) != null)
+                if (this.BaseGet(index) != null)
                 {
-                    BaseRemove(index);
+                    this.BaseRemove(index);
                 }
 
-                BaseAdd(index, value);
+                this.BaseAdd(index, value);
             }
         }
 
@@ -46,34 +39,31 @@ namespace Framework.Logic.Tasks.Config.Background.Task
         /// </summary>
         /// <param name="name">The name of the named queue element to get or set.</param>
         /// <returns>The named queue element.</returns>
-        public new BackgroundTaskElement this[string name]
-        {
-            get { return (BackgroundTaskElement) BaseGet(name); }
-        }
+        public new BackgroundTaskElement this[string name] => (BackgroundTaskElement)this.BaseGet(name);
 
         public int IndexOf(BackgroundTaskElement queue)
         {
-            return BaseIndexOf(queue);
+            return this.BaseIndexOf(queue);
         }
 
         public void RemoveAt(int index)
         {
-            BaseRemoveAt(index);
+            this.BaseRemoveAt(index);
         }
 
         public void Add(BackgroundTaskElement item)
         {
-            BaseAdd(item);
+            this.BaseAdd(item);
         }
 
         public void Clear()
         {
-            BaseClear();
+            this.BaseClear();
         }
 
         public bool Contains(BackgroundTaskElement item)
         {
-            return BaseIndexOf(item) >= 0;
+            return this.BaseIndexOf(item) >= 0;
         }
 
         public void CopyTo(BackgroundTaskElement[] array, int arrayIndex)
@@ -83,9 +73,9 @@ namespace Framework.Logic.Tasks.Config.Background.Task
 
         public bool Remove(BackgroundTaskElement item)
         {
-            if (BaseIndexOf(item) >= 0)
+            if (this.BaseIndexOf(item) >= 0)
             {
-                BaseRemove(item);
+                this.BaseRemove(item);
                 return true;
             }
 
@@ -99,8 +89,8 @@ namespace Framework.Logic.Tasks.Config.Background.Task
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            var queue = (BackgroundTaskElement) element;
-            return GetKey(queue);
+            var queue = (BackgroundTaskElement)element;
+            return this.GetKey(queue);
         }
 
         /// <summary>

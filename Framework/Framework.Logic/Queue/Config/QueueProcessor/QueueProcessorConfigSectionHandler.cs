@@ -1,20 +1,14 @@
-﻿using System.Configuration;
-
-namespace Framework.Logic.Queue.Config.QueueProcessor
+﻿namespace Framework.Logic.Queue.Config.QueueProcessor
 {
+    using System.Configuration;
+
     public class QueueProcessorConfigSectionHandler : ConfigurationSection
     {
-        public static bool ConfigurationPresent
-        {
-            get { return ConfigurationManager.GetSection("QueueConfiguration") != null; }
-        }
+        public static bool ConfigurationPresent => ConfigurationManager.GetSection("QueueConfiguration") != null;
 
         [ConfigurationProperty("", IsRequired = true, IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(QueueProcessorCollection))]
         //// [ConfigurationCollection(typeof(NamedQueueCollection), AddItemName = "add")]
-        public QueueProcessorCollection QueueProcessors
-        {
-            get { return (QueueProcessorCollection) this[string.Empty]; }
-        }
+        public QueueProcessorCollection QueueProcessors => (QueueProcessorCollection)this[string.Empty];
     }
 }

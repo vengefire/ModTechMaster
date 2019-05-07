@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-namespace Framework.Interfaces.Injection
+﻿namespace Framework.Interfaces.Injection
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
     /// <summary>
     ///     IOC container.
     /// </summary>

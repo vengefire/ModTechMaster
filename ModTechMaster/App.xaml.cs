@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace ModTechMaster
+﻿namespace ModTechMaster
 {
+    using System.Windows;
+
     /// <summary>
     ///     Interaction logic for App.xaml
     /// </summary>

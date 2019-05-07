@@ -1,16 +1,17 @@
-﻿using ModTechMaster.Core.Interfaces.Models;
-using Newtonsoft.Json;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
+    using Core.Interfaces.Models;
+    using Newtonsoft.Json;
+
     public class JsonObjectBase : IJsonObjectBase
     {
         public JsonObjectBase(dynamic jsonObject)
         {
-            JsonObject = jsonObject;
+            this.JsonObject = jsonObject;
         }
 
         public dynamic JsonObject { get; }
+
         public string JsonString => JsonConvert.SerializeObject(this.JsonObject);
     }
 }

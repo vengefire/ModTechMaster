@@ -1,7 +1,7 @@
-﻿using System.Windows;
-
-namespace ModTechMaster
+﻿namespace ModTechMaster
 {
+    using System.Windows;
+
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
@@ -9,7 +9,7 @@ namespace ModTechMaster
     {
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

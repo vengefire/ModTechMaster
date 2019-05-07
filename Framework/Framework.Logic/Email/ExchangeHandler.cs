@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using Castle.Components.DictionaryAdapter;
-using Castle.Core.Internal;
-using Castle.Core.Logging;
-using Framework.Domain.Email.Models;
-using Framework.Interfaces.Email;
-using Framework.Logic.Email.Mapping;
-using Microsoft.Exchange.WebServices.Data;
-using Task = System.Threading.Tasks.Task;
-
-namespace Framework.Logic.Email
+﻿namespace Framework.Logic.Email
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Security;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using Castle.Components.DictionaryAdapter;
+    using Castle.Core.Internal;
+    using Castle.Core.Logging;
+    using Domain.Email.Models;
+    using Interfaces.Email;
+    using Mapping;
+    using Microsoft.Exchange.WebServices.Data;
+    using Task = System.Threading.Tasks.Task;
+
     public class ExchangeHandler : IExchangeHandler, IDisposable
     {
         private readonly string customDomain;
@@ -56,32 +56,32 @@ namespace Framework.Logic.Email
 
         static ExchangeHandler()
         {
-            Mapper.CreateMap<EmailMessage, Domain.Email.Models.Email>().ConvertUsing<EmailMessageTypeConverter>();
+            Mapper.CreateMap<EmailMessage, Email>().ConvertUsing<EmailMessageTypeConverter>();
         }
 
         public ExchangeHandler(ILogger logger)
         {
-            useCustomCreds = Convert.ToBoolean(ConfigurationManager.AppSettings["MailBox_UseCustomCreds"]);
-            mailboxFolder = ConfigurationManager.AppSettings["MailBox_Folder"];
+            this.useCustomCreds = Convert.ToBoolean(ConfigurationManager.AppSettings["MailBox_UseCustomCreds"]);
+            this.mailboxFolder = ConfigurationManager.AppSettings["MailBox_Folder"];
 
-            if (useCustomCreds)
+            if (this.useCustomCreds)
             {
-                customUsername = ConfigurationManager.AppSettings["MailBox_Username"];
-                customPassword = ConfigurationManager.AppSettings["MailBox_Password"];
-                customDomain = ConfigurationManager.AppSettings["MailBox_Domain"];
+                this.customUsername = ConfigurationManager.AppSettings["MailBox_Username"];
+                this.customPassword = ConfigurationManager.AppSettings["MailBox_Password"];
+                this.customDomain = ConfigurationManager.AppSettings["MailBox_Domain"];
             }
 
             this.logger = logger;
-            pollTimer = new Timer(PollMailboxTick);
+            this.pollTimer = new Timer(this.PollMailboxTick);
             logger.Debug("Exchange Handler constructed.");
         }
 
         public void Dispose()
         {
             // Ensure the monitoring closes off cleanly...
-            if (HandlerStatus.Monitoring == handlerStatus)
+            if (HandlerStatus.Monitoring == this.handlerStatus)
             {
-                StopMonitoring();
+                this.StopMonitoring();
             }
         }
 
@@ -93,69 +93,59 @@ namespace Framework.Logic.Email
 
         public void ConnectToMailbox(string mailbox)
         {
-            if (HandlerStatus.Uninitialized != handlerStatus)
+            if (HandlerStatus.Uninitialized != this.handlerStatus)
             {
                 throw new InvalidProgramException("The ExchangeMonitor has already been connected.");
             }
 
             this.mailbox = mailbox;
 
-            ServicePointManager.ServerCertificateValidationCallback = CertificateValidationCallBack;
-            exchangeService = new ExchangeService(ExchangeVersion.Exchange2010)
-            {
-                Credentials =
-                    useCustomCreds
-                        ? new NetworkCredential(customUsername, customPassword, customDomain)
-                        : new NetworkCredential(),
-                UseDefaultCredentials = !useCustomCreds,
-                KeepAlive = true,
-                Timeout = int.MaxValue
-            };
+            ServicePointManager.ServerCertificateValidationCallback = this.CertificateValidationCallBack;
+            this.exchangeService = new ExchangeService(ExchangeVersion.Exchange2010)
+                                   {
+                                       Credentials = this.useCustomCreds
+                                           ? new NetworkCredential(this.customUsername, this.customPassword, this.customDomain)
+                                           : new NetworkCredential(),
+                                       UseDefaultCredentials = !this.useCustomCreds,
+                                       KeepAlive = true,
+                                       Timeout = int.MaxValue
+                                   };
 
-            logger.InfoFormat("Connecting to mailbox [{0}]...", mailbox);
-            exchangeService.AutodiscoverUrl(mailbox, RedirectionUrlValidationCallback);
-            if (mailboxFolder.IsNullOrEmpty())
+            this.logger.InfoFormat("Connecting to mailbox [{0}]...", mailbox);
+            this.exchangeService.AutodiscoverUrl(mailbox, this.RedirectionUrlValidationCallback);
+            if (this.mailboxFolder.IsNullOrEmpty())
             {
-                folderId = new FolderId(WellKnownFolderName.Inbox, new Mailbox(mailbox));
+                this.folderId = new FolderId(WellKnownFolderName.Inbox, new Mailbox(mailbox));
             }
             else
             {
-                var folderView = new FolderView(100)
-                {
-                    PropertySet = new PropertySet(BasePropertySet.IdOnly)
-                    {
-                        FolderSchema.DisplayName
-                    },
-                    Traversal = FolderTraversal.Shallow
-                };
+                var folderView = new FolderView(100) {PropertySet = new PropertySet(BasePropertySet.IdOnly) {FolderSchema.DisplayName}, Traversal = FolderTraversal.Shallow};
 
                 var findFolder = new Func<FolderId, string, FolderId>(
-                    (parentFolder, searchFolderName) =>
-                    {
-                        var results = exchangeService.FindFolders(parentFolder, folderView);
-                        return results.First(folder => folder.DisplayName.Equals(searchFolderName)).Id;
-                    });
+                                                                      (parentFolder, searchFolderName) =>
+                                                                      {
+                                                                          var results = this.exchangeService.FindFolders(parentFolder, folderView);
+                                                                          return results.First(folder => folder.DisplayName.Equals(searchFolderName)).Id;
+                                                                      });
 
-                var folderPaths = mailboxFolder.Replace("\\", "/").Split(
-                    new[]
-                    {
-                        "/"
-                    },
-                    StringSplitOptions.RemoveEmptyEntries);
+                var folderPaths = this.mailboxFolder.Replace("\\", "/").Split(
+                                                                              new[] {"/"},
+                                                                              StringSplitOptions.RemoveEmptyEntries);
                 var recurseFolderId = new FolderId(WellKnownFolderName.MsgFolderRoot, new Mailbox(mailbox));
-                recurseFolderId = folderPaths.Aggregate(recurseFolderId,
-                    (current, folderPath) => findFolder(current, folderPath));
-                folderId = recurseFolderId;
+                recurseFolderId = folderPaths.Aggregate(
+                                                        recurseFolderId,
+                                                        (current, folderPath) => findFolder(current, folderPath));
+                this.folderId = recurseFolderId;
             }
 
-            logger.InfoFormat("Folder ID set as [{0} - {1}].", this.mailbox, mailboxFolder);
-            handlerStatus = HandlerStatus.Idle;
-            mailboxConnectionTimeStamp = DateTime.Now;
+            this.logger.InfoFormat("Folder ID set as [{0} - {1}].", this.mailbox, this.mailboxFolder);
+            this.handlerStatus = HandlerStatus.Idle;
+            this.mailboxConnectionTimeStamp = DateTime.Now;
         }
 
         public void StartMonitoring(int pollTimeMilliseconds, int numMessagesPerTick)
         {
-            logger.Info("Starting monitoring of the mailbox, validating arguments...");
+            this.logger.Info("Starting monitoring of the mailbox, validating arguments...");
             if (1 > numMessagesPerTick)
             {
                 throw new ArgumentException("numMessagesPerTick must exceed 0.");
@@ -166,46 +156,46 @@ namespace Framework.Logic.Email
                 throw new ArgumentException("pollTimeMilliseconds must exceed 0.");
             }
 
-            if (HandlerStatus.Idle != handlerStatus)
+            if (HandlerStatus.Idle != this.handlerStatus)
             {
                 throw new InvalidProgramException("The ExchangeMonitor is not Idle.");
             }
 
-            if (null == ProcessEmailEventHandler)
+            if (null == this.ProcessEmailEventHandler)
             {
                 throw new ArgumentException("A ProcessEmailEventHandler must be set.");
             }
 
-            handlerStatus = HandlerStatus.Monitoring;
+            this.handlerStatus = HandlerStatus.Monitoring;
             this.numMessagesPerTick = numMessagesPerTick;
-            monitorMailbox = true;
-            StartTimer(pollTimeMilliseconds);
+            this.monitorMailbox = true;
+            this.StartTimer(pollTimeMilliseconds);
 
-            logger.Info("Monitoring of the mailbox has commenced...");
-            if (null != MailboxMonitoringStartedEventHandler)
+            this.logger.Info("Monitoring of the mailbox has commenced...");
+            if (null != this.MailboxMonitoringStartedEventHandler)
             {
-                MailboxMonitoringStartedEventHandler();
+                this.MailboxMonitoringStartedEventHandler();
             }
         }
 
         public void StopMonitoring()
         {
-            logger.Info("Stopping monitoring of the mailbox ...");
-            StopTimer();
+            this.logger.Info("Stopping monitoring of the mailbox ...");
+            this.StopTimer();
 
-            lock (locker)
+            lock (this.locker)
             {
-                if (HandlerStatus.Monitoring != handlerStatus)
+                if (HandlerStatus.Monitoring != this.handlerStatus)
                 {
                     throw new InvalidProgramException("The ExchangeMonitor is not currently monitoring.");
                 }
 
-                monitorMailbox = false;
-                handlerStatus = HandlerStatus.Idle;
-                logger.Debug("Mailbox monitoring has halted.");
-                if (null != MailboxMonitoringStoppedEventHandler)
+                this.monitorMailbox = false;
+                this.handlerStatus = HandlerStatus.Idle;
+                this.logger.Debug("Mailbox monitoring has halted.");
+                if (null != this.MailboxMonitoringStoppedEventHandler)
                 {
-                    MailboxMonitoringStoppedEventHandler();
+                    this.MailboxMonitoringStoppedEventHandler();
                 }
             }
         }
@@ -215,15 +205,14 @@ namespace Framework.Logic.Email
             return emailAddressCollection.Select(address => address.ToString()).ToList();
         }
 
-        private static async Task<List<EmailFileAttachment>> ConvertAttachmentCollection(
-            AttachmentCollection attachmenCollection)
+        private static async Task<List<EmailFileAttachment>> ConvertAttachmentCollection(AttachmentCollection attachmenCollection)
         {
             var emailFileAttachments = new EditableList<EmailFileAttachment>();
 
             var fileAttachments = attachmenCollection.Where(attachment => attachment is FileAttachment);
             foreach (var fileAttachment in fileAttachments)
             {
-                var emailFileAttachment = await ConvertFileAttachment(fileAttachment as FileAttachment);
+                var emailFileAttachment = await ExchangeHandler.ConvertFileAttachment(fileAttachment as FileAttachment);
                 emailFileAttachments.Add(emailFileAttachment);
             }
 
@@ -236,53 +225,51 @@ namespace Framework.Logic.Email
         {
             await Task.Factory.StartNew(attachment.Load);
 
-            return new EmailFileAttachment
-            {
-                Name = attachment.Name,
-                Length = attachment.Size,
-                Content = attachment.Content
-            };
+            return new EmailFileAttachment {Name = attachment.Name, Length = attachment.Size, Content = attachment.Content};
         }
 
         private async void PollMailboxTick(object state)
         {
-            StopTimer();
-            if (false == monitorMailbox)
+            this.StopTimer();
+            if (false == this.monitorMailbox)
             {
                 return;
             }
 
-            if ((DateTime.Now - mailboxConnectionTimeStamp).Hours >= 3 || consecutiveFailureCount != 0)
+            if ((DateTime.Now - this.mailboxConnectionTimeStamp).Hours >= 3 ||
+                this.consecutiveFailureCount != 0)
             {
                 try
                 {
-                    RefreshMailBoxConnection();
+                    this.RefreshMailBoxConnection();
                 }
                 catch (Exception ex)
                 {
-                    consecutiveFailureCount += 1;
-                    logger.ErrorFormat(ex,
-                        "An Exception was encountered while refreshing the mailbox connection. Consecutive Failure Count = [{0}]...",
-                        consecutiveFailureCount);
-                    if (consecutiveFailureCount > 10)
+                    this.consecutiveFailureCount += 1;
+                    this.logger.ErrorFormat(
+                                            ex,
+                                            "An Exception was encountered while refreshing the mailbox connection. Consecutive Failure Count = [{0}]...",
+                                            this.consecutiveFailureCount);
+                    if (this.consecutiveFailureCount > 10)
                     {
-                        logger.ErrorFormat(ex, "Consecutive Failure Count exceeded 10, re-throwing exception...");
+                        this.logger.ErrorFormat(ex, "Consecutive Failure Count exceeded 10, re-throwing exception...");
                         throw;
                     }
-                    if (monitorMailbox)
+
+                    if (this.monitorMailbox)
                     {
-                        StartTimer(pollTimeInMilliseconds);
+                        this.StartTimer(this.pollTimeInMilliseconds);
                     }
 
                     return;
                 }
             }
 
-            logger.Debug("Processing Mailbox tick...");
+            this.logger.Debug("Processing Mailbox tick...");
 
             // Process emails until the mailbox is empty...
             EmailMessage[] emails = null;
-            var getEmailSuccess = GetEmails(out emails);
+            var getEmailSuccess = this.GetEmails(out emails);
 
             while (getEmailSuccess && emails.Any())
             {
@@ -290,73 +277,74 @@ namespace Framework.Logic.Email
                 for (var index = 0; index < emails.Count(); index++)
                 {
                     var emailItem = emails[index];
-                    tasks[index] = ProcessEmail(emailItem);
+                    tasks[index] = this.ProcessEmail(emailItem);
                 }
 
                 await Task.WhenAll(tasks);
-                getEmailSuccess = GetEmails(out emails);
+                getEmailSuccess = this.GetEmails(out emails);
             }
 
-            logger.Debug("Mailbox tick processing complete.");
-            if (monitorMailbox)
+            this.logger.Debug("Mailbox tick processing complete.");
+            if (this.monitorMailbox)
             {
-                StartTimer(pollTimeInMilliseconds);
+                this.StartTimer(this.pollTimeInMilliseconds);
             }
         }
 
-        private async Task<Domain.Email.Models.Email> ConvertEmailMessage(EmailMessage emailMessage)
+        private async Task<Email> ConvertEmailMessage(EmailMessage emailMessage)
         {
-            logger.DebugFormat("Converting email message [{0}] to email...", emailMessage.Subject);
+            this.logger.DebugFormat("Converting email message [{0}] to email...", emailMessage.Subject);
 
-            var email = new Domain.Email.Models.Email
-            {
-                FromAddress = emailMessage.From.ToString(),
-                ToAddresses = ConvertEmailAddressCollection(emailMessage.ToRecipients),
-                CCAddresses = ConvertEmailAddressCollection(emailMessage.CcRecipients),
-                BCCAddresses = ConvertEmailAddressCollection(emailMessage.BccRecipients),
-                Subject = emailMessage.Subject,
-                Body = emailMessage.Body,
-                DateReceived = DateTime.Now,
-                FileAttachments = await ConvertAttachmentCollection(emailMessage.Attachments),
-                MimeBytes = emailMessage.MimeContent.Content
-            };
+            var email = new Email
+                        {
+                            FromAddress = emailMessage.From.ToString(),
+                            ToAddresses = ExchangeHandler.ConvertEmailAddressCollection(emailMessage.ToRecipients),
+                            CCAddresses = ExchangeHandler.ConvertEmailAddressCollection(emailMessage.CcRecipients),
+                            BCCAddresses = ExchangeHandler.ConvertEmailAddressCollection(emailMessage.BccRecipients),
+                            Subject = emailMessage.Subject,
+                            Body = emailMessage.Body,
+                            DateReceived = DateTime.Now,
+                            FileAttachments = await ExchangeHandler.ConvertAttachmentCollection(emailMessage.Attachments),
+                            MimeBytes = emailMessage.MimeContent.Content
+                        };
 
-            logger.DebugFormat("Email message [{0}] converted to email.", emailMessage.Subject);
+            this.logger.DebugFormat("Email message [{0}] converted to email.", emailMessage.Subject);
             return email;
         }
 
         private async void ProcessEmailItem(Item emailItem)
         {
-            if (false == monitorMailbox)
+            if (false == this.monitorMailbox)
             {
-                logger.Info("Monitoring has been stopped, exiting message processing...");
+                this.logger.Info("Monitoring has been stopped, exiting message processing...");
                 return;
             }
 
-            if (null != ProcessEmailEventHandler)
+            if (null != this.ProcessEmailEventHandler)
             {
                 try
                 {
-                    var emailMessage = TransformFindResult(emailItem);
+                    var emailMessage = this.TransformFindResult(emailItem);
 
-                    logger.InfoFormat(
-                        "Delegating email message with subject [{0}] processing to client...",
-                        emailMessage.Subject);
-                    var email = await ConvertEmailMessage(emailMessage);
+                    this.logger.InfoFormat(
+                                           "Delegating email message with subject [{0}] processing to client...",
+                                           emailMessage.Subject);
+                    var email = await this.ConvertEmailMessage(emailMessage);
 
-                    var deleteEmail = ProcessEmailEventHandler(email);
+                    var deleteEmail = this.ProcessEmailEventHandler(email);
 
                     if (deleteEmail)
                     {
                         emailMessage.Delete(DeleteMode.SoftDelete);
-                        logger.DebugFormat("Processed email message [{0}] deleted.", emailMessage.Subject);
+                        this.logger.DebugFormat("Processed email message [{0}] deleted.", emailMessage.Subject);
                     }
                 }
                 catch (Exception ex)
                 {
-                    logger.ErrorFormat(ex,
-                        "An exception occurred processing item [{0}]. Item has been left in the mail box",
-                        emailItem.Subject);
+                    this.logger.ErrorFormat(
+                                            ex,
+                                            "An exception occurred processing item [{0}]. Item has been left in the mail box",
+                                            emailItem.Subject);
                 }
             }
             else
@@ -367,35 +355,36 @@ namespace Framework.Logic.Email
 
         private async Task ProcessEmail(EmailMessage emailMessage)
         {
-            if (false == monitorMailbox)
+            if (false == this.monitorMailbox)
             {
-                logger.Info("Monitoring has been stopped, exiting message processing...");
+                this.logger.Info("Monitoring has been stopped, exiting message processing...");
                 return;
             }
 
-            if (null != ProcessEmailEventHandler)
+            if (null != this.ProcessEmailEventHandler)
             {
                 try
                 {
-                    logger.InfoFormat(
-                        "Delegating email message with subject [{0}] processing to client...",
-                        emailMessage.Subject);
+                    this.logger.InfoFormat(
+                                           "Delegating email message with subject [{0}] processing to client...",
+                                           emailMessage.Subject);
 
-                    var email = await ConvertEmailMessage(emailMessage);
+                    var email = await this.ConvertEmailMessage(emailMessage);
 
-                    var deleteEmail = ProcessEmailEventHandler(email);
+                    var deleteEmail = this.ProcessEmailEventHandler(email);
 
                     if (deleteEmail)
                     {
                         emailMessage.Delete(DeleteMode.SoftDelete);
-                        logger.DebugFormat("Processed email message [{0}] deleted.", emailMessage.Subject);
+                        this.logger.DebugFormat("Processed email message [{0}] deleted.", emailMessage.Subject);
                     }
                 }
                 catch (Exception ex)
                 {
-                    logger.ErrorFormat(ex,
-                        "An exception occurred processing item [{0}]. Item has been left in the mail box",
-                        emailMessage.Subject);
+                    this.logger.ErrorFormat(
+                                            ex,
+                                            "An exception occurred processing item [{0}]. Item has been left in the mail box",
+                                            emailMessage.Subject);
                 }
             }
             else
@@ -408,22 +397,22 @@ namespace Framework.Logic.Email
         {
             try
             {
-                logger.InfoFormat(
-                    "Refreshing mailbox connection, last refreshed at [{0}]...",
-                    mailboxConnectionTimeStamp);
+                this.logger.InfoFormat(
+                                       "Refreshing mailbox connection, last refreshed at [{0}]...",
+                                       this.mailboxConnectionTimeStamp);
 
-                if (HandlerStatus.Monitoring == handlerStatus)
+                if (HandlerStatus.Monitoring == this.handlerStatus)
                 {
-                    StopMonitoring();
+                    this.StopMonitoring();
                 }
 
-                handlerStatus = HandlerStatus.Uninitialized;
-                ConnectToMailbox(mailbox);
-                handlerStatus = HandlerStatus.Monitoring;
+                this.handlerStatus = HandlerStatus.Uninitialized;
+                this.ConnectToMailbox(this.mailbox);
+                this.handlerStatus = HandlerStatus.Monitoring;
             }
             finally
             {
-                monitorMailbox = true;
+                this.monitorMailbox = true;
             }
         }
 
@@ -442,12 +431,12 @@ namespace Framework.Logic.Email
             // If there are errors in the certificate chain, look at each error to determine the cause.
             if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateChainErrors) != 0)
             {
-                if (chain != null && chain.ChainStatus != null)
+                if (chain != null &&
+                    chain.ChainStatus != null)
                 {
                     foreach (var status in chain.ChainStatus)
-                    {
-                        if ((certificate.Subject == certificate.Issuer)
-                            && (status.Status == X509ChainStatusFlags.UntrustedRoot))
+                        if (certificate.Subject == certificate.Issuer &&
+                            status.Status == X509ChainStatusFlags.UntrustedRoot)
                         {
                             // Self-signed certificates with an untrusted root are valid. 
                         }
@@ -460,7 +449,6 @@ namespace Framework.Logic.Email
                                 return false;
                             }
                         }
-                    }
                 }
 
                 // When processing reaches this line, the only errors in the certificate chain are 
@@ -475,15 +463,15 @@ namespace Framework.Logic.Email
 
         private FindItemsResults<Item> GetEmailItems()
         {
-            logger.DebugFormat(
-                "Fetching up to [{0}] email(s) from [{1}]...",
-                numMessagesPerTick,
-                folderId.ToString());
-            var findResults = exchangeService.FindItems(
-                folderId,
-                new ItemView(numMessagesPerTick));
+            this.logger.DebugFormat(
+                                    "Fetching up to [{0}] email(s) from [{1}]...",
+                                    this.numMessagesPerTick,
+                                    this.folderId.ToString());
+            var findResults = this.exchangeService.FindItems(
+                                                             this.folderId,
+                                                             new ItemView(this.numMessagesPerTick));
 
-            logger.DebugFormat("FindItems retrieved [{0}] entries...", findResults.Count());
+            this.logger.DebugFormat("FindItems retrieved [{0}] entries...", findResults.Count());
 
             return findResults;
         }
@@ -493,51 +481,52 @@ namespace Framework.Logic.Email
             emails = null;
             try
             {
-                logger.DebugFormat(
-                    "Fetching up to [{0}] email(s) from [{1}]...",
-                    numMessagesPerTick,
-                    folderId.ToString());
+                this.logger.DebugFormat(
+                                        "Fetching up to [{0}] email(s) from [{1}]...",
+                                        this.numMessagesPerTick,
+                                        this.folderId.ToString());
 
-                var findResults = exchangeService.FindItems(
-                    folderId,
-                    new ItemView(numMessagesPerTick));
+                var findResults = this.exchangeService.FindItems(
+                                                                 this.folderId,
+                                                                 new ItemView(this.numMessagesPerTick));
 
-                logger.DebugFormat("FindItems retrieved [{0}] entries...", findResults.Count());
+                this.logger.DebugFormat("FindItems retrieved [{0}] entries...", findResults.Count());
 
-                emails = findResults.Select(TransformFindResult).ToArray();
+                emails = findResults.Select(this.TransformFindResult).ToArray();
             }
             catch (Exception ex)
             {
-                consecutiveFailureCount += 1;
-                logger.ErrorFormat(ex,
-                    "An Exception was encountered while retrieving the Email Messages. Consecutive Failure Count = [{0}]...",
-                    consecutiveFailureCount);
-                if (consecutiveFailureCount > 10)
+                this.consecutiveFailureCount += 1;
+                this.logger.ErrorFormat(
+                                        ex,
+                                        "An Exception was encountered while retrieving the Email Messages. Consecutive Failure Count = [{0}]...",
+                                        this.consecutiveFailureCount);
+                if (this.consecutiveFailureCount > 10)
                 {
-                    logger.ErrorFormat(ex, "Consecutive Failure Count exceeded 10, re-throwing exception...");
+                    this.logger.ErrorFormat(ex, "Consecutive Failure Count exceeded 10, re-throwing exception...");
                     throw;
                 }
 
-                logger.WarnFormat("Consecutive Failure Count < 10, allowing process to roll over to next tick.");
+                this.logger.WarnFormat("Consecutive Failure Count < 10, allowing process to roll over to next tick.");
                 return false;
             }
 
-            consecutiveFailureCount = 0;
+            this.consecutiveFailureCount = 0;
 
             return true;
         }
 
         private EmailMessage TransformFindResult(Item item)
         {
-            logger.DebugFormat("Running transform on Item [{0}]...", item.Subject);
+            this.logger.DebugFormat("Running transform on Item [{0}]...", item.Subject);
             var result = EmailMessage.Bind(
-                exchangeService,
-                item.Id,
-                new PropertySet(
-                    BasePropertySet.FirstClassProperties,
-                    ItemSchema.Attachments,
-                    ItemSchema.MimeContent));
-            logger.DebugFormat("Item [{0}] transformed.", item.Subject);
+                                           this.exchangeService,
+                                           item.Id,
+                                           new PropertySet(
+                                                           BasePropertySet.FirstClassProperties,
+                                                           ItemSchema.Attachments,
+                                                           ItemSchema.MimeContent));
+            this.logger.DebugFormat("Item [{0}] transformed.", item.Subject);
             return result;
         }
 
@@ -561,13 +550,13 @@ namespace Framework.Logic.Email
 
         private void StartTimer(int polltimeInMilliseconds)
         {
-            pollTimeInMilliseconds = polltimeInMilliseconds;
-            pollTimer.Change(pollTimeInMilliseconds, Timeout.Infinite);
+            this.pollTimeInMilliseconds = polltimeInMilliseconds;
+            this.pollTimer.Change(this.pollTimeInMilliseconds, Timeout.Infinite);
         }
 
         private void StopTimer()
         {
-            pollTimer.Change(Timeout.Infinite, Timeout.Infinite);
+            this.pollTimer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         ////public event Func<Email, Task<bool>> ProcessEmailEventHandlerAsync;

@@ -1,9 +1,9 @@
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.ServiceModel.Dispatcher;
-
 namespace Framework.Logic.WCF.DispatchMessageInspector
 {
+    using System.ServiceModel.Channels;
+    using System.ServiceModel.Description;
+    using System.ServiceModel.Dispatcher;
+
     public class MessageInspectorBehavior : IEndpointBehavior
     {
         public void AddBindingParameters(ServiceEndpoint endpoint, BindingParameterCollection bindingParameters)

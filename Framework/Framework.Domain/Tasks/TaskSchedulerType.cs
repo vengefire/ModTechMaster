@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Framework.Domain.Tasks
+﻿namespace Framework.Domain.Tasks
 {
+    using System;
+
     public enum TaskSchedulerType
     {
         Interval,
@@ -17,24 +17,31 @@ namespace Framework.Domain.Tasks
     {
         public static TaskSchedulerType FromString(string src)
         {
-            if (src == "Interval" || src == "IntervalTaskScheduler")
+            if (src == "Interval" ||
+                src == "IntervalTaskScheduler")
             {
                 return TaskSchedulerType.Interval;
             }
-            if (src == "Daily" || src == "EveryDayTaskScheduler")
+
+            if (src == "Daily" ||
+                src == "EveryDayTaskScheduler")
             {
                 return TaskSchedulerType.Daily;
             }
-            if (src == "Monthly" || src == "EveryMonthTaskScheduler")
+
+            if (src == "Monthly" ||
+                src == "EveryMonthTaskScheduler")
             {
                 return TaskSchedulerType.Monthly;
             }
-            if (src == "Yearly" || src == "DateEveryYearTaskScheduler")
+
+            if (src == "Yearly" ||
+                src == "DateEveryYearTaskScheduler")
             {
                 return TaskSchedulerType.Yearly;
             }
-            throw new InvalidProgramException(
-                string.Format("Source value [{0}] is not valid for conversion to TaskSchedulerType.", src));
+
+            throw new InvalidProgramException(string.Format("Source value [{0}] is not valid for conversion to TaskSchedulerType.", src));
         }
     }
 }

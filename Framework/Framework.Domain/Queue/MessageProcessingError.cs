@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Framework.Domain.Queue
+﻿namespace Framework.Domain.Queue
 {
+    using System;
+
     public class MessageProcessingError
     {
         public long Id { get; set; }

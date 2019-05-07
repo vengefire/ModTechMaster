@@ -3,6 +3,7 @@
     public interface ISourcedFromFile
     {
         string SourceFilePath { get; }
+
         string SourceDirectoryPath { get; }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Framework.Data.MessageQueue.Model
+﻿namespace Framework.Data.MessageQueue.Model
 {
+    using System;
+
     public class MessageAudit
     {
         public long Id { get; set; }

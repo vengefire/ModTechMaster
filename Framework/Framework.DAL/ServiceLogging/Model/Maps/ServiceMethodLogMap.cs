@@ -1,12 +1,12 @@
-﻿using DapperExtensions.Mapper;
-
-namespace Framework.Data.ServiceLogging.Model.Maps
+﻿namespace Framework.Data.ServiceLogging.Model.Maps
 {
+    using DapperExtensions.Mapper;
+
     public class ServiceMethodLogMap : ClassMapper<ServiceMethodLog>
     {
         public ServiceMethodLogMap()
         {
-            AutoMap();
+            this.AutoMap();
         }
     }
 }

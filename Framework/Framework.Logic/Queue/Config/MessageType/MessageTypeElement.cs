@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel;
-using System.Configuration;
-
-namespace Framework.Logic.Queue.Config.MessageType
+﻿namespace Framework.Logic.Queue.Config.MessageType
 {
+    using System;
+    using System.ComponentModel;
+    using System.Configuration;
+
     /// <summary>
     ///     A simple class for parsing a named servie out of a configuration file.
     /// </summary>
@@ -13,18 +13,10 @@ namespace Framework.Logic.Queue.Config.MessageType
         ///     The name of the queue.
         /// </summary>
         [ConfigurationProperty("name", IsRequired = true)]
-        public string Name
-        {
-            get { return (string) this["name"]; }
-            set { this["name"] = value; }
-        }
+        public string Name { get => (string)this["name"]; set => this["name"] = value; }
 
         [TypeConverter(typeof(TypeNameConverter))]
         [ConfigurationProperty("type", IsRequired = true)]
-        public Type Type
-        {
-            get { return this["type"] as Type; }
-            set { this["type"] = value; }
-        }
+        public Type Type { get => this["type"] as Type; set => this["type"] = value; }
     }
 }

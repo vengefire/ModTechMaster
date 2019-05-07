@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Castle.Facilities.TypedFactory;
-using Castle.MicroKernel.Registration;
-using Castle.Windsor;
-using Framework.Interfaces.Factories;
-
-namespace Framework.Logic.Queue.AutoTypeRegisters
+﻿namespace Framework.Logic.Queue.AutoTypeRegisters
 {
+    using System;
+    using System.Collections.Generic;
+    using Castle.Facilities.TypedFactory;
+    using Castle.MicroKernel.Registration;
+    using Castle.Windsor;
+    using Interfaces.Factories;
+
     public static class GenericFactoryAutoRegister
     {
         public static void RegisterGenericFactories(IEnumerable<Type> types, IWindsorContainer container)

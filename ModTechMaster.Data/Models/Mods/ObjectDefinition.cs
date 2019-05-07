@@ -1,20 +1,21 @@
-﻿using System.Collections.Generic;
-using ModTechMaster.Core.Interfaces.Models;
-using Newtonsoft.Json.Linq;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
+    using System.Collections.Generic;
+    using Core.Interfaces.Models;
+    using Newtonsoft.Json.Linq;
+
     public class ObjectDefinition : JsonObjectSourcedFromFile, IObjectDefinition
     {
         public ObjectDefinition(IObjectDefinitionDescription objectDescription, dynamic jsonObject, string filePath) : base(filePath, (JObject)jsonObject)
         {
-            ObjectDescription = objectDescription;
-            MetaData = new Dictionary<string, dynamic>();
+            this.ObjectDescription = objectDescription;
+            this.MetaData = new Dictionary<string, dynamic>();
         }
 
-        public IObjectDefinitionDescription ObjectDescription { get; private set; }
-        public Dictionary<string, dynamic> MetaData { get; private set; }
+        public IObjectDefinitionDescription ObjectDescription { get; }
 
-        public virtual string GetId => ObjectDescription?.Id;
+        public Dictionary<string, dynamic> MetaData { get; }
+
+        public virtual string GetId => this.ObjectDescription?.Id;
     }
 }

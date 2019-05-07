@@ -1,8 +1,8 @@
-﻿using System;
-using System.Messaging;
-
-namespace Framework.Interfaces.Queue
+﻿namespace Framework.Interfaces.Queue
 {
+    using System;
+    using System.Messaging;
+
     public enum QueueMode
     {
         Recv,

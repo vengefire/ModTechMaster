@@ -1,11 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using Castle.Core.Logging;
-using Castle.DynamicProxy;
-using Framework.Utils.DPHelper;
-
-namespace Framework.Windsor.Interceptors
+﻿namespace Framework.Windsor.Interceptors
 {
+    using System;
+    using System.Diagnostics;
+    using Castle.Core.Logging;
+    using Castle.DynamicProxy;
+    using Utils.DPHelper;
+
     public class LogAspect : IInterceptor
     {
         public ILogger Logger { get; set; } = NullLogger.Instance;
@@ -19,7 +19,7 @@ namespace Framework.Windsor.Interceptors
                 : invocation.Method.DeclaringType.FullName;
             var invocationAppelation = string.Format("{0}.{1}", targetName, invocation.Method.Name);
 
-            if (SkipLog)
+            if (this.SkipLog)
             {
                 try
                 {
@@ -27,10 +27,10 @@ namespace Framework.Windsor.Interceptors
                 }
                 catch (Exception ex)
                 {
-                    Logger.ErrorFormat(
-                        "An exception occurred calling [{0}], Error = [{1}], rethrowing...",
-                        invocationAppelation,
-                        ex.Message);
+                    this.Logger.ErrorFormat(
+                                            "An exception occurred calling [{0}], Error = [{1}], rethrowing...",
+                                            invocationAppelation,
+                                            ex.Message);
                     throw;
                 }
 
@@ -40,7 +40,7 @@ namespace Framework.Windsor.Interceptors
             var invocationString = DPHelper.CreateInvocationLogString(invocation);
 
             // this.Logger.DebugFormat("Calling [{0}]", invocationString);
-            Logger.DebugFormat("Calling [{0}]", invocationAppelation);
+            this.Logger.DebugFormat("Calling [{0}]", invocationAppelation);
             var stopWatch = new Stopwatch();
             stopWatch.Start();
             try
@@ -49,21 +49,21 @@ namespace Framework.Windsor.Interceptors
             }
             catch (Exception ex)
             {
-                Logger.ErrorFormat(
-                    ex,
-                    "An exception occurred calling [{0}], Error = [{1}], rethrowing...",
-                    invocationAppelation,
-                    ex.Message);
+                this.Logger.ErrorFormat(
+                                        ex,
+                                        "An exception occurred calling [{0}], Error = [{1}], rethrowing...",
+                                        invocationAppelation,
+                                        ex.Message);
                 throw;
             }
 
             stopWatch.Stop();
 
             var invocationExecutionTime = stopWatch.ElapsedMilliseconds;
-            Logger.DebugFormat(
-                "Invocation [{0}] Completed in [{1}] ms.",
-                invocationAppelation,
-                invocationExecutionTime);
+            this.Logger.DebugFormat(
+                                    "Invocation [{0}] Completed in [{1}] ms.",
+                                    invocationAppelation,
+                                    invocationExecutionTime);
         }
     }
 }

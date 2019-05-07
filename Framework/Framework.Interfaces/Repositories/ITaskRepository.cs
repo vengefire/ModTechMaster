@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Framework.Interfaces.Repositories
+﻿namespace Framework.Interfaces.Repositories
 {
+    using System;
+
     public interface ITaskRepository
     {
         DateTime? GetLastExecution(string name);

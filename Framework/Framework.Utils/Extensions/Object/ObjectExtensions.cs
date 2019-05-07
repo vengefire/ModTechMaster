@@ -1,11 +1,11 @@
-﻿using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Xml;
-using System.Xml.Linq;
-
-namespace Framework.Utils.Extensions.Object
+﻿namespace Framework.Utils.Extensions.Object
 {
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Xml;
+    using System.Xml.Linq;
+
     public static class ObjectExtensions
     {
         public static XElement ToXml(this object o)
@@ -13,9 +13,9 @@ namespace Framework.Utils.Extensions.Object
             var t = o.GetType();
 
             var extraTypes = t.GetProperties()
-                .Where(p => p.PropertyType.IsInterface)
-                .Select(p => p.GetValue(o, null).GetType())
-                .ToArray();
+                              .Where(p => p.PropertyType.IsInterface)
+                              .Select(p => p.GetValue(o, null).GetType())
+                              .ToArray();
 
             var serializer = new DataContractSerializer(t, extraTypes);
             var sw = new StringWriter();

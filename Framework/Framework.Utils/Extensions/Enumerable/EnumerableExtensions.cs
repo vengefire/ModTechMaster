@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace Framework.Utils.Extensions.Enumerable
+﻿namespace Framework.Utils.Extensions.Enumerable
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class EnumerableExtensions
     {
         public static IEnumerable<T> Paged<T>(
@@ -11,8 +11,8 @@ namespace Framework.Utils.Extensions.Enumerable
             int pageSize)
         {
             return source
-                .Skip((page - 1)*pageSize)
-                .Take(pageSize);
+                   .Skip((page - 1) * pageSize)
+                   .Take(pageSize);
         }
     }
 }

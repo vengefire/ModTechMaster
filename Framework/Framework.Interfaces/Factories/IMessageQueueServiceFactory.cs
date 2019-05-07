@@ -1,8 +1,8 @@
-﻿using System;
-using Framework.Interfaces.Data.Services;
-
-namespace Framework.Interfaces.Factories
+﻿namespace Framework.Interfaces.Factories
 {
+    using System;
+    using Data.Services;
+
     public interface IMessageQueueServiceFactory : IDisposable
     {
         IMessageQueueService Create();

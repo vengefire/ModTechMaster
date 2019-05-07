@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using System.Text;
-using Newtonsoft.Json;
-
-namespace Framework.Utils.Extensions.Dictionary
+﻿namespace Framework.Utils.Extensions.Dictionary
 {
+    using System;
+    using System.Collections;
+    using System.IO;
+    using System.Text;
+    using Newtonsoft.Json;
+
     public static class DictionaryExtensionMethods
     {
         /// <summary>
@@ -25,10 +25,7 @@ namespace Framework.Utils.Extensions.Dictionary
                 try
                 {
                     var sb = new StringBuilder();
-                    var settings = new JsonSerializerSettings
-                    {
-                        Formatting = Formatting.Indented
-                    };
+                    var settings = new JsonSerializerSettings {Formatting = Formatting.Indented};
                     var serializer = JsonSerializer.Create(settings);
                     using (var stringWriter = new StringWriter(sb))
                     {

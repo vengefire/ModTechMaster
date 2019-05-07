@@ -1,14 +1,14 @@
-using System;
-using Framework.Interfaces.Tasks;
-
 namespace Framework.Logic.Tasks.Schedulers
 {
+    using System;
+    using Interfaces.Tasks;
+
     public class EveryDayTaskScheduler : ITaskScheduler
     {
         public EveryDayTaskScheduler(int hour, int minute)
         {
-            Hour = hour;
-            Minute = minute;
+            this.Hour = hour;
+            this.Minute = minute;
         }
 
         public int Hour { get; }
@@ -17,7 +17,7 @@ namespace Framework.Logic.Tasks.Schedulers
 
         public DateTime NextRun(DateTime lastRun, DateTime now)
         {
-            var today = now.Date.AddHours(Hour).AddMinutes(Minute);
+            var today = now.Date.AddHours(this.Hour).AddMinutes(this.Minute);
 
             return lastRun < today ? today : today.AddDays(1);
         }
@@ -26,8 +26,8 @@ namespace Framework.Logic.Tasks.Schedulers
         {
             var runBefore = lastRun.Date.AddDays(2);
 
-            missed = (lastRun != DateTime.MinValue) && (now > runBefore);
-            return (lastRun.Date != now.Date) && (now >= now.Date.AddHours(Hour).AddMinutes(Minute));
+            missed = lastRun != DateTime.MinValue && now > runBefore;
+            return lastRun.Date != now.Date && now >= now.Date.AddHours(this.Hour).AddMinutes(this.Minute);
         }
     }
 }

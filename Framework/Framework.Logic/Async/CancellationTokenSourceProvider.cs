@@ -1,24 +1,21 @@
-﻿using System.Threading;
-using Framework.Interfaces.Async;
-
-namespace Framework.Logic.Async
+﻿namespace Framework.Logic.Async
 {
+    using System.Threading;
+    using Interfaces.Async;
+
     public class CancellationTokenSourceProvider : ICancellationTokenSourceProvider, ICancellationTokenProvider
     {
         public CancellationTokenSourceProvider()
         {
-            CancellationTokenSource = new CancellationTokenSource();
+            this.CancellationTokenSource = new CancellationTokenSource();
         }
 
         public CancellationTokenSourceProvider(CancellationTokenSource cancellationTokenSource)
         {
-            CancellationTokenSource = cancellationTokenSource;
+            this.CancellationTokenSource = cancellationTokenSource;
         }
 
-        public CancellationToken CancellationToken
-        {
-            get { return CancellationTokenSource.Token; }
-        }
+        public CancellationToken CancellationToken => this.CancellationTokenSource.Token;
 
         public CancellationTokenSource CancellationTokenSource { get; }
     }

@@ -1,7 +1,7 @@
-﻿using System.Configuration;
-
-namespace Framework.Logic.Queue.Config.MessageLogicHandler
+﻿namespace Framework.Logic.Queue.Config.MessageLogicHandler
 {
+    using System.Configuration;
+
     /// <summary>
     ///     Provides a configuration collection of named queues.
     /// </summary>
@@ -11,15 +11,9 @@ namespace Framework.Logic.Queue.Config.MessageLogicHandler
         /// <summary>
         ///     Gets the number of named queue elements in this instance.
         /// </summary>
-        public new int Count
-        {
-            get { return base.Count; }
-        }
+        public new int Count => base.Count;
 
-        public new bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public new bool IsReadOnly => false;
 
         /// <summary>
         ///     Gets or sets the named queue element for the given index.
@@ -28,16 +22,15 @@ namespace Framework.Logic.Queue.Config.MessageLogicHandler
         /// <returns>The named queue element.</returns>
         public MessageLogicHandlerElement this[int index]
         {
-            get { return (MessageLogicHandlerElement) BaseGet(index); }
-
+            get => (MessageLogicHandlerElement)this.BaseGet(index);
             set
             {
-                if (BaseGet(index) != null)
+                if (this.BaseGet(index) != null)
                 {
-                    BaseRemove(index);
+                    this.BaseRemove(index);
                 }
 
-                BaseAdd(index, value);
+                this.BaseAdd(index, value);
             }
         }
 
@@ -46,34 +39,31 @@ namespace Framework.Logic.Queue.Config.MessageLogicHandler
         /// </summary>
         /// <param name="name">The name of the named queue element to get or set.</param>
         /// <returns>The named queue element.</returns>
-        public new MessageLogicHandlerElement this[string name]
-        {
-            get { return (MessageLogicHandlerElement) BaseGet(name); }
-        }
+        public new MessageLogicHandlerElement this[string name] => (MessageLogicHandlerElement)this.BaseGet(name);
 
         public int IndexOf(MessageLogicHandlerElement queue)
         {
-            return BaseIndexOf(queue);
+            return this.BaseIndexOf(queue);
         }
 
         public void RemoveAt(int index)
         {
-            BaseRemoveAt(index);
+            this.BaseRemoveAt(index);
         }
 
         public void Add(MessageLogicHandlerElement item)
         {
-            BaseAdd(item);
+            this.BaseAdd(item);
         }
 
         public void Clear()
         {
-            BaseClear();
+            this.BaseClear();
         }
 
         public bool Contains(MessageLogicHandlerElement item)
         {
-            return BaseIndexOf(item) >= 0;
+            return this.BaseIndexOf(item) >= 0;
         }
 
         public void CopyTo(MessageLogicHandlerElement[] array, int arrayIndex)
@@ -83,9 +73,9 @@ namespace Framework.Logic.Queue.Config.MessageLogicHandler
 
         public bool Remove(MessageLogicHandlerElement item)
         {
-            if (BaseIndexOf(item) >= 0)
+            if (this.BaseIndexOf(item) >= 0)
             {
-                BaseRemove(item);
+                this.BaseRemove(item);
                 return true;
             }
 
@@ -99,8 +89,8 @@ namespace Framework.Logic.Queue.Config.MessageLogicHandler
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            var queue = (MessageLogicHandlerElement) element;
-            return GetKey(queue);
+            var queue = (MessageLogicHandlerElement)element;
+            return this.GetKey(queue);
         }
 
         /// <summary>

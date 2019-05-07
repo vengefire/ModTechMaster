@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-
-namespace Framework.Utils.XML
+﻿namespace Framework.Utils.XML
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using System.Xml;
+    using System.Xml.Schema;
+    using System.Xml.Serialization;
+
     public class XmlHelper
     {
         public static T Deserialize<T>(string xmlString, Encoding encoding = null) where T : class
@@ -21,7 +21,7 @@ namespace Framework.Utils.XML
 
             using (var stream = new MemoryStream(encoding.GetBytes(xmlString)))
             {
-                return Deserialize<T>(stream);
+                return XmlHelper.Deserialize<T>(stream);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Framework.Utils.XML
             encoding = encoding ?? new UTF8Encoding();
             using (var memoryStream = new MemoryStream(encoding.GetBytes(xml)))
             {
-                return DataContractDeserialize<T>(memoryStream);
+                return XmlHelper.DataContractDeserialize<T>(memoryStream);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Framework.Utils.XML
             encoding = encoding ?? new UTF8Encoding();
             using (var memoryStream = new MemoryStream(encoding.GetBytes(xml)))
             {
-                return DataContractDeserialize(typeInfo, memoryStream);
+                return XmlHelper.DataContractDeserialize(typeInfo, memoryStream);
             }
         }
 
@@ -81,9 +81,9 @@ namespace Framework.Utils.XML
             out string[] warnings,
             out string[] errors) where T : class
         {
-            Validate(stream, schemaStreams, out warnings, out errors);
+            XmlHelper.Validate(stream, schemaStreams, out warnings, out errors);
 
-            return errors.Any() ? null : Deserialize<T>(stream);
+            return errors.Any() ? null : XmlHelper.Deserialize<T>(stream);
         }
 
         public static T DataContractDeserializewithValidation<T>(
@@ -92,9 +92,9 @@ namespace Framework.Utils.XML
             out string[] warnings,
             out string[] errors) where T : class
         {
-            Validate(stream, schemaStreams, out warnings, out errors);
+            XmlHelper.Validate(stream, schemaStreams, out warnings, out errors);
 
-            return errors.Any() ? null : DataContractDeserialize<T>(stream);
+            return errors.Any() ? null : XmlHelper.DataContractDeserialize<T>(stream);
         }
 
         public static MemoryStream Serialize(Type typeInfo, object classInstance, Encoding encoding = null)
@@ -188,19 +188,19 @@ namespace Framework.Utils.XML
             xmlReaderSettings.ValidationFlags = XmlSchemaValidationFlags.ReportValidationWarnings;
             xmlReaderSettings.Schemas = schemaSet;
             xmlReaderSettings.ValidationEventHandler += (sender, args) =>
-            {
-                switch (args.Severity)
-                {
-                    case XmlSeverityType.Warning:
-                        warningsList.Add(args.Message);
-                        break;
-                    case XmlSeverityType.Error:
-                        errorsList.Add(args.Message);
-                        break;
-                    default:
-                        throw new InvalidProgramException("Unknown Xml Severity argument value detected.");
-                }
-            };
+                                                        {
+                                                            switch (args.Severity)
+                                                            {
+                                                                case XmlSeverityType.Warning:
+                                                                    warningsList.Add(args.Message);
+                                                                    break;
+                                                                case XmlSeverityType.Error:
+                                                                    errorsList.Add(args.Message);
+                                                                    break;
+                                                                default:
+                                                                    throw new InvalidProgramException("Unknown Xml Severity argument value detected.");
+                                                            }
+                                                        };
 
             var xmlReader = XmlReader.Create(stream, xmlReaderSettings);
             while (xmlReader.Read())

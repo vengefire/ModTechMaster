@@ -1,9 +1,9 @@
-using System;
-using Framework.Interfaces.Providers;
-using Framework.Interfaces.Tasks;
-
 namespace Framework.Logic.Tasks.Schedulers
 {
+    using System;
+    using Interfaces.Providers;
+    using Interfaces.Tasks;
+
     public class EveryMonthTaskScheduler : ITaskScheduler
     {
         public enum DayScheduleType
@@ -17,13 +17,17 @@ namespace Framework.Logic.Tasks.Schedulers
 
         private readonly DayScheduleType dayScheduleType;
 
-        public EveryMonthTaskScheduler(int hour, int minute, DayScheduleType dayScheduleType, int day,
+        public EveryMonthTaskScheduler(
+            int hour,
+            int minute,
+            DayScheduleType dayScheduleType,
+            int day,
             IBusinessDayProvider businessDayProvider)
         {
-            Hour = hour;
-            Minute = minute;
+            this.Hour = hour;
+            this.Minute = minute;
             this.dayScheduleType = dayScheduleType;
-            Day = day;
+            this.Day = day;
             this.businessDayProvider = businessDayProvider;
         }
 
@@ -37,8 +41,8 @@ namespace Framework.Logic.Tasks.Schedulers
         {
             var lastRunSubsequentDate = lastRun == DateTime.MinValue
                 ? lastRun
-                : GetOffSetRunDate(new DateTime(lastRun.Year, lastRun.Month, 1).AddMonths(1), Day);
-            var thisMonthRunDate = GetOffSetRunDate(new DateTime(now.Year, now.Month, 1), Day);
+                : this.GetOffSetRunDate(new DateTime(lastRun.Year, lastRun.Month, 1).AddMonths(1), this.Day);
+            var thisMonthRunDate = this.GetOffSetRunDate(new DateTime(now.Year, now.Month, 1), this.Day);
             return thisMonthRunDate > lastRunSubsequentDate ? thisMonthRunDate : lastRunSubsequentDate;
         }
 
@@ -46,11 +50,11 @@ namespace Framework.Logic.Tasks.Schedulers
         {
             var lastRunSubsequentDate = lastRun == DateTime.MinValue
                 ? lastRun
-                : GetOffSetRunDate(new DateTime(lastRun.Year, lastRun.Month, 1).AddMonths(1), Day);
-            var thisMonthRunDate = GetOffSetRunDate(new DateTime(now.Year, now.Month, 1), Day);
+                : this.GetOffSetRunDate(new DateTime(lastRun.Year, lastRun.Month, 1).AddMonths(1), this.Day);
+            var thisMonthRunDate = this.GetOffSetRunDate(new DateTime(now.Year, now.Month, 1), this.Day);
             var nextRunDate = thisMonthRunDate > lastRunSubsequentDate ? thisMonthRunDate : lastRunSubsequentDate;
-            missed = (lastRun != DateTime.MinValue) && (lastRun.Date < thisMonthRunDate) && (now > thisMonthRunDate);
-            return (lastRun.Date != now.Date) && (now >= nextRunDate);
+            missed = lastRun != DateTime.MinValue && lastRun.Date < thisMonthRunDate && now > thisMonthRunDate;
+            return lastRun.Date != now.Date && now >= nextRunDate;
         }
 
         public static DayScheduleType DayScheduleTypeFromString(string src)
@@ -59,23 +63,25 @@ namespace Framework.Logic.Tasks.Schedulers
             {
                 return DayScheduleType.Straight;
             }
+
             if (src == "BusinessDay")
             {
                 return DayScheduleType.BusinessDay;
             }
+
             throw new InvalidProgramException(string.Format("Value [{0}] is not parsable to DayScheduleType", src));
         }
 
         private DateTime GetOffSetRunDate(DateTime date, int days)
         {
             var offSetDate = date;
-            switch (dayScheduleType)
+            switch (this.dayScheduleType)
             {
                 case DayScheduleType.Straight:
                     offSetDate = date.AddDays(days);
                     break;
                 case DayScheduleType.BusinessDay:
-                    offSetDate = businessDayProvider.AddBusinessDays(date, days);
+                    offSetDate = this.businessDayProvider.AddBusinessDays(date, days);
                     break;
             }
 

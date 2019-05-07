@@ -1,23 +1,26 @@
-﻿using System.Collections.Generic;
-using ModTechMaster.Core.Enums.Mods;
-using ModTechMaster.Core.Interfaces.Models;
-using Newtonsoft.Json.Linq;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
+    using System.Collections.Generic;
+    using Core.Enums.Mods;
+    using Core.Interfaces.Models;
+    using Newtonsoft.Json.Linq;
+
     public class ManifestEntry : JsonObjectBase, IManifestEntry
     {
         public ManifestEntry(Manifest manifest, ManifestEntryType entryType, string path, dynamic jsonObject) : base((JObject)jsonObject)
         {
-            Manifest = manifest;
-            EntryType = entryType;
-            Path = path;
-            Objects = new HashSet<IObjectDefinition>();
+            this.Manifest = manifest;
+            this.EntryType = entryType;
+            this.Path = path;
+            this.Objects = new HashSet<IObjectDefinition>();
         }
 
         public IManifest Manifest { get; }
+
         public ManifestEntryType EntryType { get; }
+
         public string Path { get; }
-        public HashSet<IObjectDefinition> Objects { get; private set; }
+
+        public HashSet<IObjectDefinition> Objects { get; }
     }
 }

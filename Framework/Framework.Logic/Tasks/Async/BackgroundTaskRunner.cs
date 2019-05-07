@@ -1,10 +1,10 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Framework.Interfaces.Async;
-using Framework.Interfaces.Tasks;
-
-namespace Framework.Logic.Tasks.Async
+﻿namespace Framework.Logic.Tasks.Async
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Interfaces.Async;
+    using Interfaces.Tasks;
+
     public class BackgroundTaskRunner<TEventArgs> : IServiceTaskRunner
     {
         private readonly CancellationToken cancellationToken;
@@ -12,12 +12,15 @@ namespace Framework.Logic.Tasks.Async
 
         private readonly ITaskEventTrigger<TEventArgs> taskEventTrigger;
 
-        public BackgroundTaskRunner(string name, IBackgroundServiceTask<TEventArgs> serviceTask,
-            ICancellationTokenProvider cancellationTokenProvider, ITaskEventTrigger<TEventArgs> taskEventTrigger)
+        public BackgroundTaskRunner(
+            string name,
+            IBackgroundServiceTask<TEventArgs> serviceTask,
+            ICancellationTokenProvider cancellationTokenProvider,
+            ITaskEventTrigger<TEventArgs> taskEventTrigger)
         {
-            Name = name;
+            this.Name = name;
             this.serviceTask = serviceTask;
-            cancellationToken = cancellationTokenProvider.CancellationToken;
+            this.cancellationToken = cancellationTokenProvider.CancellationToken;
             this.taskEventTrigger = taskEventTrigger;
             this.taskEventTrigger.TriggerEventHandler += this.serviceTask.ExecuteTask;
         }
@@ -28,20 +31,17 @@ namespace Framework.Logic.Tasks.Async
 
         public async Task StartProcessing()
         {
-            Task = new Task(Execute, TaskCreationOptions.LongRunning);
-            Task.Start();
-            await Task;
+            this.Task = new Task(this.Execute, TaskCreationOptions.LongRunning);
+            this.Task.Start();
+            await this.Task;
         }
 
         private void Execute()
         {
-            taskEventTrigger.StartMonitoring();
-            while (!cancellationToken.IsCancellationRequested)
-            {
-                Thread.Sleep(1);
-            }
+            this.taskEventTrigger.StartMonitoring();
+            while (!this.cancellationToken.IsCancellationRequested) Thread.Sleep(1);
 
-            taskEventTrigger.StopMonitoring();
+            this.taskEventTrigger.StopMonitoring();
         }
     }
 }

@@ -1,17 +1,17 @@
-﻿using System;
-using System.IO;
-using System.Messaging;
-using System.Transactions;
-using Castle.Core.Internal;
-using Castle.Core.Logging;
-using Framework.Domain.Queue;
-using Framework.Interfaces.Data.Services;
-using Framework.Interfaces.Environment;
-using Framework.Interfaces.Queue;
-using Framework.Utils.MSMQ;
-
-namespace Framework.Logic.Queue
+﻿namespace Framework.Logic.Queue
 {
+    using System;
+    using System.IO;
+    using System.Messaging;
+    using System.Transactions;
+    using Castle.Core.Internal;
+    using Castle.Core.Logging;
+    using Domain.Queue;
+    using Interfaces.Data.Services;
+    using Interfaces.Environment;
+    using Interfaces.Queue;
+    using Utils.MSMQ;
+
     public class QueueBase<TRequestType> : IQueueBase, IDisposable
         where TRequestType : class
     {
@@ -35,74 +35,85 @@ namespace Framework.Logic.Queue
             bool defaultRecoverable,
             IMessageQueueService messageQueueService)
         {
-            Identifier = Guid.NewGuid();
-            MessageQueueHostServerName = messageQueueHostServerName;
-            BaseQueueName = queueName;
-            DefaultRecoverable = defaultRecoverable;
-            MessageQueueService = messageQueueService;
-            AuditActivity = auditActivity;
-            QueueMode = queueMode;
-            MulticastAddress = multicastAddress;
-            QueueName = string.Format("{0}_{1}", queueName, environment.DevStream);
-            IsTransactional = isTransactional;
+            this.Identifier = Guid.NewGuid();
+            this.MessageQueueHostServerName = messageQueueHostServerName;
+            this.BaseQueueName = queueName;
+            this.DefaultRecoverable = defaultRecoverable;
+            this.MessageQueueService = messageQueueService;
+            this.AuditActivity = auditActivity;
+            this.QueueMode = queueMode;
+            this.MulticastAddress = multicastAddress;
+            this.QueueName = string.Format("{0}_{1}", queueName, environment.DevStream);
+            this.IsTransactional = isTransactional;
 
-            if (!MulticastAddress.IsNullOrEmpty())
+            if (!this.MulticastAddress.IsNullOrEmpty())
             {
-                if (IsTransactional)
+                if (this.IsTransactional)
                 {
-                    throw new InvalidProgramException(string.Format("Multicast Queue [{0}] cannot be Transactional.",
-                        QueueName));
+                    throw new InvalidProgramException(
+                                                      string.Format(
+                                                                    "Multicast Queue [{0}] cannot be Transactional.",
+                                                                    this.QueueName));
                 }
 
-                IsMulticast = true;
-                IsTransactional = false;
+                this.IsMulticast = true;
+                this.IsTransactional = false;
             }
 
-            if (messageQueueHostServerName.Equals(System.Environment.MachineName,
-                StringComparison.InvariantCultureIgnoreCase))
+            if (messageQueueHostServerName.Equals(
+                                                  Environment.MachineName,
+                                                  StringComparison.InvariantCultureIgnoreCase))
             {
-                IsLocal = true;
+                this.IsLocal = true;
             }
 
-            if (IsMulticast && QueueMode == QueueMode.Send)
+            if (this.IsMulticast &&
+                this.QueueMode == QueueMode.Send)
             {
-                QueuePath = string.Format(@"FormatName:MULTICAST={0}", MulticastAddress);
+                this.QueuePath = string.Format(@"FormatName:MULTICAST={0}", this.MulticastAddress);
             }
             else
             {
-                QueuePath = string.Format(@"FormatName:Direct=OS:{0}\private$\{1}", messageQueueHostServerName,
-                    QueueName);
+                this.QueuePath = string.Format(
+                                               @"FormatName:Direct=OS:{0}\private$\{1}",
+                                               messageQueueHostServerName,
+                                               this.QueueName);
             }
 
-            Logger = logger;
+            this.Logger = logger;
 
-            if (!(IsMulticast && QueueMode == QueueMode.Send) && IsLocal)
+            if (!(this.IsMulticast && this.QueueMode == QueueMode.Send) &&
+                this.IsLocal)
             {
-                lock (Synch)
+                lock (QueueBase<TRequestType>.Synch)
                 {
-                    if (!MessageQueue.Exists(GetLocalPrivateName()))
+                    if (!MessageQueue.Exists(this.GetLocalPrivateName()))
                     {
-                        Logger.InfoFormat(
-                            "Creating Queue [{0}], Transactional = [{1}], Multicast = [{2}], Multicast Address = [{3}].",
-                            GetLocalPrivateName(), IsTransactional, IsMulticast, MulticastAddress);
-                        MsmqMessageQueue = MessageQueue.Create(GetLocalPrivateName(), IsTransactional);
-                        MsmqMessageQueue.SetPermissions("Everyone", MessageQueueAccessRights.FullControl);
-                        MsmqMessageQueue.SetPermissions("ANONYMOUS LOGON", MessageQueueAccessRights.FullControl);
+                        this.Logger.InfoFormat(
+                                               "Creating Queue [{0}], Transactional = [{1}], Multicast = [{2}], Multicast Address = [{3}].",
+                                               this.GetLocalPrivateName(),
+                                               this.IsTransactional,
+                                               this.IsMulticast,
+                                               this.MulticastAddress);
+                        this.MsmqMessageQueue = MessageQueue.Create(this.GetLocalPrivateName(), this.IsTransactional);
+                        this.MsmqMessageQueue.SetPermissions("Everyone", MessageQueueAccessRights.FullControl);
+                        this.MsmqMessageQueue.SetPermissions("ANONYMOUS LOGON", MessageQueueAccessRights.FullControl);
                     }
                 }
             }
 
-            MsmqMessageQueue = new MessageQueue(QueuePath);
+            this.MsmqMessageQueue = new MessageQueue(this.QueuePath);
 
-            if (IsMulticast && QueueMode.Recv == QueueMode)
+            if (this.IsMulticast &&
+                QueueMode.Recv == this.QueueMode)
             {
-                MsmqMessageQueue.MulticastAddress = MulticastAddress;
+                this.MsmqMessageQueue.MulticastAddress = this.MulticastAddress;
             }
 
-            MsmqMessageQueue.DefaultPropertiesToSend.Recoverable = defaultRecoverable;
-            MsmqMessageQueue.DefaultPropertiesToSend.UseAuthentication = false;
-            MsmqMessageQueue.DefaultPropertiesToSend.UseDeadLetterQueue = true;
-            MsmqMessageQueue.MessageReadPropertyFilter.CorrelationId = true;
+            this.MsmqMessageQueue.DefaultPropertiesToSend.Recoverable = defaultRecoverable;
+            this.MsmqMessageQueue.DefaultPropertiesToSend.UseAuthentication = false;
+            this.MsmqMessageQueue.DefaultPropertiesToSend.UseDeadLetterQueue = true;
+            this.MsmqMessageQueue.MessageReadPropertyFilter.CorrelationId = true;
         }
 
         public string HostServerName { get; private set; }
@@ -137,16 +148,12 @@ namespace Framework.Logic.Queue
 
         public void MoveToSubQueue(string subQueueName, Message message)
         {
-            MsmqMessageQueue.MoveToSubQueue(subQueueName, message);
+            this.MsmqMessageQueue.MoveToSubQueue(subQueueName, message);
         }
 
         protected string GetMessageXml(Message message)
         {
-            var xmlMessageFormatter = new XmlMessageFormatter(
-                new[]
-                {
-                    typeof(TRequestType)
-                });
+            var xmlMessageFormatter = new XmlMessageFormatter(new[] {typeof(TRequestType)});
             message.Formatter = xmlMessageFormatter;
             var sr = new StreamReader(message.BodyStream);
             message.BodyStream.Seek(0, SeekOrigin.Begin);
@@ -157,38 +164,29 @@ namespace Framework.Logic.Queue
 
         protected void AddMessageAudit(Message msg, string subQueueName = null, Exception ex = null)
         {
-            if (!AuditActivity)
+            if (!this.AuditActivity)
             {
                 return;
             }
 
             using (var transaction = new TransactionScope(
-                TransactionScopeOption.Required,
-                new TransactionOptions
-                {
-                    IsolationLevel = IsolationLevel.ReadCommitted
-                }))
+                                                          TransactionScopeOption.Required,
+                                                          new TransactionOptions {IsolationLevel = IsolationLevel.ReadCommitted}))
             {
                 var messageAudit = new MessageAudit
-                {
-                    MessageId = msg.Id,
-                    MessageStatus = MessageStatus.AwaitingProcessing,
-                    CorrelationId = msg.CorrelationId,
-                    QueueName = null == subQueueName ? QueueName : string.Format("{0};{1}", QueueName, subQueueName),
-                    QueuePath = null == subQueueName ? QueuePath : string.Format("{0};{1}", QueuePath, subQueueName),
-                    MessageContent = GetMessageXml(msg)
-                };
-                var newId = MessageQueueService.CreateMessageAudit(messageAudit);
+                                   {
+                                       MessageId = msg.Id,
+                                       MessageStatus = MessageStatus.AwaitingProcessing,
+                                       CorrelationId = msg.CorrelationId,
+                                       QueueName = null == subQueueName ? this.QueueName : string.Format("{0};{1}", this.QueueName, subQueueName),
+                                       QueuePath = null == subQueueName ? this.QueuePath : string.Format("{0};{1}", this.QueuePath, subQueueName),
+                                       MessageContent = this.GetMessageXml(msg)
+                                   };
+                var newId = this.MessageQueueService.CreateMessageAudit(messageAudit);
                 if (null != ex)
                 {
-                    var processingError = new MessageProcessingError
-                    {
-                        MessageAuditId = newId,
-                        Error = ex.Message,
-                        StackTrace = ex.StackTrace,
-                        TmStamp = DateTime.Now
-                    };
-                    MessageQueueService.CreateMessageAuditException(processingError);
+                    var processingError = new MessageProcessingError {MessageAuditId = newId, Error = ex.Message, StackTrace = ex.StackTrace, TmStamp = DateTime.Now};
+                    this.MessageQueueService.CreateMessageAuditException(processingError);
                 }
 
                 transaction.Complete();
@@ -197,17 +195,17 @@ namespace Framework.Logic.Queue
 
         protected void UpdateMessageAudit(Message msg, MessageStatus messageStatus, long elapedTimeInMilliseconds)
         {
-            if (!AuditActivity)
+            if (!this.AuditActivity)
             {
                 return;
             }
 
-            MessageQueueService.UpdateMessageProcessedStats(msg.Id, messageStatus, elapedTimeInMilliseconds);
+            this.MessageQueueService.UpdateMessageProcessedStats(msg.Id, messageStatus, elapedTimeInMilliseconds);
         }
 
         private string GetLocalPrivateName()
         {
-            return string.Format(@".\private$\{0}", QueueName);
+            return string.Format(@".\private$\{0}", this.QueueName);
         }
     }
 }

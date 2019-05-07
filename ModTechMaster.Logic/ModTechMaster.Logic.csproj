@@ -49,6 +49,7 @@
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\ModService.cs" />
+    <Compile Include="Services\ReferenceFinderService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework\Framework.Utils\Framework.Utils.csproj">

@@ -1,16 +1,16 @@
-using System;
-using System.Diagnostics;
-using System.Threading;
-using Framework.Interfaces.Injection;
-using Framework.Interfaces.Logging;
-using Framework.Interfaces.Providers;
-using Framework.Interfaces.Repositories;
-using Framework.Interfaces.Tasks;
-using Framework.Logic.Services;
-using Framework.Utils.Extensions.Dictionary;
-
 namespace Framework.Logic.Tasks
 {
+    using System;
+    using System.Diagnostics;
+    using System.Threading;
+    using Interfaces.Injection;
+    using Interfaces.Logging;
+    using Interfaces.Providers;
+    using Interfaces.Repositories;
+    using Interfaces.Tasks;
+    using Services;
+    using Utils.Extensions.Dictionary;
+
     public class TaskRunner
     {
         private readonly IContainer container;
@@ -29,24 +29,30 @@ namespace Framework.Logic.Tasks
 
         private IServiceTask serviceTask;
 
-        public TaskRunner(string name, Type targetType, ITaskScheduler scheduler, IContainer container,
-            ITaskRepository taskRepository, IDateTimeProvider dateTimeProvider, IExceptionLogger exceptionLogger)
+        public TaskRunner(
+            string name,
+            Type targetType,
+            ITaskScheduler scheduler,
+            IContainer container,
+            ITaskRepository taskRepository,
+            IDateTimeProvider dateTimeProvider,
+            IExceptionLogger exceptionLogger)
         {
-            Name = name;
-            Scheduler = scheduler;
+            this.Name = name;
+            this.Scheduler = scheduler;
             this.container = container;
             this.taskRepository = taskRepository;
             this.dateTimeProvider = dateTimeProvider;
             this.exceptionLogger = exceptionLogger;
-            TargetType = targetType;
+            this.TargetType = targetType;
 
-            var lastRunTime = this.taskRepository.GetLastExecution(Name);
-            LastRunTime = lastRunTime ?? DateTime.MinValue;
+            var lastRunTime = this.taskRepository.GetLastExecution(this.Name);
+            this.LastRunTime = lastRunTime ?? DateTime.MinValue;
 
-            serviceState = ServiceState.Stopped;
-            FailureCount = 0;
+            this.serviceState = ServiceState.Stopped;
+            this.FailureCount = 0;
 
-            resetEvent = new AutoResetEvent(false);
+            this.resetEvent = new AutoResetEvent(false);
         }
 
         public DateTime LastRunTime { get; private set; }
@@ -61,16 +67,15 @@ namespace Framework.Logic.Tasks
         {
             var handledMissedSlot = false;
 
-            while (serviceState != ServiceState.ShuttingDown)
-            {
-                if (serviceState == ServiceState.Started)
+            while (this.serviceState != ServiceState.ShuttingDown)
+                if (this.serviceState == ServiceState.Started)
                 {
                     bool missedSlot;
-                    var run = Scheduler.RunTask(LastRunTime, dateTimeProvider.Now, out missedSlot);
+                    var run = this.Scheduler.RunTask(this.LastRunTime, this.dateTimeProvider.Now, out missedSlot);
 
                     if (!handledMissedSlot && missedSlot)
                     {
-                        Log("Previous execution slot missed. Please check for consistency issues.");
+                        this.Log("Previous execution slot missed. Please check for consistency issues.");
                         handledMissedSlot = true;
                     }
 
@@ -78,149 +83,148 @@ namespace Framework.Logic.Tasks
                     {
                         try
                         {
-                            if (serviceTask == null)
+                            if (this.serviceTask == null)
                             {
-                                serviceTask = CreateServiceTask();
+                                this.serviceTask = this.CreateServiceTask();
                             }
 
-                            Log("Executing task");
+                            this.Log("Executing task");
 
                             var watch = Stopwatch.StartNew();
-                            serviceTask.ExecuteTask();
+                            this.serviceTask.ExecuteTask();
                             watch.Stop();
 
-                            Log("Execution completed in {0}", watch.Elapsed);
-                            LastRunTime = dateTimeProvider.Now;
+                            this.Log("Execution completed in {0}", watch.Elapsed);
+                            this.LastRunTime = this.dateTimeProvider.Now;
 
                             handledMissedSlot = false;
 
-                            PersistLastExecutionTime(LastRunTime, watch.Elapsed);
-                            ResetFailureCount();
+                            this.PersistLastExecutionTime(this.LastRunTime, watch.Elapsed);
+                            this.ResetFailureCount();
                         }
                         catch (Exception ex)
                         {
-                            serviceTask = null;
-                            LogException(ex);
-                            IncrementFailureCount();
+                            this.serviceTask = null;
+                            this.LogException(ex);
+                            this.IncrementFailureCount();
                         }
                     }
 
-                    Sleep();
+                    this.Sleep();
                 }
-            }
 
-            Log("Shut down");
+            this.Log("Shut down");
             Thread.CurrentThread.Abort();
         }
 
         public void Shutdown()
         {
-            if (serviceState == ServiceState.Started)
+            if (this.serviceState == ServiceState.Started)
             {
-                Log("Shutting down");
+                this.Log("Shutting down");
             }
 
-            serviceState = ServiceState.ShuttingDown;
-            resetEvent.Set();
+            this.serviceState = ServiceState.ShuttingDown;
+            this.resetEvent.Set();
         }
 
         public void Start()
         {
-            switch (serviceState)
+            switch (this.serviceState)
             {
                 case ServiceState.Started:
-                    Log("Already started");
+                    this.Log("Already started");
                     break;
                 case ServiceState.Stopped:
-                    Log("Started");
-                    serviceState = ServiceState.Started;
-                    resetEvent.Set();
+                    this.Log("Started");
+                    this.serviceState = ServiceState.Started;
+                    this.resetEvent.Set();
                     break;
                 case ServiceState.ShuttingDown:
-                    Log("Unable to start - service shutting down");
+                    this.Log("Unable to start - service shutting down");
                     break;
             }
         }
 
         protected TimeSpan GetSafeFailureSleep(TimeSpan proposedSleep)
         {
-            var now = dateTimeProvider.Now;
+            var now = this.dateTimeProvider.Now;
 
             var expected = now.Add(proposedSleep);
-            var actual = Scheduler.NextRun(now, now);
+            var actual = this.Scheduler.NextRun(now, now);
 
             return expected > actual ? new TimeSpan(actual.Ticks - now.Ticks) : proposedSleep;
         }
 
         private IServiceTask CreateServiceTask()
         {
-            Log("Creating task instance ({0})", TargetType);
-            return (IServiceTask) container.GetInstance(TargetType);
+            this.Log("Creating task instance ({0})", this.TargetType);
+            return (IServiceTask)this.container.GetInstance(this.TargetType);
         }
 
         private void Log(string format, params object[] p)
         {
             var message = string.Format(format, p);
-            Trace.WriteLine(string.Format("[{0}] {1}", Name, message));
+            Trace.WriteLine(string.Format("[{0}] {1}", this.Name, message));
         }
 
         private void LogException(Exception ex)
         {
-            ex.Data.SafeAdd("Task name", Name);
-            ex.Data.SafeAdd("Task type", TargetType.AssemblyQualifiedName);
-            if (LastRunTime != DateTime.MinValue)
+            ex.Data.SafeAdd("Task name", this.Name);
+            ex.Data.SafeAdd("Task type", this.TargetType.AssemblyQualifiedName);
+            if (this.LastRunTime != DateTime.MinValue)
             {
-                ex.Data.SafeAdd("Last run time", LastRunTime);
+                ex.Data.SafeAdd("Last run time", this.LastRunTime);
             }
             else
             {
                 ex.Data.SafeAdd("Last run time", "[Never]");
             }
 
-            exceptionLogger.Log(ex);
+            this.exceptionLogger.Log(ex);
         }
 
         private void PersistLastExecutionTime(DateTime lastRunTime, TimeSpan duration)
         {
-            taskRepository.UpdateTaskExecution(Name, lastRunTime, duration);
+            this.taskRepository.UpdateTaskExecution(this.Name, lastRunTime, duration);
         }
 
         private void IncrementFailureCount()
         {
-            FailureCount++;
+            this.FailureCount++;
         }
 
         private void ResetFailureCount()
         {
-            FailureCount = 0;
+            this.FailureCount = 0;
         }
 
         private void Sleep()
         {
-            switch (serviceState)
+            switch (this.serviceState)
             {
                 case ServiceState.Started:
                     TimeSpan sleep;
-                    switch (FailureCount)
+                    switch (this.FailureCount)
                     {
                         case 0:
-                            var nextRun = Scheduler.NextRun(LastRunTime, dateTimeProvider.Now);
-                            sleep = nextRun.Subtract(dateTimeProvider.Now);
+                            var nextRun = this.Scheduler.NextRun(this.LastRunTime, this.dateTimeProvider.Now);
+                            sleep = nextRun.Subtract(this.dateTimeProvider.Now);
                             break;
                         case 1:
-                            sleep = GetSafeFailureSleep(new TimeSpan(0, 0, 0, 10));
+                            sleep = this.GetSafeFailureSleep(new TimeSpan(0, 0, 0, 10));
                             break;
                         case 2:
-                            sleep = GetSafeFailureSleep(new TimeSpan(0, 0, 1, 0));
+                            sleep = this.GetSafeFailureSleep(new TimeSpan(0, 0, 1, 0));
                             break;
                         case 3:
-                            sleep = GetSafeFailureSleep(new TimeSpan(0, 0, 10, 0));
+                            sleep = this.GetSafeFailureSleep(new TimeSpan(0, 0, 10, 0));
                             break;
                         case 4:
-                            sleep = GetSafeFailureSleep(new TimeSpan(0, 0, 30, 0));
+                            sleep = this.GetSafeFailureSleep(new TimeSpan(0, 0, 30, 0));
                             break;
                         default:
-                            sleep = GetSafeFailureSleep(new TimeSpan(0, 1, 0, 0));
+                            sleep = this.GetSafeFailureSleep(new TimeSpan(0, 1, 0, 0));
                             break;
                     }
 
@@ -230,10 +234,10 @@ namespace Framework.Logic.Tasks
                         sleep = new TimeSpan(0, 0, 0, 1);
                     }
 
-                    resetEvent.WaitOne(sleep, false);
+                    this.resetEvent.WaitOne(sleep, false);
                     break;
                 case ServiceState.Stopped:
-                    resetEvent.WaitOne(-1, false);
+                    this.resetEvent.WaitOne(-1, false);
                     break;
             }
         }

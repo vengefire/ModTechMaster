@@ -1,11 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Framework.Interfaces.Email;
-using Framework.Utils.Directory;
-
-namespace Framework.Logic.Email
+﻿namespace Framework.Logic.Email
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using Domain.Email.Models;
+    using Interfaces.Email;
+    using Utils.Directory;
+
     public class EmailDiskPersistence : EmailBasePersistence, IEmailPersistence
     {
         private readonly string repositoryBaseDirectory;
@@ -15,30 +16,27 @@ namespace Framework.Logic.Email
             this.repositoryBaseDirectory = repositoryBaseDirectory;
         }
 
-        public string PersistEmail(ref Domain.Email.Models.Email email, string uniqueId)
+        public string PersistEmail(ref Email email, string uniqueId)
         {
-            if (null == repositoryBaseDirectory)
+            if (null == this.repositoryBaseDirectory)
             {
-                throw new InvalidProgramException(
-                    "No Email repository base directory setting could be found in the application configuration file.");
+                throw new InvalidProgramException("No Email repository base directory setting could be found in the application configuration file.");
             }
 
             var repositoryRelativeDirectory = string.Format(
-                "{0}\\{1}\\{2}",
-                DateTime.Today.Year,
-                DateTime.Today.Month,
-                DateTime.Today.Day);
-            var repositoryFinalDirectory = Path.Combine(repositoryBaseDirectory, repositoryRelativeDirectory);
+                                                            "{0}\\{1}\\{2}",
+                                                            DateTime.Today.Year,
+                                                            DateTime.Today.Month,
+                                                            DateTime.Today.Day);
+            var repositoryFinalDirectory = Path.Combine(this.repositoryBaseDirectory, repositoryRelativeDirectory);
             DirectoryUtils.EnsureExists(repositoryFinalDirectory);
 
             var filename = string.Format("{0}.eml", uniqueId);
             foreach (var invalidCharacter in Path.GetInvalidFileNameChars())
-            {
                 if (filename.Contains(invalidCharacter))
                 {
                     filename = filename.Replace(invalidCharacter, '_');
                 }
-            }
 
             var repositoryAbsolutePath = Path.Combine(repositoryFinalDirectory, filename);
 
@@ -58,9 +56,9 @@ namespace Framework.Logic.Email
             return uniqueId;
         }
 
-        public string PersistEmail(ref Domain.Email.Models.Email email)
+        public string PersistEmail(ref Email email)
         {
-            return PersistEmail(ref email, Guid.NewGuid().ToString());
+            return this.PersistEmail(ref email, Guid.NewGuid().ToString());
         }
     }
 }

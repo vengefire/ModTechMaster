@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Globalization;
-using System.Linq;
-using System.Xml;
-using Framework.Interfaces.Injection;
-using Framework.Interfaces.Logging;
-using Framework.Interfaces.Providers;
-using Framework.Interfaces.Repositories;
-using Framework.Interfaces.Tasks;
-using Framework.Logic.Tasks.Schedulers;
-
 namespace Framework.Logic.Tasks.Config
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Globalization;
+    using System.Linq;
+    using System.Xml;
+    using Interfaces.Injection;
+    using Interfaces.Logging;
+    using Interfaces.Providers;
+    using Interfaces.Repositories;
+    using Interfaces.Tasks;
+    using Schedulers;
+
     [Obsolete("Use the new TaskConfigSectionHandler instead, with associated Async centric implementation.")]
     public class ServiceTaskConfigSectionHandler : IConfigurationSectionHandler
     {
@@ -25,57 +25,58 @@ namespace Framework.Logic.Tasks.Config
 
         public ServiceTaskConfigSectionHandler(IContainer container)
         {
-            Container = container;
+            this.Container = container;
         }
 
         private IContainer Container { get; }
 
         public object Create(object parent, object configContext, XmlNode section)
         {
-            var taskPersistenceProvider = Container.GetInstance<ITaskRepository>();
-            var dateTimeProvider = Container.GetInstance<IDateTimeProvider>();
-            var exceptionLogger = Container.GetInstance<IExceptionLogger>();
+            var taskPersistenceProvider = this.Container.GetInstance<ITaskRepository>();
+            var dateTimeProvider = this.Container.GetInstance<IDateTimeProvider>();
+            var exceptionLogger = this.Container.GetInstance<IExceptionLogger>();
 
             var tasks = new List<TaskRunner>();
 
             foreach (XmlNode child in section.ChildNodes)
-            {
                 if (child.Name == "task")
                 {
-                    if (child.Attributes["name"] == null || string.IsNullOrEmpty(child.Attributes["name"].Value))
+                    if (child.Attributes["name"] == null ||
+                        string.IsNullOrEmpty(child.Attributes["name"].Value))
                     {
-                        RaiseException(child, "Attribute '{0}' expected on task element", "name");
+                        ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "name");
                     }
 
                     if (child.Attributes["target"] == null)
                     {
-                        RaiseException(child, "Attribute '{0}' expected on task element", "target");
+                        ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "target");
                     }
 
                     if (child.Attributes["type"] == null)
                     {
-                        RaiseException(child, "Attribute '{0}' expected on task element", "type");
+                        ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "type");
                     }
 
                     ITaskScheduler taskScheduler;
                     switch (child.Attributes["type"].Value.Trim())
                     {
                         case "IntervalTaskScheduler":
-                            taskScheduler = GetPerformPerIntervalTaskType(child);
+                            taskScheduler = ServiceTaskConfigSectionHandler.GetPerformPerIntervalTaskType(child);
                             break;
                         case "EveryDayTaskScheduler":
-                            taskScheduler = GetPerformEveryDay(child);
+                            taskScheduler = ServiceTaskConfigSectionHandler.GetPerformEveryDay(child);
                             break;
                         case "DateEveryYearTaskScheduler":
-                            taskScheduler = GetPerformDateEveryYear(child);
+                            taskScheduler = ServiceTaskConfigSectionHandler.GetPerformDateEveryYear(child);
                             break;
                         case "EveryMonthTaskScheduler":
-                            taskScheduler = GetPerformDateEveryMonth(child, Container);
+                            taskScheduler = ServiceTaskConfigSectionHandler.GetPerformDateEveryMonth(child, this.Container);
                             break;
                         default:
-                            RaiseException(child,
-                                "Attribute '{0}' expects a value of 'IntervalTaskScheduler' or 'EveryDayTaskScheduler' or 'DateEveryYearTaskScheduler'",
-                                "type");
+                            ServiceTaskConfigSectionHandler.RaiseException(
+                                                                           child,
+                                                                           "Attribute '{0}' expects a value of 'IntervalTaskScheduler' or 'EveryDayTaskScheduler' or 'DateEveryYearTaskScheduler'",
+                                                                           "type");
                             taskScheduler = null;
                             break;
                     }
@@ -84,15 +85,21 @@ namespace Framework.Logic.Tasks.Config
 
                     if (tasks.Any(x => x.Name.Equals(name)))
                     {
-                        RaiseException(child, "{0} is not unique ({1})", "name", name);
+                        ServiceTaskConfigSectionHandler.RaiseException(child, "{0} is not unique ({1})", "name", name);
                     }
 
-                    var serviceTaskType = GetIServiceTaskType(child, child.Attributes["target"].InnerText);
+                    var serviceTaskType = ServiceTaskConfigSectionHandler.GetIServiceTaskType(child, child.Attributes["target"].InnerText);
 
-                    tasks.Add(new TaskRunner(name, serviceTaskType, taskScheduler, Container, taskPersistenceProvider,
-                        dateTimeProvider, exceptionLogger));
+                    tasks.Add(
+                              new TaskRunner(
+                                             name,
+                                             serviceTaskType,
+                                             taskScheduler,
+                                             this.Container,
+                                             taskPersistenceProvider,
+                                             dateTimeProvider,
+                                             exceptionLogger));
                 }
-            }
 
             return tasks;
         }
@@ -102,12 +109,12 @@ namespace Framework.Logic.Tasks.Config
             var type = Type.GetType(target);
             if (type == null)
             {
-                RaiseException(node, "Cannot find type: '{0}'", target);
+                ServiceTaskConfigSectionHandler.RaiseException(node, "Cannot find type: '{0}'", target);
             }
 
-            if (!ServiceTaskType.IsAssignableFrom(type))
+            if (!ServiceTaskConfigSectionHandler.ServiceTaskType.IsAssignableFrom(type))
             {
-                RaiseException(node, "'{0}' does not inherit '{1}'", type, ServiceTaskType);
+                ServiceTaskConfigSectionHandler.RaiseException(node, "'{0}' does not inherit '{1}'", type, ServiceTaskConfigSectionHandler.ServiceTaskType);
             }
 
             return type;
@@ -117,12 +124,12 @@ namespace Framework.Logic.Tasks.Config
         {
             if (child.Attributes["month"] == null)
             {
-                RaiseException(child, "Attribute '{0}' expected on task element", "month");
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "month");
             }
 
             if (child.Attributes["day"] == null)
             {
-                RaiseException(child, "Attribute '{0}' expected on task element", "day");
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "day");
             }
 
             var month = Convert.ToInt32(child.Attributes["month"].Value);
@@ -135,51 +142,58 @@ namespace Framework.Logic.Tasks.Config
         {
             if (child.Attributes["time"] == null)
             {
-                RaiseException(child, "Attribute '{0}' expected on task element", "time");
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "time");
             }
 
             DateTime time;
             var value = child.Attributes["time"].Value;
             if (!DateTime.TryParseExact(value, "H:mm", null, DateTimeStyles.AssumeLocal, out time))
             {
-                RaiseException(child, "Unable to parse time '{0}' ({1})", "time", value);
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Unable to parse time '{0}' ({1})", "time", value);
             }
 
             if (child.Attributes["day"] == null)
             {
-                RaiseException(child, "Attribute '{0}' expected on task element", "day");
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "day");
             }
 
             var day = Convert.ToInt32(child.Attributes["day"].Value);
 
             if (child.Attributes["dayScheduleType"] == null)
             {
-                RaiseException(child, "Attribute '{0}' expected on task element", "dayScheduleType");
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "dayScheduleType");
             }
 
             EveryMonthTaskScheduler.DayScheduleType scheduleType;
             if (!Enum.TryParse(child.Attributes["dayScheduleType"].Value, out scheduleType))
             {
-                RaiseException(child, "Unable to parse DayScheduleType '{0}' ({1})", "dayScheduleType",
-                    child.Attributes["dayScheduleType"].Value);
+                ServiceTaskConfigSectionHandler.RaiseException(
+                                                               child,
+                                                               "Unable to parse DayScheduleType '{0}' ({1})",
+                                                               "dayScheduleType",
+                                                               child.Attributes["dayScheduleType"].Value);
             }
 
-            return new EveryMonthTaskScheduler(time.Hour, time.Minute, scheduleType, day,
-                container.GetInstance<IBusinessDayProvider>());
+            return new EveryMonthTaskScheduler(
+                                               time.Hour,
+                                               time.Minute,
+                                               scheduleType,
+                                               day,
+                                               container.GetInstance<IBusinessDayProvider>());
         }
 
         private static ITaskScheduler GetPerformEveryDay(XmlNode child)
         {
             if (child.Attributes["time"] == null)
             {
-                RaiseException(child, "Attribute '{0}' expected on task element", "time");
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "time");
             }
 
             DateTime time;
             var value = child.Attributes["time"].Value;
             if (!DateTime.TryParseExact(value, "H:mm", null, DateTimeStyles.AssumeLocal, out time))
             {
-                RaiseException(child, "Unable to parse time '{0}' ({1})", "time", value);
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Unable to parse time '{0}' ({1})", "time", value);
             }
 
             return new EveryDayTaskScheduler(time.Hour, time.Minute);
@@ -189,7 +203,7 @@ namespace Framework.Logic.Tasks.Config
         {
             if (child.Attributes["interval"] == null)
             {
-                RaiseException(child, "Attribute '{0}' expected on task element", "interval");
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' expected on task element", "interval");
             }
 
             var interval = child.Attributes["interval"].Value;
@@ -197,7 +211,7 @@ namespace Framework.Logic.Tasks.Config
             TimeSpan timeSpan;
             if (!TimeSpan.TryParse(interval, out timeSpan))
             {
-                RaiseException(child, "Attribute '{0}' on task element is not value ({0})", "interval", interval);
+                ServiceTaskConfigSectionHandler.RaiseException(child, "Attribute '{0}' on task element is not value ({0})", "interval", interval);
             }
 
             return new IntervalTaskScheduler(timeSpan);

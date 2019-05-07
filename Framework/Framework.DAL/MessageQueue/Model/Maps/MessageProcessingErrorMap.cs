@@ -1,13 +1,13 @@
-﻿using DapperExtensions.Mapper;
-
-namespace Framework.Data.MessageQueue.Model.Maps
+﻿namespace Framework.Data.MessageQueue.Model.Maps
 {
+    using DapperExtensions.Mapper;
+
     public class MessageProcessingErrorMap : ClassMapper<MessageProcessingError>
     {
         public MessageProcessingErrorMap()
         {
-            Schema("DataExchange");
-            AutoMap();
+            this.Schema("DataExchange");
+            this.AutoMap();
         }
     }
 }

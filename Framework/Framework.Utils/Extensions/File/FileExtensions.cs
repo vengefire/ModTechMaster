@@ -1,7 +1,7 @@
-﻿using System.IO;
-
-namespace Framework.Utils.Extensions.File
+﻿namespace Framework.Utils.Extensions.File
 {
+    using System.IO;
+
     public static class FileExtensions
     {
         public static bool IsFileLocked(this FileInfo file)
