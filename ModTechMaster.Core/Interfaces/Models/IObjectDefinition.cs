@@ -9,5 +9,7 @@
         Dictionary<string, object> MetaData { get; }
 
         string GetId { get; }
+
+        void AddMetaData();
     }
 }

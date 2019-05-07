@@ -6,6 +6,7 @@
     using System.Linq;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Services;
+    using ModTechMaster.Logic.Factories;
     using ModTechMaster.Logic.Services;
 
     internal class Program
@@ -19,7 +20,7 @@
                 return -1;
             }
 
-            IModService modService = new ModService(new MessageService());
+            IModService modService = new ModService(new MessageService(), new ManifestEntryProcessorFactory());
             var mods = new HashSet<IMod>();
 
             Console.WriteLine($"Processing mods from [{di.FullName}]");

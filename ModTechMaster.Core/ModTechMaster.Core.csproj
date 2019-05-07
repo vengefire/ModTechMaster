@@ -42,8 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\Constants.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Enums\Mods\ManifestEntryType.cs" />
+    <Compile Include="Interfaces\Factories\IManifestEntryProcessorFactory.cs" />
+    <Compile Include="Interfaces\Factories\IObjectDefinitionFactory.cs" />
+    <Compile Include="Interfaces\Factories\IObjectDefinitionProcessorFactory.cs" />
     <Compile Include="Interfaces\Models\IJsonObjectBase.cs" />
     <Compile Include="Interfaces\Models\IManifest.cs" />
     <Compile Include="Interfaces\Models\IManifestEntry.cs" />
@@ -51,8 +55,10 @@
     <Compile Include="Interfaces\Models\IObjectDefinition.cs" />
     <Compile Include="Interfaces\Models\IObjectDefinitionDescription.cs" />
     <Compile Include="Interfaces\Models\ISourcedFromFile.cs" />
+    <Compile Include="Interfaces\Processors\IManifestEntryProcessor.cs" />
     <Compile Include="Interfaces\Services\IMessageService.cs" />
     <Compile Include="Interfaces\Services\IModService.cs" />
+    <Compile Include="Interfaces\Processors\IObjectDefinitionProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

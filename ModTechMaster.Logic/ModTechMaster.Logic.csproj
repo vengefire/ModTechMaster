@@ -45,10 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factories\ManifestEntryProcessorFactory.cs" />
+    <Compile Include="Factories\ObjectDefinitionFactory.cs" />
+    <Compile Include="Factories\ObjectDefinitionProcessorFactory.cs" />
+    <Compile Include="Processors\FactionObjectDefinitionProcessor.cs" />
+    <Compile Include="Processors\PrefabManifestEntryProcessor.cs" />
+    <Compile Include="Processors\AssetBundleManifestEntryProcessor.cs" />
+    <Compile Include="Processors\ResourceManifestEntryProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IMessageService.cs" />
+    <Compile Include="Processors\ManifestEntryProcessor.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\ModService.cs" />
+    <Compile Include="Processors\ObjectDefinitionProcessor.cs" />
     <Compile Include="Services\ReferenceFinderService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,5 +77,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

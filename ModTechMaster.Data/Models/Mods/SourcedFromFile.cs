@@ -3,7 +3,7 @@
     using System.IO;
     using Core.Interfaces.Models;
 
-    public class SourcedFromFile : ISourcedFromFile
+    public sealed class SourcedFromFile : ISourcedFromFile
     {
         public SourcedFromFile(string sourceFilePath)
         {
@@ -13,5 +13,6 @@
         public string SourceFilePath { get; }
 
         public string SourceDirectoryPath => new FileInfo(this.SourceFilePath).DirectoryName;
+        public string SourceFileName => new FileInfo(this.SourceFilePath).Name;
     }
 }

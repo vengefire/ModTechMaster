@@ -13,6 +13,11 @@
             this.Icon = icon;
         }
 
+        public ObjectDefinitionDescription(string id, dynamic jsonObject) : base((JObject)jsonObject)
+        {
+            this.Id = id;
+        }
+
         public string Id { get; }
 
         public string Name { get; }

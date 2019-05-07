@@ -3,15 +3,19 @@
     public enum ManifestEntryType
     {
         AbilityDef,
+        Texture2D,
+        Sprite,
         MechDef,
         ChassisDef,
         MovementCapabilitiesDef,
-        Sprite,
         VehicleChassisDef,
         VehicleDef,
         TurretChassisDef,
         TurretDef,
         LanceDef,
+        AssetBundle,
+        Prefab,
+        HardpointDataDef,
         UpgradeDef,
         ApplicationConstants,
         AmmunitionDef,
@@ -25,7 +29,6 @@
         SimGameMilestoneSet,
         SimGameConversations,
         CastDef,
-        Texture2D,
         ContractOverride,
         WeaponDef,
         ShopDef,
@@ -36,12 +39,12 @@
         DialogBucketDef,
         HeraldryDef,
         SimGameEventDef,
+        StarSystemDef,
+        FactionDef,
         MEBonusDescriptions,
         MECriticalEffects,
         ShipModuleUpgrade,
         PathingCapabilitiesDef,
-        DesignMaskDef,
-        BackgroundDef,
-        SimGameMilestoneDef
+        DesignMaskDef
     }
 }

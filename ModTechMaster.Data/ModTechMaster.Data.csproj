@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Mods\TypedObjectDefinitions\AssetBundleObjectDefinition.cs" />
     <Compile Include="Models\Mods\JsonObjectBase.cs" />
     <Compile Include="Models\Mods\JsonObjectSourcedFromFile.cs" />
     <Compile Include="Models\Mods\ManifestEntry.cs" />
@@ -52,7 +53,9 @@
     <Compile Include="Models\Mods\Manifest.cs" />
     <Compile Include="Models\Mods\ObjectDefinition.cs" />
     <Compile Include="Models\Mods\ObjectDefinitionDescription.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\PrefabObjectDefinition.cs" />
     <Compile Include="Models\Mods\SourcedFromFile.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\ResourceObjectDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

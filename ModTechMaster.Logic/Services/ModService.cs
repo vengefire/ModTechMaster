@@ -6,6 +6,7 @@
     using System.Linq;
     using Core.Enums;
     using Core.Enums.Mods;
+    using Core.Interfaces.Factories;
     using Core.Interfaces.Models;
     using Core.Interfaces.Services;
     using Data.Models.Mods;
@@ -15,11 +16,13 @@
 
     public class ModService : IModService
     {
+        private readonly IManifestEntryProcessorFactory manifestEntryProcessorFactory;
         private readonly IMessageService messageService;
 
-        public ModService(IMessageService messageService)
+        public ModService(IMessageService messageService, IManifestEntryProcessorFactory manifestEntryProcessorFactory)
         {
             this.messageService = messageService;
+            this.manifestEntryProcessorFactory = manifestEntryProcessorFactory;
         }
 
         public IMod TryLoadFromPath(string path)
@@ -83,37 +86,8 @@
                 return null;
             }
 
-            var manifestEntry =
-                new ManifestEntry(manifest, entryType, (string)manifestEntrySrc.Path, manifestEntrySrc);
-            var di = new DirectoryInfo(Path.Combine(manifest.Mod.SourceDirectoryPath, manifestEntry.Path));
-            di.GetFiles("*.json").ToList().ForEach(
-                                                   fi =>
-                                                   {
-                                                       var objectDefinition = this.ProcessObjectDefinition(di, fi);
-                                                       manifestEntry.Objects.Add(objectDefinition);
-                                                   });
-
-            return manifestEntry;
-        }
-
-        private IObjectDefinition ProcessObjectDefinition(DirectoryInfo di, FileInfo fi)
-        {
-            dynamic json = JsonConvert.DeserializeObject(File.ReadAllText(fi.FullName));
-            return new ObjectDefinition(this.ProcessObjectDescription(json.Description), json, fi.FullName);
-        }
-
-        private IObjectDefinitionDescription ProcessObjectDescription(dynamic description)
-        {
-            if (description == null)
-            {
-                return null;
-            }
-
-            string id = description.Id != null ? description.Id.ToString() : null;
-            string name = description.Name != null ? description.Name.ToString() : null;
-            string desc = description.Description != null ? description.Description.ToString() : null;
-            string icon = description.Icon != null ? description.Icon.ToString() : null;
-            return new ObjectDefinitionDescription(id, name, desc, icon, description);
+            var manifestEntryProcessor = this.manifestEntryProcessorFactory.Get(entryType);
+            return manifestEntryProcessor.ProcessManifestEntry(manifest, entryType, (string)manifestEntrySrc.Path, manifestEntrySrc);
         }
 
         private Mod InitModFromJson(dynamic src, string path)

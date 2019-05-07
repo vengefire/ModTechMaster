@@ -1,0 +1,30 @@
+Invalid json files
+
+C:\dev\repos\ModTechMaster\TestData\In\Mods\B4COLValk\hardpoints\hardpointdatadef_valk.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\B4COLVapor Eagle\hardpoints\hardpointdatadef_vaporeagle.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BDMechDefs\mech\mechdef_thanatos_TNS-8S.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BD_Corsair\hardpoints\hardpointdatadef_corsair0.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BD_Corsair\hardpoints\hardpointdatadef_corsair1.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BD_Corsair\hardpoints\hardpointdatadef_corsair2.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BD_Fafnir\ideal hardpoints.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BD_Flea\final hardpoint layout.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BD_LoaderKing\hardpoints\hardpointdatadef_roughneckcrane.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BD_Longbow\hardpoints\hardpointdatadef_longbow.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BD_Roughneck\hardpoints\hardpointdatadef_roughneck.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\BD_Uziel\ideal hardpoints.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\ClanJadeFalcon\chassis\chassisdef_Eyrie.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\Colo-Groovey\hardpoints\hardpointdatadef_groovey.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\Colo-Mauler\hardpoints\hardpointdatadef_mauler.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\DarkAge\mech\mechdef_galahad_GLH-3D-L.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\ExperimentalWeapons\internals\emod_armorslots_stealth_CLAN.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\GP Hellbringer\hardpoints\hardpointdatadef_hellbringer.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\HotD-Warhammer\hardpoints\hardpointdatadef_warhammer.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\LootedClanMechs\Mech\mechdef_hellfire_HLF-P.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\MechEngineer\bonusDescriptions\BonusDescriptions_MechEngineer.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\RogueModuleTech\armors\emod_armorslots_stealth.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\RogueModuleTech\heatsink\emod_kit_dhs_RISC.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\RogueModuleTech\Lootable\Engines\lootable_kit_dhs_RISC.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\RogueModuleTech\Pirate\upgrades\emod_Aftermarket_stealth.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\RogueModuleTech\upgrade\Gear_Modular_Armor_MK4.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\The Drones Of Syberia\chassis\chassisdef_LamborRed.json
+C:\dev\repos\ModTechMaster\TestData\In\Mods\The Drones Of Syberia\chassis\chassisdef_LamborYellow.json

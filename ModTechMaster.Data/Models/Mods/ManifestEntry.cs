@@ -7,7 +7,7 @@
 
     public class ManifestEntry : JsonObjectBase, IManifestEntry
     {
-        public ManifestEntry(Manifest manifest, ManifestEntryType entryType, string path, dynamic jsonObject) : base((JObject)jsonObject)
+        public ManifestEntry(IManifest manifest, ManifestEntryType entryType, string path, dynamic jsonObject) : base((JObject)jsonObject)
         {
             this.Manifest = manifest;
             this.EntryType = entryType;
