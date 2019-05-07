@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<License>
+  <Data>
+    <LicensedTo>Nedbank</LicensedTo>
+    <LicenseType>Developer Small Business</LicenseType>
+    <LicenseNote>Limited to 2 developers.</LicenseNote>
+    <OrderID>130225151245</OrderID>
+    <OEM>This is not a non-redistributable license</OEM>
+    <Products>
+      <Product>Aspose.Total</Product>
+    </Products>
+    <EditionType>Enterprise</EditionType>
+    <SerialNumber>a9d697c1-e49e-4a55-b577-00c9b4123af9</SerialNumber>
+    <SubscriptionExpiry>20140225</SubscriptionExpiry>
+    <LicenseVersion>2.2</LicenseVersion>
+  </Data>
+  <Signature>ypWEPNDKFFgXIQkOLQVQ+xWxJhSpraOtKbRRokl29Xbr8JCIgSUfY0UsjQoHWqP9NRDwN+XiarMt+Dq08ClIUyenIG79H1uulZjSp3tXHbsesknIjnpzHqbTQ1UIV5fxEbAzWf0ZA89384N0ySBI5T6LYm4lzVNoEODnp4TeuhM=</Signature>
+</License>

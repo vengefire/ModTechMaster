@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{10BE1F82-995B-4A1B-AE48-AFF3B784F24B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework.Interfaces</RootNamespace>
+    <AssemblyName>Framework.Interfaces</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=1.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Dapper.1.12\lib\net40\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DapperExtensions, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DapperExtensions.1.4.4\lib\net40\DapperExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Async\ICancellationTokenProvider.cs" />
+    <Compile Include="Async\ICancellationTokenSourceProvider.cs" />
+    <Compile Include="Data\Services\IMessageQueueService.cs" />
+    <Compile Include="Data\Services\IServiceMethodLogService.cs" />
+    <Compile Include="Email\IEmailDomain.cs" />
+    <Compile Include="Email\IEmailPersistence.cs" />
+    <Compile Include="Email\IExchangeHandler.cs" />
+    <Compile Include="Factories\IDbConnectionFactory.cs" />
+    <Compile Include="Factories\IGenericFactory.cs" />
+    <Compile Include="Factories\IMessageQueueServiceFactory.cs" />
+    <Compile Include="Factories\IQueueProcessorNodeFactory.cs" />
+    <Compile Include="Factories\IWriteQueueFactory.cs" />
+    <Compile Include="Factories\IReadQueueFactory.cs" />
+    <Compile Include="Factories\IQueueProcessorFactory.cs" />
+    <Compile Include="Environment\IEnvironment.cs" />
+    <Compile Include="Injection\Container.cs" />
+    <Compile Include="Injection\IBootstrap.cs" />
+    <Compile Include="Injection\IContainer.cs" />
+    <Compile Include="Logging\IExceptionLogger.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\IBusinessDayProvider.cs" />
+    <Compile Include="Providers\IDateTimeProvider.cs" />
+    <Compile Include="Queue\IQueueBase.cs" />
+    <Compile Include="Queue\IQueueProcessor.cs" />
+    <Compile Include="Queue\IMessageProcessingLogic.cs" />
+    <Compile Include="Queue\IQueueProcessorNode.cs" />
+    <Compile Include="Queue\IReadQueue.cs" />
+    <Compile Include="Queue\IWritableQueueProcessorNode.cs" />
+    <Compile Include="Queue\IWriteQueue.cs" />
+    <Compile Include="Repositories\IDapperRepository.cs" />
+    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\ITaskRepository.cs" />
+    <Compile Include="Services\IDataService.cs" />
+    <Compile Include="Services\IService.cs" />
+    <Compile Include="Tasks\IBackgroundServiceTask.cs" />
+    <Compile Include="Tasks\ITaskEventTrigger.cs" />
+    <Compile Include="Tasks\IScheduledTask.cs" />
+    <Compile Include="Tasks\IServiceBatchTask.cs" />
+    <Compile Include="Tasks\IServiceTask.cs" />
+    <Compile Include="Tasks\IServiceTaskRunner.cs" />
+    <Compile Include="Tasks\ITaskScheduler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Framework.Domain\Framework.Domain.csproj">
+      <Project>{159224C6-28E6-411F-961E-78B950979FA6}</Project>
+      <Name>Framework.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
