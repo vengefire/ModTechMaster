@@ -2,7 +2,7 @@
 
 namespace ModTechMaster.Core.Interfaces.Models
 {
-    public interface IModCollection
+    public interface IModCollection : IReferenceableObjectProvider
     {
         string Name { get; }
         HashSet<IMod> Mods { get; }

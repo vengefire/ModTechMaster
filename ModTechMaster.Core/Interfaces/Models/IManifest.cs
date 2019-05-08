@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public interface IManifest : IJsonObjectBase
+    public interface IManifest : IJsonObjectBase, IReferenceableObjectProvider
     {
         IMod Mod { get; }
 

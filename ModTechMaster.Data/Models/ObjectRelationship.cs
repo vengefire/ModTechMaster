@@ -19,14 +19,14 @@ namespace ModTechMaster.Data.Models
 
     public class ObjectRelationship : Relationship, IObjectRelationship
     {
-        public ObjectRelationship(ManifestEntryType dependentType, ManifestEntryType dependencyType,
+        public ObjectRelationship(ObjectType dependentType, ObjectType dependencyType,
             string dependentKey, string dependencyKey, bool hasMultipleDependencies = false) : base(dependentKey, dependencyKey, hasMultipleDependencies)
         {
             DependentType = dependentType;
             DependencyType = dependencyType;
         }
 
-        public ManifestEntryType DependentType { get; }
-        public ManifestEntryType DependencyType { get; }
+        public ObjectType DependentType { get; }
+        public ObjectType DependencyType { get; }
     }
 }

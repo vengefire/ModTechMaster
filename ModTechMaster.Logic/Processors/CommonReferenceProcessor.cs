@@ -1,66 +1,73 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using ModTechMaster.Core.Enums;
 using ModTechMaster.Core.Enums.Mods;
 using ModTechMaster.Core.Interfaces.Models;
-using ModTechMaster.Data.Models.Mods;
+using ModTechMaster.Data.Models;
 using ModTechMaster.Logic.Managers;
 
 namespace ModTechMaster.Logic.Processors
 {
     public class CommonReferenceProcessor
     {
-        public static List<ObjectDefinition> FindReferences(IModCollection modCollection, ManifestEntryType objectType,
-            IObjectDefinition objectDefinition, List<ManifestEntryType> dependantTypesToIgnore)
+        public static List<IObjectReference<TType>> FindReferences<TType>(IReferenceableObjectProvider objectProvider,
+            ObjectType objectType,
+            IReferenceableObject objectDefinition, List<ObjectType> dependantTypesToIgnore)
+            where TType : IReferenceableObject
         {
-            var dependenciesRels = RelationshipManager.GetDependenciesRelationshipsForType(objectDefinition.ManifestEntry.Type);
-            var dependantRels = ObjRels.GetDependantRelationShipsForType(objectDefinition.ManifestEntry.Type);
+            var dependenciesRels = RelationshipManager.GetDependenciesRelationshipsForType(objectType);
+            var dependantRels = RelationshipManager.GetDependantRelationShipsForType(objectType);
 
-            var targetEntryTypes = new HashSet<ManifestEntryType>();
-            dependenciesRels.Select(ship => ship.typeDependedUpon).Distinct().ToList()
+            var targetEntryTypes = new HashSet<ObjectType>();
+            dependenciesRels.Select(ship => ship.DependencyType).Distinct().ToList()
                 .ForEach(type => targetEntryTypes.Add(type));
-            dependantRels.Select(ship => ship.dependingType).Distinct().ToList()
+            dependantRels.Select(ship => ship.DependentType).Distinct().ToList()
                 .ForEach(type => targetEntryTypes.Add(type));
-            dependantRels = dependantRels.Where(ship => !dependantTypesToIgnore.Contains(ship.dependingType)).ToList();
+            dependantRels = dependantRels.Where(ship => !dependantTypesToIgnore.Contains(ship.DependentType)).ToList();
 
-            var dependantRecs = battleTechModCollection.Mods.SelectMany(mod =>
-                mod.Manifest.Entries.Where(entry => targetEntryTypes.Contains(entry.Type)).SelectMany(entry =>
-                    entry.Objects.Where(definition =>
-                        {
-                            return dependantRels.Any(ship =>
-                                definition.ManifestEntry.Type == ship.dependingType &&
-                                definition.MetaData.ContainsKey(ship.dependantKey) &&
-                                objectDefinition.MetaData.ContainsKey(ship.targetKey) &&
-                                (
-                                    !ship.dependantKeyInList && definition.MetaData[ship.dependantKey].ToString() ==
-                                    objectDefinition.MetaData[ship.targetKey].ToString() ||
-                                    ship.dependantKeyInList &&
-                                    ((List<string>) definition.MetaData[ship.dependantKey]).Exists(v =>
-                                        v == objectDefinition.MetaData[ship.targetKey].ToString())
-                                )
-                            );
-                        })
-                        .Select(definition => definition))).ToList();
+            var dependantRecs = objectProvider.GetReferenceableObjects()
+                .Where(o => targetEntryTypes.Contains(o.ObjectType)).Select(definition =>
+                {
+                    var relationship = dependantRels.First(ship =>
+                        definition.ObjectType == ship.DependentType &&
+                        definition.MetaData.ContainsKey(ship.DependentKey) &&
+                        objectDefinition.MetaData.ContainsKey(ship.DependencyKey) &&
+                        (
+                            !ship.HasMultipleDependencies &&
+                            definition.MetaData[ship.DependentKey].ToString() ==
+                            objectDefinition.MetaData[ship.DependencyKey].ToString() ||
+                            ship.HasMultipleDependencies &&
+                            ((List<string>) definition.MetaData[ship.DependentKey]).Exists(v =>
+                                v == objectDefinition.MetaData[ship.DependencyKey].ToString())
+                        )
+                    );
 
-            var dependencyRecs = battleTechModCollection.Mods.SelectMany(mod =>
-                mod.Manifest.Entries.Where(entry => targetEntryTypes.Contains(entry.Type)).SelectMany(entry =>
-                    entry.Objects.Where(definition =>
-                        {
-                            return dependenciesRels.Any(ship =>
-                                definition.ManifestEntry.Type == ship.typeDependedUpon &&
-                                definition.MetaData.ContainsKey(ship.targetKey) &&
-                                objectDefinition.MetaData.ContainsKey(ship.dependantKey) &&
-                                (
-                                    !ship.dependantKeyInList && definition.MetaData[ship.targetKey].ToString() ==
-                                    objectDefinition.MetaData[ship.dependantKey].ToString() ||
-                                    ship.dependantKeyInList &&
-                                    ((List<string>) objectDefinition.MetaData[ship.dependantKey]).Exists(v =>
-                                        v == definition.MetaData[ship.targetKey].ToString())
-                                )
-                            );
-                        })
-                        .Select(definition => definition))).ToList();
-            var references = dependantRecs;
+                    return new ObjectReference<TType>((TType) definition, ObjectReferenceType.Dependent,
+                        relationship, false);
+                });
+
+            var dependencyRecs = objectProvider.GetReferenceableObjects()
+                .Where(o => targetEntryTypes.Contains(o.ObjectType)).Select(definition =>
+                {
+                    var relationship = dependenciesRels.First(ship =>
+                        definition.ObjectType == ship.DependencyType &&
+                        definition.MetaData.ContainsKey(ship.DependencyKey) &&
+                        objectDefinition.MetaData.ContainsKey(ship.DependentKey) &&
+                        (
+                            !ship.HasMultipleDependencies &&
+                            definition.MetaData[ship.DependencyKey].ToString() ==
+                            objectDefinition.MetaData[ship.DependentKey].ToString() ||
+                            ship.HasMultipleDependencies &&
+                            ((List<string>) objectDefinition.MetaData[ship.DependentKey]).Exists(v =>
+                                v == definition.MetaData[ship.DependencyKey].ToString())
+                        )
+                    );
+                    return new ObjectReference<TType>((TType) definition, ObjectReferenceType.Dependent,
+                        relationship, false);
+                });
+            var references = dependantRecs.ToList();
             references.AddRange(dependencyRecs.Except(dependantRecs));
-            return references;
+            return references.Cast<IObjectReference<TType>>().ToList();
         }
     }
 }

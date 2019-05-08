@@ -3,7 +3,7 @@ using ModTechMaster.Core.Interfaces.Models;
 
 namespace ModTechMaster.Data.Models
 {
-    public class ObjectReference<TType> : IObjectReference<TType> where TType : ISupportReferencing
+    public class ObjectReference<TType> : IObjectReference<TType> where TType : IReferenceableObject
     {
         public ObjectReference(TType referenceObject, ObjectReferenceType objectReferenceType,
             IRelationship relationship, bool isActive)

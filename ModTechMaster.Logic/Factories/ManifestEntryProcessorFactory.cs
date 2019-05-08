@@ -7,18 +7,18 @@
 
     public class ManifestEntryProcessorFactory : IManifestEntryProcessorFactory
     {
-        public IManifestEntryProcessor Get(ManifestEntryType type)
+        public IManifestEntryProcessor Get(ObjectType type)
         {
             switch (type)
             {
-                case ManifestEntryType.SimGameConversations:
-                case ManifestEntryType.ItemCollectionDef:
-                case ManifestEntryType.Texture2D:
-                case ManifestEntryType.Sprite:
+                case ObjectType.SimGameConversations:
+                case ObjectType.ItemCollectionDef:
+                case ObjectType.Texture2D:
+                case ObjectType.Sprite:
                     return new ResourceManifestEntryProcessor();
-                case ManifestEntryType.AssetBundle:
+                case ObjectType.AssetBundle:
                     return new AssetBundleManifestEntryProcessor();
-                case ManifestEntryType.Prefab:
+                case ObjectType.Prefab:
                     return new PrefabManifestEntryProcessor();
                 default:
                     return new ManifestEntryProcessor();

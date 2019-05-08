@@ -1,7 +1,9 @@
 ﻿namespace ModTechMaster.Core.Enums.Mods
 {
-    public enum ManifestEntryType
+    public enum ObjectType
     {
+        BackgroundDef,
+        Mod,
         AbilityDef,
         Texture2D,
         Sprite,
@@ -27,6 +29,7 @@
         FlashpointDef,
         PilotDef,
         SimGameMilestoneSet,
+        SimGameMilestoneDef,
         SimGameConversations,
         CastDef,
         ContractOverride,
@@ -47,6 +50,9 @@
         PathingCapabilitiesDef,
         DesignMaskDef,
         HardPointDataDef,
-        StreamingData
+        StreamingData,
+        Manifest,
+        ManifestEntry,
+        ObjectDefinitionDescription
     }
 }

@@ -1,11 +1,13 @@
-﻿namespace ModTechMaster.Data.Models.Mods
+﻿using ModTechMaster.Core.Enums.Mods;
+
+namespace ModTechMaster.Data.Models.Mods
 {
     using Core.Interfaces.Models;
     using Newtonsoft.Json.Linq;
 
     public class ObjectDefinitionDescription : JsonObjectBase, IObjectDefinitionDescription
     {
-        public ObjectDefinitionDescription(string id, string name, string description, string icon, dynamic jsonObject) : base((JObject)jsonObject)
+        public ObjectDefinitionDescription(string id, string name, string description, string icon, dynamic jsonObject) : base((JObject)jsonObject, ObjectType.ObjectDefinitionDescription)
         {
             this.Id = id;
             this.Name = name;
@@ -13,7 +15,7 @@
             this.Icon = icon;
         }
 
-        public ObjectDefinitionDescription(string id, dynamic jsonObject) : base((JObject)jsonObject)
+        public ObjectDefinitionDescription(string id, dynamic jsonObject) : base((JObject)jsonObject, ObjectType.ObjectDefinitionDescription)
         {
             this.Id = id;
         }

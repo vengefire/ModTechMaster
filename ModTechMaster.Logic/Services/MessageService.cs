@@ -1,4 +1,6 @@
-﻿namespace ModTechMaster.Logic.Services
+﻿using ModTechMaster.Core.Interfaces.Services;
+
+namespace ModTechMaster.Logic.Services
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,6 @@
-﻿namespace ModTechMaster.Data.Models.Mods
+﻿using ModTechMaster.Core.Enums.Mods;
+
+namespace ModTechMaster.Data.Models.Mods
 {
     using System.IO;
     using Core.Interfaces.Models;
@@ -6,7 +8,7 @@
 
     public class JsonObjectSourcedFromFile : JsonObjectBase, ISourcedFromFile
     {
-        public JsonObjectSourcedFromFile(string sourceFilePath, dynamic jsonObject) : base((JObject)jsonObject)
+        public JsonObjectSourcedFromFile(ObjectType objectType, string sourceFilePath, dynamic jsonObject) : base((JObject)jsonObject, objectType)
         {
             this.SourceFilePath = sourceFilePath;
         }

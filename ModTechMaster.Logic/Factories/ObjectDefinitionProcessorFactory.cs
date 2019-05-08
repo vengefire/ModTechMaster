@@ -22,11 +22,11 @@
             }
         }
 
-        public IObjectDefinitionProcessor Get(ManifestEntryType type)
+        public IObjectDefinitionProcessor Get(ObjectType type)
         {
             switch (type)
             {
-                case ManifestEntryType.FactionDef:
+                case ObjectType.FactionDef:
                     return new FactionObjectDefinitionProcessor();
                 default:
                     return new ObjectDefinitionProcessor();

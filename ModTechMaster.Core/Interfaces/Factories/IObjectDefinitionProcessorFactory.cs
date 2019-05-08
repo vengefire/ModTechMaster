@@ -5,6 +5,6 @@
 
     public interface IObjectDefinitionProcessorFactory
     {
-        IObjectDefinitionProcessor Get(ManifestEntryType type);
+        IObjectDefinitionProcessor Get(ObjectType type);
     }
 }

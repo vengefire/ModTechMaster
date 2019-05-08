@@ -33,6 +33,9 @@ namespace MTM
                                                      modCollection.AddModToCollection(modService.TryLoadFromPath(sub.FullName));
                                                  });
 
+            var refService = new ReferenceFinderService();
+            refService.ProcessModCollectionReferences(modCollection);
+
             return 0;
         }
     }

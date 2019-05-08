@@ -5,6 +5,6 @@
 
     public interface IManifestEntryProcessorFactory
     {
-        IManifestEntryProcessor Get(ManifestEntryType type);
+        IManifestEntryProcessor Get(ObjectType type);
     }
 }

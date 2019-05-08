@@ -5,6 +5,6 @@
 
     public interface IObjectDefinitionFactory
     {
-        IObjectDefinition Get(ManifestEntryType entryType, IObjectDefinitionDescription objectDescription, dynamic jsonObject, string filePath);
+        IObjectDefinition Get(ObjectType entryType, IObjectDefinitionDescription objectDescription, dynamic jsonObject, string filePath);
     }
 }

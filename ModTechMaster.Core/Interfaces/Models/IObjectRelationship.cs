@@ -2,12 +2,9 @@
 
 namespace ModTechMaster.Core.Interfaces.Models
 {
-    public interface IObjectRelationship
+    public interface IObjectRelationship : IRelationship
     {
-        ManifestEntryType DependentType { get; }
-        ManifestEntryType DependencyType { get; }
-        string DependentKey { get; }
-        string DependencyKey { get; }
-        bool HasMultipleDependencies { get; }
+        ObjectType DependentType { get; }
+        ObjectType DependencyType { get; }
     }
 }

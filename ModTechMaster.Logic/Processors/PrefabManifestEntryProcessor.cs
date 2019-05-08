@@ -9,7 +9,7 @@
 
     public class PrefabManifestEntryProcessor : IManifestEntryProcessor
     {
-        public IManifestEntry ProcessManifestEntry(IManifest manifest, ManifestEntryType entryType, string path, dynamic jsonObject)
+        public IManifestEntry ProcessManifestEntry(IManifest manifest, ObjectType entryType, string path, dynamic jsonObject)
         {
             var manifestEntry =
                 new ManifestEntry(manifest, entryType, path, jsonObject);

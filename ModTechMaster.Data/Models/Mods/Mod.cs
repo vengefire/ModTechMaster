@@ -1,4 +1,5 @@
 ﻿using ModTechMaster.Core.Constants;
+using ModTechMaster.Core.Enums.Mods;
 
 namespace ModTechMaster.Data.Models.Mods
 {
@@ -21,7 +22,7 @@ namespace ModTechMaster.Data.Models.Mods
             HashSet<string> dependsOn,
             HashSet<string> conflictsWith,
             string sourceFilePath,
-            dynamic jsonObject) : base(sourceFilePath, (JObject)jsonObject)
+            dynamic jsonObject) : base(ObjectType.Mod, sourceFilePath, (JObject)jsonObject)
         {
             this.Name = name;
             this.enabled = enabled;
@@ -61,5 +62,15 @@ namespace ModTechMaster.Data.Models.Mods
         }
 
         public string GetId => this.Name;
+        public List<IReferenceableObject> GetReferenceableObjects()
+        {
+            List<IReferenceableObject> objects = new List<IReferenceableObject>();
+            if (Manifest != null)
+            {
+                Manifest.GetReferenceableObjects();
+            }
+            objects.Add(this);
+            return objects;
+        }
     }
 }

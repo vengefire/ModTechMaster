@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Enums\MessageType.cs" />
-    <Compile Include="Enums\Mods\ManifestEntryType.cs" />
+    <Compile Include="Enums\Mods\ObjectType.cs" />
     <Compile Include="Enums\ObjectReferenceType.cs" />
     <Compile Include="Enums\RelationshipType.cs" />
     <Compile Include="Interfaces\Factories\IManifestEntryProcessorFactory.cs" />
@@ -55,13 +55,15 @@
     <Compile Include="Interfaces\Models\IManifestEntry.cs" />
     <Compile Include="Interfaces\Models\IMod.cs" />
     <Compile Include="Interfaces\Models\IModCollection.cs" />
+    <Compile Include="Interfaces\Models\IObject.cs" />
     <Compile Include="Interfaces\Models\IObjectDefinition.cs" />
     <Compile Include="Interfaces\Models\IObjectDefinitionDescription.cs" />
+    <Compile Include="Interfaces\Models\IReferenceableObjectProvider.cs" />
     <Compile Include="Interfaces\Models\IObjectReference.cs" />
     <Compile Include="Interfaces\Models\IObjectRelationship.cs" />
     <Compile Include="Interfaces\Models\IRelationship.cs" />
     <Compile Include="Interfaces\Models\ISourcedFromFile.cs" />
-    <Compile Include="Interfaces\Models\ISupportReferencing.cs" />
+    <Compile Include="Interfaces\Models\IReferenceableObject.cs" />
     <Compile Include="Interfaces\Processors\IManifestEntryProcessor.cs" />
     <Compile Include="Interfaces\Services\IMessageService.cs" />
     <Compile Include="Interfaces\Services\IModService.cs" />

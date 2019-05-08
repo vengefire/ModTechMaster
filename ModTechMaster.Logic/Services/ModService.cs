@@ -71,6 +71,10 @@
             foreach (var manifestEntrySrc in manifest.JsonObject)
             {
                 ManifestEntry manifestEntry = this.ProcessManifestEntry(manifest, manifestEntrySrc);
+                if (manifestEntry == null)
+                {
+                    throw new InvalidProgramException();
+                }
                 manifest.Entries.Add(manifestEntry);
             }
 
@@ -79,7 +83,7 @@
 
         private ManifestEntry ProcessManifestEntry(Manifest manifest, dynamic manifestEntrySrc)
         {
-            ManifestEntryType entryType;
+            ObjectType entryType;
             if (!Enum.TryParse((string)manifestEntrySrc.Type, out entryType))
             {
                 this.messageService.PushMessage($"Failed to parse Manifest Entry Type [{manifestEntrySrc.Type.ToString()}].", MessageType.Error);

@@ -3,11 +3,11 @@
     using System.Collections.Generic;
     using Enums.Mods;
 
-    public interface IManifestEntry : IJsonObjectBase
+    public interface IManifestEntry : IJsonObjectBase, IReferenceableObjectProvider
     {
         IManifest Manifest { get; }
 
-        ManifestEntryType EntryType { get; }
+        ObjectType EntryType { get; }
 
         string Path { get; }
 

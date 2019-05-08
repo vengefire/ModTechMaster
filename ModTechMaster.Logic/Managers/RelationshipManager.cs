@@ -1,165 +1,173 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using ModTechMaster.Core.Constants;
 using ModTechMaster.Core.Enums.Mods;
 using ModTechMaster.Core.Interfaces.Models;
 using ModTechMaster.Data.Models;
-using ModTechMaster.Data.Models.Mods;
 
 namespace ModTechMaster.Logic.Managers
 {
     public class RelationshipManager
     {
-        public List<ObjectReference<Mod>> GetModReferences(IModCollection modCollection)
-        {
-
-        }
-
-        private static List<IRelationship> _modRelationShips = new List<IRelationship>
-        {
-            new Relationship(Keywords.DependsOn, Keywords.Name, true)
-        };
-
-        private static Dictionary<ManifestEntryType, List<ObjectRelationship>> _ObjectRelationships =
-            new Dictionary<ManifestEntryType, List<ObjectRelationship>>
+        private static readonly Dictionary<ObjectType, List<IObjectRelationship>> _ObjectRelationships =
+            new Dictionary<ObjectType, List<IObjectRelationship>>
             {
                 {
-                    ManifestEntryType.PilotDef, new List<ObjectRelationship>
+                    ObjectType.Mod, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.PilotDef, ManifestEntryType.AbilityDef,
+                        new ObjectRelationship(ObjectType.Mod, ObjectType.Mod,
+                            Keywords.DependsOn, Keywords.Name, true)
+                    }
+                },
+                {
+                    ObjectType.PilotDef, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.PilotDef, ObjectType.AbilityDef,
                             Keywords.AbilityDefId, Keywords.Id, true)
                     }
                 },
                 {
-                    ManifestEntryType.AmmunitionBoxDef, new List<ObjectRelationship>
+                    ObjectType.AmmunitionBoxDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.AmmunitionBoxDef, ManifestEntryType.AmmunitionDef,
+                        new ObjectRelationship(ObjectType.AmmunitionBoxDef, ObjectType.AmmunitionDef,
                             Keywords.AmmoId, Keywords.Id)
                     }
                 },
                 {
-                    ManifestEntryType.WeaponDef, new List<ObjectRelationship>
+                    ObjectType.WeaponDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.WeaponDef, ManifestEntryType.AmmunitionDef,
+                        new ObjectRelationship(ObjectType.WeaponDef, ObjectType.AmmunitionDef,
                             Keywords.AmmoCategory, Keywords.Category)
                     }
                 },
                 {
-                    ManifestEntryType.MechDef, new List<ObjectRelationship>
+                    ObjectType.MechDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.MechDef, ManifestEntryType.WeaponDef,
+                        new ObjectRelationship(ObjectType.MechDef, ObjectType.WeaponDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.MechDef, ManifestEntryType.UpgradeDef,
+                        new ObjectRelationship(ObjectType.MechDef, ObjectType.UpgradeDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.MechDef, ManifestEntryType.HeatSinkDef,
+                        new ObjectRelationship(ObjectType.MechDef, ObjectType.HeatSinkDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.MechDef, ManifestEntryType.JumpJetDef,
+                        new ObjectRelationship(ObjectType.MechDef, ObjectType.JumpJetDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.MechDef, ManifestEntryType.ChassisDef,
+                        new ObjectRelationship(ObjectType.MechDef, ObjectType.ChassisDef,
                             Keywords.ChassisId, Keywords.Id)
                     }
                 },
                 {
-                    ManifestEntryType.ChassisDef, new List<ObjectRelationship>
+                    ObjectType.ChassisDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.ChassisDef, ManifestEntryType.MovementCapabilitiesDef,
+                        new ObjectRelationship(ObjectType.ChassisDef, ObjectType.MovementCapabilitiesDef,
                             Keywords.MovementCapDefId, Keywords.Id),
-                        new ObjectRelationship(ManifestEntryType.ChassisDef, ManifestEntryType.PathingCapabilitiesDef,
+                        new ObjectRelationship(ObjectType.ChassisDef, ObjectType.PathingCapabilitiesDef,
                             Keywords.PathingCapDefId, Keywords.Id),
-                        new ObjectRelationship(ManifestEntryType.ChassisDef, ManifestEntryType.HardPointDataDef,
+                        new ObjectRelationship(ObjectType.ChassisDef, ObjectType.HardPointDataDef,
                             Keywords.HardpointDataDefId, Keywords.Id),
-                        new ObjectRelationship(ManifestEntryType.ChassisDef, ManifestEntryType.Prefab,
+                        new ObjectRelationship(ObjectType.ChassisDef, ObjectType.Prefab,
                             Keywords.PrefabId, Keywords.Id)
                     }
                 },
                 {
-                    ManifestEntryType.VehicleDef, new List<ObjectRelationship>
+                    ObjectType.VehicleDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.VehicleDef, ManifestEntryType.WeaponDef,
+                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.WeaponDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.VehicleDef, ManifestEntryType.UpgradeDef,
+                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.UpgradeDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.VehicleDef, ManifestEntryType.HeatSinkDef,
+                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.HeatSinkDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.VehicleDef, ManifestEntryType.JumpJetDef,
+                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.JumpJetDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.VehicleDef, ManifestEntryType.ChassisDef,
+                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.ChassisDef,
                             Keywords.ChassisId, Keywords.Id)
                     }
                 },
                 {
-                    ManifestEntryType.VehicleChassisDef, new List<ObjectRelationship>
+                    ObjectType.VehicleChassisDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.VehicleChassisDef,
-                            ManifestEntryType.MovementCapabilitiesDef, Keywords.MovementCapDefId, Keywords.Id),
-                        new ObjectRelationship(ManifestEntryType.VehicleChassisDef,
-                            ManifestEntryType.PathingCapabilitiesDef, Keywords.PathingCapDefId, Keywords.Id),
-                        new ObjectRelationship(ManifestEntryType.VehicleChassisDef, ManifestEntryType.HardPointDataDef,
+                        new ObjectRelationship(ObjectType.VehicleChassisDef,
+                            ObjectType.MovementCapabilitiesDef, Keywords.MovementCapDefId, Keywords.Id),
+                        new ObjectRelationship(ObjectType.VehicleChassisDef,
+                            ObjectType.PathingCapabilitiesDef, Keywords.PathingCapDefId, Keywords.Id),
+                        new ObjectRelationship(ObjectType.VehicleChassisDef, ObjectType.HardPointDataDef,
                             Keywords.HardpointDataDefId, Keywords.Id),
-                        new ObjectRelationship(ManifestEntryType.VehicleChassisDef, ManifestEntryType.Prefab,
+                        new ObjectRelationship(ObjectType.VehicleChassisDef, ObjectType.Prefab,
                             Keywords.PrefabId, Keywords.Id)
                     }
                 },
                 {
-                    ManifestEntryType.TurretDef, new List<ObjectRelationship>
+                    ObjectType.TurretDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.TurretDef, ManifestEntryType.WeaponDef,
+                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.WeaponDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.TurretDef, ManifestEntryType.UpgradeDef,
+                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.UpgradeDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.TurretDef, ManifestEntryType.HeatSinkDef,
+                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.HeatSinkDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.TurretDef, ManifestEntryType.JumpJetDef,
+                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.JumpJetDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.TurretDef, ManifestEntryType.ChassisDef,
+                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.ChassisDef,
                             Keywords.ChassisId, Keywords.Id)
                     }
                 },
                 {
-                    ManifestEntryType.TurretChassisDef, new List<ObjectRelationship>
+                    ObjectType.TurretChassisDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.TurretChassisDef, ManifestEntryType.HardPointDataDef,
+                        new ObjectRelationship(ObjectType.TurretChassisDef, ObjectType.HardPointDataDef,
                             Keywords.HardpointDataDefId, Keywords.Id),
-                        new ObjectRelationship(ManifestEntryType.TurretChassisDef, ManifestEntryType.Prefab,
+                        new ObjectRelationship(ObjectType.TurretChassisDef, ObjectType.Prefab,
                             Keywords.PrefabId, Keywords.Id)
                     }
                 },
                 {
-                    ManifestEntryType.Prefab, new List<ObjectRelationship>
+                    ObjectType.Prefab, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.Prefab, ManifestEntryType.AssetBundle,
+                        new ObjectRelationship(ObjectType.Prefab, ObjectType.AssetBundle,
                             Keywords.AssetBundle, Keywords.Id)
                     }
                 },
                 {
-                    ManifestEntryType.CCDefaults, new List<ObjectRelationship>
+                    ObjectType.CCDefaults, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.CCDefaults, ManifestEntryType.CCCategories,
+                        new ObjectRelationship(ObjectType.CCDefaults, ObjectType.CCCategories,
                             Keywords.CategoryId, Keywords.Name),
-                        new ObjectRelationship(ManifestEntryType.CCDefaults, ManifestEntryType.UpgradeDef,
+                        new ObjectRelationship(ObjectType.CCDefaults, ObjectType.UpgradeDef,
                             Keywords.DefId, Keywords.Id),
-                        new ObjectRelationship(ManifestEntryType.CCDefaults, ManifestEntryType.HeatSinkDef,
+                        new ObjectRelationship(ObjectType.CCDefaults, ObjectType.HeatSinkDef,
                             Keywords.DefId, Keywords.Id)
                     }
                 },
                 {
-                    ManifestEntryType.UpgradeDef, new List<ObjectRelationship>
+                    ObjectType.UpgradeDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.UpgradeDef, ManifestEntryType.UpgradeDef,
+                        new ObjectRelationship(ObjectType.UpgradeDef, ObjectType.UpgradeDef,
                             Keywords.LootableId, Keywords.Id)
-                        //new ObjectRelationship(ManifestEntryType.UpgradeDef, ManifestEntryType.UpgradeDef, Keywords.defId, Keywords.Id),
+                        //new ObjectRelationship(ObjectType.UpgradeDef, ObjectType.UpgradeDef, Keywords.defId, Keywords.Id),
                     }
                 },
                 {
-                    ManifestEntryType.StreamingData, new List<ObjectRelationship>
+                    ObjectType.StreamingData, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ManifestEntryType.StreamingData, ManifestEntryType.AbilityDef,
+                        new ObjectRelationship(ObjectType.StreamingData, ObjectType.AbilityDef,
                             Keywords.AbilityDefId, Keywords.Id, true),
-                        new ObjectRelationship(ManifestEntryType.StreamingData, ManifestEntryType.MechDef,
+                        new ObjectRelationship(ObjectType.StreamingData, ObjectType.MechDef,
                             Keywords.MechDefId, Keywords.Id, true)
-                        //new ObjectRelationship(ManifestEntryType.UpgradeDef, ManifestEntryType.UpgradeDef, Keywords.defId, Keywords.Id),
+                        //new ObjectRelationship(ObjectType.UpgradeDef, ObjectType.UpgradeDef, Keywords.defId, Keywords.Id),
                     }
                 }
             };
+
+        public static List<IObjectRelationship> GetDependenciesRelationshipsForType(ObjectType objectType)
+        {
+            return _ObjectRelationships.ContainsKey(objectType)
+                ? _ObjectRelationships[objectType]
+                : new List<IObjectRelationship>();
+        }
+
+        public static List<IObjectRelationship> GetDependantRelationShipsForType(ObjectType objectType)
+        {
+            return _ObjectRelationships.Where(pair => pair.Value.Exists(ship => ship.DependentType == objectType)).SelectMany(pair => pair.Value).ToList();
+        }
     }
 }

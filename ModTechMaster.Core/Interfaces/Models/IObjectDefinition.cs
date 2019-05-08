@@ -1,14 +1,9 @@
-﻿namespace ModTechMaster.Core.Interfaces.Models
-{
-    using System.Collections.Generic;
+﻿using ModTechMaster.Core.Enums.Mods;
 
-    public interface IObjectDefinition : IJsonObjectBase, ISourcedFromFile, ISupportReferencing
+namespace ModTechMaster.Core.Interfaces.Models
+{
+    public interface IObjectDefinition : IJsonObjectBase, ISourcedFromFile, IReferenceableObject, IObject
     {
         IObjectDefinitionDescription ObjectDescription { get; }
-        /*Dictionary<string, object> MetaData { get; }
-
-        string GetId { get; }
-
-        void AddMetaData();*/
     }
 }

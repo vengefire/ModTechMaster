@@ -1,6 +1,6 @@
 ﻿namespace ModTechMaster.Core.Interfaces.Models
 {
-    public interface IJsonObjectBase
+    public interface IJsonObjectBase : IObject
     {
         dynamic JsonObject { get; }
 

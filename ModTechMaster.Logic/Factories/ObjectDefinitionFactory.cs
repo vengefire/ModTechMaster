@@ -13,23 +13,23 @@
 
         public static IObjectDefinitionFactory ObjectDefinitionFactorySingleton => ObjectDefinitionFactory.objectDefinitionFactorySingleton ?? (ObjectDefinitionFactory.objectDefinitionFactorySingleton = new ObjectDefinitionFactory());
 
-        public IObjectDefinition Get(ManifestEntryType entryType, IObjectDefinitionDescription objectDescription, dynamic jsonObject, string filePath)
+        public IObjectDefinition Get(ObjectType entryType, IObjectDefinitionDescription objectDescription, dynamic jsonObject, string filePath)
         {
             IObjectDefinition objectDefinition;
             switch (entryType)
             {
-                case ManifestEntryType.Texture2D:
-                case ManifestEntryType.Sprite:
-                    objectDefinition = new ResourceObjectDefinition(objectDescription, (JObject)jsonObject, filePath);
+                case ObjectType.Texture2D:
+                case ObjectType.Sprite:
+                    objectDefinition = new ResourceObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
-                case ManifestEntryType.AssetBundle:
-                    objectDefinition = new AssetBundleObjectDefinition(objectDescription, (JObject)jsonObject, filePath);
+                case ObjectType.AssetBundle:
+                    objectDefinition = new AssetBundleObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
-                case ManifestEntryType.Prefab:
-                    objectDefinition = new PrefabObjectDefinition(objectDescription, (JObject)jsonObject, filePath);
+                case ObjectType.Prefab:
+                    objectDefinition = new PrefabObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
                 default:
-                    objectDefinition = new ObjectDefinition(objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new ObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
             }
             objectDefinition.AddMetaData();

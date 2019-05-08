@@ -1,4 +1,6 @@
-﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
+﻿using ModTechMaster.Core.Enums.Mods;
+
+namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
     using Core.Constants;
     using Core.Interfaces.Models;
@@ -6,7 +8,7 @@
 
     public class PrefabObjectDefinition : ObjectDefinition
     {
-        public PrefabObjectDefinition(IObjectDefinitionDescription objectDescription, dynamic jsonObject, string filePath) : base(objectDescription, (JObject)jsonObject, filePath)
+        public PrefabObjectDefinition(ObjectType objectType, IObjectDefinitionDescription objectDescription, dynamic jsonObject, string filePath) : base(objectType, objectDescription, (JObject)jsonObject, filePath)
         {
         }
 

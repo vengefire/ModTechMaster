@@ -5,6 +5,6 @@
 
     public interface IManifestEntryProcessor
     {
-        IManifestEntry ProcessManifestEntry(IManifest manifest, ManifestEntryType entryType, string path, dynamic jsonObject);
+        IManifestEntry ProcessManifestEntry(IManifest manifest, ObjectType entryType, string path, dynamic jsonObject);
     }
 }
