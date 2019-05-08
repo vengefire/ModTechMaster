@@ -1,14 +1,14 @@
-﻿using System.Linq;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using Core.Enums.Mods;
     using Core.Interfaces.Models;
     using Newtonsoft.Json.Linq;
 
     public class Manifest : JsonObjectBase, IManifest
     {
-        public Manifest(Mod mod, dynamic jsonObject) : base((JArray)jsonObject, Core.Enums.Mods.ObjectType.Manifest)
+        public Manifest(Mod mod, dynamic jsonObject) : base((JArray)jsonObject, ObjectType.Manifest)
         {
             this.Mod = mod;
             this.Entries = new HashSet<IManifestEntry>();
@@ -17,9 +17,10 @@ namespace ModTechMaster.Data.Models.Mods
         public IMod Mod { get; }
 
         public HashSet<IManifestEntry> Entries { get; }
+
         public List<IReferenceableObject> GetReferenceableObjects()
         {
-            return Entries.SelectMany(entry => entry.GetReferenceableObjects()).ToList();
+            return this.Entries.SelectMany(entry => entry.Objects.Select(definition => definition as IReferenceableObject)).ToList();
         }
     }
 }

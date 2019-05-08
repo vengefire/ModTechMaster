@@ -2,6 +2,7 @@
 
 namespace ModTechMaster.Data.Models.Mods
 {
+    using System;
     using System.Collections.Generic;
     using Core.Enums.Mods;
     using Core.Interfaces.Models;
@@ -24,7 +25,7 @@ namespace ModTechMaster.Data.Models.Mods
         public string Path { get; }
 
         public HashSet<IObjectDefinition> Objects { get; }
-        public List<IReferenceableObject> GetReferenceableObjects()
+        public List<IReferenceableObject>GetReferenceableObjects()
         {
             return this.Objects.Select(definition => definition as IReferenceableObject).ToList();
         }

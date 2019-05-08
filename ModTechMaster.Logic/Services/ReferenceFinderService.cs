@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using ModTechMaster.Core.Enums.Mods;
-using ModTechMaster.Core.Interfaces.Models;
-using ModTechMaster.Logic.Processors;
-
-namespace ModTechMaster.Logic.Services
+﻿namespace ModTechMaster.Logic.Services
 {
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using Core.Interfaces.Models;
+    using Processors;
+
     public class ReferenceFinderService
     {
-        public void ProcessModCollectionReferences(IModCollection modCollection)
+        public long ProcessModCollectionReferences(IModCollection modCollection)
         {
-            var modReferences = new Dictionary<IMod, List<IObjectReference<IMod>>>();
-            foreach (var mod in modCollection.Mods)
-            {
-                var references =
-                    CommonReferenceProcessor.FindReferences<IMod>(modCollection, ObjectType.Mod, mod,
-                        new List<ObjectType>());
-                modReferences.Add(mod, references);
-            }
-
-            throw new NotImplementedException();
+            var dictRefs = new Dictionary<IReferenceableObject, List<IObjectReference<IReferenceableObject>>>();
+            var allReferences = modCollection.GetReferenceableObjects();
+            var sw = new Stopwatch();
+            sw.Start();
+            allReferences.ForEach(o => { dictRefs[o] = CommonReferenceProcessor.FindReferences<IReferenceableObject>(modCollection, o, null); });
+            sw.Stop();
+            return sw.ElapsedMilliseconds;
         }
     }
 }

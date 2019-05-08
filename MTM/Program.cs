@@ -4,6 +4,7 @@ namespace MTM
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using ModTechMaster.Core.Interfaces.Models;
@@ -26,15 +27,25 @@ namespace MTM
             IModCollection modCollection = new ModCollection("MTM Mod Collection");
 
             Console.WriteLine($"Processing mods from [{di.FullName}]");
+            var stopwatch = new Stopwatch();
             di.GetDirectories().ToList().ForEach(
                                                  sub =>
                                                  {
-                                                     Console.Write(".");
+                                                     stopwatch.Start();
+                                                     Console.Write($"Processing [{sub.Name}]...");
                                                      modCollection.AddModToCollection(modService.TryLoadFromPath(sub.FullName));
+                                                     stopwatch.Stop();
+                                                     Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
+                                                     stopwatch.Reset();
                                                  });
 
             var refService = new ReferenceFinderService();
-            refService.ProcessModCollectionReferences(modCollection);
+            Console.WriteLine($"Processing Mod Collection object relationships...");
+            long elapsedTime = refService.ProcessModCollectionReferences(modCollection);
+            Console.WriteLine($"Object relationships processed in [{elapsedTime}] ms.");
+
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
 
             return 0;
         }
