@@ -3,9 +3,10 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using Core.Interfaces.Models;
+    using Core.Interfaces.Services;
     using Processors;
 
-    public class ReferenceFinderService
+    public class ReferenceFinderService : IReferenceFinderService
     {
         public long ProcessModCollectionReferences(IModCollection modCollection)
         {

@@ -95,5 +95,25 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModTechMaster.Core\ModTechMaster.Core.csproj">
+      <Project>{F1C5C7C8-C8F3-46FC-9339-746DC0A2A185}</Project>
+      <Name>ModTechMaster.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.Data\ModTechMaster.Data.csproj">
+      <Project>{0a8e1776-19b5-41ae-959d-e887e06c4c4a}</Project>
+      <Name>ModTechMaster.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.Logic\ModTechMaster.Logic.csproj">
+      <Project>{D9D9B467-A546-49C2-843D-45BE8E730FF8}</Project>
+      <Name>ModTechMaster.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bootstrap\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Components\Images\mtm.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
