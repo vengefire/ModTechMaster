@@ -45,6 +45,8 @@
         MECriticalEffects,
         ShipModuleUpgrade,
         PathingCapabilitiesDef,
-        DesignMaskDef
+        DesignMaskDef,
+        HardPointDataDef,
+        StreamingData
     }
 }

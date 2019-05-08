@@ -1,4 +1,6 @@
-﻿namespace ModTechMaster.Data.Models.Mods
+﻿using ModTechMaster.Core.Constants;
+
+namespace ModTechMaster.Data.Models.Mods
 {
     using System.Collections.Generic;
     using Core.Interfaces.Models;
@@ -51,5 +53,13 @@
         public HashSet<string> DependsOn { get; }
 
         public HashSet<string> ConflictsWith { get; set; }
+
+        public Dictionary<string, object> MetaData { get; } = new Dictionary<string, object>();
+        public void AddMetaData()
+        {
+            MetaData.Add(Keywords.Id, GetId);
+        }
+
+        public string GetId => this.Name;
     }
 }

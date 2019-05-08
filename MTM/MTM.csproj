@@ -54,6 +54,10 @@
       <Project>{F1C5C7C8-C8F3-46FC-9339-746DC0A2A185}</Project>
       <Name>ModTechMaster.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.Data\ModTechMaster.Data.csproj">
+      <Project>{0A8E1776-19B5-41AE-959D-E887E06C4C4A}</Project>
+      <Name>ModTechMaster.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.Logic\ModTechMaster.Logic.csproj">
       <Project>{D9D9B467-A546-49C2-843D-45BE8E730FF8}</Project>
       <Name>ModTechMaster.Logic</Name>

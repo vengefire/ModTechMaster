@@ -1,4 +1,6 @@
-﻿namespace MTM
+﻿using ModTechMaster.Data.Models.Mods;
+
+namespace MTM
 {
     using System;
     using System.Collections.Generic;
@@ -21,14 +23,14 @@
             }
 
             IModService modService = new ModService(new MessageService(), new ManifestEntryProcessorFactory());
-            var mods = new HashSet<IMod>();
+            IModCollection modCollection = new ModCollection("MTM Mod Collection");
 
             Console.WriteLine($"Processing mods from [{di.FullName}]");
             di.GetDirectories().ToList().ForEach(
                                                  sub =>
                                                  {
                                                      Console.Write(".");
-                                                     mods.Add(modService.TryLoadFromPath(sub.FullName));
+                                                     modCollection.AddModToCollection(modService.TryLoadFromPath(sub.FullName));
                                                  });
 
             return 0;

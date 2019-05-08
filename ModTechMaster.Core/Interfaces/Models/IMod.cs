@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    public interface IMod : IJsonObjectBase, ISourcedFromFile
+    public interface IMod : IJsonObjectBase, ISourcedFromFile, ISupportReferencing
     {
         string Name { get; }
 
