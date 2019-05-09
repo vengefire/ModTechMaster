@@ -1,68 +1,50 @@
-﻿namespace ModTechMaster
-{
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using System.Windows;
-    using Core.Interfaces.Services;
-    using Data.Models.Mods;
-    using Logic.Factories;
-    using Logic.Services;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using ModTechMaster.Logic.Factories;
+using ModTechMaster.Logic.Services;
+using ModTechMaster.Nodes;
 
+namespace ModTechMaster
+{
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string FilterText { get; set; }
+
         public MainWindow()
         {
-            this.InitializeComponent();
+            InitializeComponent();
+            var modService = new ModService(new MessageService(), new ManifestEntryProcessorFactory());
+            var collectionData = modService.LoadCollectionFromPath(@"D:\source\repos\vf\ModTechMaster\TestData\In\Mods",
+                "Test Collection");
 
-            this.ModService = new ModService(new MessageService(), new ManifestEntryProcessorFactory());
-            this.ReferenceFinderService = new ReferenceFinderService();
-
-            this.InitData();
-            this.InitTreeView();
+            var collectionNode = new ModCollectionNode(collectionData, null);
+            tvModControl.ItemsSource = new ObservableCollection<ModCollectionNode> {collectionNode};
         }
 
-        private ReferenceFinderService ReferenceFinderService { get; }
-
-        private string TargetModCollectionPath { get; set; }
-
-        private ModService ModService { get; }
-        private ModCollection ModCollection { get; set; }
-
-        private void InitData()
+        private void BtnSelectAll_OnClick(object sender, RoutedEventArgs e)
         {
-            this.TargetModCollectionPath = @"C:\dev\repos\ModTechMaster\TestData\In\Mods";
-            IModService modService = new ModService(new MessageService(), new ManifestEntryProcessorFactory());
-            this.ModCollection = new ModCollection("MTM Mod Collection");
-
-            var di = new DirectoryInfo(this.TargetModCollectionPath);
-            if (!di.Exists)
-            {
-                Console.WriteLine($"The target directory [{di.FullName}] foes not exist.");
-                return;
-            }
-
-            Console.WriteLine($"Processing mods from [{di.FullName}]");
-            var stopwatch = new Stopwatch();
-            di.GetDirectories().ToList().ForEach(
-                                                 sub =>
-                                                 {
-                                                     stopwatch.Start();
-                                                     Console.Write($"Processing [{sub.Name}]...");
-                                                     this.ModCollection.AddModToCollection(modService.TryLoadFromPath(sub.FullName));
-                                                     stopwatch.Stop();
-                                                     Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
-                                                     stopwatch.Reset();
-                                                 });
+            throw new System.NotImplementedException();
         }
 
-        private void InitTreeView()
+        private void BtnDeselectAll_OnClick(object sender, RoutedEventArgs e)
         {
-            this.tvObjects.ItemsSource = this.ModCollection.Mods;
+            throw new System.NotImplementedException();
+        }
+
+        private async void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(300);
+            if (startLength == tb.Text.Length)
+                Console.WriteLine("Run Filter");
         }
     }
 }
