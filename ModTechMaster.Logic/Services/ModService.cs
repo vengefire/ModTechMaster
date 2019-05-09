@@ -25,6 +25,28 @@
             this.manifestEntryProcessorFactory = manifestEntryProcessorFactory;
         }
 
+        public IModCollection LoadCollectionFromPath(string path, string name)
+        {
+            if (!DirectoryUtils.Exists(path))
+            {
+                return null;
+            }
+
+            var di = new DirectoryInfo(path);
+            var collection = new ModCollection(name);
+
+            Console.WriteLine($"Processing mods from [{di.FullName}]");
+            di.GetDirectories().ToList().ForEach(
+                sub =>
+                {
+                    Console.Write(".");
+                    var mod = this.TryLoadFromPath(sub.FullName);
+                    collection.AddModToCollection(mod);
+                });
+
+            return collection;
+        }
+
         public IMod TryLoadFromPath(string path)
         {
             if (!DirectoryUtils.Exists(path) ||

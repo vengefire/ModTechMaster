@@ -4,7 +4,68 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ModTechMaster"
+        xmlns:self="clr-namespace:ModTechMaster"
+        xmlns:nodes="clr-namespace:ModTechMaster.Nodes"
+        xmlns:converters="clr-namespace:ModTechMaster.Enums.ValueConverters"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid />
+    <Window.Resources>
+        <converters:SelectionStatusToIconConverter x:Key="SelectionStatusToIconConverter"/>
+        <converters:ObjectStatusToIconConverter x:Key="ObjectStatusConverter"/>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Label>Filter Text:</Label>
+            <TextBox TextChanged="TextBoxBase_OnTextChanged" Text="{Binding FilterText, Mode=TwoWay, Delay=500}"/>
+        </StackPanel>
+        <DockPanel Grid.Row="1" Margin="0,2,0,-2">
+            <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Left" Margin="10">
+                <Button Name="btnSelectAll" Click="BtnSelectAll_OnClick" Width="120">Select All</Button>
+                <Button Name="btnDeselectAll" Click="BtnDeselectAll_OnClick" Width="120">Deselect All</Button>
+            </WrapPanel>
+            <TreeView Name="tvModControl" Margin="0,-6,0,6">
+                <TreeView.Resources>
+                    <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:IMTMTreeViewItem}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}}" Width="15" IsEnabled="False"/>
+                            <Image Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}" Width="15" IsEnabled="False"/>
+                        </StackPanel>
+                    </DataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type nodes:ModCollectionNode}" ItemsSource="{Binding Mods}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}"></ContentPresenter>
+                            <CheckBox />
+                            <TextBlock Text="{Binding ModCollection.Name}" />
+                            <TextBlock Text=" [" Foreground="Blue" />
+                            <TextBlock Text="{Binding Mods.Count}" Foreground="Blue" />
+                            <TextBlock Text="]" Foreground="Blue" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type nodes:ModNode}" ItemsSource="{Binding Contents}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}"></ContentPresenter>
+                            <CheckBox />
+                            <TextBlock Text="{Binding Mod.Name}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <DataTemplate DataType="{x:Type nodes:ManifestNode}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}"></ContentPresenter>
+                            <TextBlock Text="Manifest" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TreeView.Resources>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}"/>
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+            </TreeView>
+        </DockPanel>
+    </Grid>
 </Window>

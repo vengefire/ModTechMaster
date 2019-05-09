@@ -64,12 +64,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Enums\ObjectStatus.cs" />
+    <Compile Include="Enums\SelectionStatus.cs" />
+    <Compile Include="Enums\ValueConverters\ObjectStatusToIconConverter.cs" />
+    <Compile Include="Enums\ValueConverters\SelectionStatusToIconConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Nodes\IMTMTreeViewItem.cs" />
+    <Compile Include="Nodes\ManifestNode.cs" />
+    <Compile Include="Nodes\ModCollectionNode.cs" />
+    <Compile Include="Nodes\ModNode.cs" />
+    <Compile Include="Nodes\MTMTreeViewItem.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,6 +104,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModTechMaster.Core\ModTechMaster.Core.csproj">
+      <Project>{f1c5c7c8-c8f3-46fc-9339-746dc0a2a185}</Project>
+      <Name>ModTechMaster.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.Data\ModTechMaster.Data.csproj">
+      <Project>{0a8e1776-19b5-41ae-959d-e887e06c4c4a}</Project>
+      <Name>ModTechMaster.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.Logic\ModTechMaster.Logic.csproj">
+      <Project>{D9D9B467-A546-49C2-843D-45BE8E730FF8}</Project>
+      <Name>ModTechMaster.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\back.png" />
+    <Resource Include="Resources\Images\cancel.png" />
+    <Resource Include="Resources\Images\checked.png" />
+    <Resource Include="Resources\Images\download %281%29.png" />
+    <Resource Include="Resources\Images\download.png" />
+    <Resource Include="Resources\Images\exclamation-mark.png" />
+    <Resource Include="Resources\Images\minus.png" />
+    <Resource Include="Resources\Images\next.png" />
+    <Resource Include="Resources\Images\refresh.png" />
+    <Resource Include="Resources\Images\trash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
