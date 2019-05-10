@@ -66,7 +66,7 @@
                     </Grid.ColumnDefinitions>
                     <TreeView Name="tvModControl" Grid.Column="0" Grid.Row="0">
                         <TreeView.Resources>
-                            <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:IMTMTreeViewItem}">
+                            <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:MTMTreeViewItem}">
                                 <StackPanel Orientation="Horizontal">
                                     <Image
                                         Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}}"
@@ -75,44 +75,15 @@
                                     <Image
                                         Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}"
                                         Width="15" IsEnabled="False" />
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+                                    <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay}"/>
                                 </StackPanel>
                             </DataTemplate>
-                            <HierarchicalDataTemplate DataType="{x:Type nodes:ModCollectionNode}"
+                            <HierarchicalDataTemplate DataType="{x:Type nodes:MTMTreeViewItem}"
                                                       ItemsSource="{Binding Children}">
                                 <StackPanel Orientation="Horizontal">
                                     <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
-                                    <CheckBox />
-                                    <TextBlock Text="{Binding ModCollection.Name}" />
-                                    <TextBlock Text=" [" Foreground="Blue" />
-                                    <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
-                                    <TextBlock Text="]" Foreground="Blue" />
-                                </StackPanel>
-                            </HierarchicalDataTemplate>
-                            <HierarchicalDataTemplate DataType="{x:Type nodes:ModNode}"
-                                                      ItemsSource="{Binding Children}">
-                                <StackPanel Orientation="Horizontal">
-                                    <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
-                                    <CheckBox />
-                                    <TextBlock Text="{Binding Mod.Name}" />
-                                </StackPanel>
-                            </HierarchicalDataTemplate>
-                            <HierarchicalDataTemplate DataType="{x:Type nodes:ManifestNode}"
-                                                      ItemsSource="{Binding Children}">
-                                <StackPanel Orientation="Horizontal">
-                                    <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
-                                    <CheckBox />
-                                    <TextBlock Text="Manifest" />
-                                    <TextBlock Text=" [" Foreground="Blue" />
-                                    <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
-                                    <TextBlock Text="]" Foreground="Blue" />
-                                </StackPanel>
-                            </HierarchicalDataTemplate>
-                            <HierarchicalDataTemplate DataType="{x:Type nodes:ManifestEntryNode}"
-                                                      ItemsSource="{Binding Children}">
-                                <StackPanel Orientation="Horizontal">
-                                    <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
-                                    <CheckBox />
-                                    <TextBlock Text="{Binding ManifestEntry.EntryType}" />
+                                    <TextBlock Text="{Binding Name}" />
                                     <TextBlock Text=" [" Foreground="Blue" />
                                     <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
                                     <TextBlock Text="]" Foreground="Blue" />
@@ -121,7 +92,6 @@
                             <DataTemplate DataType="{x:Type nodes:ObjectDefinitionNode}">
                                 <StackPanel Orientation="Horizontal">
                                     <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
-                                    <CheckBox />
                                     <TextBlock Text="{Binding ObjectDefinition.GetId}" />
                                 </StackPanel>
                             </DataTemplate>

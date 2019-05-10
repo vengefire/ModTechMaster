@@ -10,8 +10,9 @@ namespace ModTechMaster.Nodes
         bool IsSelected { get; }
         bool IsExpanded { get; }
         bool HasCheck { get; }
-        bool IsChecked { get; }
+        bool IsChecked { get; set; }
         SelectionStatus SelectionStatus { get; }
         ObjectStatus ObjectStatus { get; }
+        string Name { get; }
     }
 }

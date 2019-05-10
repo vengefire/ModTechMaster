@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Documents;
 using ModTechMaster.Core.Interfaces.Models;
 
 namespace ModTechMaster.Nodes
@@ -14,13 +13,16 @@ namespace ModTechMaster.Nodes
                 .ForEach(definition => Children.Add(new ObjectDefinitionNode(this, definition)));
         }
 
-        public ManifestEntryNode(IMTMTreeViewItem parent, IManifestEntry manifestEntry, List<HashSet<IObjectDefinition>> objectLists) : base(parent)
+        public ManifestEntryNode(IMTMTreeViewItem parent, IManifestEntry manifestEntry,
+            List<HashSet<IObjectDefinition>> objectLists) : base(parent)
         {
             ManifestEntry = manifestEntry;
             objectLists
-                .ForEach(list => list.ToList().ForEach(definition => Children.Add(new ObjectDefinitionNode(this, definition))));
+                .ForEach(list =>
+                    list.ToList().ForEach(definition => Children.Add(new ObjectDefinitionNode(this, definition))));
         }
 
         public IManifestEntry ManifestEntry { get; }
+        public override string Name => ManifestEntry.EntryType.ToString();
     }
 }

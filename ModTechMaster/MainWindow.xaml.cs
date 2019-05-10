@@ -21,7 +21,7 @@ namespace ModTechMaster
             var collectionData = modService.LoadCollectionFromPath(@"D:\source\repos\vf\ModTechMaster\TestData\In\Mods",
                 "Test Collection");
             var collectionNode = new ModCollectionNode(collectionData, null);
-            tvModControl.ItemsSource = new ObservableCollection<ModCollectionNode> {collectionNode};
+            tvModControl.ItemsSource = new ObservableCollection<MTMTreeViewItem> {collectionNode};
         }
 
         public string FilterText { get; set; }

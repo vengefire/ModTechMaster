@@ -57,7 +57,7 @@ namespace ModTechMaster.Nodes
             {
                 if (value != _isChecked)
                 {
-                    _isChecked = value;
+                    CheckNode(this, value);
                     OnPropertyChanged("IsChecked");
                 }
             }
@@ -65,8 +65,15 @@ namespace ModTechMaster.Nodes
 
         public SelectionStatus SelectionStatus { get; set; } = SelectionStatus.Unselected;
         public ObjectStatus ObjectStatus { get; set; } = ObjectStatus.Nominal;
+        public abstract string Name { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public static void CheckNode(MTMTreeViewItem node, bool value)
+        {
+            node._isChecked = value;
+            foreach (var child in node.Children) child.IsChecked = value;
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

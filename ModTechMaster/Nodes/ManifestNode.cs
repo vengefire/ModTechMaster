@@ -18,9 +18,9 @@ namespace ModTechMaster.Nodes
                 var groupObjects = groupedManifestEntry.Select(entry => entry.Objects).ToList();
                 Children.Add(new ManifestEntryNode(this, firstEntry, groupObjects));
             }
-            //Manifest.Entries.ToList().ForEach(entry => _children.Add(new ManifestEntryNode(this, entry)));
         }
 
         private IManifest Manifest { get; }
+        public override string Name => @"Mod Manifest";
     }
 }
