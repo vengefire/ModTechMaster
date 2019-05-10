@@ -14,5 +14,6 @@ namespace ModTechMaster.Nodes
         SelectionStatus SelectionStatus { get; }
         ObjectStatus ObjectStatus { get; }
         string Name { get; }
+        string HumanReadableContent { get; }
     }
 }

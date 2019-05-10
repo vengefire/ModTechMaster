@@ -66,6 +66,7 @@ namespace ModTechMaster.Nodes
         public SelectionStatus SelectionStatus { get; set; } = SelectionStatus.Unselected;
         public ObjectStatus ObjectStatus { get; set; } = ObjectStatus.Nominal;
         public abstract string Name { get; }
+        public abstract string HumanReadableContent { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

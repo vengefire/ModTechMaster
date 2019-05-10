@@ -18,7 +18,6 @@ namespace ModTechMaster.Data.Models.Mods
         public IObjectDefinitionDescription ObjectDescription { get; }
         public Dictionary<string, dynamic> MetaData { get; }
 
-        public virtual string GetId => this.ObjectDescription?.Id;
         public virtual void AddMetaData()
         {
             if (this.ObjectDescription?.Id != null)
@@ -31,5 +30,8 @@ namespace ModTechMaster.Data.Models.Mods
                 this.MetaData.Add(Keywords.Name, this.ObjectDescription?.Name);
             }
         }
+
+        public override string Name => this.ObjectDescription?.Name ?? this.SourceFileName;
+        public override string Id => this.ObjectDescription?.Id ?? this.Name;
     }
 }

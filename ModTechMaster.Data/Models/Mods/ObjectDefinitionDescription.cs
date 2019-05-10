@@ -15,14 +15,15 @@ namespace ModTechMaster.Data.Models.Mods
             this.Icon = icon;
         }
 
-        public ObjectDefinitionDescription(string id, dynamic jsonObject) : base((JObject)jsonObject, ObjectType.ObjectDefinitionDescription)
+        public ObjectDefinitionDescription(string id, string name, dynamic jsonObject) : base((JObject)jsonObject, ObjectType.ObjectDefinitionDescription)
         {
             this.Id = id;
+            this.Name = name;
         }
 
-        public string Id { get; }
+        public override string Id { get; }
 
-        public string Name { get; }
+        public override string Name { get; }
 
         public string Description { get; }
 

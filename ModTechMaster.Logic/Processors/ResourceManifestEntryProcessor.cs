@@ -23,7 +23,7 @@
             di.GetFiles("*.*").ToList().ForEach(
                                                 fi =>
                                                 {
-                                                    var objectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(entryType, new ObjectDefinitionDescription(fi.Name, jsonObject), (JObject)jsonObject, fi.FullName);
+                                                    var objectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(entryType, new ObjectDefinitionDescription(fi.Name, fi.Name, jsonObject), (JObject)jsonObject, fi.FullName);
                                                     manifestEntry.Objects.Add(objectDefinition);
                                                 });
             return manifestEntry;

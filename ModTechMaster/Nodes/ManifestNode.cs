@@ -22,5 +22,6 @@ namespace ModTechMaster.Nodes
 
         private IManifest Manifest { get; }
         public override string Name => @"Mod Manifest";
+        public override string HumanReadableContent => this.Manifest.JsonString;
     }
 }

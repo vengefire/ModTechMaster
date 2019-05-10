@@ -1,9 +1,7 @@
-﻿using System.Linq;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
-    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Core.Enums.Mods;
     using Core.Interfaces.Models;
     using Newtonsoft.Json.Linq;
@@ -25,9 +23,13 @@ namespace ModTechMaster.Data.Models.Mods
         public string Path { get; }
 
         public HashSet<IObjectDefinition> Objects { get; }
-        public List<IReferenceableObject>GetReferenceableObjects()
+
+        public List<IReferenceableObject> GetReferenceableObjects()
         {
             return this.Objects.Select(definition => definition as IReferenceableObject).ToList();
         }
+
+        public override string Name => $"{this.EntryType.ToString()} - {this.Path}";
+        public override string Id => this.Name;
     }
 }

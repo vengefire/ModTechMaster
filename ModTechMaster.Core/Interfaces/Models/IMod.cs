@@ -4,8 +4,6 @@
 
     public interface IMod : IJsonObjectBase, ISourcedFromFile, IReferenceableObject, IReferenceableObjectProvider
     {
-        string Name { get; }
-
         bool Enabled { get; }
 
         string Version { get; }

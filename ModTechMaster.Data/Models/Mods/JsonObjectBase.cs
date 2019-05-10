@@ -5,7 +5,7 @@ namespace ModTechMaster.Data.Models.Mods
     using Core.Interfaces.Models;
     using Newtonsoft.Json;
 
-    public class JsonObjectBase : IJsonObjectBase
+    public abstract class JsonObjectBase : IJsonObjectBase
     {
         public JsonObjectBase(dynamic jsonObject, ObjectType objectType)
         {
@@ -15,7 +15,9 @@ namespace ModTechMaster.Data.Models.Mods
 
         public dynamic JsonObject { get; }
 
-        public string JsonString => JsonConvert.SerializeObject(this.JsonObject);
+        public string JsonString => JsonConvert.SerializeObject(this.JsonObject, Formatting.Indented);
         public ObjectType ObjectType { get; }
+        public abstract string Name { get; }
+        public abstract string Id { get; }
     }
 }

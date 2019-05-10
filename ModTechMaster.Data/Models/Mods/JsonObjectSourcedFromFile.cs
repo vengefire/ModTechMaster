@@ -6,7 +6,7 @@ namespace ModTechMaster.Data.Models.Mods
     using Core.Interfaces.Models;
     using Newtonsoft.Json.Linq;
 
-    public class JsonObjectSourcedFromFile : JsonObjectBase, ISourcedFromFile
+    public abstract class JsonObjectSourcedFromFile : JsonObjectBase, ISourcedFromFile
     {
         public JsonObjectSourcedFromFile(ObjectType objectType, string sourceFilePath, dynamic jsonObject) : base((JObject)jsonObject, objectType)
         {

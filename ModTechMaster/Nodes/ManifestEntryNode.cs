@@ -24,5 +24,6 @@ namespace ModTechMaster.Nodes
 
         public IManifestEntry ManifestEntry { get; }
         public override string Name => ManifestEntry.EntryType.ToString();
+        public override string HumanReadableContent => this.ManifestEntry.JsonString;
     }
 }

@@ -1,10 +1,8 @@
-﻿using ModTechMaster.Core.Constants;
-using ModTechMaster.Core.Enums.Mods;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
-    using System;
     using System.Collections.Generic;
+    using Core.Constants;
+    using Core.Enums.Mods;
     using Core.Interfaces.Models;
     using Newtonsoft.Json.Linq;
 
@@ -37,7 +35,8 @@ namespace ModTechMaster.Data.Models.Mods
             this.AddMetaData();
         }
 
-        public string Name { get; }
+        public override string Name { get; }
+        public override string Id { get; }
 
         public bool Enabled => this.enabled ?? true;
 
@@ -58,21 +57,24 @@ namespace ModTechMaster.Data.Models.Mods
         public HashSet<string> ConflictsWith { get; set; }
 
         public Dictionary<string, object> MetaData { get; } = new Dictionary<string, object>();
+
         public void AddMetaData()
         {
-            this.MetaData.Add(Keywords.Id, GetId);
-            this.MetaData.Add(Keywords.Name, Name);
+            this.MetaData.Add(Keywords.Id, this.GetId);
+            this.MetaData.Add(Keywords.Name, this.Name);
             this.MetaData.Add(Keywords.DependsOn, new List<string>(this.DependsOn));
         }
 
         public string GetId => this.Name;
+
         public List<IReferenceableObject> GetReferenceableObjects()
         {
-            List<IReferenceableObject> objects = new List<IReferenceableObject>();
+            var objects = new List<IReferenceableObject>();
             if (this.Manifest != null)
             {
-                objects.AddRange(Manifest.GetReferenceableObjects());
+                objects.AddRange(this.Manifest.GetReferenceableObjects());
             }
+
             objects.Add(this);
             return objects;
         }

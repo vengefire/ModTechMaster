@@ -13,5 +13,6 @@ namespace ModTechMaster.Nodes
 
         public IModCollection ModCollection { get; }
         public override string Name => ModCollection.Name;
+        public override string HumanReadableContent => this.ModCollection.Name;
     }
 }

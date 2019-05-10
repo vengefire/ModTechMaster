@@ -22,5 +22,8 @@
         {
             return this.Entries.SelectMany(entry => entry.Objects.Select(definition => definition as IReferenceableObject)).ToList();
         }
+
+        public override string Name => $"{this.Mod.Name}-Manifest";
+        public override string Id => this.Name;
     }
 }

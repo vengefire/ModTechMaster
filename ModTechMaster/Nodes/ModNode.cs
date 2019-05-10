@@ -17,5 +17,6 @@ namespace ModTechMaster.Nodes
         private ManifestNode Manifest { get; }
         public IMod Mod { get; }
         public override string Name => Mod.Name;
+        public override string HumanReadableContent => this.Mod.JsonString;
     }
 }

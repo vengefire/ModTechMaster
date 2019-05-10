@@ -6,6 +6,5 @@ namespace ModTechMaster.Core.Interfaces.Models
     {
         Dictionary<string, object> MetaData { get; }
         void AddMetaData();
-        string GetId { get; }
     }
 }

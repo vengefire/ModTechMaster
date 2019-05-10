@@ -5,5 +5,7 @@ namespace ModTechMaster.Core.Interfaces.Models
     public interface IObject
     {
         ObjectType ObjectType { get; }
+        string Name { get; }
+        string Id { get; }
     }
 }

@@ -10,6 +10,7 @@ namespace ModTechMaster.Nodes
         }
 
         public IObjectDefinition ObjectDefinition { get; }
-        public override string Name => ObjectDefinition.GetId;
+        public override string Name => this.ObjectDefinition.Id;
+        public override string HumanReadableContent => this.ObjectDefinition.JsonString;
     }
 }
