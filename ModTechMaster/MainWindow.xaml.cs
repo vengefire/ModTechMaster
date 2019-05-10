@@ -14,33 +14,32 @@ namespace ModTechMaster
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string FilterText { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
             var modService = new ModService(new MessageService(), new ManifestEntryProcessorFactory());
             var collectionData = modService.LoadCollectionFromPath(@"D:\source\repos\vf\ModTechMaster\TestData\In\Mods",
                 "Test Collection");
-
             var collectionNode = new ModCollectionNode(collectionData, null);
             tvModControl.ItemsSource = new ObservableCollection<ModCollectionNode> {collectionNode};
         }
 
+        public string FilterText { get; set; }
+
         private void BtnSelectAll_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private void BtnDeselectAll_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private async void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
+            var tb = (TextBox) sender;
+            var startLength = tb.Text.Length;
 
             await Task.Delay(300);
             if (startLength == tb.Text.Length)

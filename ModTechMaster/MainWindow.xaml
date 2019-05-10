@@ -3,69 +3,148 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ModTechMaster"
-        xmlns:self="clr-namespace:ModTechMaster"
         xmlns:nodes="clr-namespace:ModTechMaster.Nodes"
-        xmlns:converters="clr-namespace:ModTechMaster.Enums.ValueConverters"
+        xmlns:enumConverters="clr-namespace:ModTechMaster.Enums.ValueConverters"
+        xmlns:utils="clr-namespace:ModTechMaster.Utils"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="768" Width="1024">
     <Window.Resources>
-        <converters:SelectionStatusToIconConverter x:Key="SelectionStatusToIconConverter"/>
-        <converters:ObjectStatusToIconConverter x:Key="ObjectStatusConverter"/>
+        <enumConverters:SelectionStatusToIconConverter x:Key="SelectionStatusToIconConverter" />
+        <enumConverters:ObjectStatusToIconConverter x:Key="ObjectStatusConverter" />
     </Window.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Label>Filter Text:</Label>
-            <TextBox TextChanged="TextBoxBase_OnTextChanged" Text="{Binding FilterText, Mode=TwoWay, Delay=500}"/>
-        </StackPanel>
-        <DockPanel Grid.Row="1" Margin="0,2,0,-2">
-            <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Left" Margin="10">
-                <Button Name="btnSelectAll" Click="BtnSelectAll_OnClick" Width="120">Select All</Button>
-                <Button Name="btnDeselectAll" Click="BtnDeselectAll_OnClick" Width="120">Deselect All</Button>
-            </WrapPanel>
-            <TreeView Name="tvModControl" Margin="0,-6,0,6">
-                <TreeView.Resources>
-                    <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:IMTMTreeViewItem}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}}" Width="15" IsEnabled="False"/>
-                            <Image Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}" Width="15" IsEnabled="False"/>
-                        </StackPanel>
-                    </DataTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type nodes:ModCollectionNode}" ItemsSource="{Binding Mods}">
-                        <StackPanel Orientation="Horizontal">
-                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}"></ContentPresenter>
-                            <CheckBox />
-                            <TextBlock Text="{Binding ModCollection.Name}" />
-                            <TextBlock Text=" [" Foreground="Blue" />
-                            <TextBlock Text="{Binding Mods.Count}" Foreground="Blue" />
-                            <TextBlock Text="]" Foreground="Blue" />
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type nodes:ModNode}" ItemsSource="{Binding Contents}">
-                        <StackPanel Orientation="Horizontal">
-                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}"></ContentPresenter>
-                            <CheckBox />
-                            <TextBlock Text="{Binding Mod.Name}" />
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
-                    <DataTemplate DataType="{x:Type nodes:ManifestNode}">
-                        <StackPanel Orientation="Horizontal">
-                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}"></ContentPresenter>
-                            <TextBlock Text="Manifest" />
-                        </StackPanel>
-                    </DataTemplate>
-                </TreeView.Resources>
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="TreeViewItem">
-                        <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}"/>
-                        <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}"/>
-                    </Style>
-                </TreeView.ItemContainerStyle>
-            </TreeView>
-        </DockPanel>
-    </Grid>
+    <DockPanel utils:MarginSetter.Margin="5">
+        <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
+            <Grid Name="NavPanel">
+                <StackPanel Orientation="Horizontal" utils:MarginSetter.Margin="5">
+                    <Button>Nav Button 1</Button>
+                    <Button>Nav Button 2</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom">
+            <Grid Name="StatusPanel" utils:MarginSetter.Margin="5">
+                <StackPanel>
+                    <TextBlock HorizontalAlignment="Right">This is the status bar!</TextBlock>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
+            <Grid Name="CommandPanel" utils:MarginSetter.Margin="5">
+                <StackPanel>
+                    <Button>Command Button 1</Button>
+                    <Button>Command Button 2</Button>
+                    <Button>Button 3</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1">
+            <Grid utils:MarginSetter.Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="35" MaxHeight="35" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0">Filter Text:</Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" TextChanged="TextBoxBase_OnTextChanged"
+                             Text="{Binding FilterText}"
+                             VerticalAlignment="Center" />
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0" utils:MarginSetter.Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="0.15*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TreeView Name="tvModControl" Grid.Column="0" Grid.Row="0">
+                        <TreeView.Resources>
+                            <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:IMTMTreeViewItem}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}}"
+                                        Width="15" IsEnabled="False" />
+                                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+                                    <Image
+                                        Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}"
+                                        Width="15" IsEnabled="False" />
+                                </StackPanel>
+                            </DataTemplate>
+                            <HierarchicalDataTemplate DataType="{x:Type nodes:ModCollectionNode}"
+                                                      ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
+                                    <CheckBox />
+                                    <TextBlock Text="{Binding ModCollection.Name}" />
+                                    <TextBlock Text=" [" Foreground="Blue" />
+                                    <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
+                                    <TextBlock Text="]" Foreground="Blue" />
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                            <HierarchicalDataTemplate DataType="{x:Type nodes:ModNode}"
+                                                      ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
+                                    <CheckBox />
+                                    <TextBlock Text="{Binding Mod.Name}" />
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                            <HierarchicalDataTemplate DataType="{x:Type nodes:ManifestNode}"
+                                                      ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
+                                    <CheckBox />
+                                    <TextBlock Text="Manifest" />
+                                    <TextBlock Text=" [" Foreground="Blue" />
+                                    <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
+                                    <TextBlock Text="]" Foreground="Blue" />
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                            <HierarchicalDataTemplate DataType="{x:Type nodes:ManifestEntryNode}"
+                                                      ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
+                                    <CheckBox />
+                                    <TextBlock Text="{Binding ManifestEntry.EntryType}" />
+                                    <TextBlock Text=" [" Foreground="Blue" />
+                                    <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
+                                    <TextBlock Text="]" Foreground="Blue" />
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                            <DataTemplate DataType="{x:Type nodes:ObjectDefinitionNode}">
+                                <StackPanel Orientation="Horizontal">
+                                    <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
+                                    <CheckBox />
+                                    <TextBlock Text="{Binding ObjectDefinition.GetId}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </TreeView.Resources>
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="TreeViewItem">
+                                <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}" />
+                                <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}" />
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                    </TreeView>
+                    <GridSplitter Grid.Column="1" Width="2" Grid.Row="0" VerticalAlignment="Stretch"
+                                  HorizontalAlignment="Center" />
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="0">
+                        <TextBlock Name="txtDetail" />
+                    </Border>
+                    <GridSplitter Grid.Column="0" Grid.Row="1" Height="2" Grid.ColumnSpan="3"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                    <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+                        <TextBlock>Notification Text</TextBlock>
+                    </Border>
+                </Grid>
+            </Grid>
+        </Border>
+    </DockPanel>
 </Window>

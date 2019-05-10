@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using ModTechMaster.Enums;
 
 namespace ModTechMaster.Nodes
@@ -6,7 +6,7 @@ namespace ModTechMaster.Nodes
     public interface IMTMTreeViewItem
     {
         IMTMTreeViewItem Parent { get; }
-        List<IMTMTreeViewItem> Children { get; }
+        ObservableCollection<IMTMTreeViewItem> Children { get; }
         bool IsSelected { get; }
         bool IsExpanded { get; }
         bool HasCheck { get; }

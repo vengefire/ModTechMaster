@@ -56,6 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Nodes\ManifestEntryNode.cs" />
+    <Compile Include="Nodes\ObjectDefinitionNode.cs" />
+    <Compile Include="Utils\MarginSetter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -118,8 +121,14 @@
       <Project>{D9D9B467-A546-49C2-843D-45BE8E730FF8}</Project>
       <Name>ModTechMaster.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VF.WPF.CustomControls\VF.WPF.CustomControls.csproj">
+      <Project>{237f4688-e352-4e0c-b91b-9afc9bcc39c8}</Project>
+      <Name>VF.WPF.CustomControls</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Nodes\Converters\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\back.png" />
     <Resource Include="Resources\Images\cancel.png" />

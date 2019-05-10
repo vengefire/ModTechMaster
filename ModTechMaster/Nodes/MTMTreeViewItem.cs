@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ModTechMaster.Annotations;
@@ -6,7 +6,7 @@ using ModTechMaster.Enums;
 
 namespace ModTechMaster.Nodes
 {
-    public class MTMTreeViewItem : IMTMTreeViewItem, INotifyPropertyChanged
+    public abstract class MTMTreeViewItem : IMTMTreeViewItem, INotifyPropertyChanged
     {
         private bool _isChecked;
         private bool _isExpanded;
@@ -18,7 +18,9 @@ namespace ModTechMaster.Nodes
         }
 
         public IMTMTreeViewItem Parent { get; }
-        public List<IMTMTreeViewItem> Children { get; } = new List<IMTMTreeViewItem>();
+
+        public virtual ObservableCollection<IMTMTreeViewItem> Children { get; } =
+            new ObservableCollection<IMTMTreeViewItem>();
 
         public bool IsSelected
         {
