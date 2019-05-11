@@ -49,54 +49,34 @@
     <Compile Include="Utils\MarginSetter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\back.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\back.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\cancel.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\cancel.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\checked.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\checked.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\download %281%29.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\download %281%29.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\download.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\download.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\exclamation-mark.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\exclamation-mark.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\minus.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\minus.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\next.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\next.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\refresh.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\refresh.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\trash.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Images\trash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

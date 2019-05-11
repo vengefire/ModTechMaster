@@ -9,7 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ModCopyPage"
-      Background="White">
+      Background="White" Loaded="Page_Loaded">
     <Page.Resources>
         <valueConverters:SelectionStatusToIconConverter x:Key="SelectionStatusToIconConverter" />
         <valueConverters:ObjectStatusToIconConverter x:Key="ObjectStatusConverter" />

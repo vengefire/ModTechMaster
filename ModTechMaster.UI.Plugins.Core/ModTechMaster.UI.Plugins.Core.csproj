@@ -54,6 +54,7 @@
     <Compile Include="Services\PluginService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Commands\" />
     <Folder Include="Logic\" />
     <Folder Include="Models\" />
   </ItemGroup>

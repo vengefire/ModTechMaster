@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Windows;
+    using System.Windows.Controls.Ribbon;
     using Plugins.Core.Interfaces;
     using Plugins.Core.Services;
 
@@ -11,8 +12,8 @@
     /// </summary>
     public partial class MainWindow : Window
     {
-        private PluginService pluginService;
         private List<IPlugin> plugins;
+        private PluginService pluginService;
 
         public MainWindow()
         {
@@ -34,6 +35,24 @@
         {
             this.pluginService = new PluginService();
             this.plugins = this.pluginService.GetPlugins(".");
+            var tab = new RibbonTab {Header = @"Plugins"};
+            foreach (var plugin in this.plugins)
+            {
+                var group = new RibbonGroup {Header = plugin.Name};
+
+                foreach (var module in plugin.Modules)
+                {
+                    var moduleButton = new RibbonButton
+                    {
+                        Label = module.ModuleName, Command = new PluginModuleCommand(), CommandParameter = new PluginModuleCommandData(this.frmContent, module)
+                    };
+                    group.Items.Add(moduleButton);
+                }
+
+                tab.Items.Add(group);
+            }
+
+            this.rbnMain.Items.Add(tab);
         }
 
         /*public string FilterText { get; set; }
@@ -49,16 +68,5 @@
                 Console.WriteLine("Run Filter");
             }
         }*/
-
-        private void Home_Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.frmContent.Source = null;
-        }
-
-        private void ModCopy_Button_Click(object sender, RoutedEventArgs e)
-        {
-            //this.frmContent.Navigate(new Uri("pack://application:,,,/ModTechMaster.UI.Plugins.ModCopy;ModCopyPage.xaml", UriKind.RelativeOrAbsolute));
-            this.frmContent.Navigate(new Uri("/ModTechMaster.UI.Plugins.ModCopy;component/ModCopyPage.xaml", UriKind.RelativeOrAbsolute));
-        }
     }
 }

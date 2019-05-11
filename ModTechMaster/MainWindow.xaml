@@ -11,12 +11,49 @@
     </Window.Resources>
     <DockPanel utils:MarginSetter.Margin="5">
         <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
-            <Grid Name="NavPanel">
+            <Ribbon x:Name="rbnMain"  SelectedIndex="0">
+                <!-- Help Pane, located at the right-hand side -->
+                <!--Ribbon.HelpPaneContent>
+                    <TextBlock/>
+                </-->
+                <!-- Quick Access Toolbar - located at the upper-left corner -->
+                <!--Ribbon.QuickAccessToolBar>
+                    <RibbonQuickAccessToolBar>
+                        <RibbonButton x:Name ="Save"/>
+                            <RibbonSplitButton x:Name ="Undo">
+                            <RibbonSplitMenuItem Header="Undo 1" />
+                            <RibbonSplitMenuItem Header="Undo 2" />
+                            <RibbonSplitMenuItem Header="Undo 3" />
+                        </RibbonSplitButton>
+                        <RibbonSplitButton x:Name="Redo">
+                            <RibbonSplitMenuItem Header="Redo 1" />
+                            <RibbonSplitMenuItem Header="Redo 2" />
+                        </RibbonSplitButton>
+                    </RibbonQuickAccessToolBar>
+                </-->
+                <!-- Application Menu, located at the left-hand side (down arrow) -->
+                <Ribbon.ApplicationMenu>
+                    <RibbonApplicationMenu KeyTip="F" Visibility="Collapsed">
+                        <RibbonApplicationMenuItem Header="Options"/>
+                        <RibbonApplicationMenuItem Header="Exit"/>
+                    </RibbonApplicationMenu>
+                </Ribbon.ApplicationMenu>
+                <!-- Ribbon Tab #1: Home -->
+                <RibbonTab Name="rbnTabHome" Header="Home" KeyTip="H" >
+                    <RibbonGroup x:Name="HomeGroup" Header="Home">
+                        <RibbonButton Label="Exit" KeyTip="X" />
+                    </RibbonGroup>
+                    <RibbonGroup x:Name="ConfigGroup" Header="Configuration">
+                        <RibbonButton Label="Settings" KeyTip="S" />
+                    </RibbonGroup>
+                </RibbonTab>
+            </Ribbon>
+            <!--Grid Name="NavPanel">
                 <StackPanel Orientation="Horizontal" utils:MarginSetter.Margin="5">
                     <Button Click="Home_Button_Click">Home</Button>
                     <Button Click="ModCopy_Button_Click">ModCopy</Button>
                 </StackPanel>
-            </Grid>
+            </-->
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom">
             <Grid Name="StatusPanel" utils:MarginSetter.Margin="5">
