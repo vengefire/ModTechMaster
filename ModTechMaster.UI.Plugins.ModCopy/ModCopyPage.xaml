@@ -1,4 +1,4 @@
-﻿<Page x:Class="ModTechMaster.Plugins.ModCopy.ModCopyPage"
+﻿<Page x:Class="ModTechMaster.UI.Plugins.ModCopy.ModCopyPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

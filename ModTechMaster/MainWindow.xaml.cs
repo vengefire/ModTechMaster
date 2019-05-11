@@ -1,16 +1,23 @@
 ﻿namespace ModTechMaster.UI
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows;
+    using Plugins.Core.Interfaces;
+    using Plugins.Core.Services;
 
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        private PluginService pluginService;
+        private List<IPlugin> plugins;
+
         public MainWindow()
         {
             this.InitializeComponent();
+            this.InitializePlugins();
             /*var modService = new ModService(new MessageService(), new ManifestEntryProcessorFactory());
             var collectionData = modService.LoadCollectionFromPath(
                                                                    @"C:\dev\repos\ModTechMaster\TestData\In\Mods",
@@ -21,6 +28,12 @@
                 var collectionNode = new ModCollectionNode(collectionData, null);
                 //this.tvModControl.ItemsSource = new ObservableCollection<MTMTreeViewItem> {collectionNode};
             }*/
+        }
+
+        private void InitializePlugins()
+        {
+            this.pluginService = new PluginService();
+            this.plugins = this.pluginService.GetPlugins(".");
         }
 
         /*public string FilterText { get; set; }

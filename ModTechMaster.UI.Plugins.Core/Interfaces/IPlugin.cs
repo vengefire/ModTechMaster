@@ -6,6 +6,7 @@
     {
         string Name { get; }
         string Description { get; }
-        List<IPluginCommand> PluginCommands { get; }
+        List<IPluginModule> Modules { get; }
+        List<IPluginCommandCategory> PluginCommands { get; }
     }
 }

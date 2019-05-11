@@ -52,7 +52,6 @@
     <Compile Include="ModCopyPage.xaml.cs">
       <DependentUpon>ModCopyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ModCopyPlugin.cs" />
     <Compile Include="Nodes\IMTMTreeViewItem.cs" />
     <Compile Include="Nodes\ManifestEntryNode.cs" />
     <Compile Include="Nodes\ManifestNode.cs" />
