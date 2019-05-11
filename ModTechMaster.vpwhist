@@ -1,0 +1,250 @@
+[Global]
+CurrentProject=ModTechMaster\ModTechMaster.UI.vpj
+[ActiveConfig]
+ModTechMaster\ModTechMaster.UI.vpj=,Debug|AnyCPU
+ModTechMaster.Core\ModTechMaster.Core.vpj=,Debug|AnyCPU
+Framework\Framework.DAL\Framework.Data.vpj=,Debug|AnyCPU
+Framework\Framework.Domain\Framework.Domain.vpj=,Debug|AnyCPU
+Framework\Framework.Interfaces\Framework.Interfaces.vpj=,Debug|AnyCPU
+Framework\Framework.Logic\Framework.Logic.vpj=,Debug|AnyCPU
+Framework\Framework.Utils\Framework.Utils.vpj=,Debug|AnyCPU
+Framework\Framework.Windsor\Framework.Windsor.vpj=,Debug|AnyCPU
+ModTechMaster.Data\ModTechMaster.Data.vpj=,Debug|AnyCPU
+ModTechMaster.Logic\ModTechMaster.Logic.vpj=,Debug|AnyCPU
+MTM\MTM.vpj=,Debug|AnyCPU
+MTMScrape\MTMScrape.vpj=,Debug|AnyCPU
+ModTechMaster.Plugins.ModCopy\ModTechMaster.UI.Plugins.ModCopy.vpj=
+ModTechMaster.Plugins.Core\ModTechMaster.UI.Plugins.Core.vpj=
+ModTechMaster.UI.Data\ModTechMaster.UI.Data.vpj=,Debug|AnyCPU
+ModTechMaster.UI.Core\ModTechMaster.UI.Core.vpj=,Debug|AnyCPU
+[ProjectDates]
+ModTechMaster\ModTechMaster.UI.csproj=20190511131537387
+ModTechMaster.Core\ModTechMaster.Core.csproj=20190508154940816
+Framework\Framework.DAL\Framework.Data.csproj=20190511050343314
+Framework\Framework.Domain\Framework.Domain.csproj=20190507113534553
+Framework\Framework.Interfaces\Framework.Interfaces.csproj=20190511050417492
+Framework\Framework.Logic\Framework.Logic.csproj=20190511050415114
+Framework\Framework.Utils\Framework.Utils.csproj=20190511050410782
+Framework\Framework.Windsor\Framework.Windsor.csproj=20190511050354509
+ModTechMaster.Data\ModTechMaster.Data.csproj=20190508110824998
+ModTechMaster.Logic\ModTechMaster.Logic.csproj=20190508154940749
+MTM\MTM.csproj=20190508110824972
+MTMScrape\MTMScrape.csproj=20190507113534665
+ModTechMaster.Plugins.ModCopy\ModTechMaster.UI.Plugins.ModCopy.csproj=0
+ModTechMaster.Plugins.Core\ModTechMaster.UI.Plugins.Core.csproj=0
+ModTechMaster.UI.Data\ModTechMaster.UI.Data.csproj=20190511130029615
+ModTechMaster.UI.Core\ModTechMaster.UI.Core.csproj=20190511130029575
+[TreeExpansion2]
++ Framework
+  +@ Framework\Framework.Logic\Framework.Logic.csproj
+  +@ Framework\Framework.Interfaces\Framework.Interfaces.csproj
+  +@ Framework\Framework.Utils\Framework.Utils.csproj
+  +@ Framework\Framework.Domain\Framework.Domain.csproj
+  +@ Framework\Framework.Windsor\Framework.Windsor.csproj
+  +@ Framework\Framework.DAL\Framework.Data.csproj
++ Solution Files
++ Utils
+  +@ MTMScrape\MTMScrape.csproj
++@ ModTechMaster.Core\ModTechMaster.Core.csproj
++@ ModTechMaster.Data\ModTechMaster.Data.csproj
++@ ModTechMaster.Logic\ModTechMaster.Logic.csproj
++@ ModTechMaster.UI.Core\ModTechMaster.UI.Core.csproj
++@ ModTechMaster\ModTechMaster.UI.csproj
++@ ModTechMaster.UI.Data\ModTechMaster.UI.Data.csproj
++@ ModTechMaster.Plugins.Core\ModTechMaster.UI.Plugins.Core.csproj
++@ ModTechMaster.Plugins.ModCopy\ModTechMaster.UI.Plugins.ModCopy.csproj
++@ MTM\MTM.csproj
+scroll:0
+[State]
+SCREEN: 2560 1440 3041 36 968 1018 0 0 M 0 0 0 0 1535 687 0
+CWD: ModTechMaster
+FILEHIST: 9
+TestData\In\Mods\EternusMechs\mod.json
+TestData\In\Mods\Raza5_s Mech Emporium\mod.json
+TestData\In\Mods\RogueTech Core\mod.json
+TestData\In\Mods\RogueTechNormal\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\BattleTech_Data\output_log.txt
+\Games\Steam\steamapps\common\BATTLETECH\BattleTech_Data\StreamingAssets\data\debug\dsettings.json
+\Users\venge\AppData\Local\Temp\Rar$DRa19548.29715\C#\mainwindow.xaml
+\Users\venge\AppData\Local\Temp\Rar$DRa19548.38173\C#\databindinglabapp.xaml
+TestData\In\Mods\RogueTechNormal\AIPilotsBuff\pilot_d1_recruit.json
+ALLFILEHIST: 64
+\roguetech_sanity\MechEngineer\Settings.json
+\roguetech_install\BattleTech_Data\StreamingAssets\data\debug\settings.json
+\Games\Steam\steamapps\common\BATTLETECH\Settings.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\ContractSort\settings.json
+\roguetech_sanity\MechEngineer\Settings.defaults.json
+TestData\In\Mods\RogueTechNormal\AIPilotsBuff\pilot_d1_recruit.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\output_log.txt
+\Games\Steam\steamapps\common\BATTLETECH\BattleTech_Data\output_log.txt
+\Games\Steam\steamapps\common\BATTLETECH\Mods\.modtek\ModTek.log
+\roguetech_sanity\RandomCampaignStart\mod.json
+\roguetech_sanity\FYLS\mod.json
+\roguetech_install\Mods\VanillaEnabler\mod.json
+\roguetech_install\Mods\RandomCampaignStart\mod.json
+\roguetech_install\Mods\GPMechDefs\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\Turbine\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\RogueTechNormal\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\RogueTech Core\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\RogueModuleTech\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\RogueLogo\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\Replacement_MechPortraits\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\RandomCampaignStart\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\MechEngineer\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\LowVisibility\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\GPMechDefs\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\ExperimentalWeapons\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CustomComponents\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CustomAmmoCategories\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\Custom Ammo categories\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CrystalClear\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\ContractSort\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CommunityAssets\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\BDMechDefs\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\BattletechPerformanceFix\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\B4ColMechs\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\AdjustedMechAssembly\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods - XLRP\CustomComponents\mod.json
+TestData\In\Mods\RogueTechNormal\mod.json
+TestData\In\Mods\RogueTech Core\mod.json
+TestData\In\Mods\Raza5_s Mech Emporium\mod.json
+TestData\In\Mods\EternusMechs\mod.json
+TestData\In\Mods\DynamicShops\mod.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\RogueVanillaMechs\mech\mechdef_atlas_AS7-D.json
+\Users\venge\AppData\Local\Temp\Rar$DRa19548.29715\C#\mainwindow.xaml
+\roguetech_install\Mods\firemodes.txt
+\Games\Steam\steamapps\common\BATTLETECH\Mods\RogueModuleTech\basic\ChassisDefaults\emod_armorslots_clstandard.json
+\Games\Steam\steamapps\common\BATTLETECH\BattleTech_Data\StreamingAssets\data\debug\dsettings.json
+\roguetech_sanity\CustomComponents\defaults\Defaults_MechEngineer.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CustomComponents\defaults\Defaults_MechEngineer.json
+\Games\Steam\steamapps\common\BATTLETECH\debug.log
+\Users\venge\AppData\Local\Temp\Rar$DRa19548.38173\C#\databindinglabapp.xaml
+\Games\Steam\steamapps\common\BATTLETECH\Mods\.modtek\Database\database_cache.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CustomAmmoCategories\CustomAmmoCategoriesSettings.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CustomAmmoCategories\CustomAmmoCategories.log
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CustomAmmoCategories\CustomAmmoCategories.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CommunityAssets\CommunityAssetsReadme.txt
+\Games\Steam\steamapps\common\BATTLETECH\Mods\cleaned_output_log.txt
+\roguetech_install\Mods\RogueModuleElites\chassis\chassisdef_NovaCat_NCT-Mir.json
+..\..\chal_set.txt
+\roguetech_sanity\CustomComponents\categories\Categories_MechEngineer.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CustomComponents\categories\Categories_MechEngineer.json
+\roguetech_install\Mods\RogueTechNormal\StreamingAssets\data\constants\CareerDifficultySettings.json
+\Games\Steam\steamapps\common\BATTLETECH\Mods\BTModLoader.log
+\roguetech_install\Mods\audoevent_list.txt
+\Games\Steam\steamapps\common\BATTLETECH\Mods\CustomAmmoCategories\ApplicationConstants\ApplicationConstants.json
+TBCLASS: 0 0
+STANDARD_LAYOUT: 56 1 40 11 4 M 0
+_tbnotification_form F=36
+_tbdeltasave_form F=0
+_tbfind_form F=36
+_tbdebug_watches_form F=64
+_tbbookmarks_form F=8
+_tbsearch_form F=8
+_tbfind_symbol_form F=32
+_tbFTPClient_form F=0
+_tbdebug_members_form F=64
+_tbbufftabs_form F=11
+_tbopen_form F=40
+_tbdebug_threads_form F=64
+_tbdebug_classes_form F=64
+_tbdebug_memory_form F=64
+_tbbaseclasses_form F=40
+_tbderivedclasses_form F=40
+_tbclass_form F=8
+_tbunittest_form F=0
+_tbsymbolcalls_form F=40
+_tbannotations_browser_form F=0
+_tbFTPOpen_form F=0
+_tbfilelist_form F=44
+_tbslickc_stack_form F=8
+_tbprops_form F=8
+_tbtagwin_form F=8
+_tbtagrefs_form F=8
+_tboutputwin_form F=8
+_tbdebug_exceptions_form F=384
+_tbregex_form F=40
+_tbmessages_browser_form F=8
+_tbcbrowser_form F=8
+_tbproctree_form F=8
+_tbprojects_form F=8
+_tbshell_form F=8
+_tbdebug_stack_form F=64
+_tbdebug_locals_form F=64
+_tbdebug_autovars_form F=64
+_tbdebug_regs_form F=64
+_tbdebug_breakpoints_form F=384
+_tbclipboard_form F=44
+_tbcbrowser_form T=0
+_tbshell_form T=0
+_tbsearch_form T=0
+_tboutputwin_form T=0
+_tbclass_form T=0
+_tbproctree_form T=0
+_tbtagwin_form T=0
+_tbprojects_form T=0
+_tbopen_form T=0
+_tbmessages_browser_form T=0
+_tbtagrefs_form T=0
+AAAAAwAAAAEAAAAC2gAAAAIAMAAAAAAAAAA1AAAHfwAAA+IAAAAAAAAAAAAACf8AAAV3AAAAAesAAARwAAAAAPsAAAACAAAAAgAAAAAAAAAB+wAAAAIAAAACAAAAAAAAAAH9AAABoQAAAAAaADoAOgA6AC8AdgBEAG8AYwBrAEEAcgBlAGEBAAAAAXwAAQAAAAL7AAAABQAAAAUAAAAAAAAABAAAAAEAAAACAAAAA/sAAAAFAAAABQAAAAAAAAABAAAAAgAAAAMAAAAE/AAAAD0AAAAAKAAwADoAOgA6AF8AdABiAHAAcgBvAGoAZQBjAHQAcwBfAGYAbwByAG0BAP////8AAf///////////AAAAD0AAAAAKAAwADoAOgA6AF8AdABiAHAAcgBvAGMAdAByAGUAZQBfAGYAbwByAG0AAP////8AAP///////////AAAADcAAAAAIgAwADoAOgA6AF8AdABiAGMAbABhAHMAcwBfAGYAbwByAG0AAP////8AAP///////////AAAAD0AAAAAKAAwADoAOgA6AF8AdABiAGMAYgByAG8AdwBzAGUAcgBfAGYAbwByAG0AAP////8AAP///////////AAAADUAAAAAIAAwADoAOgA6AF8AdABiAG8AcABlAG4AXwBmAG8AcgBtAAD/////AAD///////////0AAAJ7AAAAABoAOgA6ADoALwB2AEQAbwBjAGsAQQByAGUAYQEAAAADNAAAAAAAAfsAAAACAAAAAgAAAAEAAAAA+wAAAAIAAAACAAAAAQAAAAD8AAAAKQAAAAAcADoAOgA6AE0ARABJAEEAUgBFAEEAVABJAEwARQEAAAACrwAA/QAAAfsAAAAAGgA6ADoAOgAvAHYARABvAGMAawBBAHIAZQBhAQAAAAD6AAAAAAAC+wAAAAYAAAAGAAAAAAAAAAIAAAAEAAAAAQAAAAUAAAAD+wAAAAYAAAAGAAAAAAAAAAEAAAACAAAAAwAAAAQAAAAF/AAAADkAAAAAJAAwADoAOgA6AF8AdABiAHMAZQBhAHIAYwBoAF8AZgBvAHIAbQEA/////wAA///////////8AAAAOQAAAAAkADAAOgA6ADoAXwB0AGIAdABhAGcAdwBpAG4AXwBmAG8AcgBtAAD/////AAD///////////wAAAA7AAAAACYAMAA6ADoAOgBfAHQAYgB0AGEAZwByAGUAZgBzAF8AZgBvAHIAbQAA/////wAA///////////8AAAANwAAAAAiADAAOgA6ADoAXwB0AGIAcwBoAGUAbABsAF8AZgBvAHIAbQAA/////wAA///////////8AAAATQAAAAA4ADAAOgA6ADoAXwB0AGIAbQBlAHMAcwBhAGcAZQBzAF8AYgByAG8AdwBzAGUAcgBfAGYAbwByAG0AAP////8AAP///////////AAAAD8AAAAAKgAwADoAOgA6AF8AdABiAG8AdQB0AHAAdQB0AHcAaQBuAF8AZgBvAHIAbQAA/////wAA//////////8AAAAA2wAAAAAAAAAC2wAAAAAAAAAB2wAAAAAAAAAD2wAAAAAAAAAA2gAAAB4AMAAtADEANQA1ADYAOQA1ADgAMAA1ADIANAA1ADAATgAADloAAADRAAAP9wAAA28AAAoAAAAAAAAAEX8AAAQPAAAAAesAAAEIAAAAAPsAAAACAAAAAgAAAAAAAAAB+wAAAAIAAAACAAAAAAAAAAH9AAAAiwAAAAAaADoAOgA6AC8AdgBEAG8AYwBrAEEAcgBlAGEAAQAABPAAAAAAAAL7AAAAAQAAAAEAAAAA+wAAAAEAAAABAAAAAPwAAABBAQAAACAAMQA6ADoAOgBfAHQAYgBmAGkAbgBkAF8AZgBvAHIAbQAB/////wAAAAABkAAAAnkAAAFqpw7rxwAAAAD8AAAAKQAAAAAcADoAOgA6AE0ARABJAEEAUgBFAEEAVABJAEwARQAB/////wAAAAAAANsAAAAAAAAAAtsAAAAAAAAAAdsAAAAAAAAAA9sAAAAAAAAAAA==
+QTOOLBAR 2 0
+AAAA/wAAAAD9AAAAAAAAB4AAAAOuAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAQAFMAdABhAG4AZABhAHIAZAEAAAAA/////wAAAAAAAAAAAAAAHgBDAHUAcgByAGUAbgB0ACAAQwBvAG4AdABlAHgAdAEAAAJx/////wAAAAAAAAAA
+_tbstandard_form 1
+_tbcontext_form 1
+APP_LAYOUT: 56 1 40 11 4 M 0
+_tbnotification_form F=36
+_tbdeltasave_form F=0
+_tbfind_form F=36
+_tbdebug_watches_form F=64
+_tbbookmarks_form F=8
+_tbsearch_form F=8
+_tbfind_symbol_form F=32
+_tbFTPClient_form F=0
+_tbdebug_members_form F=64
+_tbbufftabs_form F=11
+_tbopen_form F=40
+_tbdebug_threads_form F=64
+_tbdebug_classes_form F=64
+_tbdebug_memory_form F=64
+_tbbaseclasses_form F=40
+_tbderivedclasses_form F=40
+_tbclass_form F=8
+_tbunittest_form F=0
+_tbsymbolcalls_form F=40
+_tbannotations_browser_form F=0
+_tbFTPOpen_form F=0
+_tbfilelist_form F=44
+_tbslickc_stack_form F=8
+_tbprops_form F=8
+_tbtagwin_form F=8
+_tbtagrefs_form F=8
+_tboutputwin_form F=8
+_tbdebug_exceptions_form F=384
+_tbregex_form F=40
+_tbmessages_browser_form F=8
+_tbcbrowser_form F=8
+_tbproctree_form F=8
+_tbprojects_form F=8
+_tbshell_form F=8
+_tbdebug_stack_form F=64
+_tbdebug_locals_form F=64
+_tbdebug_autovars_form F=64
+_tbdebug_regs_form F=64
+_tbdebug_breakpoints_form F=384
+_tbclipboard_form F=44
+_tbcbrowser_form T=0
+_tbshell_form T=0
+_tbsearch_form T=0
+_tboutputwin_form T=0
+_tbclass_form T=0
+_tbproctree_form T=0
+_tbtagwin_form T=0
+_tbprojects_form T=0
+_tbopen_form T=0
+_tbmessages_browser_form T=0
+_tbtagrefs_form T=0
+AAAAAwAAAAEAAAAC2gAAAAIAMAAAAAAAAAA1AAAHfwAAA+IAAAAAAAAAAAAACf8AAAV3AAAAAesAAARwAAAAAPsAAAACAAAAAgAAAAAAAAAB+wAAAAIAAAACAAAAAAAAAAH9AAABoQAAAAAaADoAOgA6AC8AdgBEAG8AYwBrAEEAcgBlAGEBAAAAAXwAAQAAAAL7AAAABQAAAAUAAAAAAAAABAAAAAEAAAACAAAAA/sAAAAFAAAABQAAAAAAAAABAAAAAgAAAAMAAAAE/AAAAD0AAAAAKAAwADoAOgA6AF8AdABiAHAAcgBvAGoAZQBjAHQAcwBfAGYAbwByAG0BAP////8AAf///////////AAAAD0AAAAAKAAwADoAOgA6AF8AdABiAHAAcgBvAGMAdAByAGUAZQBfAGYAbwByAG0AAP////8AAP///////////AAAADcAAAAAIgAwADoAOgA6AF8AdABiAGMAbABhAHMAcwBfAGYAbwByAG0AAP////8AAP///////////AAAAD0AAAAAKAAwADoAOgA6AF8AdABiAGMAYgByAG8AdwBzAGUAcgBfAGYAbwByAG0AAP////8AAP///////////AAAADUAAAAAIAAwADoAOgA6AF8AdABiAG8AcABlAG4AXwBmAG8AcgBtAAD/////AAD///////////0AAAJ7AAAAABoAOgA6ADoALwB2AEQAbwBjAGsAQQByAGUAYQEAAAADNAAAAAAAAfsAAAACAAAAAgAAAAEAAAAA+wAAAAIAAAACAAAAAQAAAAD8AAAAKQAAAAAcADoAOgA6AE0ARABJAEEAUgBFAEEAVABJAEwARQEAAAACrwAA/QAAAfsAAAAAGgA6ADoAOgAvAHYARABvAGMAawBBAHIAZQBhAQAAAAD6AAAAAAAC+wAAAAYAAAAGAAAAAAAAAAIAAAAEAAAAAQAAAAUAAAAD+wAAAAYAAAAGAAAAAAAAAAEAAAACAAAAAwAAAAQAAAAF/AAAADkAAAAAJAAwADoAOgA6AF8AdABiAHMAZQBhAHIAYwBoAF8AZgBvAHIAbQEA/////wAA///////////8AAAAOQAAAAAkADAAOgA6ADoAXwB0AGIAdABhAGcAdwBpAG4AXwBmAG8AcgBtAAD/////AAD///////////wAAAA7AAAAACYAMAA6ADoAOgBfAHQAYgB0AGEAZwByAGUAZgBzAF8AZgBvAHIAbQAA/////wAA///////////8AAAANwAAAAAiADAAOgA6ADoAXwB0AGIAcwBoAGUAbABsAF8AZgBvAHIAbQAA/////wAA///////////8AAAATQAAAAA4ADAAOgA6ADoAXwB0AGIAbQBlAHMAcwBhAGcAZQBzAF8AYgByAG8AdwBzAGUAcgBfAGYAbwByAG0AAP////8AAP///////////AAAAD8AAAAAKgAwADoAOgA6AF8AdABiAG8AdQB0AHAAdQB0AHcAaQBuAF8AZgBvAHIAbQAA/////wAA//////////8AAAAA2wAAAAAAAAAC2wAAAAAAAAAB2wAAAAAAAAAD2wAAAAAAAAAA2gAAAB4AMAAtADEANQA1ADYAOQA1ADgAMAA1ADIANAA1ADAATgAADloAAADRAAAP9wAAA28AAAoAAAAAAAAAEX8AAAQPAAAAAesAAAEIAAAAAPsAAAACAAAAAgAAAAAAAAAB+wAAAAIAAAACAAAAAAAAAAH9AAAAiwAAAAAaADoAOgA6AC8AdgBEAG8AYwBrAEEAcgBlAGEAAQAABPAAAAAAAAL7AAAAAQAAAAEAAAAA+wAAAAEAAAABAAAAAPwAAABBAQAAACAAMQA6ADoAOgBfAHQAYgBmAGkAbgBkAF8AZgBvAHIAbQAB/////wAAAAABkAAAAnkAAAFqpw7rxwAAAAD8AAAAKQAAAAAcADoAOgA6AE0ARABJAEEAUgBFAEEAVABJAEwARQAB/////wAAAAAAANsAAAAAAAAAAtsAAAAAAAAAAdsAAAAAAAAAA9sAAAAAAAAAAA==
+QTOOLBAR 2 0
+AAAA/wAAAAD9AAAAAAAAB4AAAAOuAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAQAFMAdABhAG4AZABhAHIAZAEAAAAA/////wAAAAAAAAAAAAAAHgBDAHUAcgByAGUAbgB0ACAAQwBvAG4AdABlAHgAdAEAAAJx/////wAAAAAAAAAA
+_tbstandard_form 1
+_tbcontext_form 1

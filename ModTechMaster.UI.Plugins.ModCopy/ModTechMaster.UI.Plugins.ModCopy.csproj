@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{36B0C54B-2F26-4D6F-907C-A19FD8B7A064}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>ModTechMaster.UI.Plugins.ModCopy</RootNamespace>
+    <AssemblyName>ModTechMaster.UI.Plugins.ModCopy</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ModCopyPage.xaml.cs">
+      <DependentUpon>ModCopyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModCopyPlugin.cs" />
+    <Compile Include="Nodes\IMTMTreeViewItem.cs" />
+    <Compile Include="Nodes\ManifestEntryNode.cs" />
+    <Compile Include="Nodes\ManifestNode.cs" />
+    <Compile Include="Nodes\ModCollectionNode.cs" />
+    <Compile Include="Nodes\ModNode.cs" />
+    <Compile Include="Nodes\MTMTreeViewItem.cs" />
+    <Compile Include="Nodes\ObjectDefinitionNode.cs" />
+    <Compile Include="Plugin\ModCopyPlugin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="ModCopyPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModTechMaster.Core\ModTechMaster.Core.csproj">
+      <Project>{f1c5c7c8-c8f3-46fc-9339-746dc0a2a185}</Project>
+      <Name>ModTechMaster.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.UI.Plugins.Core\ModTechMaster.UI.Plugins.Core.csproj">
+      <Project>{5043194f-4908-4337-a148-97b9cbd8cb82}</Project>
+      <Name>ModTechMaster.UI.Plugins.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.UI.Core\ModTechMaster.UI.Core.csproj">
+      <Project>{2517ef78-4c4f-4f3a-a245-31ccbc0e2003}</Project>
+      <Name>ModTechMaster.UI.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.UI.Data\ModTechMaster.UI.Data.csproj">
+      <Project>{305b2295-0c04-48d6-914b-4b1c30c153cc}</Project>
+      <Name>ModTechMaster.UI.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

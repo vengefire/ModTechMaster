@@ -38,7 +38,7 @@
         /// <param name="args">Dictionary of arguments.</param>
         /// <typeparam name="T">The type to get.</typeparam>
         /// <returns>Instance of T.</returns>
-        T GetInstance<T>(IDictionary args);
+        T GetInstance<T>(IEnumerable<KeyValuePair<string, object>> args);
 
         /// <summary>
         ///     Gets an instance of the type specified by T.

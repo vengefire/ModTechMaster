@@ -96,7 +96,7 @@
             return this.TransientResolve<T>();
         }
 
-        public T GetInstance<T>(IDictionary args)
+        public T GetInstance<T>(IEnumerable<KeyValuePair<string, object>> args)
         {
             return this.container.Resolve<T>(args);
         }
