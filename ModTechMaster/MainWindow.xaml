@@ -17,8 +17,8 @@
         <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
             <Grid Name="NavPanel">
                 <StackPanel Orientation="Horizontal" utils:MarginSetter.Margin="5">
-                    <Button>Nav Button 1</Button>
-                    <Button>Nav Button 2</Button>
+                    <Button Click="Home_Button_Click">Home</Button>
+                    <Button Click="ModCopy_Button_Click">ModCopy</Button>
                 </StackPanel>
             </Grid>
         </Border>
@@ -39,7 +39,8 @@
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1">
-            <Grid utils:MarginSetter.Margin="5">
+            <Frame Name="frmContent"></Frame>
+            <!--Grid utils:MarginSetter.Margin="5">
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="35" MaxHeight="35" />
                     <RowDefinition />
@@ -109,21 +110,20 @@
                     <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="0">
                         <ContentPresenter Content="{Binding ElementName=tvModControl, Path=SelectedItem}">
                             <ContentPresenter.Resources>
-                                <DataTemplate DataType="{x:Type nodes:ModNode}">
+                                <DataTemplate DataType="{x:Type nodes:ModCollectionNode}">
                                     <StackPanel>
-                                        <TextBlock Text="{Binding Name}"/>
-                                        <TextBlock Text="Item Count : {Binding Children.Count}"/>
-                                        <TextBlock Text="{Binding HumanReadableContent}"></TextBlock>
+                                        <TextBlock Text="{Binding Name}" />
                                     </StackPanel>
                                 </DataTemplate>
-                                <DataTemplate DataType="{x:Type nodes:ManifestNode}">
-                                    <TextBlock Text="{Binding HumanReadableContent}"/>
+                                <DataTemplate DataType="{x:Type nodes:ModNode}">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </StackPanel>
                                 </DataTemplate>
-                                <DataTemplate DataType="{x:Type nodes:ManifestEntryNode}">
-                                    <TextBlock Text="{Binding HumanReadableContent}"/>
-                                </DataTemplate>
-                                <DataTemplate DataType="{x:Type nodes:ObjectDefinitionNode}">
-                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding HumanReadableContent}"/>
+                                <DataTemplate DataType="{x:Type nodes:MTMTreeViewItem}">
+                                    <ScrollViewer>
+                                        <TextBlock Text="{Binding HumanReadableContent}" />
+                                    </ScrollViewer>
                                 </DataTemplate>
                             </ContentPresenter.Resources>
                         </ContentPresenter>
@@ -134,7 +134,7 @@
                         <TextBlock>Notification Text</TextBlock>
                     </Border>
                 </Grid>
-            </Grid>
+            </Grid-->
         </Border>
     </DockPanel>
 </Window>

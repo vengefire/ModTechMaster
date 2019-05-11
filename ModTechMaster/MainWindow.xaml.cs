@@ -25,7 +25,7 @@
             if (null != collectionData)
             {
                 var collectionNode = new ModCollectionNode(collectionData, null);
-                this.tvModControl.ItemsSource = new ObservableCollection<MTMTreeViewItem> {collectionNode};
+                //this.tvModControl.ItemsSource = new ObservableCollection<MTMTreeViewItem> {collectionNode};
             }
         }
 
@@ -41,6 +41,16 @@
             {
                 Console.WriteLine("Run Filter");
             }
+        }
+
+        private void Home_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.frmContent.Source = null;
+        }
+
+        private void ModCopy_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.frmContent.Navigate(new System.Uri("/Plugins/ModCopy/ModCopyPage.xaml", UriKind.RelativeOrAbsolute));
         }
     }
 }

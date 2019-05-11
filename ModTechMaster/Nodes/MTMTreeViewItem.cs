@@ -1,20 +1,20 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ModTechMaster.Annotations;
-using ModTechMaster.Enums;
-
-namespace ModTechMaster.Nodes
+﻿namespace ModTechMaster.Nodes
 {
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using Annotations;
+    using Enums;
+
     public abstract class MTMTreeViewItem : IMTMTreeViewItem, INotifyPropertyChanged
     {
-        private bool _isChecked;
+        private bool? _isChecked = false;
         private bool _isExpanded;
         private bool _isSelected;
 
         public MTMTreeViewItem(IMTMTreeViewItem parent)
         {
-            Parent = parent;
+            this.Parent = parent;
         }
 
         public IMTMTreeViewItem Parent { get; }
@@ -24,41 +24,41 @@ namespace ModTechMaster.Nodes
 
         public bool IsSelected
         {
-            get => _isSelected;
+            get => this._isSelected;
             set
             {
-                if (value != IsSelected)
+                if (value != this.IsSelected)
                 {
-                    _isSelected = value;
-                    OnPropertyChanged("IsSelected");
+                    this._isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
                 }
             }
         }
 
         public bool IsExpanded
         {
-            get => _isExpanded;
+            get => this._isExpanded;
             set
             {
-                if (value != _isExpanded)
+                if (value != this._isExpanded)
                 {
-                    _isExpanded = value;
-                    OnPropertyChanged("IsExpanded");
+                    this._isExpanded = value;
+                    this.OnPropertyChanged("IsExpanded");
                 }
             }
         }
 
         public bool HasCheck => false;
 
-        public bool IsChecked
+        public bool? IsChecked
         {
-            get => _isChecked;
+            get => this?._isChecked;
             set
             {
-                if (value != _isChecked)
+                if (value != this._isChecked)
                 {
-                    CheckNode(this, value);
-                    OnPropertyChanged("IsChecked");
+                    MTMTreeViewItem.CheckNode(this, value);
+                    this.OnPropertyChanged("IsChecked");
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace ModTechMaster.Nodes
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public static void CheckNode(MTMTreeViewItem node, bool value)
+        public static void CheckNode(MTMTreeViewItem node, bool? value)
         {
             node._isChecked = value;
             foreach (var child in node.Children) child.IsChecked = value;
@@ -79,7 +79,7 @@ namespace ModTechMaster.Nodes
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
