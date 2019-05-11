@@ -12,11 +12,11 @@
             switch ((SelectionStatus) value)
             {
                 case SelectionStatus.Unselected:
-                    return "./Resources/Images/trash.png";
+                    return "/ModTechMaster.UI.Core;component/Resources/Images/trash.png";
                 case SelectionStatus.PartiallySelected:
-                    return "./Resources/Images/minus.png";
+                    return "/ModTechMaster.UI.Core;component/Resources/Images/minus.png";
                 case SelectionStatus.Selected:
-                    return "./Resources/Images/plus.png";
+                    return "/ModTechMaster.UI.Core;component/Resources/Images/plus.png";
             }
 
             return "./Resources/Images/cancel.png";

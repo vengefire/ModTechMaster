@@ -12,14 +12,14 @@
             switch ((ObjectStatus) value)
             {
                 case ObjectStatus.Nominal:
-                    return "./Resources/Images/checked.png";
+                    return "/ModTechMaster.UI.Core;component/Resources/Images/checked.png";
                 case ObjectStatus.Warning:
-                    return "./Resources/Images/exclamation-mark.png";
+                    return "/ModTechMaster.UI.Core;component/Resources/Images/exclamation-mark.png";
                 case ObjectStatus.Error:
-                    return "./Resources/Images/cancel.png";
+                    return "/ModTechMaster.UI.Core;component/Resources/Images/cancel.png";
             }
 
-            return "./Resources/Images/cancel.png";
+            return "/ModTechMaster.UI.Core;component/Resources/Images/cancel.png";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

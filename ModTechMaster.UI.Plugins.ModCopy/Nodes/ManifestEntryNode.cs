@@ -24,6 +24,6 @@
 
         public IManifestEntry ManifestEntry { get; }
         public override string Name => this.ManifestEntry.EntryType.ToString();
-        public override string HumanReadableContent => this.ManifestEntry.JsonString;
+        public override string HumanReadableContent => this.ManifestEntry.EntryType.ToString();
     }
 }

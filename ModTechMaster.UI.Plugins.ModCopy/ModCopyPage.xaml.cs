@@ -13,7 +13,7 @@
     /// <summary>
     ///     Interaction logic for ModCopyPage.xaml
     /// </summary>
-    public partial class ModCopyPage : Page, IPluginModule
+    public partial class ModCopyPage : UserControl, IPluginModule
     {
         private ObservableCollection<MTMTreeViewItem> modCollectionData;
 

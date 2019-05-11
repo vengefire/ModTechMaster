@@ -11,7 +11,7 @@
     </Window.Resources>
     <DockPanel utils:MarginSetter.Margin="5">
         <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
-            <Ribbon x:Name="rbnMain"  SelectedIndex="0">
+            <Ribbon x:Name="rbnMain" SelectedIndex="0">
                 <!-- Help Pane, located at the right-hand side -->
                 <!--Ribbon.HelpPaneContent>
                     <TextBlock/>
@@ -34,12 +34,12 @@
                 <!-- Application Menu, located at the left-hand side (down arrow) -->
                 <Ribbon.ApplicationMenu>
                     <RibbonApplicationMenu KeyTip="F" Visibility="Collapsed">
-                        <RibbonApplicationMenuItem Header="Options"/>
-                        <RibbonApplicationMenuItem Header="Exit"/>
+                        <RibbonApplicationMenuItem Header="Options" />
+                        <RibbonApplicationMenuItem Header="Exit" />
                     </RibbonApplicationMenu>
                 </Ribbon.ApplicationMenu>
                 <!-- Ribbon Tab #1: Home -->
-                <RibbonTab Name="rbnTabHome" Header="Home" KeyTip="H" >
+                <RibbonTab Name="rbnTabHome" Header="Home" KeyTip="H">
                     <RibbonGroup x:Name="HomeGroup" Header="Home">
                         <RibbonButton Label="Exit" KeyTip="X" />
                     </RibbonGroup>
@@ -72,7 +72,7 @@
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1">
-            <Frame Name="frmContent"></Frame>
+            <ContentControl Name="frmContent" BorderBrush="Black" BorderThickness="1" />
         </Border>
     </DockPanel>
 </Window>

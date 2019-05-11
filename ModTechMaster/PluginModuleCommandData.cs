@@ -5,13 +5,13 @@
 
     public class PluginModuleCommandData
     {
-        public PluginModuleCommandData(Frame containerFrame, IPluginModule module)
+        public PluginModuleCommandData(ContentControl containerFrame, IPluginModule module)
         {
             this.ContainerFrame = containerFrame;
             this.Module = module;
         }
 
-        public Frame ContainerFrame { get; }
+        public ContentControl ContainerFrame { get; }
         public IPluginModule Module { get; }
     }
 }
