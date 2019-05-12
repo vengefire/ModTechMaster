@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Controls.Ribbon;
     using Plugins.Core.Interfaces;
     using Plugins.Core.Services;
@@ -19,16 +20,6 @@
         {
             this.InitializeComponent();
             this.InitializePlugins();
-            /*var modService = new ModService(new MessageService(), new ManifestEntryProcessorFactory());
-            var collectionData = modService.LoadCollectionFromPath(
-                                                                   @"C:\dev\repos\ModTechMaster\TestData\In\Mods",
-                                                                   "Test Collection");
-
-            if (null != collectionData)
-            {
-                var collectionNode = new ModCollectionNode(collectionData, null);
-                //this.tvModControl.ItemsSource = new ObservableCollection<MTMTreeViewItem> {collectionNode};
-            }*/
         }
 
         private void InitializePlugins()
@@ -42,11 +33,11 @@
 
                 foreach (var module in plugin.Modules)
                 {
-                    var moduleButton = new RibbonButton
-                    {
-                        Label = module.ModuleName, Command = new PluginModuleCommand(), CommandParameter = new PluginModuleCommandData(this.frmContent, module)
-                    };
-                    group.Items.Add(moduleButton);
+                    var moduleTab = new TabItem {Header = module.ModuleName};
+                    moduleTab.Content = Activator.CreateInstance(module.PageType);
+                    this.tabPages.Items.Add(moduleTab);
+                    //var moduleButton = new RibbonButton {Label = module.ModuleName, Command = new PluginModuleCommand(), CommandParameter = new PluginModuleCommandData(this.frmContent, module)};
+                    //group.Items.Add(moduleButton);
                 }
 
                 tab.Items.Add(group);
@@ -54,19 +45,5 @@
 
             this.rbnMain.Items.Add(tab);
         }
-
-        /*public string FilterText { get; set; }
-
-        private async void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            var tb = (TextBox)sender;
-            var startLength = tb.Text.Length;
-
-            await Task.Delay(300);
-            if (startLength == tb.Text.Length)
-            {
-                Console.WriteLine("Run Filter");
-            }
-        }*/
     }
 }

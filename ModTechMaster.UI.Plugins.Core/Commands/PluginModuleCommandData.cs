@@ -1,7 +1,7 @@
-﻿namespace ModTechMaster.UI
+﻿namespace ModTechMaster.UI.Plugins.Core.Commands
 {
     using System.Windows.Controls;
-    using Plugins.Core.Interfaces;
+    using Interfaces;
 
     public class PluginModuleCommandData
     {

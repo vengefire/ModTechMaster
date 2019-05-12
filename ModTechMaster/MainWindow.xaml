@@ -72,7 +72,9 @@
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1">
-            <ContentControl Name="frmContent" BorderBrush="Black" BorderThickness="1" />
+            <TabControl Name="tabPages">
+                <TabItem Header="Home"></TabItem>
+            </TabControl>
         </Border>
     </DockPanel>
 </Window>

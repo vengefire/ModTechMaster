@@ -45,6 +45,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\PluginModuleCommand.cs" />
+    <Compile Include="Commands\PluginModuleCommandData.cs" />
     <Compile Include="Interfaces\INavPluginCommand.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\IPluginCommand.cs" />
@@ -54,7 +56,6 @@
     <Compile Include="Services\PluginService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
     <Folder Include="Logic\" />
     <Folder Include="Models\" />
   </ItemGroup>
