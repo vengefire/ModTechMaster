@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Core.Interfaces;
+    using Core.Logic;
 
     public class ModCopyPlugin : IPlugin
     {
@@ -9,7 +10,7 @@
         {
             this.Modules = new List<IPluginModule>
             {
-                new ModCopyPage()
+                new PluginModule(@"ModCopy", typeof(ModCopyPage))
             };
         }
 

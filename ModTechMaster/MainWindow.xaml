@@ -11,65 +11,50 @@
     </Window.Resources>
     <DockPanel utils:MarginSetter.Margin="5">
         <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
-            <Ribbon x:Name="rbnMain" SelectedIndex="0">
-                <!-- Help Pane, located at the right-hand side -->
-                <!--Ribbon.HelpPaneContent>
-                    <TextBlock/>
-                </-->
-                <!-- Quick Access Toolbar - located at the upper-left corner -->
-                <!--Ribbon.QuickAccessToolBar>
-                    <RibbonQuickAccessToolBar>
-                        <RibbonButton x:Name ="Save"/>
-                            <RibbonSplitButton x:Name ="Undo">
-                            <RibbonSplitMenuItem Header="Undo 1" />
-                            <RibbonSplitMenuItem Header="Undo 2" />
-                            <RibbonSplitMenuItem Header="Undo 3" />
-                        </RibbonSplitButton>
-                        <RibbonSplitButton x:Name="Redo">
-                            <RibbonSplitMenuItem Header="Redo 1" />
-                            <RibbonSplitMenuItem Header="Redo 2" />
-                        </RibbonSplitButton>
-                    </RibbonQuickAccessToolBar>
-                </-->
-                <!-- Application Menu, located at the left-hand side (down arrow) -->
-                <Ribbon.ApplicationMenu>
-                    <RibbonApplicationMenu KeyTip="F" Visibility="Collapsed">
-                        <RibbonApplicationMenuItem Header="Options" />
-                        <RibbonApplicationMenuItem Header="Exit" />
-                    </RibbonApplicationMenu>
-                </Ribbon.ApplicationMenu>
-                <!-- Ribbon Tab #1: Home -->
-                <RibbonTab Name="rbnTabHome" Header="Home" KeyTip="H">
-                    <RibbonGroup x:Name="HomeGroup" Header="Home">
-                        <RibbonButton Label="Exit" KeyTip="X" />
-                    </RibbonGroup>
-                    <RibbonGroup x:Name="ConfigGroup" Header="Configuration">
-                        <RibbonButton Label="Settings" KeyTip="S" />
-                    </RibbonGroup>
-                </RibbonTab>
-            </Ribbon>
-            <!--Grid Name="NavPanel">
-                <StackPanel Orientation="Horizontal" utils:MarginSetter.Margin="5">
-                    <Button Click="Home_Button_Click">Home</Button>
-                    <Button Click="ModCopy_Button_Click">ModCopy</Button>
-                </StackPanel>
-            </-->
+            <Menu>
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Settings"></MenuItem>
+                    <MenuItem Header="E_xit"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Plugins"></MenuItem>
+                <MenuItem Header="_About"></MenuItem>
+            </Menu>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom">
-            <Grid Name="StatusPanel" utils:MarginSetter.Margin="5">
-                <StackPanel>
-                    <TextBlock HorizontalAlignment="Right">This is the status bar!</TextBlock>
-                </StackPanel>
-            </Grid>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem>
+                    <TextBlock Name="lblCursorPosition" />
+                </StatusBarItem>
+                <Separator Grid.Column="1" />
+                <StatusBarItem Grid.Column="2">
+                    <TextBlock Text="c:\path\of\current\file.txt" />
+                </StatusBarItem>
+                <Separator Grid.Column="3" />
+                <StatusBarItem Grid.Column="4">
+                    <ProgressBar Value="50" Width="90" Height="16" />
+                </StatusBarItem>
+            </StatusBar>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
-            <Grid Name="CommandPanel" utils:MarginSetter.Margin="5">
-                <StackPanel>
-                    <Button>Command Button 1</Button>
-                    <Button>Command Button 2</Button>
-                    <Button>Button 3</Button>
-                </StackPanel>
-            </Grid>
+            <ToolBarTray Name="toolbarTray" Orientation="Vertical">
+                <ToolBar Header="Core">
+                    <Button  Content="Initialise"/>
+                </ToolBar>
+                <ToolBar Header="Plugin"></ToolBar>
+            </ToolBarTray>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1">
             <TabControl Name="tabPages">

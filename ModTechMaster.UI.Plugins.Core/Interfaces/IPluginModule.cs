@@ -5,7 +5,6 @@
     public interface IPluginModule
     {
         string ModuleName { get; }
-        string PageSource { get; }
         Type PageType { get; }
     }
 }
