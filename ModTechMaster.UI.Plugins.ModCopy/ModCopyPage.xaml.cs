@@ -1,35 +1,34 @@
-﻿namespace ModTechMaster.UI.Plugins.ModCopy
-{
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Threading.Tasks;
-    using System.Windows.Controls;
-    using Core.Interfaces;
-    using Logic.Factories;
-    using Logic.Services;
-    using Nodes;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using ModTechMaster.Core.Interfaces.Services;
+using ModTechMaster.UI.Plugins.Core.Interfaces;
+using ModTechMaster.UI.Plugins.ModCopy.Nodes;
 
+namespace ModTechMaster.UI.Plugins.ModCopy
+{
     /// <summary>
     ///     Interaction logic for ModCopyPage.xaml
     /// </summary>
     public partial class ModCopyPage : UserControl, IPluginModule
     {
+        private readonly IModService _modService;
         private readonly ObservableCollection<MTMTreeViewItem> modCollectionData;
 
-        public ModCopyPage()
+        public ModCopyPage(IModService modService)
         {
-            this.InitializeComponent();
-
-            var modService = new ModService(new MessageService(), new ManifestEntryProcessorFactory());
-            var collectionData = modService.LoadCollectionFromPath(
-                @"C:\dev\repos\ModTechMaster\TestData\In\Mods",
+            _modService = modService;
+            InitializeComponent();
+            var collectionData = _modService.LoadCollectionFromPath(
+                @"D:\source\repos\vf\ModTechMaster\TestData\In\Mods",
                 "Test Collection");
 
             if (null != collectionData)
             {
                 var collectionNode = new ModCollectionNode(collectionData, null);
-                this.modCollectionData = new ObservableCollection<MTMTreeViewItem> {collectionNode};
-                this.tvModControl.ItemsSource = this.modCollectionData;
+                modCollectionData = new ObservableCollection<MTMTreeViewItem> {collectionNode};
+                tvModControl.ItemsSource = modCollectionData;
             }
         }
 
@@ -38,14 +37,11 @@
 
         private async void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            var tb = (TextBox)sender;
+            var tb = (TextBox) sender;
             var startLength = tb.Text.Length;
 
             await Task.Delay(300);
-            if (startLength == tb.Text.Length)
-            {
-                Console.WriteLine("Run Filter");
-            }
+            if (startLength == tb.Text.Length) Console.WriteLine("Run Filter");
         }
     }
 }

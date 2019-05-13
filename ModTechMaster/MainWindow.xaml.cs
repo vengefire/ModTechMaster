@@ -1,12 +1,12 @@
-﻿namespace ModTechMaster.UI
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Windows;
-    using System.Windows.Controls;
-    using Plugins.Core.Interfaces;
-    using Plugins.Core.Services;
+﻿using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+using Framework.Interfaces.Injection;
+using ModTechMaster.UI.Plugins.Core.Interfaces;
+using ModTechMaster.UI.Plugins.Core.Services;
 
+namespace ModTechMaster.UI
+{
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
@@ -17,22 +17,21 @@
 
         public MainWindow()
         {
-            this.InitializeComponent();
-            this.InitializePlugins();
+            InitializeComponent();
+            InitializePlugins();
         }
 
         private void InitializePlugins()
         {
-            this.pluginService = new PluginService();
-            this.plugins = this.pluginService.GetPlugins(".");
-            foreach (var plugin in this.plugins)
+            pluginService = new PluginService();
+            plugins = pluginService.GetPlugins(".");
+            foreach (var plugin in plugins)
+            foreach (var module in plugin.Modules)
             {
-                foreach (var module in plugin.Modules)
-                {
-                    var moduleTab = new TabItem {Header = module.ModuleName};
-                    moduleTab.Content = Activator.CreateInstance(module.PageType);
-                    this.tabPages.Items.Add(moduleTab);
-                }
+                var moduleTab = new TabItem {Header = module.ModuleName};
+                var modulePage = Container.Instance.GetInstance(module.PageType);
+                moduleTab.Content = modulePage;
+                tabPages.Items.Add(moduleTab);
             }
         }
     }

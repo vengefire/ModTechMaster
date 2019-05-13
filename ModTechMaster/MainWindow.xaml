@@ -49,12 +49,14 @@
             </StatusBar>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
-            <ToolBarTray Name="toolbarTray" Orientation="Vertical">
-                <ToolBar Header="Core">
-                    <Button  Content="Initialise"/>
-                </ToolBar>
-                <ToolBar Header="Plugin"></ToolBar>
-            </ToolBarTray>
+            <Expander ExpandDirection="Right" IsExpanded="True">
+                <ToolBarTray Name="toolbarTray" Orientation="Vertical">
+                    <ToolBar Header="Core">
+                        <Button  Content="Initialise"/>
+                    </ToolBar>
+                    <ToolBar Header="Plugin"></ToolBar>
+                </ToolBarTray>
+            </Expander>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1">
             <TabControl Name="tabPages">
