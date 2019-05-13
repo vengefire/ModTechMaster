@@ -2,11 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Castle.Core.Logging;
 using ModTechMaster.Core.Interfaces.Models;
 using ModTechMaster.Core.Interfaces.Services;
 using ModTechMaster.Data.Models.Mods;
-using ModTechMaster.Logic.Factories;
-using ModTechMaster.Logic.Services;
+using MTM.Init;
 
 namespace MTM
 {
@@ -14,35 +14,38 @@ namespace MTM
     {
         private static int Main(string[] args)
         {
+            var container = new Bootstrap().RegisterContainer();
+            var logger = container.GetInstance<ILogger>();
+
             var di = new DirectoryInfo(args[0]);
             if (!di.Exists)
             {
-                Console.WriteLine($"The target directory [{di.FullName}] foes not exist.");
+                logger.Info($"The target directory [{di.FullName}] foes not exist.");
                 return -1;
             }
+            var modService = container.GetInstance<IModService>();
 
-            IModService modService = new ModService(new MessageService(), new ManifestEntryProcessorFactory(), null);
             IModCollection modCollection = new ModCollection("MTM Mod Collection");
 
-            Console.WriteLine($"Processing mods from [{di.FullName}]");
+            logger.Info($"Processing mods from [{di.FullName}]");
             var stopwatch = new Stopwatch();
             di.GetDirectories().ToList().ForEach(
                 sub =>
                 {
                     stopwatch.Start();
-                    Console.Write($"Processing [{sub.Name}]...");
+                    logger.Info($"Processing [{sub.Name}]...");
                     modCollection.AddModToCollection(modService.TryLoadFromPath(sub.FullName));
                     stopwatch.Stop();
-                    Console.WriteLine($"{stopwatch.ElapsedMilliseconds} ms");
+                    logger.Info($"{stopwatch.ElapsedMilliseconds} ms");
                     stopwatch.Reset();
                 });
 
-            var refService = new ReferenceFinderService();
-            Console.WriteLine("Processing Mod Collection object relationships...");
+            var refService = container.GetInstance<IReferenceFinderService>();
+            logger.Info("Processing Mod Collection object relationships...");
             var elapsedTime = refService.ProcessModCollectionReferences(modCollection);
-            Console.WriteLine($"Object relationships processed in [{elapsedTime}] ms.");
+            logger.Info($"Object relationships processed in [{elapsedTime}] ms.");
 
-            Console.WriteLine("Press any key to exit.");
+            logger.Info("Press any key to exit.");
             Console.ReadKey();
 
             return 0;
