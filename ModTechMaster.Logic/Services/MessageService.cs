@@ -1,4 +1,5 @@
-﻿using ModTechMaster.Core.Interfaces.Services;
+﻿using Castle.Core.Logging;
+using ModTechMaster.Core.Interfaces.Services;
 
 namespace ModTechMaster.Logic.Services
 {
@@ -8,15 +9,18 @@ namespace ModTechMaster.Logic.Services
 
     public class MessageService : IMessageService
     {
+        private readonly ILogger _logger;
         private readonly Queue<Tuple<string, MessageType>> messages;
 
-        public MessageService()
+        public MessageService(ILogger logger)
         {
+            _logger = logger;
             this.messages = new Queue<Tuple<string, MessageType>>();
         }
 
         public void PushMessage(string message, MessageType type)
         {
+            _logger.Info($"Added message [{message}]");
             this.messages.Enqueue(new Tuple<string, MessageType>(message, type));
         }
 

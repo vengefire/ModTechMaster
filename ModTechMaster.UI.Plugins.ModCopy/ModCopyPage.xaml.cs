@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Castle.Core.Logging;
 using ModTechMaster.Core.Interfaces.Services;
 using ModTechMaster.UI.Plugins.Core.Interfaces;
 using ModTechMaster.UI.Plugins.ModCopy.Nodes;
@@ -14,11 +15,13 @@ namespace ModTechMaster.UI.Plugins.ModCopy
     public partial class ModCopyPage : UserControl, IPluginModule
     {
         private readonly IModService _modService;
+        private readonly ILogger _logger;
         private readonly ObservableCollection<MTMTreeViewItem> modCollectionData;
 
-        public ModCopyPage(IModService modService)
+        public ModCopyPage(IModService modService, ILogger logger)
         {
             _modService = modService;
+            _logger = logger;
             InitializeComponent();
             var collectionData = _modService.LoadCollectionFromPath(
                 @"D:\source\repos\vf\ModTechMaster\TestData\In\Mods",
@@ -41,7 +44,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy
             var startLength = tb.Text.Length;
 
             await Task.Delay(300);
-            if (startLength == tb.Text.Length) Console.WriteLine("Run Filter");
+            if (startLength == tb.Text.Length) _logger.Info("Run Filter");
         }
     }
 }

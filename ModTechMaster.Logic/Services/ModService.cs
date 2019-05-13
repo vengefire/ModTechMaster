@@ -1,4 +1,6 @@
-﻿namespace ModTechMaster.Logic.Services
+﻿using Castle.Core.Logging;
+
+namespace ModTechMaster.Logic.Services
 {
     using System;
     using System.Collections.Generic;
@@ -17,12 +19,14 @@
     public class ModService : IModService
     {
         private readonly IManifestEntryProcessorFactory manifestEntryProcessorFactory;
+        private readonly ILogger _logger;
         private readonly IMessageService messageService;
 
-        public ModService(IMessageService messageService, IManifestEntryProcessorFactory manifestEntryProcessorFactory)
+        public ModService(IMessageService messageService, IManifestEntryProcessorFactory manifestEntryProcessorFactory, ILogger logger)
         {
             this.messageService = messageService;
             this.manifestEntryProcessorFactory = manifestEntryProcessorFactory;
+            _logger = logger;
         }
 
         public IModCollection LoadCollectionFromPath(string path, string name)
@@ -35,11 +39,11 @@
             var di = new DirectoryInfo(path);
             var collection = new ModCollection(name);
 
-            Console.WriteLine($"Processing mods from [{di.FullName}]");
+            _logger.Info($"Processing mods from [{di.FullName}]");
             di.GetDirectories().ToList().ForEach(
                 sub =>
                 {
-                    Console.Write(".");
+                    _logger.Info(".");
                     var mod = this.TryLoadFromPath(sub.FullName);
                     collection.AddModToCollection(mod);
                 });
