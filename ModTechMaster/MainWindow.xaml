@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ModTechMaster"
         xmlns:utils="clr-namespace:ModTechMaster.UI.Core.Utils;assembly=ModTechMaster.UI.Core"
         mc:Ignorable="d"
         Title="MainWindow" Height="768" Width="1024">
@@ -36,7 +35,9 @@
                     </ItemsPanelTemplate>
                 </StatusBar.ItemsPanel>
                 <StatusBarItem>
-                    <TextBlock Name="lblCursorPosition" />
+                    <TextBlock Name="lblStatus">
+                        Ready
+                    </TextBlock>
                 </StatusBarItem>
                 <Separator Grid.Column="1" />
                 <StatusBarItem Grid.Column="2">
@@ -48,20 +49,16 @@
                 </StatusBarItem>
             </StatusBar>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
-            <Expander ExpandDirection="Right" IsExpanded="True">
-                <ToolBarTray Name="toolbarTray" Orientation="Vertical">
-                    <ToolBar Header="Core">
-                        <Button  Content="Initialise"/>
-                    </ToolBar>
-                    <ToolBar Header="Plugin"></ToolBar>
-                </ToolBarTray>
-            </Expander>
-        </Border>
         <Border BorderBrush="Black" BorderThickness="1">
-            <TabControl Name="tabPages">
-                <TabItem Header="Home"></TabItem>
-            </TabControl>
+            <DockPanel>
+                <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
+                        <ToolBarTray Name="toolbarTray" Orientation="Vertical">
+                        </ToolBarTray>
+                </Border>
+                <TabControl Name="tabPages">
+                    <TabItem Header="Home"></TabItem>
+                </TabControl>
+            </DockPanel>
         </Border>
     </DockPanel>
 </Window>

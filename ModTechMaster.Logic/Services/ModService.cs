@@ -37,7 +37,7 @@ namespace ModTechMaster.Logic.Services
             }
 
             var di = new DirectoryInfo(path);
-            var collection = new ModCollection(name);
+            var collection = new ModCollection(name, path);
 
             _logger.Info($"Processing mods from [{di.FullName}]");
             di.GetDirectories().ToList().ForEach(

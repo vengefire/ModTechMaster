@@ -25,7 +25,7 @@ namespace MTM
             }
             var modService = container.GetInstance<IModService>();
 
-            IModCollection modCollection = new ModCollection("MTM Mod Collection");
+            IModCollection modCollection = new ModCollection("MTM Mod Collection", di.FullName);
 
             logger.Info($"Processing mods from [{di.FullName}]");
             var stopwatch = new Stopwatch();

@@ -6,6 +6,7 @@ namespace ModTechMaster.Core.Interfaces.Models
     {
         string Name { get; }
         HashSet<IMod> Mods { get; }
+        string Path { get; }
         void AddModToCollection(IMod mod);
         void RemoveModFromCollection(IMod mod);
     }

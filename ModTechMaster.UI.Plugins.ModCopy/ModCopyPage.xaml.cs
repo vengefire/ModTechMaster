@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Castle.Core.Logging;
 using ModTechMaster.Core.Interfaces.Services;
 using ModTechMaster.UI.Plugins.Core.Interfaces;
+using ModTechMaster.UI.Plugins.ModCopy.Commands;
 using ModTechMaster.UI.Plugins.ModCopy.Nodes;
 
 namespace ModTechMaster.UI.Plugins.ModCopy
@@ -22,7 +24,15 @@ namespace ModTechMaster.UI.Plugins.ModCopy
         {
             _modService = modService;
             _logger = logger;
+
             InitializeComponent();
+
+            Commands = new List<IPluginCommand>()
+            {
+                new LoadModsCommand(null),
+                new ValidateModsCommand(null),
+            };
+
             var collectionData = _modService.LoadCollectionFromPath(
                 @"D:\source\repos\vf\ModTechMaster\TestData\In\Mods",
                 "Test Collection");
@@ -37,6 +47,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy
 
         public string ModuleName => @"ModTechMaster - Mod Copy Module";
         public Type PageType => typeof(ModCopyPage);
+        public List<IPluginCommand> Commands { get; }
 
         private async void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
         {

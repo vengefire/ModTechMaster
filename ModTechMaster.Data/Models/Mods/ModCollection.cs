@@ -7,26 +7,26 @@ namespace ModTechMaster.Data.Models.Mods
 {
     public class ModCollection : IModCollection
     {
-        public ModCollection(string name)
+        public ModCollection(string name, string path)
         {
             Name = name;
+            Path = path;
         }
+
+        public string Path { get; private set; }
 
         public string Name { get; }
         public HashSet<IMod> Mods { get; } = new HashSet<IMod>();
+
         public void AddModToCollection(IMod mod)
         {
-            if (mod == null)
-            {
-                // TODO : Add Warning here...
-                return;
-            }
-            this.Mods.Add(mod);
+            if (mod == null) return;
+            Mods.Add(mod);
         }
 
         public void RemoveModFromCollection(IMod mod)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public List<IReferenceableObject> GetReferenceableObjects()
