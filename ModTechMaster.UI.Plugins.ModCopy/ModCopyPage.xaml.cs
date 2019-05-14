@@ -14,7 +14,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy
     /// <summary>
     ///     Interaction logic for ModCopyPage.xaml
     /// </summary>
-    public partial class ModCopyPage : UserControl, IPluginModule
+    public partial class ModCopyPage : UserControl, IPluginControl
     {
         private readonly IModService _modService;
         private readonly ILogger _logger;
@@ -27,13 +27,13 @@ namespace ModTechMaster.UI.Plugins.ModCopy
 
             InitializeComponent();
 
-            Commands = new List<IPluginCommand>()
+            PluginCommands = new List<IPluginCommand>()
             {
                 new LoadModsCommand(null),
                 new ValidateModsCommand(null),
             };
 
-            var collectionData = _modService.LoadCollectionFromPath(
+            /*var collectionData = _modService.LoadCollectionFromPath(
                 @"D:\source\repos\vf\ModTechMaster\TestData\In\Mods",
                 "Test Collection");
 
@@ -42,12 +42,12 @@ namespace ModTechMaster.UI.Plugins.ModCopy
                 var collectionNode = new ModCollectionNode(collectionData, null);
                 modCollectionData = new ObservableCollection<MTMTreeViewItem> {collectionNode};
                 tvModControl.ItemsSource = modCollectionData;
-            }
+            }*/
         }
 
         public string ModuleName => @"Mod Copy";
         public Type PageType => typeof(ModCopyPage);
-        public List<IPluginCommand> Commands { get; }
+        public List<IPluginCommand> PluginCommands { get; }
 
         private async void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
         {

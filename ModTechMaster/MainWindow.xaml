@@ -49,7 +49,6 @@
         <DockPanel>
             <ToolBarTray Name="toolbarTray" DockPanel.Dock="Bottom" utils:MarginSetter.Margin="5"/>
             <TabControl Name="tabPages" SelectionChanged="TabPages_SelectionChanged">
-                <TabItem Header="Home" />
             </TabControl>
         </DockPanel>
     </DockPanel>

@@ -73,15 +73,10 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Messaging" />
-    <Reference Include="System.Runtime.Remoting" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -175,10 +170,6 @@
     <ProjectReference Include="..\Framework.Utils\Framework.Utils.csproj">
       <Project>{e851e212-1eb4-40b4-8596-31ff26ae2594}</Project>
       <Name>Framework.Utils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Framework.Windsor\Framework.Windsor.csproj">
-      <Project>{463CE74A-0771-437B-B4E6-E058269311B9}</Project>
-      <Name>Framework.Windsor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

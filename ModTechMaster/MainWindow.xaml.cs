@@ -27,10 +27,9 @@ namespace ModTechMaster.UI
             pluginService = new PluginService();
             plugins = pluginService.GetPlugins(".");
             foreach (var plugin in plugins)
-            foreach (var module in plugin.Modules)
             {
-                var moduleTab = new TabItem {Header = module.ModuleName};
-                var modulePage = Container.Instance.GetInstance(module.PageType);
+                var moduleTab = new TabItem {Header = plugin.Name};
+                var modulePage = Container.Instance.GetInstance(plugin.PageType);
                 moduleTab.Content = modulePage;
                 tabPages.Items.Add(moduleTab);
             }
@@ -46,15 +45,15 @@ namespace ModTechMaster.UI
             toolbarTray.ToolBars.Clear();
 
             var tabItem = (sender as TabControl).SelectedItem as TabItem;
-            if (!(tabItem.Content is IPluginModule))
+            if (!(tabItem.Content is IPluginControl))
             {
                 return;
             }
             
-            var pluginModule = tabItem.Content as IPluginModule;
+            var pluginModule = tabItem.Content as IPluginControl;
             var pluginToolbar = new ToolBar();
 
-            foreach (var command in pluginModule.Commands)
+            foreach (var command in pluginModule.PluginCommands)
             {
                 pluginToolbar.Items.Add(new Button()
                 {

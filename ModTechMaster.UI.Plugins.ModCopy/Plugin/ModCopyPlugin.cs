@@ -1,4 +1,6 @@
-﻿namespace ModTechMaster.UI.Plugins.ModCopy.Plugin
+﻿using System;
+
+namespace ModTechMaster.UI.Plugins.ModCopy.Plugin
 {
     using System.Collections.Generic;
     using Core.Interfaces;
@@ -8,15 +10,16 @@
     {
         public ModCopyPlugin()
         {
-            this.Modules = new List<IPluginModule>
+            this.Modules = new List<IPluginControl>
             {
-                new PluginModule(@"ModCopy", typeof(ModCopyPage), null)
+                new PluginControl(@"ModCopy", typeof(ModCopyPage), null)
             };
         }
 
         public string Name => "ModCopy";
         public string Description => "Processes a collection of mods and allows the selection of specific mods with cross reference validation.";
-        public List<IPluginModule> Modules { get; }
+        public Type PageType => typeof(ModCopyPage);
+        public List<IPluginControl> Modules { get; }
         public List<IPluginCommandCategory> PluginCommands { get; }
     }
 }

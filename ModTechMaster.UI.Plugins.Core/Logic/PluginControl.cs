@@ -5,17 +5,17 @@ namespace ModTechMaster.UI.Plugins.Core.Logic
     using System;
     using Interfaces;
 
-    public class PluginModule : IPluginModule
+    public class PluginControl : IPluginControl
     {
-        public PluginModule(string moduleName, Type pageType, List<IPluginCommand> commands)
+        public PluginControl(string moduleName, Type pageType, List<IPluginCommand> commands)
         {
             this.ModuleName = moduleName;
             this.PageType = pageType;
-            Commands = commands;
+            PluginCommands = commands;
         }
 
         public string ModuleName { get; }
         public Type PageType { get; }
-        public List<IPluginCommand> Commands { get; }
+        public List<IPluginCommand> PluginCommands { get; }
     }
 }

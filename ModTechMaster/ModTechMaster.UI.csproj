@@ -52,17 +52,8 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Remoting" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -133,10 +124,6 @@
       <Project>{f1c5c7c8-c8f3-46fc-9339-746dc0a2a185}</Project>
       <Name>ModTechMaster.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ModTechMaster.Data\ModTechMaster.Data.csproj">
-      <Project>{0a8e1776-19b5-41ae-959d-e887e06c4c4a}</Project>
-      <Name>ModTechMaster.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.Logic\ModTechMaster.Logic.csproj">
       <Project>{D9D9B467-A546-49C2-843D-45BE8E730FF8}</Project>
       <Name>ModTechMaster.Logic</Name>
@@ -148,6 +135,10 @@
     <ProjectReference Include="..\ModTechMaster.UI.Plugins.Core\ModTechMaster.UI.Plugins.Core.csproj">
       <Project>{5043194f-4908-4337-a148-97b9cbd8cb82}</Project>
       <Name>ModTechMaster.UI.Plugins.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.UI.Plugins.Home\ModTechMaster.UI.Plugins.Home.csproj">
+      <Project>{fbe058d1-068f-4141-8ade-2bda09d2ef85}</Project>
+      <Name>ModTechMaster.UI.Plugins.Home</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.UI.Plugins.ModCopy\ModTechMaster.UI.Plugins.ModCopy.csproj">
       <Project>{36b0c54b-2f26-4d6f-907c-a19fd8b7a064}</Project>

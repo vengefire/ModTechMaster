@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{36B0C54B-2F26-4D6F-907C-A19FD8B7A064}</ProjectGuid>
+    <ProjectGuid>{FBE058D1-068F-4141-8ADE-2BDA09D2EF85}</ProjectGuid>
     <OutputType>library</OutputType>
-    <RootNamespace>ModTechMaster.UI.Plugins.ModCopy</RootNamespace>
-    <AssemblyName>ModTechMaster.UI.Plugins.ModCopy</AssemblyName>
+    <RootNamespace>ModTechMaster.UI.Plugins.Home</RootNamespace>
+    <AssemblyName>ModTechMaster.UI.Plugins.Home</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,10 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml">
@@ -47,19 +44,20 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ModTechMasterHome.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Compile Include="Commands\LoadModsCommand.cs" />
-    <Compile Include="Commands\ValidateModsCommand.cs" />
-    <Compile Include="ModCopyPage.xaml.cs">
-      <DependentUpon>ModCopyPage.xaml</DependentUpon>
+    <Compile Include="HomePlugin.cs" />
+    <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="ModTechMasterHome.xaml.cs">
+      <DependentUpon>ModTechMasterHome.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Nodes\IMTMTreeViewItem.cs" />
-    <Compile Include="Nodes\ManifestEntryNode.cs" />
-    <Compile Include="Nodes\ManifestNode.cs" />
-    <Compile Include="Nodes\ModCollectionNode.cs" />
-    <Compile Include="Nodes\ModNode.cs" />
-    <Compile Include="Nodes\MTMTreeViewItem.cs" />
-    <Compile Include="Nodes\ObjectDefinitionNode.cs" />
-    <Compile Include="Plugin\ModCopyPlugin.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -77,38 +75,24 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ModCopyPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ModTechMaster.Core\ModTechMaster.Core.csproj">
-      <Project>{f1c5c7c8-c8f3-46fc-9339-746dc0a2a185}</Project>
+      <Project>{F1C5C7C8-C8F3-46FC-9339-746DC0A2A185}</Project>
       <Name>ModTechMaster.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ModTechMaster.UI.Plugins.Core\ModTechMaster.UI.Plugins.Core.csproj">
-      <Project>{5043194f-4908-4337-a148-97b9cbd8cb82}</Project>
-      <Name>ModTechMaster.UI.Plugins.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.UI.Core\ModTechMaster.UI.Core.csproj">
       <Project>{2517ef78-4c4f-4f3a-a245-31ccbc0e2003}</Project>
       <Name>ModTechMaster.UI.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ModTechMaster.UI.Data\ModTechMaster.UI.Data.csproj">
-      <Project>{305b2295-0c04-48d6-914b-4b1c30c153cc}</Project>
-      <Name>ModTechMaster.UI.Data</Name>
+    <ProjectReference Include="..\ModTechMaster.UI.Plugins.Core\ModTechMaster.UI.Plugins.Core.csproj">
+      <Project>{5043194F-4908-4337-A148-97B9CBD8CB82}</Project>
+      <Name>ModTechMaster.UI.Plugins.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Plugin\Modules\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
