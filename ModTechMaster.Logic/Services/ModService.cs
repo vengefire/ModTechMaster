@@ -43,7 +43,7 @@ namespace ModTechMaster.Logic.Services
             di.GetDirectories().ToList().ForEach(
                 sub =>
                 {
-                    _logger.Info(".");
+                    _logger.Debug(".");
                     var mod = this.TryLoadFromPath(sub.FullName);
                     collection.AddModToCollection(mod);
                 });

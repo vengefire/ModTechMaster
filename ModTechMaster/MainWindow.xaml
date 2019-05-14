@@ -4,23 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:utils="clr-namespace:ModTechMaster.UI.Core.Utils;assembly=ModTechMaster.UI.Core"
+        xmlns:local="clr-namespace:ModTechMaster.UI"
         mc:Ignorable="d"
         Title="MainWindow" Height="768" Width="1024">
     <Window.Resources>
     </Window.Resources>
-    <DockPanel utils:MarginSetter.Margin="5">
-        <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Top">
-            <Menu>
+    <DockPanel>
+            <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Settings"></MenuItem>
-                    <MenuItem Header="E_xit"></MenuItem>
+                    <MenuItem Header="_Settings" />
+                    <MenuItem Header="E_xit" />
                 </MenuItem>
-                <MenuItem Header="_Plugins"></MenuItem>
-                <MenuItem Header="_About"></MenuItem>
+                <MenuItem Header="_Plugins" />
+                <MenuItem Header="_About" />
             </Menu>
-        </Border>
-        <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Bottom">
-            <StatusBar DockPanel.Dock="Bottom">
+        <StatusBar DockPanel.Dock="Bottom">
                 <StatusBar.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid>
@@ -48,17 +46,11 @@
                     <ProgressBar Value="50" Width="90" Height="16" />
                 </StatusBarItem>
             </StatusBar>
-        </Border>
-        <Border BorderBrush="Black" BorderThickness="1">
-            <DockPanel>
-                <Border BorderBrush="Black" BorderThickness="1" DockPanel.Dock="Left">
-                        <ToolBarTray Name="toolbarTray" Orientation="Vertical">
-                        </ToolBarTray>
-                </Border>
-                <TabControl Name="tabPages">
-                    <TabItem Header="Home"></TabItem>
-                </TabControl>
-            </DockPanel>
-        </Border>
+        <DockPanel>
+            <ToolBarTray Name="toolbarTray" DockPanel.Dock="Bottom" utils:MarginSetter.Margin="5"/>
+            <TabControl Name="tabPages" SelectionChanged="TabPages_SelectionChanged">
+                <TabItem Header="Home" />
+            </TabControl>
+        </DockPanel>
     </DockPanel>
 </Window>

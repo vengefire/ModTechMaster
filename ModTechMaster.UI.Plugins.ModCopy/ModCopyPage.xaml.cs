@@ -45,7 +45,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy
             }
         }
 
-        public string ModuleName => @"ModTechMaster - Mod Copy Module";
+        public string ModuleName => @"Mod Copy";
         public Type PageType => typeof(ModCopyPage);
         public List<IPluginCommand> Commands { get; }
 

@@ -12,6 +12,7 @@ namespace ModTechMaster.UI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private TabItem _selectedTabItem;
         private List<IPlugin> plugins;
         private PluginService pluginService;
 
@@ -33,6 +34,35 @@ namespace ModTechMaster.UI
                 moduleTab.Content = modulePage;
                 tabPages.Items.Add(moduleTab);
             }
+        }
+
+        private void TabPages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!(sender is TabControl))
+            {
+                return;
+            }
+
+            toolbarTray.ToolBars.Clear();
+
+            var tabItem = (sender as TabControl).SelectedItem as TabItem;
+            if (!(tabItem.Content is IPluginModule))
+            {
+                return;
+            }
+            
+            var pluginModule = tabItem.Content as IPluginModule;
+            var pluginToolbar = new ToolBar();
+
+            foreach (var command in pluginModule.Commands)
+            {
+                pluginToolbar.Items.Add(new Button()
+                {
+                    Content = command.Name,
+                    Command = command
+                });
+            }
+            toolbarTray.ToolBars.Add(pluginToolbar);
         }
     }
 }

@@ -10,7 +10,7 @@
         {
             this.Modules = new List<IPluginModule>
             {
-                new PluginModule(@"ModCopy", typeof(ModCopyPage))
+                new PluginModule(@"ModCopy", typeof(ModCopyPage), null)
             };
         }
 
