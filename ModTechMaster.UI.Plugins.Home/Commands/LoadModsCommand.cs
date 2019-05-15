@@ -4,11 +4,11 @@
     using Core.Interfaces;
     using Models;
 
-    public class LoadModsCommand : IPluginCommand
+    public class LoadModsCommand : AwaitableDelegateCommand<HomeModel>, IPluginCommand
     {
         private readonly HomeModel homeModel;
 
-        public LoadModsCommand(HomeModel homeModel)
+        public LoadModsCommand(HomeModel homeModel) : base(Execute, CanExecute)
         {
             this.homeModel = homeModel;
         }
