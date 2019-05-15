@@ -10,6 +10,19 @@
     {
         private readonly IModService _modService;
         private readonly ISettingsService settingsService;
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set
+            {
+                if (this._isBusy != value)
+                {
+                    this._isBusy = value;
+                    this.OnPropertyChanged(nameof(this.IsBusy));
+                }
+            }
+        }
 
         public HomeModel(IModService modService, ISettingsService settingsService)
         {
@@ -32,7 +45,9 @@
 
         public IModCollection LoadMods()
         {
+            this.IsBusy = true;
             this.ModCollection = this._modService.LoadCollectionFromPath(this.HomeSettings.ModDirectory, this.HomeSettings.ModCollectionName);
+            this.IsBusy = false;
             return this.ModCollection;
         }
     }

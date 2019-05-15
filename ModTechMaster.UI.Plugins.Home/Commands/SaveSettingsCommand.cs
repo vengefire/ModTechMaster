@@ -29,5 +29,6 @@
         public event EventHandler CanExecuteChanged;
         public string Name => @"Save Settings";
         public IPluginCommandCategory Category { get; }
+        public object CommandParameter => this.settings;
     }
 }

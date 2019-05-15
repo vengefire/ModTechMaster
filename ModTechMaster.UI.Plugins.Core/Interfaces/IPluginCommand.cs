@@ -6,5 +6,6 @@
     {
         string Name { get; }
         IPluginCommandCategory Category { get; }
+        object CommandParameter { get; }
     }
 }

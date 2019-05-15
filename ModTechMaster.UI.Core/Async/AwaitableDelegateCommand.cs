@@ -28,45 +28,45 @@ public class AwaitableDelegateCommand<T> : IAsyncCommand<T>, ICommand
 
     public AwaitableDelegateCommand(Func<T, Task> executeMethod, Func<T, bool> canExecuteMethod)
     {
-        _executeMethod = executeMethod;
-        _underlyingCommand = new DelegateCommand<T>(x => { }, canExecuteMethod);
+        this._executeMethod = executeMethod;
+        this._underlyingCommand = new DelegateCommand<T>(x => { }, canExecuteMethod);
     }
+
+    public NotifyTaskCompletion Execution { get; set; }
 
     public async Task ExecuteAsync(T obj)
     {
         try
         {
-            _isExecuting = true;
-            RaiseCanExecuteChanged();
-            await _executeMethod(obj);
+            this._isExecuting = true;
+            this.RaiseCanExecuteChanged();
+            //await this._executeMethod(obj);
+            this.Execution = new NotifyTaskCompletion(this._executeMethod(obj));
+            await this.Execution.TaskCompletion;
         }
         finally
         {
-            _isExecuting = false;
-            RaiseCanExecuteChanged();
+            this._isExecuting = false;
+            this.RaiseCanExecuteChanged();
         }
     }
 
-    public ICommand Command { get { return this; } }
+    public ICommand Command => this;
 
     public bool CanExecute(object parameter)
     {
-        return !_isExecuting && _underlyingCommand.CanExecute((T)parameter);
-    }
-
-    public event EventHandler CanExecuteChanged
-    {
-        add { _underlyingCommand.CanExecuteChanged += value; }
-        remove { _underlyingCommand.CanExecuteChanged -= value; }
-    }
-
-    public async void Execute(object parameter)
-    {
-        await ExecuteAsync((T)parameter);
+        return !this._isExecuting && this._underlyingCommand.CanExecute((T)parameter);
     }
 
     public void RaiseCanExecuteChanged()
     {
-        _underlyingCommand.RaiseCanExecuteChanged();
+        this._underlyingCommand.RaiseCanExecuteChanged();
+    }
+
+    public event EventHandler CanExecuteChanged { add => this._underlyingCommand.CanExecuteChanged += value; remove => this._underlyingCommand.CanExecuteChanged -= value; }
+
+    public async void Execute(object parameter)
+    {
+        await this.ExecuteAsync((T)parameter);
     }
 }

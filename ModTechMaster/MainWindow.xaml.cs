@@ -53,7 +53,7 @@
             var pluginToolbar = new ToolBar();
 
             foreach (var command in pluginModule.PluginCommands)
-                pluginToolbar.Items.Add(new Button {Content = command.Name, Command = command});
+                pluginToolbar.Items.Add(new Button {Content = command.Name, Command = command, CommandParameter = command.CommandParameter});
             this.toolbarTray.ToolBars.Add(pluginToolbar);
         }
     }

@@ -31,7 +31,7 @@ public class DelegateCommand<T> : ICommand, IRaiseCanExecuteChanged
 
     public DelegateCommand(Action<T> executeMethod, Func<T, bool> canExecuteMethod)
     {
-        if (executeMethod == null && canExecuteMethod == null)
+        if (executeMethod == null)
             throw new ArgumentNullException("executeMethod", @"Execute Method cannot be null");
         _executeMethod = executeMethod;
         _canExecuteMethod = canExecuteMethod;

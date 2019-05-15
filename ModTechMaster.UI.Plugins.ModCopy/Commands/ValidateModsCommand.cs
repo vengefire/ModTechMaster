@@ -23,5 +23,6 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Commands
         public event EventHandler CanExecuteChanged;
         public string Name => @"Validate Mods";
         public IPluginCommandCategory Category { get; }
+        public object CommandParameter => null;
     }
 }

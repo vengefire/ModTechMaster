@@ -1,6 +1,6 @@
 ﻿namespace ModTechMaster.UI.Plugins.Home.Commands
 {
-    using System;
+    using System.Threading.Tasks;
     using Core.Interfaces;
     using Models;
 
@@ -8,24 +8,24 @@
     {
         private readonly HomeModel homeModel;
 
-        public LoadModsCommand(HomeModel homeModel) : base(Execute, CanExecute)
+        public LoadModsCommand(HomeModel homeModel) : base(LoadModsCommand.Execute, LoadModsCommand.CanExecute)
         {
             this.homeModel = homeModel;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return !string.IsNullOrEmpty(this.homeModel.HomeSettings.ModDirectory) &&
-                !string.IsNullOrEmpty(this.homeModel.HomeSettings.ModCollectionName);
-        }
-
-        public void Execute(object parameter)
-        {
-            this.homeModel.LoadMods();
-        }
-
-        public event EventHandler CanExecuteChanged;
         public string Name => @"Load Mods";
         public IPluginCommandCategory Category { get; }
+        public object CommandParameter => this.homeModel;
+
+        public static bool CanExecute(HomeModel homeModel)
+        {
+            return !string.IsNullOrEmpty(homeModel?.HomeSettings?.ModDirectory) &&
+                !string.IsNullOrEmpty(homeModel?.HomeSettings?.ModCollectionName);
+        }
+
+        public static Task Execute(HomeModel homeModel)
+        {
+            return Task.Run(() => homeModel.LoadMods());
+        }
     }
 }

@@ -1,41 +1,43 @@
 ﻿<UserControl x:Class="ModTechMaster.UI.Plugins.Home.ModTechMasterHome"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:utils="clr-namespace:ModTechMaster.UI.Core.Utils;assembly=ModTechMaster.UI.Core"
-             mc:Ignorable="d" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3">
-            <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="2" VerticalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Mod Collection Name: "/>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding HomeSettings.ModCollectionName, Mode=TwoWay}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                <Label Grid.Row="1" Grid.Column="0" Content="Mod Collection Directory: "/>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding HomeSettings.ModDirectory, Mode=TwoWay}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                <Button Grid.Row="1" Grid.Column="2" Content="..." Click="Button_Click"/>
-            </Grid>
-            <DataGrid></DataGrid>
-        </DockPanel>
+        <xctk:BusyIndicator Name="busyIndicator" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
+            <xctk:BusyIndicator.Content>
+                <DockPanel LastChildFill="True">
+                    <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="2" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Mod Collection Name: " />
+                        <TextBox Grid.Row="0" Grid.Column="1"
+                                 Text="{Binding HomeSettings.ModCollectionName, Mode=TwoWay}"
+                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Mod Collection Directory: " />
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding HomeSettings.ModDirectory, Mode=TwoWay}"
+                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                        <Button Grid.Row="1" Grid.Column="2" Content="..." Click="Button_Click" />
+                    </Grid>
+                    <DataGrid></DataGrid>
+                </DockPanel>
+            </xctk:BusyIndicator.Content>
+        </xctk:BusyIndicator>
     </Grid>
 </UserControl>
-    

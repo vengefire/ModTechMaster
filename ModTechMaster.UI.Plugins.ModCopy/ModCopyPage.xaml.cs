@@ -47,7 +47,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy
             {
                 var collectionNode = new ModCollectionNode(modService.ModCollection, null);
                 this.modCollectionData = new ObservableCollection<MTMTreeViewItem> {collectionNode};
-                this.tvModControl.ItemsSource = this.modCollectionData;
+                this.Dispatcher.Invoke(() => this.tvModControl.ItemsSource = this.modCollectionData);
             }
         }
 
