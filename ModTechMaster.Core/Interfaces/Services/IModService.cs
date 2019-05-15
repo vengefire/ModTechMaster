@@ -6,5 +6,6 @@
     {
         IMod TryLoadFromPath(string path);
         IModCollection LoadCollectionFromPath(string path, string name);
+        IModCollection ModCollection { get; }
     }
 }

@@ -59,6 +59,7 @@
     <Compile Include="Services\ModService.cs" />
     <Compile Include="Processors\ObjectDefinitionProcessor.cs" />
     <Compile Include="Services\ReferenceFinderService.cs" />
+    <Compile Include="Services\SettingsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework\Framework.Utils\Framework.Utils.csproj">

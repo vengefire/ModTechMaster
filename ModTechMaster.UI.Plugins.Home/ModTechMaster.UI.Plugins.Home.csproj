@@ -49,8 +49,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Commands\LoadModsCommand.cs" />
+    <Compile Include="Commands\SaveSettingsCommand.cs" />
     <Compile Include="HomePlugin.cs" />
     <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Models\HomeSettings.cs" />
     <Compile Include="ModTechMasterHome.xaml.cs">
       <DependentUpon>ModTechMasterHome.xaml</DependentUpon>
       <SubType>Code</SubType>

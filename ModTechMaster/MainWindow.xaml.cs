@@ -1,37 +1,36 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
-using Framework.Interfaces.Injection;
-using ModTechMaster.UI.Plugins.Core.Interfaces;
-using ModTechMaster.UI.Plugins.Core.Services;
-
-namespace ModTechMaster.UI
+﻿namespace ModTechMaster.UI
 {
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Controls;
+    using Framework.Interfaces.Injection;
+    using Plugins.Core.Interfaces;
+    using Plugins.Core.Services;
+
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private TabItem _selectedTabItem;
         private List<IPlugin> plugins;
         private PluginService pluginService;
 
         public MainWindow()
         {
-            InitializeComponent();
-            InitializePlugins();
+            this.InitializeComponent();
+            this.InitializePlugins();
         }
 
         private void InitializePlugins()
         {
-            pluginService = new PluginService();
-            plugins = pluginService.GetPlugins(".");
-            foreach (var plugin in plugins)
+            this.pluginService = new PluginService();
+            this.plugins = this.pluginService.GetPlugins(".");
+            foreach (var plugin in this.plugins)
             {
                 var moduleTab = new TabItem {Header = plugin.Name};
                 var modulePage = Container.Instance.GetInstance(plugin.PageType);
                 moduleTab.Content = modulePage;
-                tabPages.Items.Add(moduleTab);
+                this.tabPages.Items.Add(moduleTab);
             }
         }
 
@@ -42,26 +41,20 @@ namespace ModTechMaster.UI
                 return;
             }
 
-            toolbarTray.ToolBars.Clear();
+            this.toolbarTray.ToolBars.Clear();
 
             var tabItem = (sender as TabControl).SelectedItem as TabItem;
-            if (!(tabItem.Content is IPluginControl))
+            if (!(tabItem?.Content is IPluginControl))
             {
                 return;
             }
-            
-            var pluginModule = tabItem.Content as IPluginControl;
+
+            var pluginModule = (IPluginControl)tabItem.Content;
             var pluginToolbar = new ToolBar();
 
             foreach (var command in pluginModule.PluginCommands)
-            {
-                pluginToolbar.Items.Add(new Button()
-                {
-                    Content = command.Name,
-                    Command = command
-                });
-            }
-            toolbarTray.ToolBars.Add(pluginToolbar);
+                pluginToolbar.Items.Add(new Button {Content = command.Name, Command = command});
+            this.toolbarTray.ToolBars.Add(pluginToolbar);
         }
     }
 }

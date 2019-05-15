@@ -47,7 +47,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\LoadModsCommand.cs" />
     <Compile Include="Commands\ValidateModsCommand.cs" />
     <Compile Include="ModCopyPage.xaml.cs">
       <DependentUpon>ModCopyPage.xaml</DependentUpon>

@@ -1,52 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using ModTechMaster.Core.Interfaces.Services;
-using ModTechMaster.UI.Core.WinForms.Extensions;
-using ModTechMaster.UI.Plugins.Core.Interfaces;
-using ModTechMaster.UI.Plugins.Home.Commands;
-using ModTechMaster.UI.Plugins.Home.Models;
-using UserControl = System.Windows.Controls.UserControl;
-
-namespace ModTechMaster.UI.Plugins.Home
+﻿namespace ModTechMaster.UI.Plugins.Home
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows;
+    using System.Windows.Forms;
+    using Commands;
+    using Core.Interfaces;
+    using Models;
+    using ModTechMaster.Core.Interfaces.Services;
+    using UI.Core.WinForms.Extensions;
+    using UserControl = System.Windows.Controls.UserControl;
+
     /// <summary>
     ///     Interaction logic for ModTechMasterHome.xaml
     /// </summary>
     public partial class ModTechMasterHome : UserControl, IPluginControl
     {
-        private HomeModel Model { get; set; }
-
-        public ModTechMasterHome(IModService modService )
+        public ModTechMasterHome(IModService modService, ISettingsService settingsService)
         {
-            InitializeComponent();
-
-            Model = new HomeModel(modService)
+            this.InitializeComponent();
+            this.Model = new HomeModel(modService, settingsService);
+            this.PluginCommands = new List<IPluginCommand>
             {
-                ModDirectory = @"Some previously selected value from saved settings?",
-                ModCollectionName = @"My mod collection"
+                new LoadModsCommand(this.Model),
+                new SaveSettingsCommand(settingsService, this.Model.HomeSettings)
             };
-
-            PluginCommands = new List<IPluginCommand>()
-            {
-                new LoadModsCommand(Model)
-            };
-
-            this.DataContext = Model;
+            this.DataContext = this.Model;
         }
+
+        public HomeModel Model { get; set; }
 
         public string ModuleName => @"Home";
         public Type PageType => typeof(ModTechMasterHome);
         public List<IPluginCommand> PluginCommands { get; }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            using (var folderDialog = new System.Windows.Forms.FolderBrowserDialog())
+            using (var folderDialog = new FolderBrowserDialog())
             {
                 var result = folderDialog.ShowDialog(this.GetIWin32Window());
-                if (result ==  DialogResult.OK)
+                if (result == DialogResult.OK)
                 {
-                    Model.ModDirectory = folderDialog.SelectedPath;
+                    this.Model.HomeSettings.ModDirectory = folderDialog.SelectedPath;
                 }
             }
         }

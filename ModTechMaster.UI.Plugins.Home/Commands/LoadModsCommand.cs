@@ -1,27 +1,27 @@
-﻿using System;
-using ModTechMaster.UI.Plugins.Core.Interfaces;
-using ModTechMaster.UI.Plugins.Home.Models;
-
-namespace ModTechMaster.UI.Plugins.Home.Commands
+﻿namespace ModTechMaster.UI.Plugins.Home.Commands
 {
+    using System;
+    using Core.Interfaces;
+    using Models;
+
     public class LoadModsCommand : IPluginCommand
     {
-        private readonly HomeModel _homeModel;
+        private readonly HomeModel homeModel;
 
         public LoadModsCommand(HomeModel homeModel)
         {
-            _homeModel = homeModel;
+            this.homeModel = homeModel;
         }
 
         public bool CanExecute(object parameter)
         {
-            return !string.IsNullOrEmpty(_homeModel.ModDirectory) &&
-                   !string.IsNullOrEmpty(_homeModel.ModCollectionName);
+            return !string.IsNullOrEmpty(this.homeModel.HomeSettings.ModDirectory) &&
+                !string.IsNullOrEmpty(this.homeModel.HomeSettings.ModCollectionName);
         }
 
         public void Execute(object parameter)
         {
-            _homeModel.LoadMods();
+            this.homeModel.LoadMods();
         }
 
         public event EventHandler CanExecuteChanged;

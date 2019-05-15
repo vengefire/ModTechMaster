@@ -21,6 +21,7 @@ namespace ModTechMaster.UI.Init
                 Component.For<ILogger>().ImplementedBy<Log4netLogger>(),
                 Component.For<IExceptionLogger>().ImplementedBy<ExceptionLogger>(),
                 Component.For<IMessageService>().ImplementedBy<MessageService>(),
+                Component.For<ISettingsService>().ImplementedBy<SettingsService>(),
                 Component.For<IModService>().ImplementedBy<ModService>(),
                 Component.For<IReferenceFinderService>().ImplementedBy<ReferenceFinderService>(),
                 Component.For<IManifestEntryProcessorFactory>().ImplementedBy<ManifestEntryProcessorFactory>()

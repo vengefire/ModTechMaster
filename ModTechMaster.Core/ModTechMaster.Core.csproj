@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\Services\IModService.cs" />
     <Compile Include="Interfaces\Processors\IObjectDefinitionProcessor.cs" />
     <Compile Include="Interfaces\Services\IReferenceFinderService.cs" />
+    <Compile Include="Interfaces\Services\ISettingsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

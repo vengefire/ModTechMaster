@@ -26,7 +26,7 @@ namespace ModTechMaster.Logic.Services
         {
             this.messageService = messageService;
             this.manifestEntryProcessorFactory = manifestEntryProcessorFactory;
-            _logger = logger;
+            this._logger = logger;
         }
 
         public IModCollection LoadCollectionFromPath(string path, string name)
@@ -48,8 +48,12 @@ namespace ModTechMaster.Logic.Services
                     collection.AddModToCollection(mod);
                 });
 
+            this.ModCollection = collection;
+
             return collection;
         }
+
+        public IModCollection ModCollection { get; private set; }
 
         public IMod TryLoadFromPath(string path)
         {

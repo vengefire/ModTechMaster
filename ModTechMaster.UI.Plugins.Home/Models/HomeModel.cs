@@ -1,60 +1,39 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using ModTechMaster.Core.Interfaces.Models;
-using ModTechMaster.Core.Interfaces.Services;
-using ModTechMaster.UI.Plugins.Home.Annotations;
-
-namespace ModTechMaster.UI.Plugins.Home.Models
+﻿namespace ModTechMaster.UI.Plugins.Home.Models
 {
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+    using Annotations;
+    using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
+
     public class HomeModel : INotifyPropertyChanged
     {
         private readonly IModService _modService;
-        private string _modDirectory;
-        private string _modCollectionName;
-        private IModCollection _modCollection;
+        private readonly ISettingsService settingsService;
 
-        public string ModCollectionName
+        public HomeModel(IModService modService, ISettingsService settingsService)
         {
-            get => _modCollectionName;
-            set {
-                if (_modCollectionName != value)
-                {
-                    _modCollectionName = value;
-                    OnPropertyChanged(nameof(ModCollectionName));
-                }
-            }  
+            this._modService = modService;
+            this.settingsService = settingsService;
+            this.HomeSettings = settingsService.ReadSettings<HomeSettings>("HomeSettings");
         }
 
-        public HomeModel(IModService modService)
-        {
-            _modService = modService;
-        }
+        public IModCollection ModCollection { get; private set; }
 
-        public string ModDirectory
-        {
-            get => _modDirectory;
-            set
-            {
-                if (_modDirectory != value)
-                {
-                    _modDirectory = value;
-                    OnPropertyChanged(nameof(ModDirectory));
-                }
-            }
-        }
+        public HomeSettings HomeSettings { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public IModCollection LoadMods()
         {
-            this._modCollection = _modService.LoadCollectionFromPath(ModDirectory, ModCollectionName);
-            return _modCollection;
+            this.ModCollection = this._modService.LoadCollectionFromPath(this.HomeSettings.ModDirectory, this.HomeSettings.ModCollectionName);
+            return this.ModCollection;
         }
     }
 }
