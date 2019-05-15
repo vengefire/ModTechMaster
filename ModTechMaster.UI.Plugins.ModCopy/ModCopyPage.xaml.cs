@@ -1,4 +1,8 @@
-﻿namespace ModTechMaster.UI.Plugins.ModCopy
+﻿using System.ComponentModel;
+using System.Linq;
+using System.Windows.Data;
+
+namespace ModTechMaster.UI.Plugins.ModCopy
 {
     using System;
     using System.Collections.Generic;
@@ -16,9 +20,17 @@
     /// </summary>
     public partial class ModCopyPage : UserControl, IPluginControl
     {
+        public string FilterText { get; set; }
         private readonly ILogger logger;
         private readonly IModService modService;
-        private readonly ObservableCollection<MTMTreeViewItem> modCollectionData;
+        private ObservableCollection<MTMTreeViewItem> modCollectionData;
+
+        private bool Filter(object obj)
+        {
+            if (string.IsNullOrEmpty(FilterText))
+                return true;
+            return false;
+        }
 
         public ModCopyPage(IModService modService, ILogger logger)
         {
@@ -26,10 +38,15 @@
             this.logger = logger;
             this.InitializeComponent();
             this.PluginCommands = new List<IPluginCommand> {new ValidateModsCommand(null)};
-            if (null != this.modService.ModCollection)
+            this.modService.PropertyChanged += ModServiceOnPropertyChanged;
+        }
+
+        private void ModServiceOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "ModCollection")
             {
                 var collectionNode = new ModCollectionNode(modService.ModCollection, null);
-                this.modCollectionData = new ObservableCollection<MTMTreeViewItem> { collectionNode };
+                this.modCollectionData = new ObservableCollection<MTMTreeViewItem> {collectionNode};
                 this.tvModControl.ItemsSource = this.modCollectionData;
             }
         }
@@ -43,11 +60,18 @@
             var tb = (TextBox)sender;
             var startLength = tb.Text.Length;
 
-            await Task.Delay(300);
+            await Task.Delay(750);
             if (startLength == tb.Text.Length)
             {
-                this.logger.Info("Run Filter");
+                FilterText = tb.Text;
+                var rootCollectionView = CollectionViewSource.GetDefaultView(modCollectionData);
+                rootCollectionView.Filter = (node => ((IMTMTreeViewItem) node).Filter(FilterText));
             }
+        }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            txtFilter.Clear();
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using Castle.Core.Logging;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using Castle.Core.Logging;
+using ModTechMaster.Data.Annotations;
 
 namespace ModTechMaster.Logic.Services
 {
@@ -27,6 +30,7 @@ namespace ModTechMaster.Logic.Services
             this.messageService = messageService;
             this.manifestEntryProcessorFactory = manifestEntryProcessorFactory;
             this._logger = logger;
+            this.ModCollection = new ModCollection("Unknown Mod Collection", string.Empty);
         }
 
         public IModCollection LoadCollectionFromPath(string path, string name)
@@ -37,7 +41,8 @@ namespace ModTechMaster.Logic.Services
             }
 
             var di = new DirectoryInfo(path);
-            var collection = new ModCollection(name, path);
+            this.ModCollection.Name = name;
+            this.ModCollection.Path = path;
 
             _logger.Info($"Processing mods from [{di.FullName}]");
             di.GetDirectories().ToList().ForEach(
@@ -45,12 +50,12 @@ namespace ModTechMaster.Logic.Services
                 {
                     _logger.Debug(".");
                     var mod = this.TryLoadFromPath(sub.FullName);
-                    collection.AddModToCollection(mod);
+                    this.ModCollection.AddModToCollection(mod);
                 });
 
-            this.ModCollection = collection;
+            this.OnPropertyChanged(nameof(ModCollection));
 
-            return collection;
+            return this.ModCollection;
         }
 
         public IModCollection ModCollection { get; private set; }
@@ -151,6 +156,14 @@ namespace ModTechMaster.Logic.Services
                            conflicts,
                            path,
                            src);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

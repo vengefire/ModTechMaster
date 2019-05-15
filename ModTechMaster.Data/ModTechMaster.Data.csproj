@@ -54,6 +54,7 @@
     <Compile Include="Models\Mods\TypedObjectDefinitions\ResourceObjectDefinition.cs" />
     <Compile Include="Models\ObjectReference.cs" />
     <Compile Include="Models\ObjectRelationship.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

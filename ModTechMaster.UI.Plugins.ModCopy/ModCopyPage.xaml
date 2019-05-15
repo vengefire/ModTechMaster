@@ -14,23 +14,20 @@
         <valueConverters:ObjectStatusToIconConverter x:Key="ObjectStatusConverter" />
     </UserControl.Resources>
 
-    <Grid>
-        <Grid utils:MarginSetter.Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition MinHeight="35" MaxHeight="35" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid>
+    <DockPanel>
+            <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0">Filter Text:</Label>
-                <TextBox Grid.Row="0" Grid.Column="1" TextChanged="TextBoxBase_OnTextChanged"
+                <Label Grid.Column="0">Filter Text:</Label>
+                <TextBox Name="txtFilter" Grid.Column="1" TextChanged="TextBoxBase_OnTextChanged"
                          Text="{Binding FilterText}"
                          VerticalAlignment="Center" />
+                <Button Grid.Column="2" Content="Clear Filter" Click="Button_Click" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
-            <Grid Grid.Row="1" Grid.Column="0" utils:MarginSetter.Margin="5">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
@@ -77,6 +74,7 @@
                         <Style TargetType="TreeViewItem">
                             <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}" />
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}" />
+                            <Setter Property="Visibility" Value="{Binding Visibility,Mode=TwoWay}" />
                         </Style>
                     </TreeView.ItemContainerStyle>
                 </TreeView>
@@ -87,20 +85,20 @@
                         <ContentPresenter.Resources>
                             <DataTemplate DataType="{x:Type nodes:ModCollectionNode}">
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBox Text="{Binding Name, Mode=OneWay}" />
                                 </StackPanel>
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type nodes:ModNode}">
                                 <ScrollViewer>
                                     <StackPanel>
-                                        <TextBlock Text="{Binding Name}" />
-                                        <TextBlock Text="{Binding HumanReadableContent}" />
+                                        <TextBox Text="{Binding Name, Mode=OneWay}" />
+                                        <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
                                     </StackPanel>
                                 </ScrollViewer>
                             </DataTemplate>
                             <DataTemplate DataType="{x:Type nodes:MTMTreeViewItem}">
                                 <ScrollViewer>
-                                    <TextBlock Text="{Binding HumanReadableContent}" />
+                                    <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
                                 </ScrollViewer>
                             </DataTemplate>
                         </ContentPresenter.Resources>
@@ -112,6 +110,6 @@
                     <TextBlock>Notification Text</TextBlock>
                 </Border>
             </Grid>
-        </Grid>
-    </Grid>
+    </DockPanel>
 </UserControl>
+    

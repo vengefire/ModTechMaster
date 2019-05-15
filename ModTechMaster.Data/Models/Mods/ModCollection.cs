@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ModTechMaster.Core.Interfaces.Models;
+using ModTechMaster.Data.Annotations;
 
 namespace ModTechMaster.Data.Models.Mods
 {
@@ -13,15 +16,16 @@ namespace ModTechMaster.Data.Models.Mods
             Path = path;
         }
 
-        public string Path { get; private set; }
+        public string Path { get; set; }
 
-        public string Name { get; }
+        public string Name { get; set;  }
         public HashSet<IMod> Mods { get; } = new HashSet<IMod>();
 
         public void AddModToCollection(IMod mod)
         {
             if (mod == null) return;
             Mods.Add(mod);
+            OnPropertyChanged(nameof(Mods));
         }
 
         public void RemoveModFromCollection(IMod mod)
@@ -34,6 +38,14 @@ namespace ModTechMaster.Data.Models.Mods
             var objects = new List<IReferenceableObject>();
             Mods.ToList().ForEach(mod => objects.AddRange(mod.GetReferenceableObjects()));
             return objects;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

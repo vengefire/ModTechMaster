@@ -2,7 +2,6 @@
 
 namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
-    using Core.Constants;
     using Core.Interfaces.Models;
     using Newtonsoft.Json.Linq;
 

@@ -1,8 +1,10 @@
-﻿namespace ModTechMaster.Core.Interfaces.Services
+﻿using System.ComponentModel;
+
+namespace ModTechMaster.Core.Interfaces.Services
 {
     using Models;
 
-    public interface IModService
+    public interface IModService : INotifyPropertyChanged
     {
         IMod TryLoadFromPath(string path);
         IModCollection LoadCollectionFromPath(string path, string name);

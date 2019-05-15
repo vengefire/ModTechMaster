@@ -1,49 +1,66 @@
-﻿namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
-{
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Runtime.CompilerServices;
-    //using Annotations;
-    using Data.Enums;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Data;
+using ModTechMaster.UI.Data.Enums;
 
-    public abstract class MTMTreeViewItem : IMTMTreeViewItem, INotifyPropertyChanged
+namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
+{
+    //using Annotations;
+
+    public abstract class MTMTreeViewItem : IMTMTreeViewItem
     {
         private bool? _isChecked = false;
         private bool _isExpanded;
         private bool _isSelected;
+        private Visibility _visibility = Visibility.Visible;
 
         public MTMTreeViewItem(IMTMTreeViewItem parent)
         {
-            this.Parent = parent;
+            Parent = parent;
         }
 
         public IMTMTreeViewItem Parent { get; }
 
-        public virtual ObservableCollection<IMTMTreeViewItem> Children { get; } =
+        public virtual ObservableCollection<IMTMTreeViewItem> Children { get; set; } =
             new ObservableCollection<IMTMTreeViewItem>();
 
         public bool IsSelected
         {
-            get => this._isSelected;
+            get => _isSelected;
             set
             {
-                if (value != this.IsSelected)
+                if (value != IsSelected)
                 {
-                    this._isSelected = value;
-                    this.OnPropertyChanged("IsSelected");
+                    _isSelected = value;
+                    OnPropertyChanged("IsSelected");
                 }
             }
         }
 
         public bool IsExpanded
         {
-            get => this._isExpanded;
+            get => _isExpanded;
             set
             {
-                if (value != this._isExpanded)
+                if (value != _isExpanded)
                 {
-                    this._isExpanded = value;
-                    this.OnPropertyChanged("IsExpanded");
+                    _isExpanded = value;
+                    OnPropertyChanged("IsExpanded");
+                }
+            }
+        }
+
+        public Visibility Visibility
+        {
+            get => _visibility;
+            set
+            {
+                if (_visibility != value)
+                {
+                    _visibility = value;
+                    OnPropertyChanged(nameof(Visibility));
                 }
             }
         }
@@ -55,12 +72,25 @@
             get => this?._isChecked;
             set
             {
-                if (value != this._isChecked)
+                if (value != _isChecked)
                 {
-                    MTMTreeViewItem.CheckNode(this, value);
-                    this.OnPropertyChanged("IsChecked");
+                    CheckNode(this, value);
+                    OnPropertyChanged("IsChecked");
                 }
             }
+        }
+
+        public bool Filter(string filterText)
+        {
+            if (Children.Count > 0)
+            {
+                var childCollectionView = CollectionViewSource.GetDefaultView(Children);
+                childCollectionView.Filter = child => ((IMTMTreeViewItem) child).Filter(filterText);
+                return !childCollectionView.IsEmpty || Name.Contains(filterText) ||
+                       HumanReadableContent.Contains(filterText);
+            }
+
+            return Name.Contains(filterText) || HumanReadableContent.Contains(filterText);
         }
 
         public SelectionStatus SelectionStatus { get; set; } = SelectionStatus.Unselected;
@@ -79,7 +109,7 @@
         //[NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
