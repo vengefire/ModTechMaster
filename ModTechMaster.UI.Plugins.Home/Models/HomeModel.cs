@@ -47,6 +47,7 @@
         {
             this.IsBusy = true;
             this.ModCollection = this._modService.LoadCollectionFromPath(this.HomeSettings.ModDirectory, this.HomeSettings.ModCollectionName);
+            OnPropertyChanged(nameof(ModCollection));
             this.IsBusy = false;
             return this.ModCollection;
         }

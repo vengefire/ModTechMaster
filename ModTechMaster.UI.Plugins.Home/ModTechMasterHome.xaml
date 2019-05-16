@@ -4,19 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:utils="clr-namespace:ModTechMaster.UI.Core.Utils;assembly=ModTechMaster.UI.Core"
+             xmlns:converters="clr-namespace:ModTechMaster.UI.Core.Converters;assembly=ModTechMaster.UI.Core"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
     <Grid>
+        <Grid.Resources>
+            <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <xctk:BusyIndicator Name="busyIndicator" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
             <xctk:BusyIndicator.Content>
                 <DockPanel LastChildFill="True">
-                    <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="2" VerticalAlignment="Center">
+                    <Grid DockPanel.Dock="Top" VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -35,7 +39,34 @@
                                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
                         <Button Grid.Row="1" Grid.Column="2" Content="..." Click="Button_Click" />
                     </Grid>
-                    <DataGrid></DataGrid>
+                    <Grid Visibility="{Binding ModCollection, Converter={StaticResource NullVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.01*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition ></ColumnDefinition>
+                            <ColumnDefinition Width="0.01*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.01*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition ></RowDefinition>
+                            <RowDefinition Height="0.01*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="1" Grid.Column="1" Content="Mod Count"></Label>
+                        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Text="{Binding ModCollection.Mods.Count}"/>
+                        <Label Grid.Row="2" Grid.Column="1" Content="Object Count" ></Label>
+                        <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Text="{Binding ModCollection.ObjectCount}"/>
+                        <DataGrid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding ModCollection.Mods}" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=OneWay}"></DataGridTextColumn>
+                                <!--DataGridTextColumn Header="Author" Binding="{Binding Author, Mode=OneWay}"></-->
+                                <!--DataGridTextColumn Header="Website" Binding="{Binding Website, Mode=OneWay}"></-->
+                                <!--DataGridTextColumn Header="Contact" Binding="{Binding Contact, Mode=OneWay}"></-->
+                                <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled, Mode=OneWay}"></DataGridCheckBoxColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </DockPanel>
             </xctk:BusyIndicator.Content>
         </xctk:BusyIndicator>

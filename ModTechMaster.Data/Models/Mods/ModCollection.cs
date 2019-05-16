@@ -26,12 +26,16 @@ namespace ModTechMaster.Data.Models.Mods
             if (mod == null) return;
             Mods.Add(mod);
             OnPropertyChanged(nameof(Mods));
+            OnPropertyChanged(nameof(ObjectCount));
         }
 
         public void RemoveModFromCollection(IMod mod)
         {
             throw new NotImplementedException();
         }
+
+        public int ObjectCount => Mods.Sum(mod =>
+            mod.Manifest?.Entries.Sum(entry => entry.Objects.Count) ?? 0);
 
         public List<IReferenceableObject> GetReferenceableObjects()
         {

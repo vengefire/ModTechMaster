@@ -10,5 +10,6 @@ namespace ModTechMaster.Core.Interfaces.Models
         string Path { get; set;  }
         void AddModToCollection(IMod mod);
         void RemoveModFromCollection(IMod mod);
+        int ObjectCount { get; }
     }
 }
