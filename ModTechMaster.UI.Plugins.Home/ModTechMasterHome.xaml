@@ -15,7 +15,7 @@
             <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
         </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <xctk:BusyIndicator Name="busyIndicator" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
             <xctk:BusyIndicator.Content>
@@ -41,28 +41,30 @@
                     </Grid>
                     <Grid Visibility="{Binding ModCollection, Converter={StaticResource NullVisibilityConverter}}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.01*"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition ></ColumnDefinition>
-                            <ColumnDefinition Width="0.01*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.01*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="0.01*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.01*"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition ></RowDefinition>
-                            <RowDefinition Height="0.01*"></RowDefinition>
+                            <RowDefinition Height="0.01*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="0.01*" />
                         </Grid.RowDefinitions>
-                        <Label Grid.Row="1" Grid.Column="1" Content="Mod Count"></Label>
-                        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Text="{Binding ModCollection.Mods.Count}"/>
-                        <Label Grid.Row="2" Grid.Column="1" Content="Object Count" ></Label>
-                        <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" Text="{Binding ModCollection.ObjectCount}"/>
-                        <DataGrid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding ModCollection.Mods}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <Label Grid.Row="1" Grid.Column="1" Content="Mod Count" />
+                        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"
+                                   Text="{Binding ModCollection.Mods.Count}" />
+                        <Label Grid.Row="2" Grid.Column="1" Content="Object Count" />
+                        <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"
+                                   Text="{Binding ModCollection.ObjectCount}" />
+                        <DataGrid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding ModCollection.Mods}" AutoGenerateColumns="False" IsReadOnly="True" Margin="5,5,0,0">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=OneWay}"></DataGridTextColumn>
-                                <!--DataGridTextColumn Header="Author" Binding="{Binding Author, Mode=OneWay}"></-->
-                                <!--DataGridTextColumn Header="Website" Binding="{Binding Website, Mode=OneWay}"></-->
-                                <!--DataGridTextColumn Header="Contact" Binding="{Binding Contact, Mode=OneWay}"></-->
+                                <!--<DataGridTextColumn Header="Author" Binding="{Binding Author, Mode=OneWay}"/>
+                                <DataGridTextColumn Header="Website" Binding="{Binding Website, Mode=OneWay}"/>
+                                <DataGridTextColumn Header="Contact" Binding="{Binding Contact, Mode=OneWay}"/>-->
                                 <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled, Mode=OneWay}"></DataGridCheckBoxColumn>
                             </DataGrid.Columns>
                         </DataGrid>
