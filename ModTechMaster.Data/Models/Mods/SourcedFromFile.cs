@@ -3,7 +3,7 @@
     using System.IO;
     using Core.Interfaces.Models;
 
-    public sealed class SourcedFromFile : ISourcedFromFile
+    public class SourcedFromFile : ISourcedFromFile
     {
         public SourcedFromFile(string sourceFilePath)
         {

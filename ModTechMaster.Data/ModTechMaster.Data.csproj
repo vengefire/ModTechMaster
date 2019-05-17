@@ -41,6 +41,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Mods\ModCollection.cs" />
+    <Compile Include="Models\Mods\ResourceDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\ContractObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\ChassisObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\CCDefaultsObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\SimGameConstantsObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\UpgradeObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\SimGameEventObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\TurretObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\TurretChassisObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\VehicleObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\VehicleChassisObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\MechObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\PilotObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\AmmunitionBoxObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\WeaponObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\AmmunitionObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\AssetBundleObjectDefinition.cs" />
     <Compile Include="Models\Mods\JsonObjectBase.cs" />
     <Compile Include="Models\Mods\JsonObjectSourcedFromFile.cs" />

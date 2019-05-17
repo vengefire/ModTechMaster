@@ -1,21 +1,20 @@
 ﻿using ModTechMaster.Core.Enums.Mods;
+using ModTechMaster.Core.Interfaces.Models;
+using Newtonsoft.Json;
 
 namespace ModTechMaster.Data.Models.Mods
 {
-    using Core.Interfaces.Models;
-    using Newtonsoft.Json;
-
     public abstract class JsonObjectBase : IJsonObjectBase
     {
         public JsonObjectBase(dynamic jsonObject, ObjectType objectType)
         {
-            this.JsonObject = jsonObject;
+            JsonObject = jsonObject;
             ObjectType = objectType;
         }
 
         public dynamic JsonObject { get; }
 
-        public string JsonString => JsonConvert.SerializeObject(this.JsonObject, Formatting.Indented);
+        public string JsonString => JsonConvert.SerializeObject(JsonObject, Formatting.Indented);
         public ObjectType ObjectType { get; }
         public abstract string Name { get; }
         public abstract string Id { get; }

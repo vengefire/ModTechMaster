@@ -98,6 +98,21 @@ namespace ModTechMaster.Logic.Services
             mod.Manifest = manifest;
 
             // Process implicits like StreamingAssets folder...
+            // Special handling for sim game constants...
+            var streamingAssetsPath = @"StreamingAssets";
+            var saPath = Path.Combine(mod.SourceDirectoryPath, streamingAssetsPath);
+            if (Directory.Exists(saPath))
+            {
+                // Handle
+                AddStreamingAssetsManifestEntry(saPath, mod);
+            }
+        }
+
+        private void AddStreamingAssetsManifestEntry(string simPath, Mod mod)
+        {
+            var newEntry = new ManifestEntry(mod.Manifest, ObjectType.StreamingAssetsData, simPath, null);
+            newEntry.ParseStreamingAssets();
+            mod.Manifest.Entries.Add(newEntry);
         }
 
         private Manifest ProcessManifest(Mod mod)

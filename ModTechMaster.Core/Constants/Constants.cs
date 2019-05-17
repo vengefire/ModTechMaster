@@ -20,5 +20,8 @@
         public static readonly string DefId = "DefId";
         public static readonly string LootableId = "LootableId";
         public static readonly string MechDefId = "MechDefID";
+        public static readonly string RequiredTags = "RequiredTags";
+        public static readonly string CastDefId = "CastDefId";
+        public static readonly string DialogBucketId = "DialogBucketId";
     }
 }

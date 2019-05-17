@@ -28,6 +28,10 @@ namespace ModTechMaster.Data.Models.Mods
             {
                 this.MetaData.Add(Keywords.Id, this.JsonObject.Id);
             }
+            else if (this.JsonObject?.identifier != null)
+            {
+                this.MetaData.Add(Keywords.Id, this.JsonObject?.identifier);
+            }
 
             if (this.ObjectDescription?.Name != null)
             {
@@ -36,6 +40,12 @@ namespace ModTechMaster.Data.Models.Mods
             else if (this.JsonObject?.Name != null)
             {
                 this.MetaData.Add(Keywords.Name, this.JsonObject.Name);
+            }
+
+            // If we didn't find a Name in our json store (which may not be there if we're a resource object) then add our default name (FileName)
+            if (!MetaData.ContainsKey(Keywords.Name))
+            {
+                MetaData.Add(Keywords.Name, Name);
             }
         }
 

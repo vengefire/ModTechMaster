@@ -147,13 +147,22 @@ namespace ModTechMaster.Logic.Managers
                     }
                 },
                 {
-                    ObjectType.StreamingData, new List<IObjectRelationship>
+                    ObjectType.StreamingAssetsData, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ObjectType.StreamingData, ObjectType.AbilityDef,
+                        new ObjectRelationship(ObjectType.StreamingAssetsData, ObjectType.AbilityDef,
                             Keywords.AbilityDefId, Keywords.Id, true),
-                        new ObjectRelationship(ObjectType.StreamingData, ObjectType.MechDef,
+                        new ObjectRelationship(ObjectType.StreamingAssetsData, ObjectType.MechDef,
                             Keywords.MechDefId, Keywords.Id, true)
                         //new ObjectRelationship(ObjectType.UpgradeDef, ObjectType.UpgradeDef, Keywords.defId, Keywords.Id),
+                    }
+                },
+                {
+                    ObjectType.ContractOverride, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.ContractOverride, ObjectType.CastDef,
+                            Keywords.CastDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ContractOverride, ObjectType.DialogBucketDef,
+                            Keywords.DialogBucketId, Keywords.Id, true),
                     }
                 }
             };

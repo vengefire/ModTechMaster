@@ -28,5 +28,19 @@ namespace ModTechMaster.Data.Models.Mods
         public string Description { get; }
 
         public string Icon { get; }
+
+        public static ObjectDefinitionDescription CreateDefault(dynamic description)
+        {
+            if (description == null)
+            {
+                return null;
+            }
+
+            string id = description.ID != null ? description.ID.ToString() : null;
+            string name = description.Name != null ? description.Name.ToString() : null;
+            string desc = description.Description != null ? description.Description.ToString() : null;
+            string icon = description.Icon != null ? description.Icon.ToString() : null;
+            return new ObjectDefinitionDescription(id, name, desc, icon, description);
+        }
     }
 }

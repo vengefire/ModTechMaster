@@ -1,4 +1,9 @@
-﻿namespace ModTechMaster.Data.Models.Mods
+﻿using System;
+using System.IO;
+using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
+using Newtonsoft.Json;
+
+namespace ModTechMaster.Data.Models.Mods
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -14,7 +19,10 @@
             this.EntryType = entryType;
             this.Path = path;
             this.Objects = new HashSet<IObjectDefinition>();
+            this.Resources = new HashSet<IResourceDefinition>();
         }
+
+        public HashSet<IResourceDefinition> Resources { get; }
 
         public IManifest Manifest { get; }
 
@@ -31,5 +39,69 @@
 
         public override string Name => $"{this.EntryType.ToString()} - {this.Path}";
         public override string Id => this.Name;
+
+        public void ParseStreamingAssets()
+        {
+            void RecurseStreamingAssetsDirectory(string path)
+            {
+                DirectoryInfo di = new DirectoryInfo(path);
+                foreach (var fi in di.EnumerateFiles())
+                {
+                    var fileName = fi.Name;
+                    var fileData = File.ReadAllText(fi.FullName);
+
+                    if (fi.Extension == ".json")
+                    {
+                        // Handle json object definition...
+                        IObjectDefinition objectDefinition;
+                        dynamic jsonData = JsonConvert.DeserializeObject(fileData);
+                        var description = ObjectDefinitionDescription.CreateDefault(jsonData.Description);
+
+                        // infer the object type from the current sub-directory.
+                        var hostDirectory = di.Name;
+                        switch (hostDirectory.ToLower())
+                        {
+                            case "constants":
+                            case "milestones":
+                            case "itemcollections":
+                            case "events":
+                            case "cast":
+                            case "behaviorvariables":
+                            case "buildings":
+                            case "hardpoints":
+                                objectDefinition = new ObjectDefinition(ObjectType.StreamingAssetsData, description, jsonData, fi.FullName);
+                                break;
+                            case "pilot":
+                                objectDefinition = new PilotObjectDefinition(ObjectType.PilotDef, description, jsonData, fi.FullName);
+                                break;
+                            case "simgameconstants":
+                                objectDefinition = new SimGameConstantsObjectDefinition(ObjectType.SimGameConstants, ObjectDefinitionDescription.CreateDefault(jsonData.Description), jsonData, fi.FullName);
+                                break;
+                            default:
+                                throw new InvalidProgramException($"Unknown streaming assets folder type detected [{hostDirectory}]");
+                        }
+
+                        Objects.Add(objectDefinition);
+                    }
+                    else
+                    {
+                        IResourceDefinition resourceDefinition;
+                        // Handle resource file style definition...
+                        switch (fi.Name)
+                        {
+                            default:
+                                resourceDefinition = new ResourceDefinition(ObjectType.Resource, fi.FullName, fi.Name, fi.Name);
+                                break;
+                        }
+
+                        Resources.Add(resourceDefinition);
+                    }
+                }
+
+                di.GetDirectories().ToList().ForEach(subdi => RecurseStreamingAssetsDirectory(subdi.FullName));
+            }
+
+            RecurseStreamingAssetsDirectory(Path);
+        }
     }
 }

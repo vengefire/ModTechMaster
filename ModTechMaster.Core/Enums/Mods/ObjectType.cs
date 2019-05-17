@@ -50,9 +50,11 @@
         PathingCapabilitiesDef,
         DesignMaskDef,
         HardPointDataDef,
-        StreamingData,
+        StreamingAssetsData,
         Manifest,
         ManifestEntry,
-        ObjectDefinitionDescription
+        ObjectDefinitionDescription,
+        Resource,
+        SimGameConstants
     }
 }
