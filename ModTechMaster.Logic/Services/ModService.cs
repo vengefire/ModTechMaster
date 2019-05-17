@@ -131,6 +131,8 @@ namespace ModTechMaster.Logic.Services
 
         private Mod InitModFromJson(dynamic src, string path)
         {
+            var fi = new FileInfo(path);
+            var di = new DirectoryInfo(fi.DirectoryName);
             var depends = src.DependsOn == null
                 ? new HashSet<string>()
                 : new HashSet<string>(((JArray)src.DependsOn).Select(token => token.ToString()));
@@ -155,7 +157,8 @@ namespace ModTechMaster.Logic.Services
                            depends,
                            conflicts,
                            path,
-                           src);
+                           src,
+                           Convert.ToDouble(di.EnumerateFiles("*", SearchOption.AllDirectories).Sum(info => info.Length)) / 1024);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

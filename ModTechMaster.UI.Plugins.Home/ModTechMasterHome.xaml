@@ -62,10 +62,8 @@
                         <DataGrid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding ModCollection.Mods}" AutoGenerateColumns="False" IsReadOnly="True" Margin="5,5,0,0">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=OneWay}"></DataGridTextColumn>
-                                <!--<DataGridTextColumn Header="Author" Binding="{Binding Author, Mode=OneWay}"/>
-                                <DataGridTextColumn Header="Website" Binding="{Binding Website, Mode=OneWay}"/>
-                                <DataGridTextColumn Header="Contact" Binding="{Binding Contact, Mode=OneWay}"/>-->
                                 <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled, Mode=OneWay}"></DataGridCheckBoxColumn>
+                                <DataGridTextColumn Header="Mod Size (KB)" Binding="{Binding SizeOnDisk, Mode=OneWay, StringFormat={}{0:#,#.00}}"></DataGridTextColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

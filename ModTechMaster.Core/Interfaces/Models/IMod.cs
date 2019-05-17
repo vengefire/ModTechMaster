@@ -21,5 +21,6 @@
         HashSet<string> DependsOn { get; }
 
         HashSet<string> ConflictsWith { get; set; }
+        double SizeOnDisk { get; }
     }
 }

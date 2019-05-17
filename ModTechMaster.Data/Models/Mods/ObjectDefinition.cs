@@ -24,14 +24,22 @@ namespace ModTechMaster.Data.Models.Mods
             {
                 this.MetaData.Add(Keywords.Id, this.ObjectDescription?.Id);
             }
+            else if (this.JsonObject?.Id != null)
+            {
+                this.MetaData.Add(Keywords.Id, this.JsonObject.Id);
+            }
 
             if (this.ObjectDescription?.Name != null)
             {
                 this.MetaData.Add(Keywords.Name, this.ObjectDescription?.Name);
             }
+            else if (this.JsonObject?.Name != null)
+            {
+                this.MetaData.Add(Keywords.Name, this.JsonObject.Name);
+            }
         }
 
-        public override string Name => this.ObjectDescription?.Name ?? this.SourceFileName;
-        public override string Id => this.ObjectDescription?.Id ?? this.Name;
+        public override string Name => this.MetaData.ContainsKey(Keywords.Name) ? this.MetaData[Keywords.Name] : this.SourceFileName;
+        public override string Id => this.MetaData.ContainsKey(Keywords.Id) ? this.MetaData[Keywords.Id] : this.Name;
     }
 }

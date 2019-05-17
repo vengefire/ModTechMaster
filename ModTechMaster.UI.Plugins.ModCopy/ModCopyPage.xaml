@@ -15,101 +15,101 @@
     </UserControl.Resources>
 
     <DockPanel>
-            <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0">Filter Text:</Label>
-                <TextBox Name="txtFilter" Grid.Column="1" TextChanged="TextBoxBase_OnTextChanged"
-                         Text="{Binding FilterText}"
-                         VerticalAlignment="Center" />
-                <Button Grid.Column="2" Content="Clear Filter" Click="Button_Click" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-            </Grid>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="0.15*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-                <TreeView Name="tvModControl" Grid.Column="0" Grid.Row="0">
-                    <TreeView.Resources>
-                        <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:MTMTreeViewItem}">
-                            <StackPanel Orientation="Horizontal">
-                                <Image
-                                    Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}}"
-                                    Width="15" IsEnabled="False" />
-                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                                <Image
-                                    Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}"
-                                    Width="15" IsEnabled="False" />
-                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                                <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay}" />
+        <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0">Filter Text:</Label>
+            <TextBox Name="txtFilter" Grid.Column="1" TextChanged="TextBoxBase_OnTextChanged"
+                     Text="{Binding FilterText}"
+                     VerticalAlignment="Center" />
+            <Button Grid.Column="2" Content="Clear Filter" Click="Button_Click" VerticalAlignment="Center"
+                    VerticalContentAlignment="Center" />
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="0.15*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <TreeView Name="tvModControl" Grid.Column="0" Grid.Row="0">
+                <TreeView.Resources>
+                    <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:MTMTreeViewItem}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image
+                                Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}}"
+                                Width="15" IsEnabled="False" />
+                            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                            <Image
+                                Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}"
+                                Width="15" IsEnabled="False" />
+                            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                            <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay}" />
+                        </StackPanel>
+                    </DataTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type nodes:MTMTreeViewItem}"
+                                              ItemsSource="{Binding Children}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Text=" [" Foreground="Blue" />
+                            <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
+                            <TextBlock Text="]" Foreground="Blue" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <DataTemplate DataType="{x:Type nodes:ObjectDefinitionNode}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
+                            <TextBlock Text="{Binding ObjectDefinition.Id}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TreeView.Resources>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}" />
+                        <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}" />
+                        <Setter Property="Visibility" Value="{Binding Visibility,Mode=TwoWay}" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
+            </TreeView>
+            <GridSplitter Grid.Column="1" Width="5" Grid.Row="0" VerticalAlignment="Stretch"
+                          HorizontalAlignment="Center" />
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="0">
+                <ContentPresenter Content="{Binding ElementName=tvModControl, Path=SelectedItem}">
+                    <ContentPresenter.Resources>
+                        <DataTemplate DataType="{x:Type nodes:ModCollectionNode}">
+                            <StackPanel>
+                                <TextBox Text="{Binding Name, Mode=OneWay}" />
                             </StackPanel>
                         </DataTemplate>
-                        <HierarchicalDataTemplate DataType="{x:Type nodes:MTMTreeViewItem}"
-                                                  ItemsSource="{Binding Children}">
-                            <StackPanel Orientation="Horizontal">
-                                <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
-                                <TextBlock Text="{Binding Name}" />
-                                <TextBlock Text=" [" Foreground="Blue" />
-                                <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
-                                <TextBlock Text="]" Foreground="Blue" />
-                            </StackPanel>
-                        </HierarchicalDataTemplate>
-                        <DataTemplate DataType="{x:Type nodes:ObjectDefinitionNode}">
-                            <StackPanel Orientation="Horizontal">
-                                <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
-                                <TextBlock Text="{Binding ObjectDefinition.Id}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </TreeView.Resources>
-                    <TreeView.ItemContainerStyle>
-                        <Style TargetType="TreeViewItem">
-                            <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}" />
-                            <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}" />
-                            <Setter Property="Visibility" Value="{Binding Visibility,Mode=TwoWay}" />
-                        </Style>
-                    </TreeView.ItemContainerStyle>
-                </TreeView>
-                <GridSplitter Grid.Column="1" Width="5" Grid.Row="0" VerticalAlignment="Stretch"
-                              HorizontalAlignment="Center" />
-                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="0">
-                    <ContentPresenter Content="{Binding ElementName=tvModControl, Path=SelectedItem}">
-                        <ContentPresenter.Resources>
-                            <DataTemplate DataType="{x:Type nodes:ModCollectionNode}">
+                        <DataTemplate DataType="{x:Type nodes:ModNode}">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                 <StackPanel>
                                     <TextBox Text="{Binding Name, Mode=OneWay}" />
-                                </StackPanel>
-                            </DataTemplate>
-                            <DataTemplate DataType="{x:Type nodes:ModNode}">
-                                <ScrollViewer>
-                                    <StackPanel>
-                                        <TextBox Text="{Binding Name, Mode=OneWay}" />
-                                        <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
-                                    </StackPanel>
-                                </ScrollViewer>
-                            </DataTemplate>
-                            <DataTemplate DataType="{x:Type nodes:MTMTreeViewItem}">
-                                <ScrollViewer>
                                     <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
-                                </ScrollViewer>
-                            </DataTemplate>
-                        </ContentPresenter.Resources>
-                    </ContentPresenter>
-                </Border>
-                <GridSplitter Grid.Column="0" Grid.Row="1" Height="5" Grid.ColumnSpan="3"
-                              HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
-                    <TextBlock>Notification Text</TextBlock>
-                </Border>
-            </Grid>
+                                </StackPanel>
+                            </ScrollViewer>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type nodes:MTMTreeViewItem}">
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
+                            </ScrollViewer>
+                        </DataTemplate>
+                    </ContentPresenter.Resources>
+                </ContentPresenter>
+            </Border>
+            <GridSplitter Grid.Column="0" Grid.Row="1" Height="5" Grid.ColumnSpan="3"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
+                <TextBlock>Notification Text</TextBlock>
+            </Border>
+        </Grid>
     </DockPanel>
 </UserControl>
-    
