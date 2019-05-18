@@ -23,5 +23,29 @@
         public static readonly string RequiredTags = "RequiredTags";
         public static readonly string CastDefId = "CastDefId";
         public static readonly string DialogBucketId = "DialogBucketId";
+        public static readonly string Faction = "Faction";
+        public static readonly string FactionId = "FactionId";
+        public static readonly string EnemyFactionId = "EnemyFactionId";
+        public static readonly string AlliedFactionId = "AlliedFactionId";
+        public static readonly string CombatLeaderCastDefId = "CombatLeaderCastDefId";
+        public static readonly string RepresentativeCastDefId = "RepresentativeCastDefId";
+        public static readonly string HeraldryDefId = "HeraldryDefId";
+        public static readonly string PortraitPath = "PortraitPath";
+        public static readonly string LanceDefId = "LanceDefId";
+        public static readonly string PilotId = "PilotId";
+        public static readonly string TurretId = "TurretId";
+        public static readonly string DialogId = "DialogId";
+        public static readonly string MilestoneSetId = "MilestoneSetId";
+        public static readonly string ItemCollectionId = "ItemCollectionId";
+        public static readonly string TextureId = "TextureId";
+        public static readonly string UpgradeDefId = "UpgradeDefId";
+        public static readonly string WeaponDefId = "WeaponDefId";
+        public static readonly string ContractId = "ContractId";
+        public static readonly string EventId = "EventId";
+        public static readonly string MilestoneId = "MilestoneId";
+        public static readonly string HeatSinkDefId = "HeatSinkDefId";
+        public static readonly string AmmoBoxId = "AmmoBoxId";
+        public static readonly string JumpJetDefId = "JumpJetId";
+        public static readonly string VehicleId = "VehicleId";
     }
 }

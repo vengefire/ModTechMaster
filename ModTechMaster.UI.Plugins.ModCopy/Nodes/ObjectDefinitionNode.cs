@@ -11,6 +11,6 @@
 
         public IObjectDefinition ObjectDefinition { get; }
         public override string Name => this.ObjectDefinition.Id;
-        public override string HumanReadableContent => this.ObjectDefinition.JsonString;
+        public override string HumanReadableContent => this.ObjectDefinition.HumanReadableText;
     }
 }

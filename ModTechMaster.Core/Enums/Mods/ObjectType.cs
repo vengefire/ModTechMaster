@@ -49,7 +49,6 @@
         ShipModuleUpgrade,
         PathingCapabilitiesDef,
         DesignMaskDef,
-        HardPointDataDef,
         StreamingAssetsData,
         Manifest,
         ManifestEntry,

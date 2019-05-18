@@ -40,11 +40,22 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Mods\CsvObjectBase.cs" />
     <Compile Include="Models\Mods\ModCollection.cs" />
     <Compile Include="Models\Mods\ResourceDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\ShopDefObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\HardpointDataObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\MilestoneSetObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\ItemCollectionObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\HeraldryObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\ConversationObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\DialogObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\CastObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\FactionObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\ContractObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\ChassisObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\CCDefaultsObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\FlashpointObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\SimGameConstantsObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\UpgradeObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\SimGameEventObjectDefinition.cs" />

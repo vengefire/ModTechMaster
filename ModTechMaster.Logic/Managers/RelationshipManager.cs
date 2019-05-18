@@ -62,7 +62,7 @@ namespace ModTechMaster.Logic.Managers
                             Keywords.MovementCapDefId, Keywords.Id),
                         new ObjectRelationship(ObjectType.ChassisDef, ObjectType.PathingCapabilitiesDef,
                             Keywords.PathingCapDefId, Keywords.Id),
-                        new ObjectRelationship(ObjectType.ChassisDef, ObjectType.HardPointDataDef,
+                        new ObjectRelationship(ObjectType.ChassisDef, ObjectType.HardpointDataDef,
                             Keywords.HardpointDataDefId, Keywords.Id),
                         new ObjectRelationship(ObjectType.ChassisDef, ObjectType.Prefab,
                             Keywords.PrefabId, Keywords.Id)
@@ -90,7 +90,7 @@ namespace ModTechMaster.Logic.Managers
                             ObjectType.MovementCapabilitiesDef, Keywords.MovementCapDefId, Keywords.Id),
                         new ObjectRelationship(ObjectType.VehicleChassisDef,
                             ObjectType.PathingCapabilitiesDef, Keywords.PathingCapDefId, Keywords.Id),
-                        new ObjectRelationship(ObjectType.VehicleChassisDef, ObjectType.HardPointDataDef,
+                        new ObjectRelationship(ObjectType.VehicleChassisDef, ObjectType.HardpointDataDef,
                             Keywords.HardpointDataDefId, Keywords.Id),
                         new ObjectRelationship(ObjectType.VehicleChassisDef, ObjectType.Prefab,
                             Keywords.PrefabId, Keywords.Id)
@@ -114,7 +114,7 @@ namespace ModTechMaster.Logic.Managers
                 {
                     ObjectType.TurretChassisDef, new List<IObjectRelationship>
                     {
-                        new ObjectRelationship(ObjectType.TurretChassisDef, ObjectType.HardPointDataDef,
+                        new ObjectRelationship(ObjectType.TurretChassisDef, ObjectType.HardpointDataDef,
                             Keywords.HardpointDataDefId, Keywords.Id),
                         new ObjectRelationship(ObjectType.TurretChassisDef, ObjectType.Prefab,
                             Keywords.PrefabId, Keywords.Id)
@@ -162,9 +162,129 @@ namespace ModTechMaster.Logic.Managers
                         new ObjectRelationship(ObjectType.ContractOverride, ObjectType.CastDef,
                             Keywords.CastDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.ContractOverride, ObjectType.DialogBucketDef,
-                            Keywords.DialogBucketId, Keywords.Id, true),
+                            Keywords.DialogBucketId, Keywords.Id, false),
+                        new ObjectRelationship(ObjectType.ContractOverride, ObjectType.LanceDef,
+                            Keywords.LanceDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ContractOverride, ObjectType.HeraldryDef,
+                            Keywords.HeraldryDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ContractOverride, ObjectType.MechDef,
+                            Keywords.MechDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ContractOverride, ObjectType.PilotDef,
+                            Keywords.PilotId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ContractOverride, ObjectType.TurretDef,
+                            Keywords.TurretId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ContractOverride, ObjectType.VehicleDef,
+                            Keywords.VehicleId, Keywords.Id, true),
                     }
-                }
+                },
+                {
+                    ObjectType.FactionDef, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.FactionDef, ObjectType.CastDef,
+                            Keywords.CombatLeaderCastDefId, Keywords.Id, false),
+                        new ObjectRelationship(ObjectType.FactionDef, ObjectType.CastDef,
+                            Keywords.RepresentativeCastDefId, Keywords.Id, false),
+                        new ObjectRelationship(ObjectType.FactionDef, ObjectType.HeraldryDef,
+                            Keywords.HeraldryDefId, Keywords.Id, false),
+                        new ObjectRelationship(ObjectType.FactionDef, ObjectType.FactionDef,
+                            Keywords.EnemyFactionId, Keywords.Faction, true),
+                        new ObjectRelationship(ObjectType.FactionDef, ObjectType.FactionDef,
+                            Keywords.AlliedFactionId, Keywords.Faction, true),
+                    }
+                },
+                {
+                    ObjectType.CastDef, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.CastDef, ObjectType.FactionDef,
+                            Keywords.Faction, Keywords.FactionId, false),
+                    }
+                },
+                {
+                    ObjectType.ConversationContent, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.ConversationContent, ObjectType.DialogBucketDef,
+                            Keywords.DialogId, Keywords.Id, true),
+                    }
+                },
+                {
+                    ObjectType.DialogBucketDef, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.DialogBucketDef, ObjectType.CastDef,
+                            Keywords.CastDefId, Keywords.Id, true),
+                    }
+                },
+                {
+                    ObjectType.FlashpointDef, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.FlashpointDef, ObjectType.SimGameMilestoneSet,
+                            Keywords.MilestoneSetId, Keywords.Id, false),
+                        new ObjectRelationship(ObjectType.FlashpointDef, ObjectType.ItemCollectionDef,
+                            Keywords.ItemCollectionId, Keywords.Id, false),
+                        new ObjectRelationship(ObjectType.FlashpointDef, ObjectType.CastDef,
+                        Keywords.CastDefId, Keywords.Id, false)
+                    }
+                },
+                {
+                    ObjectType.HeraldryDef, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.HeraldryDef, ObjectType.Texture2D,
+                            Keywords.TextureId, Keywords.Id, false)
+                    }
+                },
+                {
+                    ObjectType.ItemCollectionDef, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.ItemCollectionDef, ObjectType.MechDef,
+                            Keywords.MechDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ItemCollectionDef, ObjectType.UpgradeDef,
+                            Keywords.UpgradeDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ItemCollectionDef, ObjectType.ItemCollectionDef,
+                            Keywords.ItemCollectionId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ItemCollectionDef, ObjectType.WeaponDef,
+                            Keywords.WeaponDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ItemCollectionDef, ObjectType.HeatSinkDef,
+                            Keywords.HeatSinkDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ItemCollectionDef, ObjectType.AmmunitionBoxDef,
+                            Keywords.AmmoBoxId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ItemCollectionDef, ObjectType.JumpJetDef,
+                            Keywords.JumpJetDefId, Keywords.Id, true),
+                    }
+                },
+                {
+                    ObjectType.SimGameMilestoneSet, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.SimGameMilestoneSet, ObjectType.SimGameMilestoneDef,
+                            Keywords.MilestoneId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.SimGameMilestoneSet, ObjectType.ContractOverride,
+                            Keywords.ContractId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.SimGameMilestoneSet, ObjectType.SimGameEventDef,
+                            Keywords.EventId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.SimGameMilestoneSet, ObjectType.ItemCollectionDef,
+                            Keywords.ItemCollectionId, Keywords.Id, true),
+                    }
+                },
+                {
+                    ObjectType.HardpointDataDef, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.HardpointDataDef, ObjectType.Prefab,
+                            Keywords.PrefabId, Keywords.Id, true)
+                    }
+                },
+                {
+                    ObjectType.ShopDef, new List<IObjectRelationship>
+                    {
+                        new ObjectRelationship(ObjectType.ShopDef, ObjectType.WeaponDef,
+                            Keywords.WeaponDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ShopDef, ObjectType.UpgradeDef,
+                            Keywords.UpgradeDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ShopDef, ObjectType.MechDef,
+                            Keywords.MechDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ShopDef, ObjectType.HeatSinkDef,
+                            Keywords.HeatSinkDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.ShopDef, ObjectType.JumpJetDef,
+                            Keywords.JumpJetDefId, Keywords.Id, true)
+                    }
+                },
             };
 
         public static List<IObjectRelationship> GetDependenciesRelationshipsForType(ObjectType objectType)

@@ -49,6 +49,7 @@ namespace ModTechMaster.Data.Models.Mods
                 {
                     var fileName = fi.Name;
                     var fileData = File.ReadAllText(fi.FullName);
+                    var hostDirectory = di.Name;
 
                     if (fi.Extension == ".json")
                     {
@@ -58,17 +59,16 @@ namespace ModTechMaster.Data.Models.Mods
                         var description = ObjectDefinitionDescription.CreateDefault(jsonData.Description);
 
                         // infer the object type from the current sub-directory.
-                        var hostDirectory = di.Name;
                         switch (hostDirectory.ToLower())
                         {
                             case "constants":
                             case "milestones":
-                            case "itemcollections":
                             case "events":
                             case "cast":
                             case "behaviorvariables":
                             case "buildings":
                             case "hardpoints":
+                            case "factions":
                                 objectDefinition = new ObjectDefinition(ObjectType.StreamingAssetsData, description, jsonData, fi.FullName);
                                 break;
                             case "pilot":
@@ -85,16 +85,27 @@ namespace ModTechMaster.Data.Models.Mods
                     }
                     else
                     {
-                        IResourceDefinition resourceDefinition;
-                        // Handle resource file style definition...
-                        switch (fi.Name)
+                        switch (hostDirectory.ToLower())
                         {
+                            case "itemcollections":
+                                var itemCollection = new ItemCollectionObjectDefinition(ObjectType.ItemCollectionDef, fileData, fi.FullName);
+                                itemCollection.AddMetaData();
+                                this.Objects.Add(itemCollection);
+                                break;
                             default:
-                                resourceDefinition = new ResourceDefinition(ObjectType.Resource, fi.FullName, fi.Name, fi.Name);
+                                IResourceDefinition resourceDefinition;
+                                // Handle resource file style definition...
+                                switch (fi.Name)
+                                {
+                                    default:
+                                        resourceDefinition = new ResourceDefinition(ObjectType.Resource, fi.FullName, fi.Name, fi.Name);
+                                        break;
+                                }
+
+                                Resources.Add(resourceDefinition);
+                                // TBD: Add Note here -- throw new InvalidProgramException();
                                 break;
                         }
-
-                        Resources.Add(resourceDefinition);
                     }
                 }
 

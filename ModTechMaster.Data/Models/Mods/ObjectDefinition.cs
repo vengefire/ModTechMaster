@@ -16,13 +16,14 @@ namespace ModTechMaster.Data.Models.Mods
         }
 
         public IObjectDefinitionDescription ObjectDescription { get; }
+        public string HumanReadableText => this.JsonString;
         public Dictionary<string, dynamic> MetaData { get; }
 
         public virtual void AddMetaData()
         {
             if (this.ObjectDescription?.Id != null)
             {
-                this.MetaData.Add(Keywords.Id, this.ObjectDescription?.Id);
+                this.MetaData.Add(Keywords.Id, this.ObjectDescription.Id);
             }
             else if (this.JsonObject?.Id != null)
             {
@@ -30,12 +31,16 @@ namespace ModTechMaster.Data.Models.Mods
             }
             else if (this.JsonObject?.identifier != null)
             {
-                this.MetaData.Add(Keywords.Id, this.JsonObject?.identifier);
+                this.MetaData.Add(Keywords.Id, this.JsonObject.identifier);
+            }
+            else if (this.JsonObject?.ID!= null)
+            {
+                this.MetaData.Add(Keywords.Id, this.JsonObject.ID);
             }
 
             if (this.ObjectDescription?.Name != null)
             {
-                this.MetaData.Add(Keywords.Name, this.ObjectDescription?.Name);
+                this.MetaData.Add(Keywords.Name, this.ObjectDescription.Name);
             }
             else if (this.JsonObject?.Name != null)
             {

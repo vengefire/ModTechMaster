@@ -28,6 +28,8 @@
             {
                 case ObjectType.FactionDef:
                     return new FactionObjectDefinitionProcessor();
+                case ObjectType.ItemCollectionDef:
+                    return new ItemCollectionObjectDefinitionProcessor();
                 default:
                     return new ObjectDefinitionProcessor();
             }

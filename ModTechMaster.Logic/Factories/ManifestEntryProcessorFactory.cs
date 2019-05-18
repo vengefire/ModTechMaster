@@ -12,7 +12,6 @@
             switch (type)
             {
                 case ObjectType.SimGameConversations:
-                case ObjectType.ItemCollectionDef:
                 case ObjectType.Texture2D:
                 case ObjectType.Sprite:
                     return new ResourceManifestEntryProcessor();

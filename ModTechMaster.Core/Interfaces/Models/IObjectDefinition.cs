@@ -1,9 +1,8 @@
-﻿using ModTechMaster.Core.Enums.Mods;
-
-namespace ModTechMaster.Core.Interfaces.Models
+﻿namespace ModTechMaster.Core.Interfaces.Models
 {
-    public interface IObjectDefinition : IJsonObjectBase, ISourcedFromFile, IReferenceableObject, IObject
+    public interface IObjectDefinition : ISourcedFromFile, IReferenceableObject, IObject
     {
         IObjectDefinitionDescription ObjectDescription { get; }
+        string HumanReadableText { get; }
     }
 }

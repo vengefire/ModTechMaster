@@ -31,7 +31,7 @@ namespace ModTechMaster.Data.Models.Mods
 
         public static ObjectDefinitionDescription CreateDefault(dynamic description)
         {
-            if (description == null)
+            if (description == null || description is JValue)
             {
                 return null;
             }

@@ -1,5 +1,6 @@
 ﻿namespace ModTechMaster.Logic.Factories
 {
+    using System;
     using Core.Enums.Mods;
     using Core.Interfaces.Factories;
     using Core.Interfaces.Models;
@@ -70,8 +71,59 @@
                 case ObjectType.WeaponDef:
                     objectDefinition = new WeaponObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
-                default:
+                case ObjectType.ContractOverride:
+                    objectDefinition = new ContractObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.FactionDef:
+                    objectDefinition = new FactionObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.CastDef:
+                    objectDefinition = new CastObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.ConversationContent:
+                    objectDefinition = new DialogObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    // objectDefinition = new ConversationObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.DialogBucketDef:
+                    objectDefinition = new ConversationObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    // objectDefinition = new DialogObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.FlashpointDef:
+                    objectDefinition = new FlashpointObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.HeraldryDef:
+                    objectDefinition = new HeraldryObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.SimGameMilestoneSet:
+                    objectDefinition = new MilestoneSetObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.HardpointDataDef:
+                    objectDefinition = new HardpointDataObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.ShopDef:
+                    objectDefinition = new ShopDefObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.AbilityDef:
+                case ObjectType.MovementCapabilitiesDef:
+                case ObjectType.LanceDef:
+                case ObjectType.ApplicationConstants:
+                case ObjectType.CCCategories:
+                case ObjectType.CCTagRestrictions:
+                case ObjectType.SimGameConversations:
+                case ObjectType.HeatSinkDef:
+                case ObjectType.JumpJetDef:
+                case ObjectType.BaseDescriptionDef:
+                case ObjectType.StarSystemDef:
+                case ObjectType.MEBonusDescriptions:
+                case ObjectType.MECriticalEffects:
+                case ObjectType.ShipModuleUpgrade:
+                case ObjectType.PathingCapabilitiesDef:
+                case ObjectType.DesignMaskDef:
                     objectDefinition = new ObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                default:
+                    throw new InvalidProgramException();
+                    //objectDefinition = new ObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
             }
             objectDefinition.AddMetaData();
