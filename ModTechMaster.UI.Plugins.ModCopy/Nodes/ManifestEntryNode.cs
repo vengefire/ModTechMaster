@@ -4,22 +4,22 @@
     using System.Linq;
     using ModTechMaster.Core.Interfaces.Models;
 
-    public class ManifestEntryNode : MTMTreeViewItem
+    public class ManifestEntryNode : MtmTreeViewItem
     {
-        public ManifestEntryNode(IMTMTreeViewItem parent, IManifestEntry manifestEntry) : base(parent)
+        public ManifestEntryNode(IMtmTreeViewItem parent, IManifestEntry manifestEntry) : base(parent, manifestEntry)
         {
             this.ManifestEntry = manifestEntry;
             this.ManifestEntry.Objects.ToList()
                 .ForEach(definition => this.Children.Add(new ObjectDefinitionNode(this, definition)));
         }
 
-        public ManifestEntryNode(IMTMTreeViewItem parent, IManifestEntry manifestEntry,
-            List<HashSet<IObjectDefinition>> objectLists) : base(parent)
+        public ManifestEntryNode(IMtmTreeViewItem parent, IManifestEntry manifestEntry,
+            List<HashSet<IObjectDefinition>> objectLists) : base(parent, manifestEntry)
         {
             this.ManifestEntry = manifestEntry;
             objectLists
                 .ForEach(list =>
-                    list.ToList().ForEach(definition => this.Children.Add(new ObjectDefinitionNode(this, definition))));
+                    list.OrderBy(definition => definition.Name).ToList().ForEach(definition => this.Children.Add(new ObjectDefinitionNode(this, definition))));
         }
 
         public IManifestEntry ManifestEntry { get; }

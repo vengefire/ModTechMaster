@@ -25,11 +25,16 @@ namespace MTM
             }
             var modService = container.GetInstance<IModService>();
 
-            IModCollection modCollection = new ModCollection("MTM Mod Collection", di.FullName);
+            //IModCollection modCollection = new ModCollection("MTM Mod Collection", di.FullName);
 
             logger.Info($"Processing mods from [{di.FullName}]");
             var stopwatch = new Stopwatch();
-            di.GetDirectories().ToList().ForEach(
+            stopwatch.Start();
+            var modCollection = modService.LoadCollectionFromPath(di.FullName, "MTM Mod Collection");
+            stopwatch.Stop();
+            var elapsedTime = stopwatch.ElapsedMilliseconds;
+            logger.Info($"Mods processed in [{elapsedTime}] ms.");
+            /*di.GetDirectories().ToList().ForEach(
                 sub =>
                 {
                     stopwatch.Start();
@@ -38,11 +43,11 @@ namespace MTM
                     stopwatch.Stop();
                     logger.Info($"{stopwatch.ElapsedMilliseconds} ms");
                     stopwatch.Reset();
-                });
+                });*/
 
             var refService = container.GetInstance<IReferenceFinderService>();
             logger.Info("Processing Mod Collection object relationships...");
-            var elapsedTime = refService.ProcessModCollectionReferences(modCollection);
+            elapsedTime = refService.ProcessModCollectionReferences(modCollection);
             logger.Info($"Object relationships processed in [{elapsedTime}] ms.");
 
             logger.Info("Press any key to exit.");

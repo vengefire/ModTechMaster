@@ -1,66 +1,135 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Data;
-using ModTechMaster.UI.Data.Enums;
-
-namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
+﻿namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Windows;
+    using System.Windows.Data;
+    using Data.Enums;
+    using Logic.Processors;
+    using ModTechMaster.Core.Enums;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
     //using Annotations;
 
-    public abstract class MTMTreeViewItem : IMTMTreeViewItem
+    public abstract class MtmTreeViewItem : IMtmTreeViewItem
     {
-        private bool? _isChecked = false;
-        private bool _isExpanded;
-        private bool _isSelected;
-        private Visibility _visibility = Visibility.Visible;
+        private static readonly Dictionary<IReferenceableObject, IMtmTreeViewItem> DictRefsToTreeViewItems = new Dictionary<IReferenceableObject, IMtmTreeViewItem>();
 
-        public MTMTreeViewItem(IMTMTreeViewItem parent)
+        private bool? isChecked = false;
+        private bool isExpanded;
+        private bool isSelected;
+
+        private bool isThreeState;
+
+        private List<IObjectReference<IReferenceableObject>> objectReferences;
+        private Visibility visibility = Visibility.Visible;
+
+        public MtmTreeViewItem(IMtmTreeViewItem parent, object o)
         {
-            Parent = parent;
+            this.Parent = parent;
+            this.Object = o;
+            if (this.Object is IReferenceableObject referenceableObject)
+            {
+                MtmTreeViewItem.DictRefsToTreeViewItems.Add(referenceableObject, this);
+            }
         }
 
-        public IMTMTreeViewItem Parent { get; }
+        public IMtmTreeViewItem TopNode
+        {
+            get
+            {
+                if (this.Parent == null)
+                {
+                    return this;
+                }
 
-        public virtual ObservableCollection<IMTMTreeViewItem> Children { get; set; } =
-            new ObservableCollection<IMTMTreeViewItem>();
+                return this.Parent.TopNode;
+            }
+        }
+
+        public bool IsThreeState
+        {
+            get => this.isThreeState;
+            set
+            {
+                if (this.isThreeState == value)
+                {
+                    return;
+                }
+
+                this.isThreeState = value;
+                this.OnPropertyChanged(nameof(this.IsThreeState));
+            }
+        }
+
+
+        public virtual IReferenceableObjectProvider ReferenceableObjectProvider => throw new NotImplementedException();
+
+        public IMtmTreeViewItem Parent { get; }
+
+        public virtual ObservableCollection<IMtmTreeViewItem> Children { get; set; } =
+            new ObservableCollection<IMtmTreeViewItem>();
+
+        public List<IObjectReference<IReferenceableObject>> ObjectReferences
+        {
+            get
+            {
+                if (this.objectReferences == null)
+                {
+                    this.objectReferences = CommonReferenceProcessor.FindReferences<IReferenceableObject>(
+                        this.TopNode.ReferenceableObjectProvider, this.Object as IReferenceableObject, new List<ObjectType> {ObjectType.MechDef, ObjectType.Mod}); //TBD
+                }
+
+                return this.objectReferences;
+            }
+        }
 
         public bool IsSelected
         {
-            get => _isSelected;
+            get => this.isSelected;
             set
             {
-                if (value != IsSelected)
+                if (value != this.IsSelected)
                 {
-                    _isSelected = value;
-                    OnPropertyChanged("IsSelected");
+                    this.isSelected = value;
+                    this.OnPropertyChanged(nameof(this.IsSelected));
                 }
             }
         }
 
         public bool IsExpanded
         {
-            get => _isExpanded;
+            get => this.isExpanded;
             set
             {
-                if (value != _isExpanded)
+                if (value != this.isExpanded)
                 {
-                    _isExpanded = value;
-                    OnPropertyChanged("IsExpanded");
+                    if (value)
+                    {
+                        var viewSource = CollectionViewSource.GetDefaultView(this);
+                        viewSource?.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                    }
+
+                    this.isExpanded = value;
+                    this.OnPropertyChanged(nameof(this.IsExpanded));
                 }
             }
         }
 
         public Visibility Visibility
         {
-            get => _visibility;
+            get => this.visibility;
             set
             {
-                if (_visibility != value)
+                if (this.visibility != value)
                 {
-                    _visibility = value;
-                    OnPropertyChanged(nameof(Visibility));
+                    this.visibility = value;
+                    this.OnPropertyChanged(nameof(MtmTreeViewItem.Visibility));
                 }
             }
         }
@@ -69,29 +138,56 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
 
         public bool? IsChecked
         {
-            get => this?._isChecked;
+            get => this.isChecked;
             set
             {
-                if (value != _isChecked)
+                if (value != this.isChecked)
                 {
-                    CheckNode(this, value);
-                    OnPropertyChanged("IsChecked");
+                    MtmTreeViewItem.CheckNode(this, value);
+                    this.PropertyChanged += OnPropertyChanged;
+                    this.OnPropertyChanged(nameof(this.IsChecked));
+                }
+            }
+        }
+
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.IsChecked))
+            {
+                if (this.IsChecked == null)
+                {
+                    this.IsThreeState = true;
+                }
+                else
+                {
+                    this.IsThreeState = false;
                 }
             }
         }
 
         public bool Filter(string filterText)
         {
-            if (Children.Count > 0)
+            if (this.Children.Count > 0)
             {
-                var childCollectionView = CollectionViewSource.GetDefaultView(Children);
-                childCollectionView.Filter = child => ((IMTMTreeViewItem) child).Filter(filterText);
-                return !childCollectionView.IsEmpty || Name.Contains(filterText) ||
-                       HumanReadableContent.Contains(filterText);
+                var childCollectionView = CollectionViewSource.GetDefaultView(this.Children);
+                childCollectionView.Filter = child => ((IMtmTreeViewItem)child).Filter(filterText);
+                return !childCollectionView.IsEmpty || this.Name.Contains(filterText) || this.HumanReadableContent.Contains(filterText);
             }
 
-            return Name.Contains(filterText) || HumanReadableContent.Contains(filterText);
+            return this.Name.Contains(filterText) || this.HumanReadableContent.Contains(filterText);
         }
+
+        public void Sort()
+        {
+            if (this.Children.Count > 0)
+            {
+                var collectionView = CollectionViewSource.GetDefaultView(this);
+                collectionView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                this.Children.ToList().ForEach(item => item.Sort());
+            }
+        }
+
+        public object Object { get; }
 
         public SelectionStatus SelectionStatus { get; set; } = SelectionStatus.Unselected;
         public ObjectStatus ObjectStatus { get; set; } = ObjectStatus.Nominal;
@@ -100,16 +196,62 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public static void CheckNode(MTMTreeViewItem node, bool? value)
+        public static void CheckNode(MtmTreeViewItem node, bool? value)
         {
-            node._isChecked = value;
+            // If we're setting the node to an unspecified state, we don't want to roll that down to our children.
+            node.isChecked = value;
+
+            if (value == null)
+            {
+                return;
+            }
+
             foreach (var child in node.Children) child.IsChecked = value;
+            IEnumerable<IObjectReference<IReferenceableObject>> objects;
+            objects = value == true ? node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent) : node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency);
+
+            foreach (var objectReference in objects)
+            {
+                IMtmTreeViewItem treeItem;
+                if (MtmTreeViewItem.DictRefsToTreeViewItems.TryGetValue(objectReference.ReferenceObject, out treeItem))
+                {
+                    treeItem.IsChecked = value;
+                }
+            }
+
+            MtmTreeViewItem.CheckParentChildrenSelectedState(node);
+        }
+
+        private static void CheckParentChildrenSelectedState(IMtmTreeViewItem item)
+        {
+            if (item.Children.Count == 0)
+            {
+                var currentNode = item.Parent;
+                while (currentNode != null)
+                {
+                    if (currentNode.Children.All(node => node.IsChecked == true))
+                    {
+                        currentNode.IsChecked = true;
+                    }
+                    else if (currentNode.Children.All(Nodes => Nodes.IsChecked == false))
+                    {
+                        currentNode.IsChecked = false;
+                    }
+                    else
+                    {
+                        currentNode.IsChecked = null;
+                        // break;
+                    }
+
+                    currentNode = currentNode.Parent;
+                }
+            }
         }
 
         //[NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

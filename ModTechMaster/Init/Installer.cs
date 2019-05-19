@@ -12,6 +12,9 @@ using ModTechMaster.Logic.Services;
 
 namespace ModTechMaster.UI.Init
 {
+    using Models;
+    using Plugins.Core.Interfaces;
+
     public class Installer : IWindsorInstaller
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
@@ -24,7 +27,8 @@ namespace ModTechMaster.UI.Init
                 Component.For<ISettingsService>().ImplementedBy<SettingsService>().LifestyleSingleton(),
                 Component.For<IModService>().ImplementedBy<ModService>().LifestyleSingleton(),
                 Component.For<IReferenceFinderService>().ImplementedBy<ReferenceFinderService>().LifestyleSingleton(),
-                Component.For<IManifestEntryProcessorFactory>().ImplementedBy<ManifestEntryProcessorFactory>()
+                Component.For<IManifestEntryProcessorFactory>().ImplementedBy<ManifestEntryProcessorFactory>(),
+                Component.For<IMtmMainModel>().ImplementedBy<MtmMainModel>().LifestyleSingleton()
             );
         }
     }

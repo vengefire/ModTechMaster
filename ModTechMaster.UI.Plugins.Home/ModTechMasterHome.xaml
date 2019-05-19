@@ -3,10 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:utils="clr-namespace:ModTechMaster.UI.Core.Utils;assembly=ModTechMaster.UI.Core"
              xmlns:converters="clr-namespace:ModTechMaster.UI.Core.Converters;assembly=ModTechMaster.UI.Core"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
@@ -17,58 +14,56 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <xctk:BusyIndicator Name="busyIndicator" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
-            <xctk:BusyIndicator.Content>
-                <DockPanel LastChildFill="True">
-                    <Grid DockPanel.Dock="Top" VerticalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Grid.Column="0" Content="Mod Collection Name: " />
-                        <TextBox Grid.Row="0" Grid.Column="1"
-                                 Text="{Binding HomeSettings.ModCollectionName, Mode=TwoWay}"
-                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
-                        <Label Grid.Row="1" Grid.Column="0" Content="Mod Collection Directory: " />
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding HomeSettings.ModDirectory, Mode=TwoWay}"
-                                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
-                        <Button Grid.Row="1" Grid.Column="2" Content="..." Click="Button_Click" />
-                    </Grid>
-                    <Grid Visibility="{Binding ModCollection, Converter={StaticResource NullVisibilityConverter}}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.01*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="0.01*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.01*" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                            <RowDefinition Height="0.01*" />
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="1" Grid.Column="1" Content="Mod Count" />
-                        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"
-                                   Text="{Binding ModCollection.Mods.Count}" />
-                        <Label Grid.Row="2" Grid.Column="1" Content="Object Count" />
-                        <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"
-                                   Text="{Binding ModCollection.ObjectCount}" />
-                        <DataGrid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding ModCollection.Mods}" AutoGenerateColumns="False" IsReadOnly="True" Margin="5,5,0,0">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=OneWay}"></DataGridTextColumn>
-                                <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled, Mode=OneWay}"></DataGridCheckBoxColumn>
-                                <DataGridTextColumn Header="Mod Size (KB)" Binding="{Binding SizeOnDisk, Mode=OneWay, StringFormat={}{0:#,#.00}}"></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-                </DockPanel>
-            </xctk:BusyIndicator.Content>
-        </xctk:BusyIndicator>
+        <DockPanel LastChildFill="True">
+            <Grid DockPanel.Dock="Top" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="Mod Collection Name: " />
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         Text="{Binding HomeSettings.ModCollectionName, Mode=TwoWay}"
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                <Label Grid.Row="1" Grid.Column="0" Content="Mod Collection Directory: " />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding HomeSettings.ModDirectory, Mode=TwoWay}"
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                <Button Grid.Row="1" Grid.Column="2" Content="..." Click="Button_Click" />
+            </Grid>
+            <Grid Visibility="{Binding ModCollection, Converter={StaticResource NullVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.01*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="0.01*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.01*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="0.01*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="1" Content="Mod Count" />
+                <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"
+                           Text="{Binding ModCollection.Mods.Count}" />
+                <Label Grid.Row="2" Grid.Column="1" Content="Object Count" />
+                <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"
+                           Text="{Binding ModCollection.ObjectCount}" />
+                <DataGrid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding ModCollection.Mods}"
+                          AutoGenerateColumns="False" IsReadOnly="True" Margin="5,4,0,1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=OneWay}" />
+                        <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled, Mode=OneWay}" />
+                        <DataGridTextColumn Header="Mod Size (KB)"
+                                            Binding="{Binding SizeOnDisk, Mode=OneWay, StringFormat={}{0:#,#.00}}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </DockPanel>
     </Grid>
 </UserControl>

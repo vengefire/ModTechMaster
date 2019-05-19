@@ -57,13 +57,13 @@
                         throw new InvalidProgramException();
                 }
             }
-            this.MetaData.Add(Keywords.MechDefId, mechDefs);
-            this.MetaData.Add(Keywords.ItemCollectionId, itemCollections);
-            this.MetaData.Add(Keywords.UpgradeDefId, upgrades);
-            this.MetaData.Add(Keywords.WeaponDefId, weapons);
-            this.MetaData.Add(Keywords.HeatSinkDefId, heatsinks);
-            this.MetaData.Add(Keywords.AmmoBoxId, ammoBoxes);
-            this.MetaData.Add(Keywords.JumpJetDefId, jumpJets);
+            this.MetaData.Add(Keywords.MechDefId, new List<string>(mechDefs));
+            this.MetaData.Add(Keywords.ItemCollectionId, new List<string>(itemCollections));
+            this.MetaData.Add(Keywords.UpgradeDefId, new List<string>(upgrades));
+            this.MetaData.Add(Keywords.WeaponDefId, new List<string>(weapons));
+            this.MetaData.Add(Keywords.HeatSinkDefId, new List<string>(heatsinks));
+            this.MetaData.Add(Keywords.AmmoBoxId, new List<string>(ammoBoxes));
+            this.MetaData.Add(Keywords.JumpJetDefId, new List<string>(jumpJets));
         }
 
         public override string Id => this.Name;

@@ -1,17 +1,18 @@
-﻿using ModTechMaster.Core.Enums;
-using ModTechMaster.Core.Interfaces.Models;
-
-namespace ModTechMaster.Data.Models
+﻿namespace ModTechMaster.Data.Models
 {
+    using Core.Enums;
+    using Core.Interfaces.Models;
+
     public class ObjectReference<TType> : IObjectReference<TType> where TType : IReferenceableObject
     {
-        public ObjectReference(TType referenceObject, ObjectReferenceType objectReferenceType,
+        public ObjectReference(
+            TType referenceObject, ObjectReferenceType objectReferenceType,
             IRelationship relationship, bool isActive)
         {
-            ReferenceObject = referenceObject;
-            ObjectReferenceType = objectReferenceType;
-            Relationship = relationship;
-            IsActive = isActive;
+            this.ReferenceObject = referenceObject;
+            this.ObjectReferenceType = objectReferenceType;
+            this.Relationship = relationship;
+            this.IsActive = isActive;
         }
 
         public ObjectReferenceType ObjectReferenceType { get; }

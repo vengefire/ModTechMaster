@@ -93,6 +93,10 @@
       <Project>{f1c5c7c8-c8f3-46fc-9339-746dc0a2a185}</Project>
       <Name>ModTechMaster.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.Logic\ModTechMaster.Logic.csproj">
+      <Project>{D9D9B467-A546-49C2-843D-45BE8E730FF8}</Project>
+      <Name>ModTechMaster.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.UI.Plugins.Core\ModTechMaster.UI.Plugins.Core.csproj">
       <Project>{5043194f-4908-4337-a148-97b9cbd8cb82}</Project>
       <Name>ModTechMaster.UI.Plugins.Core</Name>

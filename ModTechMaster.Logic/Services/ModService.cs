@@ -9,6 +9,7 @@ namespace ModTechMaster.Logic.Services
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
     using Core.Enums;
     using Core.Enums.Mods;
     using Core.Interfaces.Factories;
@@ -45,13 +46,15 @@ namespace ModTechMaster.Logic.Services
             this.ModCollection.Path = path;
 
             _logger.Info($"Processing mods from [{di.FullName}]");
-            di.GetDirectories().ToList().ForEach(
-                sub =>
+
+            var result = Parallel.ForEach(
+                di.GetDirectories(), sub =>
                 {
                     _logger.Debug(".");
                     var mod = this.TryLoadFromPath(sub.FullName);
                     this.ModCollection.AddModToCollection(mod);
                 });
+            this.ModCollection.Mods.Sort((mod, mod1) => String.Compare(mod.Name, mod1.Name, StringComparison.OrdinalIgnoreCase));
 
             this.OnPropertyChanged(nameof(ModCollection));
 
@@ -161,6 +164,7 @@ namespace ModTechMaster.Logic.Services
             var author = src.Author?.ToString();
             var website = src.Website?.ToString();
             var contact = src.Contact?.ToString();
+            var dll = src.DLL?.ToString();
             return new Mod(
                            name,
                            enabled,
@@ -173,7 +177,8 @@ namespace ModTechMaster.Logic.Services
                            conflicts,
                            path,
                            src,
-                           Convert.ToDouble(di.EnumerateFiles("*", SearchOption.AllDirectories).Sum(info => info.Length)) / 1024);
+                           Convert.ToDouble(di.EnumerateFiles("*", SearchOption.AllDirectories).Sum(info => info.Length)) / 1024,
+                           dll);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

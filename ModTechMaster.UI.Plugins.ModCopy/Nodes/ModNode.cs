@@ -2,9 +2,9 @@
 {
     using ModTechMaster.Core.Interfaces.Models;
 
-    public sealed class ModNode : MTMTreeViewItem
+    public sealed class ModNode : MtmTreeViewItem
     {
-        public ModNode(IMod mod, MTMTreeViewItem parent) : base(parent)
+        public ModNode(IMod mod, MtmTreeViewItem parent) : base(parent, mod)
         {
             this.Mod = mod;
             if (this.Mod.Manifest != null)

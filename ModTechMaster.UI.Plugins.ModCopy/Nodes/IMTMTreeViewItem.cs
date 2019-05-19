@@ -1,19 +1,23 @@
-﻿using System;
-using System.ComponentModel;
-using System.Windows;
-
-namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
+﻿namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Windows;
     using Data.Enums;
+    using ModTechMaster.Core.Interfaces.Models;
 
-    public interface IMTMTreeViewItem : INotifyPropertyChanged
+    public interface IMtmTreeViewItem : INotifyPropertyChanged
     {
-        IMTMTreeViewItem Parent { get; }
-        ObservableCollection<IMTMTreeViewItem> Children { get; set; }
-        bool IsSelected { get; }
-        bool IsExpanded { get; }
-        Visibility Visibility { get; }
+        bool IsThreeState { get; set;  }
+        IReferenceableObjectProvider ReferenceableObjectProvider { get; }
+        IMtmTreeViewItem Parent { get; }
+        IMtmTreeViewItem TopNode { get; }
+        ObservableCollection<IMtmTreeViewItem> Children { get; set; }
+        List<IObjectReference<IReferenceableObject>> ObjectReferences { get; }
+        bool IsSelected { get; set; }
+        bool IsExpanded { get; set; }
+        Visibility Visibility { get; set; }
         bool HasCheck { get; }
         bool? IsChecked { get; set; }
         SelectionStatus SelectionStatus { get; }
@@ -21,5 +25,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
         string Name { get; }
         string HumanReadableContent { get; }
         bool Filter(string filterText);
+        object Object { get; }
+        void Sort();
     }
 }

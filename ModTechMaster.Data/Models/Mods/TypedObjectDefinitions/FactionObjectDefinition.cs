@@ -27,14 +27,14 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
             {
                 enemies.Add(enemy as string);
             }
-            this.MetaData.Add(Keywords.EnemyFactionId, enemies);
+            this.MetaData.Add(Keywords.EnemyFactionId, new List<string>(enemies));
 
             List<string> allies = new List<string>();
             foreach (var ally in this.JsonObject.Allies)
             {
                 allies.Add(ally as string);
             }
-            this.MetaData.Add(Keywords.AlliedFactionId, allies);
+            this.MetaData.Add(Keywords.AlliedFactionId, new List<string>(allies));
             
         }
     }

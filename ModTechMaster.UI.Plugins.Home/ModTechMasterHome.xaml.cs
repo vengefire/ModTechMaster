@@ -16,10 +16,10 @@
     /// </summary>
     public partial class ModTechMasterHome : UserControl, IPluginControl
     {
-        public ModTechMasterHome(IModService modService, ISettingsService settingsService)
+        public ModTechMasterHome(IModService modService, ISettingsService settingsService, IMtmMainModel mainModel)
         {
             this.InitializeComponent();
-            this.Model = new HomeModel(modService, settingsService);
+            this.Model = new HomeModel(modService, settingsService, mainModel);
             this.PluginCommands = new List<IPluginCommand>
             {
                 new LoadModsCommand(this.Model),

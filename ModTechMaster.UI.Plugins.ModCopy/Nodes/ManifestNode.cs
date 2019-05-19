@@ -4,14 +4,14 @@
     using System.Linq;
     using ModTechMaster.Core.Interfaces.Models;
 
-    public sealed class ManifestNode : MTMTreeViewItem
+    public sealed class ManifestNode : MtmTreeViewItem
     {
-        private readonly List<IMTMTreeViewItem> _children = new List<IMTMTreeViewItem>();
+        private readonly List<IMtmTreeViewItem> _children = new List<IMtmTreeViewItem>();
 
-        public ManifestNode(IManifest modManifest, MTMTreeViewItem parent) : base(parent)
+        public ManifestNode(IManifest modManifest, MtmTreeViewItem parent) : base(parent, modManifest)
         {
             this.Manifest = modManifest;
-            var groupedManifestEntries = this.Manifest.Entries.GroupBy(entry => entry.EntryType);
+            var groupedManifestEntries = this.Manifest.Entries.GroupBy(entry => entry.EntryType).OrderBy(entries => entries.Key);
             foreach (var groupedManifestEntry in groupedManifestEntries)
             {
                 var firstEntry = groupedManifestEntry.First();

@@ -21,7 +21,7 @@
             HashSet<string> dependsOn,
             HashSet<string> conflictsWith,
             string sourceFilePath,
-            dynamic jsonObject, double sizeOnDisk) : base(ObjectType.Mod, sourceFilePath, (JObject)jsonObject)
+            dynamic jsonObject, double sizeOnDisk, string dll) : base(ObjectType.Mod, sourceFilePath, (JObject)jsonObject)
         {
             this.Name = name;
             this.enabled = enabled;
@@ -33,6 +33,7 @@
             this.DependsOn = dependsOn;
             this.ConflictsWith = conflictsWith;
             this.SizeOnDisk = sizeOnDisk;
+            this.Dll = dll;
             this.AddMetaData();
         }
 
@@ -57,6 +58,7 @@
 
         public HashSet<string> ConflictsWith { get; set; }
         public double SizeOnDisk { get; }
+        public string Dll { get; }
 
         public Dictionary<string, object> MetaData { get; } = new Dictionary<string, object>();
 

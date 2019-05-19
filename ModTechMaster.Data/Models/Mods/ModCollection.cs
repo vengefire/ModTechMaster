@@ -1,32 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using ModTechMaster.Core.Interfaces.Models;
-using ModTechMaster.Data.Annotations;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using Annotations;
+    using Core.Interfaces.Models;
+
     public class ModCollection : IModCollection
     {
         public ModCollection(string name, string path)
         {
-            Name = name;
-            Path = path;
+            this.Name = name;
+            this.Path = path;
         }
 
         public string Path { get; set; }
 
-        public string Name { get; set;  }
-        public HashSet<IMod> Mods { get; } = new HashSet<IMod>();
+        public string Name { get; set; }
+        public List<IMod> Mods { get; } = new List<IMod>();
 
         public void AddModToCollection(IMod mod)
         {
-            if (mod == null) return;
-            Mods.Add(mod);
-            OnPropertyChanged(nameof(Mods));
-            OnPropertyChanged(nameof(ObjectCount));
+            if (mod == null)
+            {
+                return;
+            }
+
+            lock(this.Mods)
+            {
+                this.Mods.Add(mod);
+            }
+
+            this.OnPropertyChanged(nameof(ModCollection.Mods));
+            this.OnPropertyChanged(nameof(ModCollection.ObjectCount));
         }
 
         public void RemoveModFromCollection(IMod mod)
@@ -34,13 +42,15 @@ namespace ModTechMaster.Data.Models.Mods
             throw new NotImplementedException();
         }
 
-        public int ObjectCount => Mods.Sum(mod =>
-            mod.Manifest?.Entries.Sum(entry => entry.Objects.Count) ?? 0);
+        public int ObjectCount =>
+            this.Mods.Sum(
+                mod =>
+                    mod.Manifest?.Entries.Sum(entry => entry.Objects.Count) ?? 0);
 
         public List<IReferenceableObject> GetReferenceableObjects()
         {
             var objects = new List<IReferenceableObject>();
-            Mods.ToList().ForEach(mod => objects.AddRange(mod.GetReferenceableObjects()));
+            this.Mods.ToList().ForEach(mod => objects.AddRange(mod.GetReferenceableObjects()));
             return objects;
         }
 
@@ -49,7 +59,7 @@ namespace ModTechMaster.Data.Models.Mods
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -5,51 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:utils="clr-namespace:ModTechMaster.UI.Core.Utils;assembly=ModTechMaster.UI.Core"
         xmlns:local="clr-namespace:ModTechMaster.UI"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="MainWindow" Height="768" Width="1024">
     <Window.Resources>
     </Window.Resources>
     <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Settings" />
-                    <MenuItem Header="E_xit" />
-                </MenuItem>
-                <MenuItem Header="_Plugins" />
-                <MenuItem Header="_About" />
-            </Menu>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Settings" />
+                <MenuItem Header="E_xit" />
+            </MenuItem>
+            <MenuItem Header="_Plugins" />
+            <MenuItem Header="_About" />
+        </Menu>
         <StatusBar DockPanel.Dock="Bottom">
-                <StatusBar.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="100" />
-                            </Grid.ColumnDefinitions>
-                        </Grid>
-                    </ItemsPanelTemplate>
-                </StatusBar.ItemsPanel>
-                <StatusBarItem>
-                    <TextBlock Name="lblStatus">
-                        Ready
-                    </TextBlock>
-                </StatusBarItem>
-                <Separator Grid.Column="1" />
-                <StatusBarItem Grid.Column="2">
-                    <TextBlock Text="c:\path\of\current\file.txt" />
-                </StatusBarItem>
-                <Separator Grid.Column="3" />
-                <StatusBarItem Grid.Column="4">
-                    <ProgressBar Value="50" Width="90" Height="16" />
-                </StatusBarItem>
-            </StatusBar>
-        <DockPanel>
-            <ToolBarTray Name="toolbarTray" DockPanel.Dock="Bottom" utils:MarginSetter.Margin="5"/>
-            <TabControl Name="tabPages" SelectionChanged="TabPages_SelectionChanged">
-            </TabControl>
-        </DockPanel>
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem>
+                <TextBlock Name="lblStatus">
+                    Ready
+                </TextBlock>
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                <TextBlock Text="c:\path\of\current\file.txt" />
+            </StatusBarItem>
+            <Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4">
+                <ProgressBar Value="50" Width="90" Height="16" />
+            </StatusBarItem>
+        </StatusBar>
+        <xctk:BusyIndicator Name="busyIndicator" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
+            <xctk:BusyIndicator.Content>
+                <DockPanel>
+                    <ToolBarTray Name="toolbarTray" DockPanel.Dock="Bottom" utils:MarginSetter.Margin="5" />
+                    <TabControl Name="tabPages" SelectionChanged="TabPages_SelectionChanged" />
+                </DockPanel>
+            </xctk:BusyIndicator.Content>
+        </xctk:BusyIndicator>
     </DockPanel>
 </Window>

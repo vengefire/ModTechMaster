@@ -22,7 +22,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
             {
                 dialogDefs.Add(content.ToString());
             }
-            this.MetaData.Add(Keywords.DialogId, dialogDefs);
+            this.MetaData.Add(Keywords.DialogId, new List<string>(dialogDefs));
         }
     }
 }

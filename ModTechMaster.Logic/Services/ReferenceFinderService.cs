@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Threading.Tasks;
     using Core.Interfaces.Models;
     using Core.Interfaces.Services;
     using Processors;
@@ -14,7 +15,8 @@
             var allReferences = modCollection.GetReferenceableObjects();
             var sw = new Stopwatch();
             sw.Start();
-            allReferences.ForEach(o => { dictRefs[o] = CommonReferenceProcessor.FindReferences<IReferenceableObject>(modCollection, o, null); });
+            Parallel.ForEach(allReferences, o => { dictRefs[o] = CommonReferenceProcessor.FindReferences<IReferenceableObject>(modCollection, o, null); });
+            //allReferences.ForEach(o => { dictRefs[o] = CommonReferenceProcessor.FindReferences<IReferenceableObject>(modCollection, o, null); });
             sw.Stop();
             return sw.ElapsedMilliseconds;
         }

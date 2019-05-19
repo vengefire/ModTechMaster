@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Core.Enums;
     using Core.Enums.Mods;
     using Core.Interfaces.Models;
@@ -15,12 +16,18 @@
             IReferenceableObject objectDefinition, List<ObjectType> dependantTypesToIgnore)
             where TType : IReferenceableObject
         {
-            dependantTypesToIgnore = dependantTypesToIgnore ?? new List<ObjectType>();
+            if (objectDefinition == null)
+            {
+                return new List<IObjectReference<TType>>();
+            }
+
+            // dependantTypesToIgnore = dependantTypesToIgnore ?? new List<ObjectType>();
 
             var dependenciesRels = RelationshipManager.GetDependenciesRelationshipsForType(objectDefinition.ObjectType);
             var dependantRels = RelationshipManager.GetDependantRelationShipsForType(objectDefinition.ObjectType);
 
-            if (!dependantRels.Any() && !dependenciesRels.Any())
+            if (!dependantRels.Any() &&
+                !dependenciesRels.Any())
             {
                 return new List<IObjectReference<TType>>();
             }
@@ -39,58 +46,68 @@
             var candidates = objectProvider.GetReferenceableObjects();
             candidates = candidates.Where(o => targetObjectTypes.Contains(o.ObjectType)).ToList();
             var dependentRecs = new List<ObjectReference<TType>>();
-            foreach (var relationship in dependantRels)
-            {
-                foreach (var candidate in candidates)
+            Parallel.ForEach(
+                dependantRels, relationship =>
                 {
-                    if (candidate.ObjectType != relationship.DependentType)
-                    {
-                        continue;
-                    }
+                    Parallel.ForEach(
+                        candidates, candidate =>
+                        {
+                            if (candidate.ObjectType != relationship.DependentType)
+                            {
+                                return;
+                            }
 
-                    if (!candidate.MetaData.ContainsKey(relationship.DependentKey) ||
-                        !objectDefinition.MetaData.ContainsKey(relationship.DependencyKey))
-                    {
-                        continue;
-                    }
+                            if (!candidate.MetaData.ContainsKey(relationship.DependentKey) ||
+                                !objectDefinition.MetaData.ContainsKey(relationship.DependencyKey))
+                            {
+                                return;
+                            }
 
-                    var objectKey = objectDefinition.MetaData[relationship.DependencyKey];
+                            var objectKey = objectDefinition.MetaData[relationship.DependencyKey];
 
-                    var dependentKeys = candidate.MetaData[relationship.DependentKey];
-                    if ((relationship.HasMultipleDependencies && ((List<string>)dependentKeys).Contains(objectKey)) || 
-                        dependentKeys == objectKey)
-                    {
-                        dependentRecs.Add(new ObjectReference<TType>((TType)candidate, ObjectReferenceType.Dependent, relationship, false));
-                    }
-                }
-            }
+                            var dependentKeys = candidate.MetaData[relationship.DependentKey];
+                            if (relationship.HasMultipleDependencies && ((List<string>)dependentKeys).Contains(objectKey) ||
+                                dependentKeys == objectKey)
+                            {
+                                lock (dependentRecs)
+                                {
+                                    dependentRecs.Add(new ObjectReference<TType>((TType)candidate, ObjectReferenceType.Dependent, relationship, false));
+                                }
+                            }
+                        });
+                });
 
             var dependencyRecs = new List<ObjectReference<TType>>();
-            foreach (var relationship in dependenciesRels)
-            {
-                foreach (var candidate in candidates)
+            Parallel.ForEach(
+                dependenciesRels, relationship =>
                 {
-                    if (candidate.ObjectType != relationship.DependencyType)
-                    {
-                        continue;
-                    }
+                    Parallel.ForEach(
+                        candidates, candidate =>
+                        {
+                            if (candidate.ObjectType != relationship.DependencyType)
+                            {
+                                return;
+                            }
 
-                    if (!candidate.MetaData.ContainsKey(relationship.DependencyKey) ||
-                        !objectDefinition.MetaData.ContainsKey(relationship.DependentKey))
-                    {
-                        continue;
-                    }
+                            if (!candidate.MetaData.ContainsKey(relationship.DependencyKey) ||
+                                !objectDefinition.MetaData.ContainsKey(relationship.DependentKey))
+                            {
+                                return;
+                            }
 
-                    var objectKeys = objectDefinition.MetaData[relationship.DependentKey];
+                            var objectKeys = objectDefinition.MetaData[relationship.DependentKey];
 
-                    var dependencyKey = candidate.MetaData[relationship.DependencyKey];
-                    if ((relationship.HasMultipleDependencies && ((List<string>)objectKeys).Contains(dependencyKey)) || 
-                        objectKeys == dependencyKey)
-                    {
-                        dependencyRecs.Add(new ObjectReference<TType>((TType)candidate, ObjectReferenceType.Dependent, relationship, false));
-                    }
-                }
-            }
+                            var dependencyKey = candidate.MetaData[relationship.DependencyKey];
+                            if ((relationship.HasMultipleDependencies && ((List<string>)objectKeys).Contains(dependencyKey)) ||
+                                (!relationship.HasMultipleDependencies && (string.CompareOrdinal(objectKeys.ToString(), dependencyKey.ToString()) == 0)))
+                            {
+                                lock (dependencyRecs)
+                                {
+                                    dependencyRecs.Add(new ObjectReference<TType>((TType)candidate, ObjectReferenceType.Dependent, relationship, false));
+                                }
+                            }
+                        });
+                });
 
             var references = dependentRecs;
             references.AddRange(dependencyRecs.Except(dependentRecs));

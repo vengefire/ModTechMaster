@@ -38,7 +38,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
                 }
                 RecurseWeapons(data.weapons, prefabWeapons);
             }
-            this.MetaData.Add(Keywords.PrefabId, prefabWeapons);
+            this.MetaData.Add(Keywords.PrefabId, new List<string>(prefabWeapons));
         }
     }
 }

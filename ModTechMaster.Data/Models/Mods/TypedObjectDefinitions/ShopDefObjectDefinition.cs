@@ -80,11 +80,11 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
                     throw new NotImplementedException();
                 }
             }
-            this.MetaData.Add(Keywords.WeaponDefId, weapons);
-            this.MetaData.Add(Keywords.UpgradeDefId, upgrades);
-            this.MetaData.Add(Keywords.MechDefId, mechs);
-            this.MetaData.Add(Keywords.HeatSinkDefId, heatsinks);
-            this.MetaData.Add(Keywords.JumpJetDefId, jumpjets);
+            this.MetaData.Add(Keywords.WeaponDefId, new List<string>(weapons));
+            this.MetaData.Add(Keywords.UpgradeDefId, new List<string>(upgrades));
+            this.MetaData.Add(Keywords.MechDefId, new List<string>(mechs));
+            this.MetaData.Add(Keywords.HeatSinkDefId, new List<string>(heatsinks));
+            this.MetaData.Add(Keywords.JumpJetDefId, new List<string>(jumpjets));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy
         public string FilterText { get; set; }
         private readonly ILogger logger;
         private readonly IModService modService;
-        private ObservableCollection<MTMTreeViewItem> modCollectionData;
+        private ObservableCollection<MtmTreeViewItem> modCollectionData;
 
         private bool Filter(object obj)
         {
@@ -46,7 +46,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy
             if (e.PropertyName == "ModCollection")
             {
                 var collectionNode = new ModCollectionNode(modService.ModCollection, null);
-                this.modCollectionData = new ObservableCollection<MTMTreeViewItem> {collectionNode};
+                this.modCollectionData = new ObservableCollection<MtmTreeViewItem> {collectionNode};
                 this.Dispatcher.Invoke(() => this.tvModControl.ItemsSource = this.modCollectionData);
             }
         }
@@ -65,7 +65,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy
             {
                 FilterText = tb.Text;
                 var rootCollectionView = CollectionViewSource.GetDefaultView(modCollectionData);
-                rootCollectionView.Filter = (node => ((IMTMTreeViewItem) node).Filter(FilterText));
+                rootCollectionView.Filter = (node => ((IMtmTreeViewItem) node).Filter(FilterText));
             }
         }
 

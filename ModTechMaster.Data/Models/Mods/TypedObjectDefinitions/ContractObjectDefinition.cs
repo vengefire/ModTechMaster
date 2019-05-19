@@ -80,12 +80,12 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
                 }
             }
 
-            this.MetaData.Add(Keywords.LanceDefId, lanceDefs);
-            this.MetaData.Add(Keywords.HeraldryDefId, heraldryDefs);
-            this.MetaData.Add(Keywords.MechDefId, mechDefs);
-            this.MetaData.Add(Keywords.PilotId, pilotDefs);
-            this.MetaData.Add(Keywords.TurretId, turretDefs);
-            this.MetaData.Add(Keywords.VehicleId, vehicleDefs);
+            this.MetaData.Add(Keywords.LanceDefId, new List<string>(lanceDefs));
+            this.MetaData.Add(Keywords.HeraldryDefId, new List<string>(heraldryDefs));
+            this.MetaData.Add(Keywords.MechDefId, new List<string>(mechDefs));
+            this.MetaData.Add(Keywords.PilotId, new List<string>(pilotDefs));
+            this.MetaData.Add(Keywords.TurretId, new List<string>(turretDefs));
+            this.MetaData.Add(Keywords.VehicleId, new List<string>(vehicleDefs));
         }
     }
 }

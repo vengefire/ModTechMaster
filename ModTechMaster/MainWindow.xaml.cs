@@ -12,13 +12,16 @@
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly IMtmMainModel mainModel;
         private List<IPlugin> plugins;
         private PluginService pluginService;
 
-        public MainWindow()
+        public MainWindow(IMtmMainModel mainModel)
         {
             this.InitializeComponent();
             this.InitializePlugins();
+            this.mainModel = mainModel;
+            this.DataContext = mainModel;
         }
 
         private void InitializePlugins()

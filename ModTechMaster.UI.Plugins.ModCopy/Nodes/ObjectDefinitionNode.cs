@@ -2,9 +2,9 @@
 {
     using ModTechMaster.Core.Interfaces.Models;
 
-    public class ObjectDefinitionNode : MTMTreeViewItem
+    public class ObjectDefinitionNode : MtmTreeViewItem
     {
-        public ObjectDefinitionNode(IMTMTreeViewItem parent, IObjectDefinition objectDefinition) : base(parent)
+        public ObjectDefinitionNode(IMtmTreeViewItem parent, IObjectDefinition objectDefinition) : base(parent, objectDefinition)
         {
             this.ObjectDefinition = objectDefinition;
         }

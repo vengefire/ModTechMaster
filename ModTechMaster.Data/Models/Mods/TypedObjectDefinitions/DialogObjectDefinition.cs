@@ -22,7 +22,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
             {
                 castDefs.Add(content.selectedCastDefId.ToString());
             }
-            this.MetaData.Add(Keywords.CastDefId, castDefs);
+            this.MetaData.Add(Keywords.CastDefId, new List<string>(castDefs));
         }
     }
 }

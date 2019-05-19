@@ -79,7 +79,7 @@ namespace ModTechMaster.Logic.Managers
                             Keywords.ComponentDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.VehicleDef, ObjectType.JumpJetDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.ChassisDef,
+                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.VehicleChassisDef,
                             Keywords.ChassisId, Keywords.Id)
                     }
                 },
@@ -107,7 +107,7 @@ namespace ModTechMaster.Logic.Managers
                             Keywords.ComponentDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.TurretDef, ObjectType.JumpJetDef,
                             Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.ChassisDef,
+                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.TurretChassisDef,
                             Keywords.ChassisId, Keywords.Id)
                     }
                 },
@@ -127,7 +127,7 @@ namespace ModTechMaster.Logic.Managers
                             Keywords.AssetBundle, Keywords.Id)
                     }
                 },
-                {
+                /*{
                     ObjectType.CCDefaults, new List<IObjectRelationship>
                     {
                         new ObjectRelationship(ObjectType.CCDefaults, ObjectType.CCCategories,
@@ -137,7 +137,7 @@ namespace ModTechMaster.Logic.Managers
                         new ObjectRelationship(ObjectType.CCDefaults, ObjectType.HeatSinkDef,
                             Keywords.DefId, Keywords.Id)
                     }
-                },
+                },*/
                 {
                     ObjectType.UpgradeDef, new List<IObjectRelationship>
                     {
@@ -296,7 +296,19 @@ namespace ModTechMaster.Logic.Managers
 
         public static List<IObjectRelationship> GetDependantRelationShipsForType(ObjectType objectType)
         {
-            return _ObjectRelationships.Where(pair => pair.Value.Exists(ship => ship.DependentType == objectType)).SelectMany(pair => pair.Value).ToList();
+            List<IObjectRelationship> lstDependentRelationships = new List<IObjectRelationship>();
+            foreach (var objectRelationship in RelationshipManager._ObjectRelationships)
+            {
+                foreach (var relationship in objectRelationship.Value)
+                {
+                    if (relationship.DependencyType == objectType)
+                    {
+                        lstDependentRelationships.Add(relationship);
+                    }
+                }
+            }
+
+            return lstDependentRelationships;
         }
     }
 }
