@@ -14,8 +14,10 @@ namespace ModTechMaster.UI.Plugins.Core.Logic
             PluginCommands = commands;
         }
 
+        public virtual Type SettingsType { get; }
         public string ModuleName { get; }
         public Type PageType { get; }
         public List<IPluginCommand> PluginCommands { get; }
+        public object Settings { get; set; }
     }
 }

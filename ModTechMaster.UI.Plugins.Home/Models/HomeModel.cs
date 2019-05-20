@@ -11,15 +11,11 @@
     {
         private readonly IModService _modService;
         private readonly IMtmMainModel mainModel;
-        private readonly ISettingsService settingsService;
-        private bool _isBusy;
 
-        public HomeModel(IModService modService, ISettingsService settingsService, IMtmMainModel mainModel)
+        public HomeModel(IModService modService, IMtmMainModel mainModel)
         {
             this._modService = modService;
-            this.settingsService = settingsService;
             this.mainModel = mainModel;
-            this.HomeSettings = settingsService.ReadSettings<HomeSettings>("HomeSettings");
         }
 
         public IModCollection ModCollection { get; private set; }

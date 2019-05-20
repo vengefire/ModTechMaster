@@ -10,6 +10,18 @@
     {
         private bool isBusy;
 
+        private IPluginControl _currentPluginControl;
+        public IPluginControl CurrentPluginControl
+        {
+            get => _currentPluginControl;
+            set
+            {
+                if (Equals(value, _currentPluginControl)) return;
+                _currentPluginControl = value;
+                OnPropertyChanged();
+            }
+        }
+
         public MtmMainModel(IContainer container)
         {
             this.Container = container;

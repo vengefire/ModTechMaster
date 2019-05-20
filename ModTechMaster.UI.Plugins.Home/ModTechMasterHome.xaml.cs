@@ -16,23 +16,32 @@
     /// </summary>
     public partial class ModTechMasterHome : UserControl, IPluginControl
     {
-        public ModTechMasterHome(IModService modService, ISettingsService settingsService, IMtmMainModel mainModel)
+        public ModTechMasterHome(IModService modService, IMtmMainModel mainModel)
         {
             this.InitializeComponent();
-            this.Model = new HomeModel(modService, settingsService, mainModel);
+            this.Model = new HomeModel(modService, mainModel);
             this.PluginCommands = new List<IPluginCommand>
             {
                 new LoadModsCommand(this.Model),
-                new SaveSettingsCommand(settingsService, this.Model.HomeSettings)
             };
             this.DataContext = this.Model;
         }
 
         public HomeModel Model { get; set; }
 
+        public Type SettingsType => typeof(HomeSettings);
         public string ModuleName => @"Home";
         public Type PageType => typeof(ModTechMasterHome);
         public List<IPluginCommand> PluginCommands { get; }
+
+        public object Settings
+        {
+            get => this.Model.HomeSettings;
+            set
+            {
+                this.Model.HomeSettings = value as HomeSettings;
+            }
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

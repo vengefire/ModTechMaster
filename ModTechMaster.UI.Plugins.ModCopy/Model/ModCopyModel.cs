@@ -9,14 +9,10 @@
 
     public class ModCopyModel : INotifyPropertyChanged
     {
-        private static ISettingsService settingsService;
-
-        public static ModCopySettings settings;
         private IMtmTreeViewItem currentSelectedItem;
 
-        public ModCopyModel(ISettingsService settingsService)
+        public ModCopyModel()
         {
-            ModCopyModel.settingsService = settingsService;
         }
 
         public IMtmTreeViewItem CurrentSelectedItem
@@ -34,7 +30,7 @@
             }
         }
 
-        public static ModCopySettings Settings => ModCopyModel.settings ?? (ModCopyModel.settings = ModCopyModel.settingsService.ReadSettings<ModCopySettings>(nameof(ModCopyModel)));
+        public ModCopySettings Settings { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

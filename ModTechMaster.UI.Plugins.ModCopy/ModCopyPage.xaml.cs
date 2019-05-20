@@ -23,16 +23,14 @@
     public partial class ModCopyPage : UserControl, IPluginControl
     {
         private readonly ILogger logger;
-        private static ISettingsService settingsService;
         private readonly IModService modService;
         private ObservableCollection<MtmTreeViewItem> modCollectionData;
 
-        public ModCopyPage(IModService modService, ILogger logger, ISettingsService settingsService)
+        public ModCopyPage(IModService modService, ILogger logger)
         {
             this.modService = modService;
             this.logger = logger;
-            ModCopyPage.settingsService = settingsService;
-            this.ModCopyModel = new ModCopyModel(settingsService);
+            this.ModCopyModel = new ModCopyModel();
             this.InitializeComponent();
             this.tvModControl.SelectedItemChanged += this.ModCopyModel.OnSelectedItemChanged;
             this.PluginCommands = new List<IPluginCommand> {new ValidateModsCommand(null)};
@@ -44,9 +42,15 @@
 
         public string FilterText { get; set; }
 
+        public Type SettingsType => typeof(ModCopySettings);
         public string ModuleName => @"Mod Copy";
         public Type PageType => typeof(ModCopyPage);
         public List<IPluginCommand> PluginCommands { get; }
+        public object Settings
+        {
+            get => this.ModCopyModel.Settings;
+            set => this.ModCopyModel.Settings = value as ModCopySettings;
+        }
 
         private bool Filter(object obj)
         {

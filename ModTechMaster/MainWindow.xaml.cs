@@ -1,12 +1,17 @@
-﻿namespace ModTechMaster.UI
-{
-    using System.Collections.Generic;
-    using System.Windows;
-    using System.Windows.Controls;
-    using Framework.Interfaces.Injection;
-    using Plugins.Core.Interfaces;
-    using Plugins.Core.Services;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls;
+using ModTechMaster.Annotations;
+using ModTechMaster.UI.Commands;
+using ModTechMaster.UI.Plugins.Core.Interfaces;
+using ModTechMaster.UI.Plugins.Core.Services;
+using Container = Framework.Interfaces.Injection.Container;
 
+namespace ModTechMaster.UI
+{
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
@@ -18,46 +23,48 @@
 
         public MainWindow(IMtmMainModel mainModel)
         {
-            this.InitializeComponent();
-            this.InitializePlugins();
+            InitializeComponent();
+            InitializePlugins();
             this.mainModel = mainModel;
-            this.DataContext = mainModel;
+            DataContext = mainModel;
         }
 
         private void InitializePlugins()
         {
-            this.pluginService = new PluginService();
-            this.plugins = this.pluginService.GetPlugins(".");
-            foreach (var plugin in this.plugins)
+            pluginService = new PluginService();
+            plugins = pluginService.GetPlugins(".");
+            foreach (var plugin in plugins)
             {
                 var moduleTab = new TabItem {Header = plugin.Name};
                 var modulePage = Container.Instance.GetInstance(plugin.PageType);
                 moduleTab.Content = modulePage;
-                this.tabPages.Items.Add(moduleTab);
+                tabPages.Items.Add(moduleTab);
             }
         }
 
         private void TabPages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!(sender is TabControl))
-            {
-                return;
-            }
+            if (!(sender is TabControl)) return;
 
-            this.toolbarTray.ToolBars.Clear();
+            // Remove non-common tool bars...
+            var toolbars = toolbarTray.ToolBars.Where(bar => bar.Name != "tbCommon").ToList();
+            toolbars.ForEach(bar => toolbarTray.ToolBars.Remove(bar));
 
             var tabItem = (sender as TabControl).SelectedItem as TabItem;
-            if (!(tabItem?.Content is IPluginControl))
-            {
-                return;
-            }
+            if (!(tabItem?.Content is IPluginControl)) return;
 
-            var pluginModule = (IPluginControl)tabItem.Content;
+
+            var pluginModule = (IPluginControl) tabItem.Content;
             var pluginToolbar = new ToolBar();
 
             foreach (var command in pluginModule.PluginCommands)
-                pluginToolbar.Items.Add(new Button {Content = command.Name, Command = command, CommandParameter = command.CommandParameter});
-            this.toolbarTray.ToolBars.Add(pluginToolbar);
+                pluginToolbar.Items.Add(new Button
+                    {Content = command.Name, Command = command, CommandParameter = command.CommandParameter});
+            toolbarTray.ToolBars.Add(pluginToolbar);
+
+            // Init settings and commands...
+            this.mainModel.CurrentPluginControl = pluginModule;
+            CommonCommands.LoadCurrentSettingsCommand.Execute(pluginModule);
         }
     }
 }

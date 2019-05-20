@@ -22,6 +22,16 @@
             return JsonConvert.DeserializeObject<TType>(File.ReadAllText($"./{name}.json"));
         }
 
+        public object ReadSettings(string name, Type settingsType)
+        {
+            if (!File.Exists(this.SettingsFileName("./", name)))
+            {
+                return Activator.CreateInstance(settingsType);
+            }
+
+            return JsonConvert.DeserializeObject(File.ReadAllText($"./{name}.json"), settingsType);
+        }
+
         private string SettingsFileName(string path, string name) => Path.Combine(path, $"{name}.json");
     }
 }

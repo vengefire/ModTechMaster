@@ -92,6 +92,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\CommonCommands.cs" />
+    <Compile Include="Commands\LoadSettingsCommand.cs" />
+    <Compile Include="Commands\SaveSettingsCommand.cs" />
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="Init\Bootstrap.cs" />
     <Compile Include="Init\CastleWindsorContainer.cs" />

@@ -6,5 +6,6 @@
     {
         bool IsBusy { get; set; }
         IContainer Container { get; }
+        IPluginControl CurrentPluginControl { get; set; }
     }
 }

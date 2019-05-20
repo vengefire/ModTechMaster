@@ -75,12 +75,6 @@ namespace ModTechMaster.Logic.Managers
                     {
                         new ObjectRelationship(ObjectType.VehicleDef, ObjectType.WeaponDef,
                             Keywords.WeaponDefId, Keywords.Id, true),
-                        /*new ObjectRelationship(ObjectType.VehicleDef, ObjectType.UpgradeDef,
-                            Keywords.UpgradeDefId, Keywords.Id, true),
-                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.HeatSinkDef,
-                            Keywords.HeatSinkDefId, Keywords.Id, true),
-                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.JumpJetDef,
-                            Keywords.JumpJetDefId, Keywords.Id, true),*/
                         new ObjectRelationship(ObjectType.VehicleDef, ObjectType.AmmunitionBoxDef,
                             Keywords.AmmoBoxId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.VehicleDef, ObjectType.VehicleChassisDef,
@@ -105,12 +99,6 @@ namespace ModTechMaster.Logic.Managers
                     {
                         new ObjectRelationship(ObjectType.TurretDef, ObjectType.WeaponDef,
                             Keywords.WeaponDefId, Keywords.Id, true),
-                        /*new ObjectRelationship(ObjectType.TurretDef, ObjectType.UpgradeDef,
-                            Keywords.UpgradeDefId, Keywords.Id, true),
-                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.HeatSinkDef,
-                            Keywords.HeatSinkDefId, Keywords.Id, true),
-                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.JumpJetDef,
-                            Keywords.JumpJetDefId, Keywords.Id, true),*/
                         new ObjectRelationship(ObjectType.TurretDef, ObjectType.AmmunitionBoxDef,
                             Keywords.AmmoBoxId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.TurretDef, ObjectType.TurretChassisDef,
