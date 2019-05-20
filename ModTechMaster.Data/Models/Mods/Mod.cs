@@ -59,6 +59,7 @@
         public HashSet<string> ConflictsWith { get; set; }
         public double SizeOnDisk { get; }
         public string Dll { get; }
+        public List<IResourceDefinition> ResourceFiles { get; } = new List<IResourceDefinition>();
 
         public Dictionary<string, object> MetaData { get; } = new Dictionary<string, object>();
 

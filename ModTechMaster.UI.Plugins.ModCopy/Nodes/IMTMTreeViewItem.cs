@@ -15,6 +15,8 @@
         IMtmTreeViewItem TopNode { get; }
         ObservableCollection<IMtmTreeViewItem> Children { get; set; }
         List<IObjectReference<IReferenceableObject>> ObjectReferences { get; }
+        List<IObjectReference<IReferenceableObject>> Dependencies { get; }
+        List<IObjectReference<IReferenceableObject>> Dependents { get; }
         bool IsSelected { get; set; }
         bool IsExpanded { get; set; }
         Visibility Visibility { get; set; }

@@ -23,5 +23,6 @@
         HashSet<string> ConflictsWith { get; set; }
         double SizeOnDisk { get; }
         string Dll { get; }
+        List<IResourceDefinition> ResourceFiles { get; }
     }
 }

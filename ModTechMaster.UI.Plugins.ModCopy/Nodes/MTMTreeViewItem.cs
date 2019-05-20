@@ -83,11 +83,25 @@
                 {
                     this.objectReferences = CommonReferenceProcessor.FindReferences<IReferenceableObject>(
                         this.TopNode.ReferenceableObjectProvider, this.Object as IReferenceableObject, new List<ObjectType> {ObjectType.MechDef, ObjectType.Mod}); //TBD
+
+                    this.OnPropertyChanged();
+                    if (this.Dependencies.Any())
+                    {
+                        this.OnPropertyChanged(nameof(this.Dependencies));
+                    }
+
+                    if (this.Dependents.Any())
+                    {
+                        this.OnPropertyChanged(nameof(this.Dependents));
+                    }
                 }
 
                 return this.objectReferences;
             }
         }
+
+        public List<IObjectReference<IReferenceableObject>> Dependencies => this.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency).ToList();
+        public List<IObjectReference<IReferenceableObject>> Dependents => this.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent).ToList();
 
         public bool IsSelected
         {

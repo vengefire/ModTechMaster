@@ -98,7 +98,7 @@ namespace ModTechMaster.Data.Models.Mods
                                 switch (fi.Name)
                                 {
                                     default:
-                                        resourceDefinition = new ResourceDefinition(ObjectType.Resource, fi.FullName, fi.Name, fi.Name);
+                                        resourceDefinition = new ResourceDefinition(ObjectType.UnhandledResource, fi.FullName, fi.Name, fi.Name);
                                         break;
                                 }
 

@@ -36,7 +36,10 @@
                     objectDefinition = new AmmunitionObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
                 case ObjectType.CCDefaults:
-                    objectDefinition = new CCDefaultsObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new CcDefaultsObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    break;
+                case ObjectType.CCCategories:
+                    objectDefinition = new CcCategoryObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
                 case ObjectType.ChassisDef:
                     objectDefinition = new ChassisObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
@@ -107,7 +110,6 @@
                 case ObjectType.MovementCapabilitiesDef:
                 case ObjectType.LanceDef:
                 case ObjectType.ApplicationConstants:
-                case ObjectType.CCCategories:
                 case ObjectType.CCTagRestrictions:
                 case ObjectType.SimGameConversations:
                 case ObjectType.HeatSinkDef:

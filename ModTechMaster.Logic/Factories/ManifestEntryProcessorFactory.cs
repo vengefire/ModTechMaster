@@ -19,6 +19,9 @@
                     return new AssetBundleManifestEntryProcessor();
                 case ObjectType.Prefab:
                     return new PrefabManifestEntryProcessor();
+                case ObjectType.CCDefaults:
+                case ObjectType.CCCategories:
+                    return new CustomComponentsManifestEntryProcessor();
                 default:
                     return new ManifestEntryProcessor();
             }

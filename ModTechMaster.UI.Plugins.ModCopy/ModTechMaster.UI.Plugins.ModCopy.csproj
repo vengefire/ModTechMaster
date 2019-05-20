@@ -51,14 +51,18 @@
     <Compile Include="ModCopyPage.xaml.cs">
       <DependentUpon>ModCopyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\ModCopyModel.cs" />
+    <Compile Include="Model\ModCopySettings.cs" />
     <Compile Include="Nodes\IMTMTreeViewItem.cs" />
     <Compile Include="Nodes\ManifestEntryNode.cs" />
     <Compile Include="Nodes\ManifestNode.cs" />
     <Compile Include="Nodes\ModCollectionNode.cs" />
     <Compile Include="Nodes\ModNode.cs" />
     <Compile Include="Nodes\MTMTreeViewItem.cs" />
+    <Compile Include="Nodes\ResourceNode.cs" />
     <Compile Include="Nodes\ObjectDefinitionNode.cs" />
     <Compile Include="Plugin\ModCopyPlugin.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -89,6 +93,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Framework\Framework.Utils\Framework.Utils.csproj">
+      <Project>{E851E212-1EB4-40B4-8596-31FF26AE2594}</Project>
+      <Name>Framework.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.Core\ModTechMaster.Core.csproj">
       <Project>{f1c5c7c8-c8f3-46fc-9339-746dc0a2a185}</Project>
       <Name>ModTechMaster.Core</Name>

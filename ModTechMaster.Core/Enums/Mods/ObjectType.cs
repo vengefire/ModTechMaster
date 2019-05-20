@@ -53,7 +53,7 @@
         Manifest,
         ManifestEntry,
         ObjectDefinitionDescription,
-        Resource,
+        UnhandledResource,
         SimGameConstants
     }
 }

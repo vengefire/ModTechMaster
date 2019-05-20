@@ -40,7 +40,7 @@
                 .Select(ship => ship.DependentType).Distinct().ToList()
                 .ForEach(type => targetObjectTypes.Add(type));
 
-            dependantRels = dependantRels.Where(ship => !dependantTypesToIgnore.Contains(ship.DependentType)).ToList();
+            // dependantRels = dependantRels.Where(ship => !dependantTypesToIgnore.Contains(ship.DependentType)).ToList();
 
 
             var candidates = objectProvider.GetReferenceableObjects();
@@ -66,8 +66,8 @@
                             var objectKey = objectDefinition.MetaData[relationship.DependencyKey];
 
                             var dependentKeys = candidate.MetaData[relationship.DependentKey];
-                            if (relationship.HasMultipleDependencies && ((List<string>)dependentKeys).Contains(objectKey) ||
-                                dependentKeys == objectKey)
+                            if ((relationship.HasMultipleDependencies && ((List<string>)dependentKeys).Contains(objectKey)) ||
+                                dependentKeys.ToString() == objectKey.ToString())
                             {
                                 lock (dependentRecs)
                                 {
@@ -99,18 +99,18 @@
 
                             var dependencyKey = candidate.MetaData[relationship.DependencyKey];
                             if ((relationship.HasMultipleDependencies && ((List<string>)objectKeys).Contains(dependencyKey)) ||
-                                (!relationship.HasMultipleDependencies && (string.CompareOrdinal(objectKeys.ToString(), dependencyKey.ToString()) == 0)))
+                                string.CompareOrdinal(objectKeys.ToString(), dependencyKey.ToString()) == 0)
                             {
                                 lock (dependencyRecs)
                                 {
-                                    dependencyRecs.Add(new ObjectReference<TType>((TType)candidate, ObjectReferenceType.Dependent, relationship, false));
+                                    dependencyRecs.Add(new ObjectReference<TType>((TType)candidate, ObjectReferenceType.Dependency, relationship, false));
                                 }
                             }
                         });
                 });
 
             var references = dependentRecs;
-            references.AddRange(dependencyRecs.Except(dependentRecs));
+            references.AddRange(dependencyRecs);
             return references.Cast<IObjectReference<TType>>().ToList();
         }
     }

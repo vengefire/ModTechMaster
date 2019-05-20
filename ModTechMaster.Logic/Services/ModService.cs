@@ -1,20 +1,19 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Castle.Core.Logging;
-using ModTechMaster.Data.Annotations;
-
-namespace ModTechMaster.Logic.Services
+﻿namespace ModTechMaster.Logic.Services
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.IO;
     using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
+    using Castle.Core.Logging;
     using Core.Enums;
     using Core.Enums.Mods;
     using Core.Interfaces.Factories;
     using Core.Interfaces.Models;
     using Core.Interfaces.Services;
+    using Data.Annotations;
     using Data.Models.Mods;
     using Framework.Utils.Directory;
     using Newtonsoft.Json;
@@ -22,8 +21,8 @@ namespace ModTechMaster.Logic.Services
 
     public class ModService : IModService
     {
-        private readonly IManifestEntryProcessorFactory manifestEntryProcessorFactory;
         private readonly ILogger _logger;
+        private readonly IManifestEntryProcessorFactory manifestEntryProcessorFactory;
         private readonly IMessageService messageService;
 
         public ModService(IMessageService messageService, IManifestEntryProcessorFactory manifestEntryProcessorFactory, ILogger logger)
@@ -45,23 +44,23 @@ namespace ModTechMaster.Logic.Services
             this.ModCollection.Name = name;
             this.ModCollection.Path = path;
 
-            _logger.Info($"Processing mods from [{di.FullName}]");
+            this._logger.Info($"Processing mods from [{di.FullName}]");
 
             var result = Parallel.ForEach(
                 di.GetDirectories(), sub =>
                 {
-                    _logger.Debug(".");
+                    this._logger.Debug(".");
                     var mod = this.TryLoadFromPath(sub.FullName);
                     this.ModCollection.AddModToCollection(mod);
                 });
-            this.ModCollection.Mods.Sort((mod, mod1) => String.Compare(mod.Name, mod1.Name, StringComparison.OrdinalIgnoreCase));
+            this.ModCollection.Mods.Sort((mod, mod1) => string.Compare(mod.Name, mod1.Name, StringComparison.OrdinalIgnoreCase));
 
-            this.OnPropertyChanged(nameof(ModCollection));
+            this.OnPropertyChanged(nameof(ModService.ModCollection));
 
             return this.ModCollection;
         }
 
-        public IModCollection ModCollection { get; private set; }
+        public IModCollection ModCollection { get; }
 
         public IMod TryLoadFromPath(string path)
         {
@@ -73,6 +72,8 @@ namespace ModTechMaster.Logic.Services
 
             return this.LoadFromPath(path);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private static string ModFilePath(string path)
         {
@@ -107,8 +108,11 @@ namespace ModTechMaster.Logic.Services
             if (Directory.Exists(saPath))
             {
                 // Handle
-                AddStreamingAssetsManifestEntry(saPath, mod);
+                this.AddStreamingAssetsManifestEntry(saPath, mod);
             }
+
+            var di = new DirectoryInfo(mod.SourceDirectoryPath);
+            foreach (var file in di.EnumerateFiles()) mod.ResourceFiles.Add(new ResourceDefinition(ObjectType.UnhandledResource, file.FullName, file.Name, file.Name));
         }
 
         private void AddStreamingAssetsManifestEntry(string simPath, Mod mod)
@@ -128,6 +132,7 @@ namespace ModTechMaster.Logic.Services
                 {
                     throw new InvalidProgramException();
                 }
+
                 manifest.Entries.Add(manifestEntry);
             }
 
@@ -166,27 +171,25 @@ namespace ModTechMaster.Logic.Services
             var contact = src.Contact?.ToString();
             var dll = src.DLL?.ToString();
             return new Mod(
-                           name,
-                           enabled,
-                           version,
-                           description,
-                           author,
-                           website,
-                           contact,
-                           depends,
-                           conflicts,
-                           path,
-                           src,
-                           Convert.ToDouble(di.EnumerateFiles("*", SearchOption.AllDirectories).Sum(info => info.Length)) / 1024,
-                           dll);
+                name,
+                enabled,
+                version,
+                description,
+                author,
+                website,
+                contact,
+                depends,
+                conflicts,
+                path,
+                src,
+                Convert.ToDouble(di.EnumerateFiles("*", SearchOption.AllDirectories).Sum(info => info.Length)) / 1024,
+                dll);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

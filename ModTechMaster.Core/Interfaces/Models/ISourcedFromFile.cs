@@ -6,5 +6,6 @@
 
         string SourceDirectoryPath { get; }
         string SourceFileName { get; }
+        string SourceFileExtension { get; }
     }
 }

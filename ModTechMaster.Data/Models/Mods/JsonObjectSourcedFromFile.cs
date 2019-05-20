@@ -17,5 +17,6 @@ namespace ModTechMaster.Data.Models.Mods
 
         public string SourceDirectoryPath => new FileInfo(this.SourceFilePath).DirectoryName;
         public string SourceFileName => new FileInfo(this.SourceFilePath).Name;
+        public string SourceFileExtension => new FileInfo(this.SourceFilePath).Extension;
     }
 }

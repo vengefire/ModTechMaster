@@ -48,6 +48,7 @@
     <Compile Include="Factories\ObjectDefinitionProcessorFactory.cs" />
     <Compile Include="Managers\RelationshipManager.cs" />
     <Compile Include="Processors\CommonReferenceProcessor.cs" />
+    <Compile Include="Processors\CustomComponentsManifestEntryProcessor.cs" />
     <Compile Include="Processors\ItemCollectionObjectDefinitionProcessor.cs" />
     <Compile Include="Processors\FactionObjectDefinitionProcessor.cs" />
     <Compile Include="Processors\ModReferenceProcessor.cs" />

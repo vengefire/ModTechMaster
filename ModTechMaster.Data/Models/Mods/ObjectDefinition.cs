@@ -1,9 +1,8 @@
-﻿using ModTechMaster.Core.Enums.Mods;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
     using System.Collections.Generic;
     using Core.Constants;
+    using Core.Enums.Mods;
     using Core.Interfaces.Models;
     using Newtonsoft.Json.Linq;
 
@@ -33,7 +32,7 @@ namespace ModTechMaster.Data.Models.Mods
             {
                 this.MetaData.Add(Keywords.Id, this.JsonObject.identifier);
             }
-            else if (this.JsonObject?.ID!= null)
+            else if (this.JsonObject?.ID != null)
             {
                 this.MetaData.Add(Keywords.Id, this.JsonObject.ID);
             }
@@ -48,9 +47,14 @@ namespace ModTechMaster.Data.Models.Mods
             }
 
             // If we didn't find a Name in our json store (which may not be there if we're a resource object) then add our default name (FileName)
-            if (!MetaData.ContainsKey(Keywords.Name))
+            if (!this.MetaData.ContainsKey(Keywords.Name))
             {
-                MetaData.Add(Keywords.Name, Name);
+                this.MetaData.Add(Keywords.Name, this.Name);
+            }
+            // Similarly if we didnt find an ID, use the name as ID.
+            if (!this.MetaData.ContainsKey(Keywords.Id))
+            {
+                this.MetaData.Add(Keywords.Id, this.Name);
             }
         }
 

@@ -127,17 +127,17 @@ namespace ModTechMaster.Logic.Managers
                             Keywords.AssetBundle, Keywords.Id)
                     }
                 },
-                /*{
+                {
                     ObjectType.CCDefaults, new List<IObjectRelationship>
                     {
                         new ObjectRelationship(ObjectType.CCDefaults, ObjectType.CCCategories,
-                            Keywords.CategoryId, Keywords.Name),
+                            Keywords.CategoryId, Keywords.Id),
                         new ObjectRelationship(ObjectType.CCDefaults, ObjectType.UpgradeDef,
                             Keywords.DefId, Keywords.Id),
                         new ObjectRelationship(ObjectType.CCDefaults, ObjectType.HeatSinkDef,
                             Keywords.DefId, Keywords.Id)
                     }
-                },*/
+                },
                 {
                     ObjectType.UpgradeDef, new List<IObjectRelationship>
                     {

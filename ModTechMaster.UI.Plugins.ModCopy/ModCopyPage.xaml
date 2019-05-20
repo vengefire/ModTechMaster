@@ -32,7 +32,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="0.15*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -86,8 +86,8 @@
                           HorizontalAlignment="Center" />
             <Grid Grid.Column="2" Grid.Row="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition Height="0.5*"></RowDefinition>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="0">
                     <ContentPresenter Content="{Binding ElementName=tvModControl, Path=SelectedItem}">
@@ -113,12 +113,86 @@
                         </ContentPresenter.Resources>
                     </ContentPresenter>
                 </Border>
-                <TextBlock Grid.Row="1">PLACE HOLDER</TextBlock>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Expander Grid.Row="0" Header="Dependencies">
+                        <ScrollViewer>
+                        <ListView ItemsSource="{Binding ModCopyModel.CurrentSelectedItem.Dependencies}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Object Type"
+                                                    DisplayMemberBinding="{Binding ReferenceObject.ObjectType}" />
+                                    <GridViewColumn Header="Object Name"
+                                                    DisplayMemberBinding="{Binding ReferenceObject.Name}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        </ScrollViewer>
+                    </Expander>
+                    <Expander Grid.Row="1" Header="Dependents">
+                        <ScrollViewer>
+                        <ListView ItemsSource="{Binding ModCopyModel.CurrentSelectedItem.Dependents}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Object Type"
+                                                    DisplayMemberBinding="{Binding ReferenceObject.ObjectType}" />
+                                    <GridViewColumn Header="Object Name"
+                                                    DisplayMemberBinding="{Binding ReferenceObject.Name}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        </ScrollViewer>
+                    </Expander>
+                </Grid>
             </Grid>
             <GridSplitter Grid.Column="0" Grid.Row="1" Height="5" Grid.ColumnSpan="3"
                           HorizontalAlignment="Stretch" VerticalAlignment="Center" />
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
-                <TextBlock>Notification Text</TextBlock>
+                <Expander Header="Settings and Notifications">
+                    <StackPanel>
+                        <Expander Header="Settings">
+                            <Grid DataContext="{Binding ModCopyModel.Settings}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Row="0" Grid.Column="0" Content="Auto Include Dependents"
+                                          IsChecked="{Binding AutoIncludeDependents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Label Grid.Row="0" Grid.Column="2" Content="Output Directory" />
+                                <TextBox Grid.Row="0" Grid.Column="3"
+                                         Text="{Binding OutputDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
+                                          ItemsSource="{Binding AlwaysIncludedMods}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Auto Included Mod"
+                                                            DisplayMemberBinding="{Binding Name}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
+                                          ItemsSource="{Binding DependentTypesToIgnore}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Dependent Types to Ignore"
+                                                            DisplayMemberBinding="{Binding Name}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </Expander>
+                    </StackPanel>
+                </Expander>
             </Border>
         </Grid>
     </DockPanel>
