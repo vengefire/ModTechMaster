@@ -167,10 +167,10 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <CheckBox Grid.Row="0" Grid.Column="0" Content="Auto Include Dependents"
-                                          IsChecked="{Binding AutoIncludeDependents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                          IsChecked="{Binding AutoIncludeDependents, Mode=TwoWay}" />
                                 <Label Grid.Row="0" Grid.Column="2" Content="Output Directory" />
                                 <TextBox Grid.Row="0" Grid.Column="3"
-                                         Text="{Binding OutputDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                         Text="{Binding OutputDirectory, Mode=TwoWay}" />
                                 <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
                                           ItemsSource="{Binding AlwaysIncludedMods}">
                                     <ListView.View>

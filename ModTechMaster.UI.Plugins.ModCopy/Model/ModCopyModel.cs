@@ -10,6 +10,7 @@
     public class ModCopyModel : INotifyPropertyChanged
     {
         private IMtmTreeViewItem currentSelectedItem;
+        private ModCopySettings _settings;
 
         public ModCopyModel()
         {
@@ -30,7 +31,17 @@
             }
         }
 
-        public ModCopySettings Settings { get; set; }
+        public ModCopySettings Settings
+        {
+            get => _settings;
+            set
+            {
+                if (Equals(value, _settings)) return;
+                _settings = value;
+                OnPropertyChanged();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
