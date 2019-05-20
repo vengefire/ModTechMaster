@@ -64,7 +64,6 @@
                             }
 
                             var objectKey = objectDefinition.MetaData[relationship.DependencyKey];
-
                             var dependentKeys = candidate.MetaData[relationship.DependentKey];
                             if ((relationship.HasMultipleDependencies && ((List<string>)dependentKeys).Contains(objectKey)) ||
                                 dependentKeys.ToString() == objectKey.ToString())

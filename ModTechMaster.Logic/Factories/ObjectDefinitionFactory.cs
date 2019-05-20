@@ -121,6 +121,8 @@
                 case ObjectType.ShipModuleUpgrade:
                 case ObjectType.PathingCapabilitiesDef:
                 case ObjectType.DesignMaskDef:
+                case ObjectType.BackgroundDef:
+                case ObjectType.SimGameMilestoneDef:
                     objectDefinition = new ObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
                 default:

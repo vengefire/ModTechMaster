@@ -44,13 +44,15 @@ namespace ModTechMaster.Logic.Managers
                     ObjectType.MechDef, new List<IObjectRelationship>
                     {
                         new ObjectRelationship(ObjectType.MechDef, ObjectType.WeaponDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.WeaponDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.MechDef, ObjectType.UpgradeDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.UpgradeDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.MechDef, ObjectType.HeatSinkDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.HeatSinkDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.MechDef, ObjectType.JumpJetDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.JumpJetDefId, Keywords.Id, true),
+                        new ObjectRelationship(ObjectType.MechDef, ObjectType.AmmunitionBoxDef,
+                            Keywords.AmmoBoxId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.MechDef, ObjectType.ChassisDef,
                             Keywords.ChassisId, Keywords.Id)
                     }
@@ -72,13 +74,15 @@ namespace ModTechMaster.Logic.Managers
                     ObjectType.VehicleDef, new List<IObjectRelationship>
                     {
                         new ObjectRelationship(ObjectType.VehicleDef, ObjectType.WeaponDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.UpgradeDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.WeaponDefId, Keywords.Id, true),
+                        /*new ObjectRelationship(ObjectType.VehicleDef, ObjectType.UpgradeDef,
+                            Keywords.UpgradeDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.VehicleDef, ObjectType.HeatSinkDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.HeatSinkDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.VehicleDef, ObjectType.JumpJetDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.JumpJetDefId, Keywords.Id, true),*/
+                        new ObjectRelationship(ObjectType.VehicleDef, ObjectType.AmmunitionBoxDef,
+                            Keywords.AmmoBoxId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.VehicleDef, ObjectType.VehicleChassisDef,
                             Keywords.ChassisId, Keywords.Id)
                     }
@@ -100,13 +104,15 @@ namespace ModTechMaster.Logic.Managers
                     ObjectType.TurretDef, new List<IObjectRelationship>
                     {
                         new ObjectRelationship(ObjectType.TurretDef, ObjectType.WeaponDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
-                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.UpgradeDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.WeaponDefId, Keywords.Id, true),
+                        /*new ObjectRelationship(ObjectType.TurretDef, ObjectType.UpgradeDef,
+                            Keywords.UpgradeDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.TurretDef, ObjectType.HeatSinkDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.HeatSinkDefId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.TurretDef, ObjectType.JumpJetDef,
-                            Keywords.ComponentDefId, Keywords.Id, true),
+                            Keywords.JumpJetDefId, Keywords.Id, true),*/
+                        new ObjectRelationship(ObjectType.TurretDef, ObjectType.AmmunitionBoxDef,
+                            Keywords.AmmoBoxId, Keywords.Id, true),
                         new ObjectRelationship(ObjectType.TurretDef, ObjectType.TurretChassisDef,
                             Keywords.ChassisId, Keywords.Id)
                     }

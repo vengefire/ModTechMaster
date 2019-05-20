@@ -222,7 +222,7 @@
 
             foreach (var child in node.Children) child.IsChecked = value;
             IEnumerable<IObjectReference<IReferenceableObject>> objects;
-            objects = value == true ? node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent) : node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency);
+            objects = value == true ? node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency) : node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent);
 
             foreach (var objectReference in objects)
             {
