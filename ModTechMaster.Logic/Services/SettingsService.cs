@@ -9,7 +9,10 @@
     {
         public void SaveSettings(string name, object settings)
         {
-            File.WriteAllText($"./{name}.json", JsonConvert.SerializeObject(settings, Formatting.Indented));
+            File.WriteAllText($"./{name}.json", JsonConvert.SerializeObject(settings, Formatting.Indented, new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
         }
 
         public TType ReadSettings<TType>(string name)

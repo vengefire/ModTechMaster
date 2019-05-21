@@ -31,35 +31,29 @@ public class DelegateCommand<T> : ICommand, IRaiseCanExecuteChanged
 
     public DelegateCommand(Action<T> executeMethod, Func<T, bool> canExecuteMethod)
     {
-        if (executeMethod == null)
-            throw new ArgumentNullException("executeMethod", @"Execute Method cannot be null");
-        _executeMethod = executeMethod;
-        _canExecuteMethod = canExecuteMethod;
+        this._executeMethod = executeMethod ?? throw new ArgumentNullException("executeMethod", @"Execute Method cannot be null");
+        this._canExecuteMethod = canExecuteMethod;
     }
 
-    public event EventHandler CanExecuteChanged
-    {
-        add => CommandManager.RequerySuggested += value;
-        remove => CommandManager.RequerySuggested -= value;
-    }
+    public event EventHandler CanExecuteChanged { add => CommandManager.RequerySuggested += value; remove => CommandManager.RequerySuggested -= value; }
 
     bool ICommand.CanExecute(object parameter)
     {
-        return !_isExecuting && CanExecute((T) parameter);
+        return !this._isExecuting && this.CanExecute((T)parameter);
     }
 
     void ICommand.Execute(object parameter)
     {
-        _isExecuting = true;
+        this._isExecuting = true;
         try
         {
-            RaiseCanExecuteChanged();
-            Execute((T) parameter);
+            this.RaiseCanExecuteChanged();
+            this.Execute((T)parameter);
         }
         finally
         {
-            _isExecuting = false;
-            RaiseCanExecuteChanged();
+            this._isExecuting = false;
+            this.RaiseCanExecuteChanged();
         }
     }
 
@@ -70,14 +64,16 @@ public class DelegateCommand<T> : ICommand, IRaiseCanExecuteChanged
 
     public bool CanExecute(T parameter)
     {
-        if (_canExecuteMethod == null)
+        if (this._canExecuteMethod == null)
+        {
             return true;
+        }
 
-        return _canExecuteMethod(parameter);
+        return this._canExecuteMethod(parameter);
     }
 
     public void Execute(T parameter)
     {
-        _executeMethod(parameter);
+        this._executeMethod(parameter);
     }
 }

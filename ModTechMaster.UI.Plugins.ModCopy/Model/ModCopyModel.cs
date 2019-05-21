@@ -1,27 +1,48 @@
 ﻿namespace ModTechMaster.UI.Plugins.ModCopy.Model
 {
+    using System;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Runtime.CompilerServices;
     using System.Windows;
+    using System.Windows.Input;
     using Annotations;
-    using ModTechMaster.Core.Interfaces.Services;
     using Nodes;
 
-    public class ModCopyModel : INotifyPropertyChanged
+    public sealed class ModCopyModel : INotifyPropertyChanged
     {
-        private IMtmTreeViewItem currentSelectedItem;
-        private ModCopySettings _settings;
+        public static readonly ICommand AddModToImperativeListCommand = new DelegateCommand<Tuple<ModCopyPage, ModNode>>(
+            parameters =>
+            {
+                var model = parameters.Item1;
+                var mod = parameters.Item2;
+                var settings = model.Settings as ModCopySettings;
+                Debug.Assert(settings != null, nameof(settings) + " != null");
+                settings.AddImperativeMod(mod.Mod);
+                mod.IsChecked = true;
+            });
 
-        public ModCopyModel()
-        {
-        }
+        public static readonly ICommand RemoveModFromImperativeListCommand = new DelegateCommand<Tuple<ModCopyPage, ModNode>>(
+            parameters =>
+            {
+                var model = parameters.Item1;
+                var mod = parameters.Item2;
+                var settings = model.Settings as ModCopySettings;
+                Debug.Assert(settings != null, nameof(settings) + " != null");
+                settings.RemoveImperativeMod(mod.Mod);
+                mod.IsChecked = false;
+            });
+
+        private ModCopySettings settings;
+
+        private IMtmTreeViewItem currentSelectedItem;
 
         public IMtmTreeViewItem CurrentSelectedItem
         {
             get => this.currentSelectedItem;
             set
             {
-                if (object.Equals(value, this.currentSelectedItem))
+                if (value == this.currentSelectedItem)
                 {
                     return;
                 }
@@ -33,12 +54,16 @@
 
         public ModCopySettings Settings
         {
-            get => _settings;
+            get => this.settings;
             set
             {
-                if (Equals(value, _settings)) return;
-                _settings = value;
-                OnPropertyChanged();
+                if (value == this.settings)
+                {
+                    return;
+                }
+
+                this.settings = value;
+                this.OnPropertyChanged();
             }
         }
 
@@ -50,7 +75,7 @@
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

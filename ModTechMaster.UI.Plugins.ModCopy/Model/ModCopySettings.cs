@@ -1,6 +1,6 @@
 ﻿namespace ModTechMaster.UI.Plugins.ModCopy.Model
 {
-    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
     using Annotations;
@@ -9,28 +9,36 @@
 
     public class ModCopySettings : INotifyPropertyChanged
     {
-        private HashSet<IMod> alwaysIncludedMods = new HashSet<IMod>();
-        private HashSet<ObjectType> dependentTypesToIgnore = new HashSet<ObjectType>();
-        private string outputDirectory;
+        private ObservableCollection<string> alwaysIncludedMods = new ObservableCollection<string>();
         private bool autoIncludeDependents;
+        private ObservableCollection<ObjectType> dependentTypesToIgnore = new ObservableCollection<ObjectType>();
+        private string outputDirectory;
 
-        public HashSet<IMod> AlwaysIncludedMods
+        public ObservableCollection<string> AlwaysIncludedMods
         {
             get => this.alwaysIncludedMods;
             set
             {
-                if (Equals(value, this.alwaysIncludedMods)) return;
+                if (value == this.alwaysIncludedMods)
+                {
+                    return;
+                }
+
                 this.alwaysIncludedMods = value;
                 this.OnPropertyChanged();
             }
         }
 
-        public HashSet<ObjectType> DependentTypesToIgnore
+        public ObservableCollection<ObjectType> DependentTypesToIgnore
         {
             get => this.dependentTypesToIgnore;
             set
             {
-                if (Equals(value, this.dependentTypesToIgnore)) return;
+                if (value == this.dependentTypesToIgnore)
+                {
+                    return;
+                }
+
                 this.dependentTypesToIgnore = value;
                 this.OnPropertyChanged();
             }
@@ -41,7 +49,11 @@
             get => this.outputDirectory;
             set
             {
-                if (value == this.outputDirectory) return;
+                if (value == this.outputDirectory)
+                {
+                    return;
+                }
+
                 this.outputDirectory = value;
                 this.OnPropertyChanged();
             }
@@ -52,13 +64,35 @@
             get => this.autoIncludeDependents;
             set
             {
-                if (value == this.autoIncludeDependents) return;
+                if (value == this.autoIncludeDependents)
+                {
+                    return;
+                }
+
                 this.autoIncludeDependents = value;
                 this.OnPropertyChanged();
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public void AddImperativeMod(IMod mod)
+        {
+            if (!this.AlwaysIncludedMods.Contains(mod.Name))
+            {
+                this.AlwaysIncludedMods.Add(mod.Name);
+                this.OnPropertyChanged(nameof(this.AlwaysIncludedMods));
+            }
+        }
+
+        public void RemoveImperativeMod(IMod mod)
+        {
+            if (this.AlwaysIncludedMods.Contains(mod.Name))
+            {
+                this.AlwaysIncludedMods.Remove(mod.Name);
+                this.OnPropertyChanged(nameof(this.AlwaysIncludedMods));
+            }
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -8,7 +8,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:commands="clr-namespace:ModTechMaster.UI.Commands"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1024">
+        Title="MainWindow" Height="1024" Width="1280">
     <Window.Resources>
     </Window.Resources>
     <Window.CommandBindings>

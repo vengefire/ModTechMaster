@@ -44,7 +44,9 @@ namespace ModTechMaster.UI
 
         private void TabPages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!(sender is TabControl)) return;
+            var tabControl = sender as TabControl;
+            // Every Tab Control in the entire app, I tell you... ffs.
+            if (tabControl == null || tabControl.Name != "tabPages") return;
 
             // Remove non-common tool bars...
             var toolbars = toolbarTray.ToolBars.Where(bar => bar.Name != "tbCommon").ToList();

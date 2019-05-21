@@ -61,6 +61,7 @@
     <Compile Include="Nodes\MTMTreeViewItem.cs" />
     <Compile Include="Nodes\ResourceNode.cs" />
     <Compile Include="Nodes\ObjectDefinitionNode.cs" />
+    <Compile Include="Nodes\TreeViewContextMenuSelector.cs" />
     <Compile Include="Plugin\ModCopyPlugin.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

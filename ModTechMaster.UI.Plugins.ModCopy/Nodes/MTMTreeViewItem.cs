@@ -8,6 +8,7 @@
     using System.Runtime.CompilerServices;
     using System.Windows;
     using System.Windows.Data;
+    using System.Windows.Input;
     using Data.Enums;
     using Logic.Processors;
     using ModTechMaster.Core.Enums;
@@ -38,6 +39,23 @@
                 MtmTreeViewItem.DictRefsToTreeViewItems.Add(referenceableObject, this);
             }
         }
+
+        private static void SetExpandedState(IMtmTreeViewItem current, bool state)
+        {
+            if (!current.Children.Any())
+            {
+                return;
+            }
+
+            current.IsExpanded = state;
+            current.Children.ToList().ForEach(item => SetExpandedState(item, state));
+        }
+
+        public static ICommand ExpandAllCommand { get; } = new DelegateCommand<IMtmTreeViewItem>(
+            node => MtmTreeViewItem.SetExpandedState(node, true), node => node?.Children?.Count > 0);
+
+        public static ICommand CollapseAllCommand { get; } = new DelegateCommand<IMtmTreeViewItem>(
+            node => MtmTreeViewItem.SetExpandedState(node, false), node => node?.Children?.Count > 0);
 
         public IMtmTreeViewItem TopNode
         {
@@ -83,6 +101,8 @@
                 {
                     this.objectReferences = CommonReferenceProcessor.FindReferences<IReferenceableObject>(
                         this.TopNode.ReferenceableObjectProvider, this.Object as IReferenceableObject, new List<ObjectType> {ObjectType.MechDef, ObjectType.Mod}); //TBD
+                    this.objectReferences.Sort(
+                        (reference, objectReference) => string.CompareOrdinal(reference.ReferenceObject.ObjectType.ToString(), objectReference.ReferenceObject.ObjectType.ToString()));
 
                     this.OnPropertyChanged();
                     if (this.Dependencies.Any())
@@ -158,23 +178,8 @@
                 if (value != this.isChecked)
                 {
                     MtmTreeViewItem.CheckNode(this, value);
-                    this.PropertyChanged += OnPropertyChanged;
+                    this.PropertyChanged += this.OnPropertyChanged;
                     this.OnPropertyChanged(nameof(this.IsChecked));
-                }
-            }
-        }
-
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(this.IsChecked))
-            {
-                if (this.IsChecked == null)
-                {
-                    this.IsThreeState = true;
-                }
-                else
-                {
-                    this.IsThreeState = false;
                 }
             }
         }
@@ -210,6 +215,21 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.IsChecked))
+            {
+                if (this.IsChecked == null)
+                {
+                    this.IsThreeState = true;
+                }
+                else
+                {
+                    this.IsThreeState = false;
+                }
+            }
+        }
+
         public static void CheckNode(MtmTreeViewItem node, bool? value)
         {
             // If we're setting the node to an unspecified state, we don't want to roll that down to our children.
@@ -222,7 +242,9 @@
 
             foreach (var child in node.Children) child.IsChecked = value;
             IEnumerable<IObjectReference<IReferenceableObject>> objects;
-            objects = value == true ? node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency) : node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent);
+            objects = value == true
+                ? node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency)
+                : node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent);
 
             foreach (var objectReference in objects)
             {

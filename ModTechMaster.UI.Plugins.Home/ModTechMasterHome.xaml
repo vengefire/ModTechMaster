@@ -27,10 +27,10 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="Mod Collection Name: " />
                 <TextBox Grid.Row="0" Grid.Column="1"
-                         Text="{Binding HomeSettings.ModCollectionName, Mode=TwoWay}"
+                         Text="{Binding HomeSettings.ModCollectionName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
                 <Label Grid.Row="1" Grid.Column="0" Content="Mod Collection Directory: " />
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding HomeSettings.ModDirectory, Mode=TwoWay}"
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding HomeSettings.ModDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
                 <Button Grid.Row="1" Grid.Column="2" Content="..." Click="Button_Click" />
             </Grid>
@@ -55,7 +55,7 @@
                 <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center"
                            Text="{Binding ModCollection.ObjectCount}" />
                 <DataGrid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding ModCollection.Mods}"
-                          AutoGenerateColumns="False" IsReadOnly="True" Margin="5,4,0,1">
+                          AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=OneWay}" />
                         <DataGridCheckBoxColumn Header="Enabled" Binding="{Binding Enabled, Mode=OneWay}" />

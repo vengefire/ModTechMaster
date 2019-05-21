@@ -17,7 +17,7 @@
                 if (this.modCollectionName != value)
                 {
                     this.modCollectionName = value;
-                    this.OnPropertyChanged(nameof(HomeSettings.ModCollectionName));
+                    this.OnPropertyChanged();
                 }
             }
         }
@@ -30,7 +30,7 @@
                 if (this.modDirectory != value)
                 {
                     this.modDirectory = value;
-                    this.OnPropertyChanged(nameof(HomeSettings.ModDirectory));
+                    this.OnPropertyChanged();
                 }
             }
         }
