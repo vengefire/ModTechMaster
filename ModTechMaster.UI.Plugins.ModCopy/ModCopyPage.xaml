@@ -49,7 +49,7 @@
                     <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:MtmTreeViewItem}">
                         <StackPanel Orientation="Horizontal">
                             <Image
-                                Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}}"
+                                Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}, UpdateSourceTrigger=PropertyChanged}"
                                 Width="15" IsEnabled="False" />
                             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                             <Image

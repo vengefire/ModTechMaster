@@ -180,6 +180,7 @@
                     MtmTreeViewItem.CheckNode(this, value);
                     this.PropertyChanged += this.OnPropertyChanged;
                     this.OnPropertyChanged(nameof(this.IsChecked));
+                    this.OnPropertyChanged(nameof(this.SelectionStatus));
                 }
             }
         }
@@ -208,7 +209,7 @@
 
         public object Object { get; }
 
-        public SelectionStatus SelectionStatus { get; set; } = SelectionStatus.Unselected;
+        public SelectionStatus SelectionStatus => this.IsChecked == null ? SelectionStatus.PartiallySelected : this.IsChecked.Value ? SelectionStatus.Selected : SelectionStatus.Unselected;
         public ObjectStatus ObjectStatus { get; set; } = ObjectStatus.Nominal;
         public abstract string Name { get; }
         public abstract string HumanReadableContent { get; }
