@@ -1,4 +1,6 @@
-﻿namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
+﻿using ModTechMaster.UI.Data.Enums;
+
+namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
 {
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -18,7 +20,9 @@
                     {
                         if (args.PropertyName == "IsChecked")
                         {
-                            this.OnPropertyChanged("SelectedMods");
+                            this.OnPropertyChanged(nameof(SelectedMods));
+                            this.OnPropertyChanged(nameof(SelectedModSize));
+                            this.OnPropertyChanged(nameof(SelectedModObjectCount));
                         }
                     };
                 });
@@ -38,5 +42,8 @@
             this.Children.Where(item => item.IsChecked == false && settingsAlwaysIncludedMods.Contains(item.Name)).ToList().ForEach(item => item.IsChecked = true);
             this.OnPropertyChanged("SelectedMods");
         }
+
+        public double SelectedModSize => SelectedMods.Sum(node => node.Mod.SizeOnDisk);
+        public long SelectedModObjectCount => SelectedMods.Sum(node => node.SelectedObjectCount);
     }
 }

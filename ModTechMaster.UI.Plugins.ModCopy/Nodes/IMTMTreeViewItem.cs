@@ -29,5 +29,6 @@
         bool Filter(string filterText);
         object Object { get; }
         void Sort();
+        long SelectedObjectCount { get; }
     }
 }

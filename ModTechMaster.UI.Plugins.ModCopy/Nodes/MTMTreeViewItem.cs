@@ -1,4 +1,6 @@
-﻿namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
+﻿using ModTechMaster.UI.Plugins.ModCopy.Annotations;
+
+namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
 {
     using System;
     using System.Collections.Generic;
@@ -290,5 +292,8 @@
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public long SelectedObjectCount => this.Children.Count(item => item.SelectionStatus != SelectionStatus.Unselected && item is ObjectDefinitionNode) +
+                                           this.Children.Sum(item => item.SelectedObjectCount);
     }
 }

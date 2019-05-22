@@ -136,9 +136,9 @@
                                 <TextBlock Grid.Row="0" Grid.Column="2"
                                            Text="{Binding SelectedMods.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="1" Text="Selected Mod Size on Disk" />
-                                <TextBlock Grid.Row="1" Grid.Column="2" Text="X" />
+                                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SelectedModSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,#.00}}" />
                                 <TextBlock Grid.Row="2" Text="Selected Item Count" />
-                                <TextBlock Grid.Row="2" Grid.Column="2" Text="X" />
+                                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Separator Grid.Row="3" Grid.ColumnSpan="4" />
                                 <TextBlock Grid.Row="4" Text="Number of Mech Definitions" />
                                 <TextBlock Grid.Row="4" Grid.Column="2" Text="X" />
