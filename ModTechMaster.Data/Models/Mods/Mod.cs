@@ -24,6 +24,7 @@
             dynamic jsonObject, double sizeOnDisk, string dll) : base(ObjectType.Mod, sourceFilePath, (JObject)jsonObject)
         {
             this.Name = name;
+            this.Id = this.GetId;
             this.enabled = enabled;
             this.Version = version;
             this.Description = description;

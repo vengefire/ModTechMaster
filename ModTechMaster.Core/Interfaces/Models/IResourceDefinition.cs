@@ -1,6 +1,6 @@
 ﻿namespace ModTechMaster.Core.Interfaces.Models
 {
-    public interface IResourceDefinition : ISourcedFromFile, IObject
+    public interface IResourceDefinition : ISourcedFromFile, IObject, IReferenceableObject
     {
     }
 }

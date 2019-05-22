@@ -141,17 +141,17 @@
                                 <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Separator Grid.Row="3" Grid.ColumnSpan="4" />
                                 <TextBlock Grid.Row="4" Text="Number of Mech Definitions" />
-                                <TextBlock Grid.Row="4" Grid.Column="2" Text="X" />
+                                <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding SelectedMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="5" Text="Number of Vehicle Definitions" />
-                                <TextBlock Grid.Row="5" Grid.Column="2" Text="X" />
+                                <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding SelectedVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="6" Text="Number of Turret Definitions" />
-                                <TextBlock Grid.Row="6" Grid.Column="2" Text="X" />
+                                <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding SelectedTurretCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="7" Text="Number of Weapon Definitions" />
-                                <TextBlock Grid.Row="7" Grid.Column="2" Text="X" />
+                                <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding SelectedWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="8" Text="Number of Upgrade Definitions" />
-                                <TextBlock Grid.Row="8" Grid.Column="2" Text="X" />
+                                <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding SelectedUpgradeCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="9" Text="Number of Cooling Definitions" />
-                                <TextBlock Grid.Row="9" Grid.Column="2" Text="X" />
+                                <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding SelectedCoolingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
                             <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
                                   DataContext="{Binding ModCopyModel.Settings}" utils:MarginSetter.Margin="5">

@@ -47,5 +47,6 @@
         public static readonly string AmmoBoxId = "AmmoBoxId";
         public static readonly string JumpJetDefId = "JumpJetId";
         public static readonly string VehicleId = "VehicleId";
+        public static readonly string Dll = "Dll";
     }
 }

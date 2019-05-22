@@ -50,7 +50,12 @@
         public List<IReferenceableObject> GetReferenceableObjects()
         {
             var objects = new List<IReferenceableObject>();
-            this.Mods.ToList().ForEach(mod => objects.AddRange(mod.GetReferenceableObjects()));
+            this.Mods.ToList().ForEach(
+                mod =>
+                {
+                    objects.AddRange(mod.GetReferenceableObjects()); 
+                    objects.AddRange(mod.ResourceFiles);
+                });
             return objects;
         }
 

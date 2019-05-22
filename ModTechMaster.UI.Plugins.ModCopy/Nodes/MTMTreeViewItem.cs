@@ -8,6 +8,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Input;
@@ -179,10 +180,26 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
             {
                 if (value != this.isChecked)
                 {
-                    MtmTreeViewItem.CheckNode(this, value);
-                    this.PropertyChanged += this.OnPropertyChanged;
-                    this.OnPropertyChanged(nameof(this.IsChecked));
-                    this.OnPropertyChanged(nameof(this.SelectionStatus));
+                    // Are we executing concurrently?
+                    if (!ModCopyPage.Self.ModCopyModel.MainModel.IsBusy)
+                    {
+                        Task.Run(() =>
+                        {
+                            ModCopyPage.Self.ModCopyModel.MainModel.IsBusy = true;
+                            MtmTreeViewItem.CheckNode(this, value);
+                            ModCopyPage.Self.ModCopyModel.MainModel.IsBusy = false;
+                            this.PropertyChanged += this.OnPropertyChanged;
+                            this.OnPropertyChanged("IsChecked");
+                            this.OnPropertyChanged("SelectionStatus");
+                        }).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        MtmTreeViewItem.CheckNode(this, value);
+                        this.PropertyChanged += this.OnPropertyChanged;
+                        this.OnPropertyChanged("IsChecked");
+                        this.OnPropertyChanged("SelectionStatus");
+                    }
                 }
             }
         }
@@ -238,6 +255,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
             // If we're setting the node to an unspecified state, we don't want to roll that down to our children.
             node.isChecked = value;
 
+            // We don't go down the fucking list if we're setting partial. Cunt.
             if (value == null)
             {
                 return;
@@ -245,6 +263,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
 
             foreach (var child in node.Children) child.IsChecked = value;
             IEnumerable<IObjectReference<IReferenceableObject>> objects;
+            // We check for not true so that we will select dependencies for partially selected mods.
             objects = value == true
                 ? node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency)
                 : node.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent);
@@ -266,6 +285,7 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
             if (item.Children.Count == 0)
             {
                 var currentNode = item.Parent;
+
                 while (currentNode != null)
                 {
                     if (currentNode.Children.All(node => node.IsChecked == true))
@@ -293,7 +313,33 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public long SelectedObjectCount => this.Children.Count(item => item.SelectionStatus != SelectionStatus.Unselected && item is ObjectDefinitionNode) +
-                                           this.Children.Sum(item => item.SelectedObjectCount);
+        public ObservableCollection<IMtmTreeViewItem> SelectedObjects
+        {
+            get
+            {
+                List<IMtmTreeViewItem> aggregatedObjects = new List<IMtmTreeViewItem>();
+                if (this.Children.Any())
+                {
+                    aggregatedObjects = this.Children.Where(item => item.SelectionStatus != SelectionStatus.Unselected && item is ObjectDefinitionNode).ToList();
+                    this.Children.ToList().ForEach(item => aggregatedObjects.AddRange(item.SelectedObjects));
+                }
+                return new ObservableCollection<IMtmTreeViewItem>(aggregatedObjects);
+            }
+        }
+
+        public ObservableCollection<IMtmTreeViewItem> AllChildren
+        {
+            get
+            {
+                List<IMtmTreeViewItem> aggregatedChildren = new List<IMtmTreeViewItem>();
+                if (this.Children.Any())
+                {
+                    aggregatedChildren = new List<IMtmTreeViewItem>(this.Children);
+                    this.Children.ToList().ForEach(item => aggregatedChildren.AddRange(item.AllChildren));
+                }
+
+                return new ObservableCollection<IMtmTreeViewItem>(aggregatedChildren);
+            }
+        }
     }
 }

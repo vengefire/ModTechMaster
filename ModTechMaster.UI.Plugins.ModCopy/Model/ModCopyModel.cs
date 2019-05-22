@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using Castle.Core.Logging;
-using ModTechMaster.Core.Interfaces.Services;
-using ModTechMaster.UI.Plugins.ModCopy.Annotations;
-using ModTechMaster.UI.Plugins.ModCopy.Nodes;
-
-namespace ModTechMaster.UI.Plugins.ModCopy.Model
+﻿namespace ModTechMaster.UI.Plugins.ModCopy.Model
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Runtime.CompilerServices;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Input;
+    using Annotations;
+    using Castle.Core.Logging;
+    using Commands;
+    using Core.Interfaces;
+    using ModTechMaster.Core.Interfaces.Services;
+    using Nodes;
+
     public sealed class ModCopyModel : INotifyPropertyChanged
     {
         public static readonly ICommand AddModToImperativeListCommand =
@@ -39,7 +43,10 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Model
                     mod.IsChecked = false;
                 });
 
+        public static IPluginCommand ResetSelectionsCommand;
+
         private readonly ILogger logger;
+        public IMtmMainModel MainModel { get; }
         private readonly IModService modService;
 
         private IMtmTreeViewItem currentSelectedItem;
@@ -48,35 +55,41 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Model
 
         private ModCopySettings settings;
 
-        public ModCopyModel(IModService modService, ILogger logger)
+        public ModCopyModel(IModService modService, ILogger logger, IMtmMainModel mainModel)
         {
             this.modService = modService;
             this.logger = logger;
-            this.modService.PropertyChanged += ModServiceOnPropertyChanged;
+            this.MainModel = mainModel;
+            this.modService.PropertyChanged += this.ModServiceOnPropertyChanged;
+            ModCopyModel.ResetSelectionsCommand = new ResetSelectionsCommand(this);
         }
 
         public ObservableCollection<MtmTreeViewItem> ModCollectionData
         {
-            get => modCollectionData;
+            get => this.modCollectionData;
             set
             {
-                if (Equals(value, modCollectionData)) return;
-                modCollectionData = value;
-                OnPropertyChanged();
+                if (value == this.modCollectionData)
+                {
+                    return;
+                }
+
+                this.modCollectionData = value;
+                this.OnPropertyChanged();
             }
         }
 
         public string FilterText
         {
-            get => filterText;
+            get => this.filterText;
             set
             {
-                if (FilterText != value)
+                if (this.FilterText != value)
                 {
-                    filterText = value;
-                    var rootCollectionView = CollectionViewSource.GetDefaultView(modCollectionData);
-                    rootCollectionView.Filter = node => ((IMtmTreeViewItem) node).Filter(FilterText);
-                    OnPropertyChanged();
+                    this.filterText = value;
+                    var rootCollectionView = CollectionViewSource.GetDefaultView(this.modCollectionData);
+                    rootCollectionView.Filter = node => ((IMtmTreeViewItem)node).Filter(this.FilterText);
+                    this.OnPropertyChanged();
                 }
             }
         }
@@ -85,49 +98,83 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Model
 
         public IMtmTreeViewItem CurrentSelectedItem
         {
-            get => currentSelectedItem;
+            get => this.currentSelectedItem;
             set
             {
-                if (value == currentSelectedItem) return;
+                if (value == this.currentSelectedItem)
+                {
+                    return;
+                }
 
-                currentSelectedItem = value;
-                OnPropertyChanged();
+                this.currentSelectedItem = value;
+                this.OnPropertyChanged();
             }
         }
 
         public ModCopySettings Settings
         {
-            get => settings;
+            get => this.settings;
             set
             {
-                if (value == settings) return;
+                if (value == this.settings)
+                {
+                    return;
+                }
 
-                settings = value;
-                ModCollectionNode.SelectMods(Settings.AlwaysIncludedMods);
-                OnPropertyChanged();
+                this.settings = value;
+                Task.Run(
+                    async () =>
+                    {
+                        await this.SelectImperativeMods();
+                        this.OnPropertyChanged();
+                    });
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public async Task ResetModSelections()
+        {
+            var query = this.ModCollectionNode.AllChildren.Where(item => item.IsChecked != false).AsParallel();
+            await Task.Run(
+                async () =>
+                {
+                    this.MainModel.IsBusy = true;
+                    query.ForAll(item => item.IsChecked = false);
+                    await this.SelectImperativeMods();
+                    this.MainModel.IsBusy = false;
+                });
+        }
+
+        public async Task SelectImperativeMods()
+        {
+            await Task.Run(
+                () =>
+                {
+                    this.MainModel.IsBusy = true;
+                    this.ModCollectionNode.SelectMods(this.Settings.AlwaysIncludedMods);
+                    this.MainModel.IsBusy = false;
+                });
+        }
+
         public void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            CurrentSelectedItem = e.NewValue as IMtmTreeViewItem;
+            this.CurrentSelectedItem = e.NewValue as IMtmTreeViewItem;
         }
 
         [NotifyPropertyChangedInvocator]
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void ModServiceOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "ModCollection")
             {
-                ModCollectionNode = new ModCollectionNode(modService.ModCollection, null);
-                modCollectionData = new ObservableCollection<MtmTreeViewItem> {ModCollectionNode};
-                OnPropertyChanged("ModCollectionNode");
+                this.ModCollectionNode = new ModCollectionNode(this.modService.ModCollection, null);
+                this.modCollectionData = new ObservableCollection<MtmTreeViewItem> {this.ModCollectionNode};
+                this.OnPropertyChanged("ModCollectionNode");
             }
         }
     }

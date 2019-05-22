@@ -93,13 +93,7 @@
         private void ProcessModConfig(Mod mod)
         {
             // Process Manifest
-            if (mod.JsonObject.Manifest == null)
-            {
-                return;
-            }
-
             var manifest = this.ProcessManifest(mod);
-            mod.Manifest = manifest;
 
             // Process implicits like StreamingAssets folder...
             // Special handling for sim game constants...
@@ -108,32 +102,51 @@
             if (Directory.Exists(saPath))
             {
                 // Handle
-                this.AddStreamingAssetsManifestEntry(saPath, mod);
+                this.AddStreamingAssetsManifestEntry(saPath, mod, manifest);
+            }
+
+            if (manifest.Entries.Any())
+            {
+                mod.Manifest = manifest;
             }
 
             var di = new DirectoryInfo(mod.SourceDirectoryPath);
-            foreach (var file in di.EnumerateFiles()) mod.ResourceFiles.Add(new ResourceDefinition(ObjectType.UnhandledResource, file.FullName, file.Name, file.Name));
+            foreach (var file in di.EnumerateFiles())
+            {
+                switch (file.Extension.ToLower())
+                {
+                    case ".dll":
+                        mod.ResourceFiles.Add(new ResourceDefinition(ObjectType.Dll, file.FullName, file.Name, file.Name));
+                        break;
+                    default:
+                        mod.ResourceFiles.Add(new ResourceDefinition(ObjectType.UnhandledResource, file.FullName, file.Name, file.Name));
+                        break;
+                }
+            }
         }
 
-        private void AddStreamingAssetsManifestEntry(string simPath, Mod mod)
+        private void AddStreamingAssetsManifestEntry(string simPath, Mod mod, Manifest manifest)
         {
-            var newEntry = new ManifestEntry(mod.Manifest, ObjectType.StreamingAssetsData, simPath, null);
+            var newEntry = new ManifestEntry(manifest, ObjectType.StreamingAssetsData, simPath, null);
             newEntry.ParseStreamingAssets();
-            mod.Manifest.Entries.Add(newEntry);
+            manifest.Entries.Add(newEntry);
         }
 
         private Manifest ProcessManifest(Mod mod)
         {
             var manifest = new Manifest(mod, mod.JsonObject.Manifest);
-            foreach (var manifestEntrySrc in manifest.JsonObject)
+            if (manifest.JsonObject != null)
             {
-                ManifestEntry manifestEntry = this.ProcessManifestEntry(manifest, manifestEntrySrc);
-                if (manifestEntry == null)
+                foreach (var manifestEntrySrc in manifest.JsonObject)
                 {
-                    throw new InvalidProgramException();
-                }
+                    ManifestEntry manifestEntry = this.ProcessManifestEntry(manifest, manifestEntrySrc);
+                    if (manifestEntry == null)
+                    {
+                        throw new InvalidProgramException();
+                    }
 
-                manifest.Entries.Add(manifestEntry);
+                    manifest.Entries.Add(manifestEntry);
+                }
             }
 
             return manifest;

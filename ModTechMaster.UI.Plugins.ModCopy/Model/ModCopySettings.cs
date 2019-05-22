@@ -3,31 +3,25 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
+    using System.Windows.Controls;
+    using System.Windows.Data;
     using Annotations;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
 
     public class ModCopySettings : INotifyPropertyChanged
     {
-        private ObservableCollection<string> alwaysIncludedMods = new ObservableCollection<string>();
         private bool autoIncludeDependents;
         private ObservableCollection<ObjectType> dependentTypesToIgnore = new ObservableCollection<ObjectType>();
         private string outputDirectory;
 
-        public ObservableCollection<string> AlwaysIncludedMods
+        public ModCopySettings()
         {
-            get => this.alwaysIncludedMods;
-            set
-            {
-                if (value == this.alwaysIncludedMods)
-                {
-                    return;
-                }
-
-                this.alwaysIncludedMods = value;
-                this.OnPropertyChanged();
-            }
+            var view = CollectionViewSource.GetDefaultView(this.AlwaysIncludedMods);
+            view.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
         }
+
+        public ObservableCollection<string> AlwaysIncludedMods { get; } = new ObservableCollection<string>();
 
         public ObservableCollection<ObjectType> DependentTypesToIgnore
         {

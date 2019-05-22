@@ -54,6 +54,7 @@
         ManifestEntry,
         ObjectDefinitionDescription,
         UnhandledResource,
-        SimGameConstants
+        SimGameConstants,
+        Dll
     }
 }

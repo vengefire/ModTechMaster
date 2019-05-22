@@ -69,6 +69,8 @@ namespace ModTechMaster.Data.Models.Mods
                             case "buildings":
                             case "hardpoints":
                             case "factions":
+                            case "lifepathnode":
+                            case "campaign":
                                 objectDefinition = new ObjectDefinition(ObjectType.StreamingAssetsData, description, jsonData, fi.FullName);
                                 break;
                             case "pilot":

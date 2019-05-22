@@ -29,6 +29,7 @@
         bool Filter(string filterText);
         object Object { get; }
         void Sort();
-        long SelectedObjectCount { get; }
+        ObservableCollection<IMtmTreeViewItem> SelectedObjects { get; }
+        ObservableCollection<IMtmTreeViewItem> AllChildren { get; }
     }
 }
