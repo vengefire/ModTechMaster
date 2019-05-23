@@ -1,0 +1,26 @@
+﻿<Window x:Class="ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector.MechSelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector"
+        mc:Ignorable="d"
+        Title="MechSelectorWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Content="Load Mech File..."/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Model.MechFilePath, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+    </Grid>
+</Window>
