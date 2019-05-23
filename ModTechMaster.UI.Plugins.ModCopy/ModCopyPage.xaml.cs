@@ -33,7 +33,7 @@
                     }
                 };
             this.tvModControl.SelectedItemChanged += this.ModCopyModel.OnSelectedItemChanged;
-            this.PluginCommands = new List<IPluginCommand> { ModCopyModel.ResetSelectionsCommand };
+            this.PluginCommands = new List<IPluginCommand> { ModCopyModel.ResetSelectionsCommand, ModCopyModel.SelectMechsFromDataFileCommand };
             this.DataContext = this;
         }
 

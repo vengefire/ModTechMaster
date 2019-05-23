@@ -20,7 +20,7 @@
                         this.Children.Add(modNode);
                         modNode.PropertyChanged += (sender, args) =>
                             {
-                                if (args.PropertyName == "IsChecked")
+                                if (args.PropertyName == "Selected")
                                 {
                                     this.OnPropertyChanged(nameof(this.SelectedMods));
                                     this.OnPropertyChanged(nameof(this.SelectedModSize));

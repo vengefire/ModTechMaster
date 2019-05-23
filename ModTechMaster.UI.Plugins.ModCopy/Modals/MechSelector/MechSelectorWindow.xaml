@@ -20,7 +20,8 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Content="Load Mech File..."/>
+        <Button Content="Load Mech File..." Command="local:MechSelectorCommands.ProcessMechSelectionFileCommand" CommandParameter="{Binding MechSelectorModel}"/>
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Model.MechFilePath, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+        <DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="5" ItemsSource="{Binding MechSelectorModel.MechModels, UpdateSourceTrigger=PropertyChanged}"></DataGrid>
     </Grid>
 </Window>

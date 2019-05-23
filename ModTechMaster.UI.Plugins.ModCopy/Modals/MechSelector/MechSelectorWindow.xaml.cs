@@ -1,27 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector
+﻿namespace ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector
 {
+    using System.Windows;
+
+    using ModTechMaster.UI.Plugins.ModCopy.Model;
+
     /// <summary>
-    /// Interaction logic for MechSelectorWindow.xaml
+    ///     Interaction logic for MechSelectorWindow.xaml
     /// </summary>
     public partial class MechSelectorWindow : Window
     {
-        public MechSelectorWindow()
+        private readonly MechSelectorModel mechSelectorModel;
+
+        public MechSelectorWindow(ModCopyModel modCopyModel)
         {
-            InitializeComponent();
+            this.mechSelectorModel = new MechSelectorModel(modCopyModel);
+            this.InitializeComponent();
+            this.DataContext = this;
         }
+
+        public MechSelectorModel MechSelectorModel => this.mechSelectorModel;
     }
 }

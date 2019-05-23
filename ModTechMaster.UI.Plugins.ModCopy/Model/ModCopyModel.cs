@@ -17,6 +17,7 @@
     using ModTechMaster.UI.Plugins.Core.Interfaces;
     using ModTechMaster.UI.Plugins.ModCopy.Annotations;
     using ModTechMaster.UI.Plugins.ModCopy.Commands;
+    using ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector;
     using ModTechMaster.UI.Plugins.ModCopy.Nodes;
 
     public sealed class ModCopyModel : INotifyPropertyChanged
@@ -64,11 +65,13 @@
             this.MainModel = mainModel;
             this.modService.PropertyChanged += this.ModServiceOnPropertyChanged;
             ResetSelectionsCommand = new ResetSelectionsCommand(this);
+            SelectMechsFromDataFileCommand = new SelectMechsFromDataFileCommand(this);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public static IPluginCommand ResetSelectionsCommand { get; private set; }
+        public static IPluginCommand SelectMechsFromDataFileCommand { get; private set; }
 
         public IMtmTreeViewItem CurrentSelectedItem
         {
@@ -137,6 +140,12 @@
                             this.OnPropertyChanged();
                         });
             }
+        }
+
+        public static void SelectMechsFromDataFile(ModCopyModel modCopyModel)
+        {
+            var mechSelectorWindow = new MechSelectorWindow(modCopyModel);
+            var result = mechSelectorWindow.ShowDialog();
         }
 
         public void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

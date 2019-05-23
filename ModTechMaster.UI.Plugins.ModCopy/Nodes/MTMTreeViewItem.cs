@@ -102,7 +102,7 @@
                                     CheckNode(this, value);
                                     ModCopyPage.Self.ModCopyModel.MainModel.IsBusy = false;
                                     this.PropertyChanged += this.OnPropertyChanged;
-                                    this.OnPropertyChanged("IsChecked");
+                                    this.OnPropertyChanged("Selected");
                                     this.OnPropertyChanged("SelectionStatus");
                                 }).ConfigureAwait(false);
                     }
@@ -110,7 +110,7 @@
                     {
                         CheckNode(this, value);
                         this.PropertyChanged += this.OnPropertyChanged;
-                        this.OnPropertyChanged("IsChecked");
+                        this.OnPropertyChanged("Selected");
                         this.OnPropertyChanged("SelectionStatus");
                     }
                 }
