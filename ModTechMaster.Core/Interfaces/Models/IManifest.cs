@@ -4,8 +4,8 @@
 
     public interface IManifest : IJsonObjectBase, IReferenceableObjectProvider
     {
-        IMod Mod { get; }
-
         HashSet<IManifestEntry> Entries { get; }
+
+        IMod Mod { get; }
     }
 }

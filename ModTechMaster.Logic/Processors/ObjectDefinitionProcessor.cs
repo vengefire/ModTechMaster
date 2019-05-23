@@ -1,10 +1,12 @@
 ﻿namespace ModTechMaster.Logic.Processors
 {
     using System.IO;
-    using Core.Interfaces.Models;
-    using Core.Interfaces.Processors;
-    using Data.Models.Mods;
-    using Factories;
+
+    using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Processors;
+    using ModTechMaster.Data.Models.Mods;
+    using ModTechMaster.Logic.Factories;
+
     using Newtonsoft.Json;
 
     internal class FactionObjectDefinitionProcessor : IObjectDefinitionProcessor
@@ -12,7 +14,11 @@
         public IObjectDefinition ProcessObjectDefinition(IManifestEntry manifestEntry, DirectoryInfo di, FileInfo fi)
         {
             dynamic json = JsonConvert.DeserializeObject(File.ReadAllText(fi.FullName));
-            return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(manifestEntry.EntryType, FactionObjectDefinitionProcessor.ProcessObjectDescription(json), json, fi.FullName);
+            return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
+                manifestEntry.EntryType,
+                ProcessObjectDescription(json),
+                json,
+                fi.FullName);
         }
 
         private static IObjectDefinitionDescription ProcessObjectDescription(dynamic description)

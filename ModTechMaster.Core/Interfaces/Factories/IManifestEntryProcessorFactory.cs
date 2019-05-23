@@ -1,7 +1,7 @@
 ﻿namespace ModTechMaster.Core.Interfaces.Factories
 {
-    using Enums.Mods;
-    using Processors;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Processors;
 
     public interface IManifestEntryProcessorFactory
     {

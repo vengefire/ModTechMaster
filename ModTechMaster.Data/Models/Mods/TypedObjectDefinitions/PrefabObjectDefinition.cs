@@ -1,14 +1,19 @@
-﻿using ModTechMaster.Core.Enums.Mods;
-
-namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
+﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
-    using Core.Constants;
-    using Core.Interfaces.Models;
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
     using Newtonsoft.Json.Linq;
 
     public class PrefabObjectDefinition : ObjectDefinition
     {
-        public PrefabObjectDefinition(ObjectType objectType, IObjectDefinitionDescription objectDescription, dynamic jsonObject, string filePath) : base(objectType, objectDescription, (JObject)jsonObject, filePath)
+        public PrefabObjectDefinition(
+            ObjectType objectType,
+            IObjectDefinitionDescription objectDescription,
+            dynamic jsonObject,
+            string filePath)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
         {
         }
 

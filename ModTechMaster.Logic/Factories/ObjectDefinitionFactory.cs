@@ -1,110 +1,231 @@
 ﻿namespace ModTechMaster.Logic.Factories
 {
     using System;
-    using Core.Enums.Mods;
-    using Core.Interfaces.Factories;
-    using Core.Interfaces.Models;
-    using Data.Models.Mods;
-    using Data.Models.Mods.TypedObjectDefinitions;
+
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Factories;
+    using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Data.Models.Mods;
+    using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
+
     using Newtonsoft.Json.Linq;
 
     public class ObjectDefinitionFactory : IObjectDefinitionFactory
     {
         private static IObjectDefinitionFactory objectDefinitionFactorySingleton;
 
-        public static IObjectDefinitionFactory ObjectDefinitionFactorySingleton => ObjectDefinitionFactory.objectDefinitionFactorySingleton ?? (ObjectDefinitionFactory.objectDefinitionFactorySingleton = new ObjectDefinitionFactory());
+        public static IObjectDefinitionFactory ObjectDefinitionFactorySingleton =>
+            objectDefinitionFactorySingleton ?? (objectDefinitionFactorySingleton = new ObjectDefinitionFactory());
 
-        public IObjectDefinition Get(ObjectType entryType, IObjectDefinitionDescription objectDescription, dynamic jsonObject, string filePath)
+        public IObjectDefinition Get(
+            ObjectType entryType,
+            IObjectDefinitionDescription objectDescription,
+            dynamic jsonObject,
+            string filePath)
         {
             IObjectDefinition objectDefinition;
             switch (entryType)
             {
                 case ObjectType.Texture2D:
                 case ObjectType.Sprite:
-                    objectDefinition = new ResourceObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new ResourceObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.AssetBundle:
-                    objectDefinition = new AssetBundleObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new AssetBundleObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.Prefab:
-                    objectDefinition = new PrefabObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new PrefabObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.AmmunitionBoxDef:
-                    objectDefinition = new AmmunitionBoxObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new AmmunitionBoxObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.AmmunitionDef:
-                    objectDefinition = new AmmunitionObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new AmmunitionObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.CCDefaults:
-                    objectDefinition = new CcDefaultsObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new CcDefaultsObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.CCCategories:
-                    objectDefinition = new CcCategoryObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new CcCategoryObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.ChassisDef:
-                    objectDefinition = new ChassisObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new ChassisObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.MechDef:
-                    objectDefinition = new MechObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new MechObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.PilotDef:
-                    objectDefinition = new PilotObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new PilotObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.SimGameEventDef:
-                    objectDefinition = new SimGameEventObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new SimGameEventObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.StreamingAssetsData:
-                    objectDefinition = new SimGameConstantsObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new SimGameConstantsObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.TurretChassisDef:
-                    objectDefinition = new TurretChassisObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new TurretChassisObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.TurretDef:
-                    objectDefinition = new TurretObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new TurretObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.UpgradeDef:
-                    objectDefinition = new UpgradeObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new UpgradeObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.VehicleChassisDef:
-                    objectDefinition = new VehicleChassisObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new VehicleChassisObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.VehicleDef:
-                    objectDefinition = new VehicleObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new VehicleObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.WeaponDef:
-                    objectDefinition = new WeaponObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new WeaponObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.ContractOverride:
-                    objectDefinition = new ContractObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new ContractObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.FactionDef:
-                    objectDefinition = new FactionObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new FactionObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.CastDef:
-                    objectDefinition = new CastObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new CastObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.ConversationContent:
-                    objectDefinition = new DialogObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new DialogObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
+
                     // objectDefinition = new ConversationObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
                 case ObjectType.DialogBucketDef:
-                    objectDefinition = new ConversationObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new ConversationObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
+
                     // objectDefinition = new DialogObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
                     break;
                 case ObjectType.FlashpointDef:
-                    objectDefinition = new FlashpointObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new FlashpointObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.HeraldryDef:
-                    objectDefinition = new HeraldryObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new HeraldryObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.SimGameMilestoneSet:
-                    objectDefinition = new MilestoneSetObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new MilestoneSetObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.HardpointDataDef:
-                    objectDefinition = new HardpointDataObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new HardpointDataObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.ShopDef:
-                    objectDefinition = new ShopDefObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new ShopDefObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 case ObjectType.AbilityDef:
                 case ObjectType.MovementCapabilitiesDef:
@@ -123,13 +244,18 @@
                 case ObjectType.DesignMaskDef:
                 case ObjectType.BackgroundDef:
                 case ObjectType.SimGameMilestoneDef:
-                    objectDefinition = new ObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    objectDefinition = new ObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
                     break;
                 default:
                     throw new InvalidProgramException();
-                    //objectDefinition = new ObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
-                    break;
+                    // objectDefinition = new ObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                    // break;
             }
+
             objectDefinition.AddMetaData();
             return objectDefinition;
         }

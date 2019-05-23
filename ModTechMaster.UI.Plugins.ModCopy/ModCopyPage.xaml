@@ -32,8 +32,7 @@
                     VerticalContentAlignment="Center">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <ei:ChangePropertyAction TargetName="txtFilter" PropertyName="Text" Value="">
-                        </ei:ChangePropertyAction>
+                        <ei:ChangePropertyAction TargetName="txtFilter" PropertyName="Text" Value="" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -112,7 +111,8 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.ColumnSpan="4" Grid.RowSpan="3" VerticalAlignment="Top"
-                                  utils:MarginSetter.Margin="1" DataContext="{Binding ModCopyModel.ModCollectionNode, UpdateSourceTrigger=PropertyChanged}">
+                                  utils:MarginSetter.Margin="1"
+                                  DataContext="{Binding ModCopyModel.ModCollectionNode, UpdateSourceTrigger=PropertyChanged}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition />
@@ -136,22 +136,30 @@
                                 <TextBlock Grid.Row="0" Grid.Column="2"
                                            Text="{Binding SelectedMods.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="1" Text="Selected Mod Size on Disk" />
-                                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SelectedModSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,#.00}}" />
+                                <TextBlock Grid.Row="1" Grid.Column="2"
+                                           Text="{Binding SelectedModSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,#.00}}" />
                                 <TextBlock Grid.Row="2" Text="Selected Item Count" />
-                                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Grid.Row="2" Grid.Column="2"
+                                           Text="{Binding SelectedModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <Separator Grid.Row="3" Grid.ColumnSpan="4" />
                                 <TextBlock Grid.Row="4" Text="Number of Mech Definitions" />
-                                <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding SelectedMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Grid.Row="4" Grid.Column="2"
+                                           Text="{Binding SelectedMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="5" Text="Number of Vehicle Definitions" />
-                                <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding SelectedVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Grid.Row="5" Grid.Column="2"
+                                           Text="{Binding SelectedVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="6" Text="Number of Turret Definitions" />
-                                <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding SelectedTurretCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Grid.Row="6" Grid.Column="2"
+                                           Text="{Binding SelectedTurretCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="7" Text="Number of Weapon Definitions" />
-                                <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding SelectedWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Grid.Row="7" Grid.Column="2"
+                                           Text="{Binding SelectedWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="8" Text="Number of Upgrade Definitions" />
-                                <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding SelectedUpgradeCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Grid.Row="8" Grid.Column="2"
+                                           Text="{Binding SelectedUpgradeCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <TextBlock Grid.Row="9" Text="Number of Cooling Definitions" />
-                                <TextBlock Grid.Row="9" Grid.Column="2" Text="{Binding SelectedCoolingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Grid.Row="9" Grid.Column="2"
+                                           Text="{Binding SelectedCoolingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                             </Grid>
                             <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
                                   DataContext="{Binding ModCopyModel.Settings}" utils:MarginSetter.Margin="5">

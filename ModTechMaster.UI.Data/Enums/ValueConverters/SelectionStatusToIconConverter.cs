@@ -9,7 +9,7 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch ((SelectionStatus) value)
+            switch ((SelectionStatus)value)
             {
                 case SelectionStatus.Unselected:
                     return "/ModTechMaster.UI.Core;component/Resources/Images/trash.png";

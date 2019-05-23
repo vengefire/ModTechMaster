@@ -1,17 +1,21 @@
-﻿using ModTechMaster.Core.Constants;
-using ModTechMaster.Core.Enums.Mods;
-using ModTechMaster.Core.Interfaces.Models;
-using Newtonsoft.Json.Linq;
-
-namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
+﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
     using System.Collections.Generic;
-    using System.Linq;
+
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
+    using Newtonsoft.Json.Linq;
 
     public class MilestoneSetObjectDefinition : ObjectDefinition
     {
-        public MilestoneSetObjectDefinition(ObjectType objectType, IObjectDefinitionDescription objectDescription,
-            dynamic jsonObject, string filePath) : base(objectType, objectDescription, (JObject) jsonObject, filePath)
+        public MilestoneSetObjectDefinition(
+            ObjectType objectType,
+            IObjectDefinitionDescription objectDescription,
+            dynamic jsonObject,
+            string filePath)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
         {
         }
 
@@ -21,7 +25,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
             var milestones = new HashSet<string>();
             var contracts = new HashSet<string>();
             var events = new HashSet<string>();
-            var itemCollections  = new HashSet<string>();
+            var itemCollections = new HashSet<string>();
             milestones.Add(this.JsonObject.StartingMilestoneID.ToString());
             foreach (var milestone in this.JsonObject.Milestones)
             {
@@ -39,8 +43,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
                         {
                             milestones.Add(action.value.ToString());
                         }
-                        else if (action.Type == "Flashpoint_AddContract" ||
-                            action.Type == "Flashpoint_StartContract")
+                        else if (action.Type == "Flashpoint_AddContract" || action.Type == "Flashpoint_StartContract")
                         {
                             contracts.Add(action.additionalValues[2].ToString());
                         }
@@ -58,6 +61,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
                     }
                 }
             }
+
             this.MetaData.Add(Keywords.MilestoneId, new List<string>(milestones));
             this.MetaData.Add(Keywords.ContractId, new List<string>(contracts));
             this.MetaData.Add(Keywords.EventId, new List<string>(events));

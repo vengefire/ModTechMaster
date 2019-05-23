@@ -1,18 +1,22 @@
-﻿using ModTechMaster.Core.Constants;
-using ModTechMaster.Core.Enums.Mods;
-using ModTechMaster.Core.Interfaces.Models;
-using Newtonsoft.Json.Linq;
-
-namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
+﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
+
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
+    using Newtonsoft.Json.Linq;
 
     public class ShopDefObjectDefinition : ObjectDefinition
     {
-        public ShopDefObjectDefinition(ObjectType objectType, IObjectDefinitionDescription objectDescription,
-            dynamic jsonObject, string filePath) : base(objectType, objectDescription, (JObject) jsonObject, filePath)
+        public ShopDefObjectDefinition(
+            ObjectType objectType,
+            IObjectDefinitionDescription objectDescription,
+            dynamic jsonObject,
+            string filePath)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
         {
         }
 
@@ -80,6 +84,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
                     throw new NotImplementedException();
                 }
             }
+
             this.MetaData.Add(Keywords.WeaponDefId, new List<string>(weapons));
             this.MetaData.Add(Keywords.UpgradeDefId, new List<string>(upgrades));
             this.MetaData.Add(Keywords.MechDefId, new List<string>(mechs));

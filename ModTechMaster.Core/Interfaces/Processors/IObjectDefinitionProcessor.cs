@@ -1,7 +1,8 @@
 ﻿namespace ModTechMaster.Core.Interfaces.Processors
 {
     using System.IO;
-    using Models;
+
+    using ModTechMaster.Core.Interfaces.Models;
 
     public interface IObjectDefinitionProcessor
     {

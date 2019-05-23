@@ -3,7 +3,9 @@
     public enum SelectionStatus
     {
         Unselected,
+
         PartiallySelected,
+
         Selected
     }
 }

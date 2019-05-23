@@ -1,7 +1,7 @@
 ﻿namespace ModTechMaster.Core.Interfaces.Processors
 {
-    using Enums.Mods;
-    using Models;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
 
     public interface IManifestEntryProcessor
     {

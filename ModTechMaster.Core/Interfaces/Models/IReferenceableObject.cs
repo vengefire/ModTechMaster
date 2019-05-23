@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace ModTechMaster.Core.Interfaces.Models
+﻿namespace ModTechMaster.Core.Interfaces.Models
 {
+    using System.Collections.Generic;
+
     public interface IReferenceableObject : IObject
     {
         Dictionary<string, object> MetaData { get; }
+
         void AddMetaData();
     }
 }

@@ -1,19 +1,21 @@
-﻿using System.Windows;
-using Castle.Core.Logging;
-using Castle.MicroKernel.Registration;
-using Castle.MicroKernel.SubSystems.Configuration;
-using Castle.Services.Logging.Log4netIntegration;
-using Castle.Windsor;
-using Framework.Interfaces.Logging;
-using ModTechMaster.Core.Interfaces.Factories;
-using ModTechMaster.Core.Interfaces.Services;
-using ModTechMaster.Logic.Factories;
-using ModTechMaster.Logic.Services;
-
-namespace ModTechMaster.UI.Init
+﻿namespace ModTechMaster.UI.Init
 {
-    using Models;
-    using Plugins.Core.Interfaces;
+    using System.Windows;
+
+    using Castle.Core.Logging;
+    using Castle.MicroKernel.Registration;
+    using Castle.MicroKernel.SubSystems.Configuration;
+    using Castle.Services.Logging.Log4netIntegration;
+    using Castle.Windsor;
+
+    using Framework.Interfaces.Logging;
+
+    using ModTechMaster.Core.Interfaces.Factories;
+    using ModTechMaster.Core.Interfaces.Services;
+    using ModTechMaster.Logic.Factories;
+    using ModTechMaster.Logic.Services;
+    using ModTechMaster.UI.Models;
+    using ModTechMaster.UI.Plugins.Core.Interfaces;
 
     public class Installer : IWindsorInstaller
     {
@@ -28,8 +30,7 @@ namespace ModTechMaster.UI.Init
                 Component.For<IModService>().ImplementedBy<ModService>().LifestyleSingleton(),
                 Component.For<IReferenceFinderService>().ImplementedBy<ReferenceFinderService>().LifestyleSingleton(),
                 Component.For<IManifestEntryProcessorFactory>().ImplementedBy<ManifestEntryProcessorFactory>(),
-                Component.For<IMtmMainModel>().ImplementedBy<MtmMainModel>().LifestyleSingleton()
-            );
+                Component.For<IMtmMainModel>().ImplementedBy<MtmMainModel>().LifestyleSingleton());
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using Framework.Interfaces.Injection;
-
-namespace ModTechMaster.UI.Init
+﻿namespace ModTechMaster.UI.Init
 {
+    using Framework.Interfaces.Injection;
+
     internal class Bootstrap : IBootstrap
     {
         public IContainer RegisterContainer()

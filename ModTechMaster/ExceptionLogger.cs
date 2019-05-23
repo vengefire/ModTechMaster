@@ -1,21 +1,23 @@
-﻿using System;
-using Castle.Core.Logging;
-using Framework.Interfaces.Logging;
-
-namespace ModTechMaster.UI
+﻿namespace ModTechMaster.UI
 {
+    using System;
+
+    using Castle.Core.Logging;
+
+    using Framework.Interfaces.Logging;
+
     public class ExceptionLogger : IExceptionLogger
     {
-        private readonly ILogger _logger;
+        private readonly ILogger logger;
 
         public ExceptionLogger(ILogger logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         public void Log(Exception ex)
         {
-            _logger.Error(ex.ToString(), ex);
+            this.logger.Error(ex.ToString(), ex);
         }
     }
 }

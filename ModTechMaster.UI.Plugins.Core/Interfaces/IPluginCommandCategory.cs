@@ -4,7 +4,8 @@
 
     public interface IPluginCommandCategory
     {
-        string Name { get; }
         List<IPluginCommand> Commands { get; }
+
+        string Name { get; }
     }
 }

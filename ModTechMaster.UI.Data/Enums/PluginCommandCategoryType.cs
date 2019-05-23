@@ -3,7 +3,9 @@
     public enum PluginCommandCategoryType
     {
         Nav,
+
         Menu,
+
         Page
     }
 }

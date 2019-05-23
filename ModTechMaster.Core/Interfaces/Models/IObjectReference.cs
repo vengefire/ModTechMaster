@@ -1,16 +1,21 @@
-﻿using ModTechMaster.Core.Enums;
-
-namespace ModTechMaster.Core.Interfaces.Models
+﻿namespace ModTechMaster.Core.Interfaces.Models
 {
+    using ModTechMaster.Core.Enums;
+
     public interface IObjectReference : IObjectReference<object>
     {
     }
 
     public interface IObjectReference<TType>
     {
-        TType ReferenceObject { get; }
-        ObjectReferenceType ObjectReferenceType { get; }
-        IRelationship Relationship { get; }
         bool IsActive { get; set; }
+
         bool IsValid { get; set; }
-    }}
+
+        ObjectReferenceType ObjectReferenceType { get; }
+
+        TType ReferenceObject { get; }
+
+        IRelationship Relationship { get; }
+    }
+}

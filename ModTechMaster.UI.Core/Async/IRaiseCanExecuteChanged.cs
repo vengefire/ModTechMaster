@@ -13,6 +13,8 @@ public static class CommandExtensions
         var canExecuteChanged = command as IRaiseCanExecuteChanged;
 
         if (canExecuteChanged != null)
+        {
             canExecuteChanged.RaiseCanExecuteChanged();
+        }
     }
 }

@@ -2,19 +2,13 @@
 {
     using System;
     using System.IO;
-    using Core.Interfaces.Services;
+
+    using ModTechMaster.Core.Interfaces.Services;
+
     using Newtonsoft.Json;
 
     public class SettingsService : ISettingsService
     {
-        public void SaveSettings(string name, object settings)
-        {
-            File.WriteAllText($"./{name}.json", JsonConvert.SerializeObject(settings, Formatting.Indented, new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            }));
-        }
-
         public TType ReadSettings<TType>(string name)
         {
             if (!File.Exists(this.SettingsFileName("./", name)))
@@ -35,6 +29,19 @@
             return JsonConvert.DeserializeObject(File.ReadAllText($"./{name}.json"), settingsType);
         }
 
-        private string SettingsFileName(string path, string name) => Path.Combine(path, $"{name}.json");
+        public void SaveSettings(string name, object settings)
+        {
+            File.WriteAllText(
+                $"./{name}.json",
+                JsonConvert.SerializeObject(
+                    settings,
+                    Formatting.Indented,
+                    new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+        }
+
+        private string SettingsFileName(string path, string name)
+        {
+            return Path.Combine(path, $"{name}.json");
+        }
     }
 }

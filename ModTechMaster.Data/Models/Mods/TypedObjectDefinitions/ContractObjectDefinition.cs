@@ -1,18 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using ModTechMaster.Core.Constants;
-using ModTechMaster.Core.Enums.Mods;
-using ModTechMaster.Core.Interfaces.Models;
-using Newtonsoft.Json.Linq;
-
-namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
+﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
     using System;
+    using System.Collections.Generic;
+
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
+    using Newtonsoft.Json.Linq;
 
     public class ContractObjectDefinition : ObjectDefinition
     {
-        public ContractObjectDefinition(ObjectType objectType, IObjectDefinitionDescription objectDescription,
-            dynamic jsonObject, string filePath) : base(objectType, objectDescription, (JObject) jsonObject, filePath)
+        public ContractObjectDefinition(
+            ObjectType objectType,
+            IObjectDefinitionDescription objectDescription,
+            dynamic jsonObject,
+            string filePath)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
         {
         }
 
@@ -20,7 +24,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
         {
             base.AddMetaData();
             var castList = new HashSet<string>();
-            foreach (var dialog in JsonObject.dialogueList)
+            foreach (var dialog in this.JsonObject.dialogueList)
             {
                 foreach (var dialogueContent in dialog.dialogueContent)
                 {
@@ -36,7 +40,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
             // lanceOverrideList
             if (this.JsonObject.overrideAutoCompleteDialogueId != null)
             {
-                this.MetaData.Add(Keywords.DialogBucketId, JsonObject.overrideAutoCompleteDialogueId);
+                this.MetaData.Add(Keywords.DialogBucketId, this.JsonObject.overrideAutoCompleteDialogueId);
             }
 
             var lanceDefs = new HashSet<string>();

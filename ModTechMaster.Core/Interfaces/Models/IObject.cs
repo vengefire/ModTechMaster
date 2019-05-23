@@ -1,11 +1,13 @@
-﻿using ModTechMaster.Core.Enums.Mods;
-
-namespace ModTechMaster.Core.Interfaces.Models
+﻿namespace ModTechMaster.Core.Interfaces.Models
 {
+    using ModTechMaster.Core.Enums.Mods;
+
     public interface IObject
     {
-        ObjectType ObjectType { get; }
-        string Name { get; }
         string Id { get; }
+
+        string Name { get; }
+
+        ObjectType ObjectType { get; }
     }
 }

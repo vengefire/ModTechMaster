@@ -1,7 +1,7 @@
-﻿using Framework.Interfaces.Injection;
-
-namespace MTM.Init
+﻿namespace MTM.Init
 {
+    using Framework.Interfaces.Injection;
+
     internal class Bootstrap : IBootstrap
     {
         public IContainer RegisterContainer()

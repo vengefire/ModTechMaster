@@ -1,10 +1,11 @@
-﻿using System;
-using System.Windows.Input;
-using ModTechMaster.Core.Interfaces.Services;
-using ModTechMaster.UI.Plugins.Core.Interfaces;
-
-namespace ModTechMaster.UI.Commands
+﻿namespace ModTechMaster.UI.Commands
 {
+    using System;
+    using System.Windows.Input;
+
+    using ModTechMaster.Core.Interfaces.Services;
+    using ModTechMaster.UI.Plugins.Core.Interfaces;
+
     public class LoadSettingsCommand : ICommand
     {
         private readonly ISettingsService settingsService;
@@ -14,20 +15,21 @@ namespace ModTechMaster.UI.Commands
             this.settingsService = settingsService;
         }
 
-        public string Name => @"Load Settings";
+        public event EventHandler CanExecuteChanged;
+
         public IPluginCommandCategory Category { get; }
+
+        public string Name => @"Load Settings";
 
         public bool CanExecute(object parameter)
         {
             return true;
         }
-            
+
         public void Execute(object parameter)
         {
             var plugin = parameter as IPluginControl;
-            plugin.Settings = settingsService.ReadSettings(plugin.ModuleName, plugin.SettingsType);
+            plugin.Settings = this.settingsService.ReadSettings(plugin.ModuleName, plugin.SettingsType);
         }
-
-        public event EventHandler CanExecuteChanged;
     }
 }

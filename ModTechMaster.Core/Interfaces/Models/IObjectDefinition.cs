@@ -2,7 +2,8 @@
 {
     public interface IObjectDefinition : ISourcedFromFile, IReferenceableObject, IObject
     {
-        IObjectDefinitionDescription ObjectDescription { get; }
         string HumanReadableText { get; }
+
+        IObjectDefinitionDescription ObjectDescription { get; }
     }
 }

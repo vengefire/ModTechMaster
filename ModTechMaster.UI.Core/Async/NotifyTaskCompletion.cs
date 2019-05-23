@@ -13,29 +13,30 @@ public sealed class NotifyTaskCompletion : INotifyPropertyChanged
         }
     }
 
-    public Task TaskCompletion { get; }
+    public event PropertyChangedEventHandler PropertyChanged;
 
-    public Task Task { get; }
+    public string ErrorMessage => this.InnerException == null ? null : this.InnerException.Message;
 
-    //public TResult Result => this.Task.Status == TaskStatus.RanToCompletion ? this.Task.Result : default(TResult);
-
-    public TaskStatus Status => this.Task.Status;
-    public bool IsCompleted => this.Task.IsCompleted;
-    public bool IsNotCompleted => !this.Task.IsCompleted;
-
-    public bool IsSuccessfullyCompleted =>
-        this.Task.Status ==
-        TaskStatus.RanToCompletion;
-
-    public bool IsCanceled => this.Task.IsCanceled;
-    public bool IsFaulted => this.Task.IsFaulted;
     public AggregateException Exception => this.Task.Exception;
 
     public Exception InnerException => this.Exception == null ? null : this.Exception.InnerException;
 
-    public string ErrorMessage => this.InnerException == null ? null : this.InnerException.Message;
+    public bool IsCanceled => this.Task.IsCanceled;
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public bool IsCompleted => this.Task.IsCompleted;
+
+    public bool IsFaulted => this.Task.IsFaulted;
+
+    public bool IsNotCompleted => !this.Task.IsCompleted;
+
+    public bool IsSuccessfullyCompleted => this.Task.Status == TaskStatus.RanToCompletion;
+
+    // public TResult Result => this.Task.Status == TaskStatus.RanToCompletion ? this.Task.Result : default(TResult);
+    public TaskStatus Status => this.Task.Status;
+
+    public Task Task { get; }
+
+    public Task TaskCompletion { get; }
 
     private async Task WatchTaskAsync(Task task)
     {
@@ -64,16 +65,12 @@ public sealed class NotifyTaskCompletion : INotifyPropertyChanged
         {
             propertyChanged(this, new PropertyChangedEventArgs("IsFaulted"));
             propertyChanged(this, new PropertyChangedEventArgs("Exception"));
-            propertyChanged(
-                this,
-                new PropertyChangedEventArgs("InnerException"));
+            propertyChanged(this, new PropertyChangedEventArgs("InnerException"));
             propertyChanged(this, new PropertyChangedEventArgs("ErrorMessage"));
         }
         else
         {
-            propertyChanged(
-                this,
-                new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
+            propertyChanged(this, new PropertyChangedEventArgs("IsSuccessfullyCompleted"));
             propertyChanged(this, new PropertyChangedEventArgs("Result"));
         }
     }

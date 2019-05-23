@@ -1,72 +1,82 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-public class AwaitableDelegateCommand : AwaitableDelegateCommand<object>, IAsyncCommand
+﻿namespace ModTechMaster.UI.Core.Async
 {
-    public AwaitableDelegateCommand(Func<Task> executeMethod)
-        : base(o => executeMethod())
+    using System;
+    using System.Threading.Tasks;
+    using System.Windows.Input;
+
+    /*public class AwaitableDelegateCommand : AwaitableDelegateCommand<object>, IAsyncCommand
     {
-    }
-
-    public AwaitableDelegateCommand(Func<Task> executeMethod, Func<bool> canExecuteMethod)
-        : base(o => executeMethod(), o => canExecuteMethod())
-    {
-    }
-}
-
-public class AwaitableDelegateCommand<T> : IAsyncCommand<T>, ICommand
-{
-    private readonly Func<T, Task> _executeMethod;
-    private readonly DelegateCommand<T> _underlyingCommand;
-    private bool _isExecuting;
-
-    public AwaitableDelegateCommand(Func<T, Task> executeMethod)
-        : this(executeMethod, _ => true)
-    {
-    }
-
-    public AwaitableDelegateCommand(Func<T, Task> executeMethod, Func<T, bool> canExecuteMethod)
-    {
-        this._executeMethod = executeMethod;
-        this._underlyingCommand = new DelegateCommand<T>(x => { }, canExecuteMethod);
-    }
-
-    public NotifyTaskCompletion Execution { get; set; }
-
-    public async Task ExecuteAsync(T obj)
-    {
-        try
+        public AwaitableDelegateCommand(Func<Task> executeMethod)
+            : base(o => executeMethod())
         {
-            this._isExecuting = true;
-            this.RaiseCanExecuteChanged();
-            //await this._executeMethod(obj);
-            this.Execution = new NotifyTaskCompletion(this._executeMethod(obj));
-            await this.Execution.TaskCompletion;
         }
-        finally
+
+        public AwaitableDelegateCommand(Func<Task> executeMethod, Func<bool> canExecuteMethod)
+            : base(o => executeMethod(), o => canExecuteMethod())
         {
-            this._isExecuting = false;
-            this.RaiseCanExecuteChanged();
         }
-    }
+    }*/
 
-    public ICommand Command => this;
-
-    public bool CanExecute(object parameter)
+    public class AwaitableDelegateCommand<T> : IAsyncCommand<T>, ICommand
     {
-        return !this._isExecuting && this._underlyingCommand.CanExecute((T)parameter);
-    }
+        private readonly Func<T, Task> executeMethod;
 
-    public void RaiseCanExecuteChanged()
-    {
-        this._underlyingCommand.RaiseCanExecuteChanged();
-    }
+        private readonly DelegateCommand<T> underlyingCommand;
 
-    public event EventHandler CanExecuteChanged { add => this._underlyingCommand.CanExecuteChanged += value; remove => this._underlyingCommand.CanExecuteChanged -= value; }
+        private bool isExecuting;
 
-    public async void Execute(object parameter)
-    {
-        await this.ExecuteAsync((T)parameter);
+        public AwaitableDelegateCommand(Func<T, Task> executeMethod)
+            : this(executeMethod, _ => true)
+        {
+        }
+
+        public AwaitableDelegateCommand(Func<T, Task> executeMethod, Func<T, bool> canExecuteMethod)
+        {
+            this.executeMethod = executeMethod;
+            this.underlyingCommand = new DelegateCommand<T>(x => { }, canExecuteMethod);
+        }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add => this.underlyingCommand.CanExecuteChanged += value;
+            remove => this.underlyingCommand.CanExecuteChanged -= value;
+        }
+
+        public ICommand Command => this;
+
+        public NotifyTaskCompletion Execution { get; set; }
+
+        public bool CanExecute(object parameter)
+        {
+            return !this.isExecuting && this.underlyingCommand.CanExecute((T)parameter);
+        }
+
+        public async void Execute(object parameter)
+        {
+            await this.ExecuteAsync((T)parameter).ConfigureAwait(false);
+        }
+
+        public async Task ExecuteAsync(T obj)
+        {
+            try
+            {
+                this.isExecuting = true;
+                this.RaiseCanExecuteChanged();
+
+                // await this._executeMethod(obj);
+                this.Execution = new NotifyTaskCompletion(this.executeMethod(obj));
+                await this.Execution.TaskCompletion;
+            }
+            finally
+            {
+                this.isExecuting = false;
+                this.RaiseCanExecuteChanged();
+            }
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            this.underlyingCommand.RaiseCanExecuteChanged();
+        }
     }
 }

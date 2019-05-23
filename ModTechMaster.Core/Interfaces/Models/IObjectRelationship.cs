@@ -1,10 +1,11 @@
-﻿using ModTechMaster.Core.Enums.Mods;
-
-namespace ModTechMaster.Core.Interfaces.Models
+﻿namespace ModTechMaster.Core.Interfaces.Models
 {
+    using ModTechMaster.Core.Enums.Mods;
+
     public interface IObjectRelationship : IRelationship
     {
-        ObjectType DependentType { get; }
         ObjectType DependencyType { get; }
+
+        ObjectType DependentType { get; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿namespace ModTechMaster.Logic.Processors
 {
     using System.IO;
-    using Core.Enums.Mods;
-    using Core.Interfaces.Models;
-    using Core.Interfaces.Processors;
-    using Data.Models.Mods.TypedObjectDefinitions;
+
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Processors;
+    using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
 
     internal class ItemCollectionObjectDefinitionProcessor : IObjectDefinitionProcessor
     {

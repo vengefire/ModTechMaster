@@ -1,28 +1,34 @@
-﻿using System.Collections.Generic;
-using ModTechMaster.Core.Constants;
-using ModTechMaster.Core.Enums.Mods;
-using ModTechMaster.Core.Interfaces.Models;
-using Newtonsoft.Json.Linq;
-
-namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
+﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
+    using System.Collections.Generic;
+
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
+    using Newtonsoft.Json.Linq;
+
     public class SimGameConstantsObjectDefinition : ObjectDefinition
     {
-        public SimGameConstantsObjectDefinition(ObjectType objectType, IObjectDefinitionDescription objectDescription,
-            dynamic jsonObject, string filePath) : base(objectType, objectDescription, (JObject) jsonObject, filePath)
+        public SimGameConstantsObjectDefinition(
+            ObjectType objectType,
+            IObjectDefinitionDescription objectDescription,
+            dynamic jsonObject,
+            string filePath)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
         {
-            AddMetaData();
+            this.AddMetaData();
         }
 
-        public sealed override void AddMetaData()
+        public override sealed void AddMetaData()
         {
             base.AddMetaData();
             var requiredAbilities = new List<string>();
-            MetaData.Add(Keywords.AbilityDefId, requiredAbilities);
+            this.MetaData.Add(Keywords.AbilityDefId, requiredAbilities);
 
-            if (JsonObject.Progression != null)
+            if (this.JsonObject.Progression != null)
             {
-                foreach (var skill in JsonObject.Progression)
+                foreach (var skill in this.JsonObject.Progression)
                 {
                     foreach (var level in skill)
                     {
@@ -38,11 +44,11 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
             }
 
             var requiredMechs = new List<string>();
-            MetaData.Add(Keywords.MechDefId, requiredMechs);
+            this.MetaData.Add(Keywords.MechDefId, requiredMechs);
 
-            if (JsonObject?.Story?.StartingLance != null)
+            if (this.JsonObject?.Story?.StartingLance != null)
             {
-                foreach (var mechDef in JsonObject.Story.StartingLance)
+                foreach (var mechDef in this.JsonObject.Story.StartingLance)
                 {
                     requiredMechs.Add(mechDef.ToString());
                 }

@@ -1,16 +1,21 @@
-﻿using ModTechMaster.Core.Constants;
-using ModTechMaster.Core.Enums.Mods;
-using ModTechMaster.Core.Interfaces.Models;
-using Newtonsoft.Json.Linq;
-
-namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
+﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
     using System.Collections.Generic;
 
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
+    using Newtonsoft.Json.Linq;
+
     public class ConversationObjectDefinition : ObjectDefinition
     {
-        public ConversationObjectDefinition(ObjectType objectType, IObjectDefinitionDescription objectDescription,
-            dynamic jsonObject, string filePath) : base(objectType, objectDescription, (JObject) jsonObject, filePath)
+        public ConversationObjectDefinition(
+            ObjectType objectType,
+            IObjectDefinitionDescription objectDescription,
+            dynamic jsonObject,
+            string filePath)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
         {
         }
 
@@ -22,6 +27,7 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
             {
                 dialogDefs.Add(content.ToString());
             }
+
             this.MetaData.Add(Keywords.DialogId, new List<string>(dialogDefs));
         }
     }

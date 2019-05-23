@@ -3,25 +3,44 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using System.Windows.Controls;
     using System.Windows.Data;
-    using Annotations;
+
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.UI.Plugins.ModCopy.Annotations;
 
     public class ModCopySettings : INotifyPropertyChanged
     {
         private bool autoIncludeDependents;
+
         private ObservableCollection<ObjectType> dependentTypesToIgnore = new ObservableCollection<ObjectType>();
+
         private string outputDirectory;
 
         public ModCopySettings()
         {
             var view = CollectionViewSource.GetDefaultView(this.AlwaysIncludedMods);
-            view.SortDescriptions.Add(new SortDescription("", ListSortDirection.Ascending));
+            view.SortDescriptions.Add(new SortDescription(string.Empty, ListSortDirection.Ascending));
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public ObservableCollection<string> AlwaysIncludedMods { get; } = new ObservableCollection<string>();
+
+        public bool AutoIncludeDependents
+        {
+            get => this.autoIncludeDependents;
+            set
+            {
+                if (value == this.autoIncludeDependents)
+                {
+                    return;
+                }
+
+                this.autoIncludeDependents = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<ObjectType> DependentTypesToIgnore
         {
@@ -52,23 +71,6 @@
                 this.OnPropertyChanged();
             }
         }
-
-        public bool AutoIncludeDependents
-        {
-            get => this.autoIncludeDependents;
-            set
-            {
-                if (value == this.autoIncludeDependents)
-                {
-                    return;
-                }
-
-                this.autoIncludeDependents = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public void AddImperativeMod(IMod mod)
         {

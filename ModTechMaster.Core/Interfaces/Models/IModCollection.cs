@@ -1,15 +1,20 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ModTechMaster.Core.Interfaces.Models
+﻿namespace ModTechMaster.Core.Interfaces.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+
     public interface IModCollection : IReferenceableObjectProvider, INotifyPropertyChanged
     {
-        string Name { get; set; }
         List<IMod> Mods { get; }
-        string Path { get; set;  }
-        void AddModToCollection(IMod mod);
-        void RemoveModFromCollection(IMod mod);
+
+        string Name { get; set; }
+
         int ObjectCount { get; }
+
+        string Path { get; set; }
+
+        void AddModToCollection(IMod mod);
+
+        void RemoveModFromCollection(IMod mod);
     }
 }

@@ -34,6 +34,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{337F1856-2902-4934-8962-AD9E1E42580E}"
 	ProjectSection(SolutionItems) = preProject
 		scratch.txt = scratch.txt
+		settings.stylecop = settings.stylecop
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModTechMaster.UI.Plugins.ModCopy", "ModTechMaster.UI.Plugins.ModCopy\ModTechMaster.UI.Plugins.ModCopy.csproj", "{36B0C54B-2F26-4D6F-907C-A19FD8B7A064}"

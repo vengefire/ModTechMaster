@@ -2,29 +2,40 @@
 {
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using Annotations;
-    using Plugins.Core.Interfaces;
+
+    using ModTechMaster.Annotations;
+    using ModTechMaster.UI.Plugins.Core.Interfaces;
+
     using IContainer = Framework.Interfaces.Injection.IContainer;
 
     public class MtmMainModel : INotifyPropertyChanged, IMtmMainModel
     {
-        private bool isBusy;
+        private IPluginControl currentPluginControl;
 
-        private IPluginControl _currentPluginControl;
-        public IPluginControl CurrentPluginControl
-        {
-            get => _currentPluginControl;
-            set
-            {
-                if (Equals(value, _currentPluginControl)) return;
-                _currentPluginControl = value;
-                OnPropertyChanged();
-            }
-        }
+        private bool isBusy;
 
         public MtmMainModel(IContainer container)
         {
             this.Container = container;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public IContainer Container { get; }
+
+        public IPluginControl CurrentPluginControl
+        {
+            get => this.currentPluginControl;
+            set
+            {
+                if (value == this.currentPluginControl)
+                {
+                    return;
+                }
+
+                this.currentPluginControl = value;
+                this.OnPropertyChanged();
+            }
         }
 
         public bool IsBusy
@@ -37,14 +48,8 @@
                     this.isBusy = value;
                     this.OnPropertyChanged(nameof(this.IsBusy));
                 }
-
-                ;
             }
         }
-
-        public IContainer Container { get;  }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

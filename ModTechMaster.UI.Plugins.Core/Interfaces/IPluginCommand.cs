@@ -4,8 +4,10 @@
 
     public interface IPluginCommand : ICommand
     {
-        string Name { get; }
         IPluginCommandCategory Category { get; }
+
         object CommandParameter { get; }
+
+        string Name { get; }
     }
 }

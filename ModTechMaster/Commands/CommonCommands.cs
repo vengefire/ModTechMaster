@@ -1,8 +1,9 @@
-﻿using System.Windows.Input;
-using ModTechMaster.Core.Interfaces.Services;
-
-namespace ModTechMaster.UI.Commands
+﻿namespace ModTechMaster.UI.Commands
 {
+    using System.Windows.Input;
+
+    using ModTechMaster.Core.Interfaces.Services;
+
     public static class CommonCommands
     {
         static CommonCommands()
@@ -12,8 +13,10 @@ namespace ModTechMaster.UI.Commands
             LoadCurrentSettingsCommand = new LoadSettingsCommand(SettingsService);
         }
 
-        public static ISettingsService SettingsService { get; }
-        public static ICommand SaveCurrentSettingsCommand { get; }
         public static ICommand LoadCurrentSettingsCommand { get; }
+
+        public static ICommand SaveCurrentSettingsCommand { get; }
+
+        public static ISettingsService SettingsService { get; }
     }
 }

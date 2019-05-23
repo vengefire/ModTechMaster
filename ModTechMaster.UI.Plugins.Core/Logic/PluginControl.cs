@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace ModTechMaster.UI.Plugins.Core.Logic
+﻿namespace ModTechMaster.UI.Plugins.Core.Logic
 {
     using System;
-    using Interfaces;
+    using System.Collections.Generic;
+
+    using ModTechMaster.UI.Plugins.Core.Interfaces;
 
     public class PluginControl : IPluginControl
     {
@@ -11,13 +11,17 @@ namespace ModTechMaster.UI.Plugins.Core.Logic
         {
             this.ModuleName = moduleName;
             this.PageType = pageType;
-            PluginCommands = commands;
+            this.PluginCommands = commands;
         }
 
-        public virtual Type SettingsType { get; }
         public string ModuleName { get; }
+
         public Type PageType { get; }
+
         public List<IPluginCommand> PluginCommands { get; }
+
         public object Settings { get; set; }
+
+        public virtual Type SettingsType { get; }
     }
 }

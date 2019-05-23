@@ -9,7 +9,7 @@
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch ((ObjectStatus) value)
+            switch ((ObjectStatus)value)
             {
                 case ObjectStatus.Nominal:
                     return "/ModTechMaster.UI.Core;component/Resources/Images/checked.png";

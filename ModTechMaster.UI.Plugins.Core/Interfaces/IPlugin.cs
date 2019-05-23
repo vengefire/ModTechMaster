@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ModTechMaster.UI.Plugins.Core.Interfaces
+﻿namespace ModTechMaster.UI.Plugins.Core.Interfaces
 {
+    using System;
+    using System.Collections.Generic;
+
     public interface IPlugin
     {
-        string Name { get; }
         string Description { get; }
-        Type PageType { get; }
+
         List<IPluginControl> Modules { get; }
+
+        string Name { get; }
+
+        Type PageType { get; }
     }
 }

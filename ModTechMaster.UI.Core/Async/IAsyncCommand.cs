@@ -8,6 +8,8 @@ public interface IAsyncCommand : IAsyncCommand<object>
 public interface IAsyncCommand<in T> : IRaiseCanExecuteChanged
 {
     ICommand Command { get; }
-    Task ExecuteAsync(T obj);
+
     bool CanExecute(object obj);
+
+    Task ExecuteAsync(T obj);
 }

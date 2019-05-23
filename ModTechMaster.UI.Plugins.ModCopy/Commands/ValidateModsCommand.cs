@@ -1,14 +1,23 @@
-﻿using System;
-using ModTechMaster.UI.Plugins.Core.Interfaces;
-
-namespace ModTechMaster.UI.Plugins.ModCopy.Commands
+﻿namespace ModTechMaster.UI.Plugins.ModCopy.Commands
 {
+    using System;
+
+    using ModTechMaster.UI.Plugins.Core.Interfaces;
+
     public class ValidateModsCommand : IPluginCommand
     {
         public ValidateModsCommand(IPluginCommandCategory category)
         {
-            Category = category;
+            this.Category = category;
         }
+
+        public event EventHandler CanExecuteChanged;
+
+        public IPluginCommandCategory Category { get; }
+
+        public object CommandParameter => null;
+
+        public string Name => @"Validate Mods";
 
         public bool CanExecute(object parameter)
         {
@@ -19,10 +28,5 @@ namespace ModTechMaster.UI.Plugins.ModCopy.Commands
         {
             throw new NotImplementedException();
         }
-
-        public event EventHandler CanExecuteChanged;
-        public string Name => @"Validate Mods";
-        public IPluginCommandCategory Category { get; }
-        public object CommandParameter => null;
     }
 }

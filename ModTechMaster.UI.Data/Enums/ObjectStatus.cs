@@ -3,7 +3,9 @@
     public enum ObjectStatus
     {
         Nominal,
+
         Warning,
+
         Error
     }
 }

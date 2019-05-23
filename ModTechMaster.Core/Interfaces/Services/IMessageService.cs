@@ -1,12 +1,13 @@
 ﻿namespace ModTechMaster.Core.Interfaces.Services
 {
     using System;
-    using Enums;
+
+    using ModTechMaster.Core.Enums;
 
     public interface IMessageService
     {
-        void PushMessage(string message, MessageType type);
-
         Tuple<string, MessageType> PopMessage();
+
+        void PushMessage(string message, MessageType type);
     }
 }

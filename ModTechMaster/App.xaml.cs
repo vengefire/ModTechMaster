@@ -1,9 +1,11 @@
-﻿using System.Windows;
-using Framework.Interfaces.Injection;
-using ModTechMaster.UI.Init;
-
-namespace ModTechMaster.UI
+﻿namespace ModTechMaster.UI
 {
+    using System.Windows;
+
+    using Framework.Interfaces.Injection;
+
+    using ModTechMaster.UI.Init;
+
     /// <summary>
     ///     Interaction logic for App.xaml
     /// </summary>
@@ -14,8 +16,8 @@ namespace ModTechMaster.UI
         protected override void OnStartup(StartupEventArgs e)
         {
             var bootstrapper = new Bootstrap();
-            App.Container = bootstrapper.RegisterContainer();
-            var mainWindow = App.Container.GetInstance<Window>();
+            Container = bootstrapper.RegisterContainer();
+            var mainWindow = Container.GetInstance<Window>();
             mainWindow.Show();
         }
     }

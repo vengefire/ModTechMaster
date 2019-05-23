@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-public class DelegateCommand : DelegateCommand<object>
+/*public class DelegateCommand : DelegateCommand<object>
 {
     public DelegateCommand(Action executeMethod)
         : base(o => executeMethod())
@@ -12,7 +12,7 @@ public class DelegateCommand : DelegateCommand<object>
         : base(o => executeMethod(), o => canExecuteMethod())
     {
     }
-}
+}*/
 
 /// <summary>
 ///     A command that calls the specified delegate when the command is executed.
@@ -20,9 +20,11 @@ public class DelegateCommand : DelegateCommand<object>
 /// <typeparam name="T"></typeparam>
 public class DelegateCommand<T> : ICommand, IRaiseCanExecuteChanged
 {
-    private readonly Func<T, bool> _canExecuteMethod;
-    private readonly Action<T> _executeMethod;
-    private bool _isExecuting;
+    private readonly Func<T, bool> canExecuteMethod;
+
+    private readonly Action<T> executeMethod;
+
+    private bool isExecuting;
 
     public DelegateCommand(Action<T> executeMethod)
         : this(executeMethod, null)
@@ -31,30 +33,31 @@ public class DelegateCommand<T> : ICommand, IRaiseCanExecuteChanged
 
     public DelegateCommand(Action<T> executeMethod, Func<T, bool> canExecuteMethod)
     {
-        this._executeMethod = executeMethod ?? throw new ArgumentNullException("executeMethod", @"Execute Method cannot be null");
-        this._canExecuteMethod = canExecuteMethod;
+        this.executeMethod = executeMethod ?? throw new ArgumentNullException(
+                                  "executeMethod",
+                                  @"Execute Method cannot be null");
+        this.canExecuteMethod = canExecuteMethod;
     }
 
-    public event EventHandler CanExecuteChanged { add => CommandManager.RequerySuggested += value; remove => CommandManager.RequerySuggested -= value; }
-
-    bool ICommand.CanExecute(object parameter)
+    public event EventHandler CanExecuteChanged
     {
-        return !this._isExecuting && this.CanExecute((T)parameter);
+        add => CommandManager.RequerySuggested += value;
+        remove => CommandManager.RequerySuggested -= value;
     }
 
-    void ICommand.Execute(object parameter)
+    public bool CanExecute(T parameter)
     {
-        this._isExecuting = true;
-        try
+        if (this.canExecuteMethod == null)
         {
-            this.RaiseCanExecuteChanged();
-            this.Execute((T)parameter);
+            return true;
         }
-        finally
-        {
-            this._isExecuting = false;
-            this.RaiseCanExecuteChanged();
-        }
+
+        return this.canExecuteMethod(parameter);
+    }
+
+    public void Execute(T parameter)
+    {
+        this.executeMethod(parameter);
     }
 
     public void RaiseCanExecuteChanged()
@@ -62,18 +65,23 @@ public class DelegateCommand<T> : ICommand, IRaiseCanExecuteChanged
         CommandManager.InvalidateRequerySuggested();
     }
 
-    public bool CanExecute(T parameter)
+    bool ICommand.CanExecute(object parameter)
     {
-        if (this._canExecuteMethod == null)
-        {
-            return true;
-        }
-
-        return this._canExecuteMethod(parameter);
+        return !this.isExecuting && this.CanExecute((T)parameter);
     }
 
-    public void Execute(T parameter)
+    void ICommand.Execute(object parameter)
     {
-        this._executeMethod(parameter);
+        this.isExecuting = true;
+        try
+        {
+            this.RaiseCanExecuteChanged();
+            this.Execute((T)parameter);
+        }
+        finally
+        {
+            this.isExecuting = false;
+            this.RaiseCanExecuteChanged();
+        }
     }
 }

@@ -4,11 +4,13 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Forms;
-    using Commands;
-    using Core.Interfaces;
-    using Models;
+
     using ModTechMaster.Core.Interfaces.Services;
-    using UI.Core.WinForms.Extensions;
+    using ModTechMaster.UI.Core.WinForms.Extensions;
+    using ModTechMaster.UI.Plugins.Core.Interfaces;
+    using ModTechMaster.UI.Plugins.Home.Commands;
+    using ModTechMaster.UI.Plugins.Home.Models;
+
     using UserControl = System.Windows.Controls.UserControl;
 
     /// <summary>
@@ -20,28 +22,25 @@
         {
             this.InitializeComponent();
             this.Model = new HomeModel(modService, mainModel);
-            this.PluginCommands = new List<IPluginCommand>
-            {
-                new LoadModsCommand(this.Model),
-            };
+            this.PluginCommands = new List<IPluginCommand> { new LoadModsCommand(this.Model) };
             this.DataContext = this.Model;
         }
 
         public HomeModel Model { get; set; }
 
-        public Type SettingsType => typeof(HomeSettings);
         public string ModuleName => @"Home";
+
         public Type PageType => typeof(ModTechMasterHome);
+
         public List<IPluginCommand> PluginCommands { get; }
 
         public object Settings
         {
             get => this.Model.HomeSettings;
-            set
-            {
-                this.Model.HomeSettings = value as HomeSettings;
-            }
+            set => this.Model.HomeSettings = value as HomeSettings;
         }
+
+        public Type SettingsType => typeof(HomeSettings);
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

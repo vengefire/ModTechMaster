@@ -2,8 +2,10 @@
 {
     public interface IRelationship
     {
-        string DependentKey { get; }
         string DependencyKey { get; }
+
+        string DependentKey { get; }
+
         bool HasMultipleDependencies { get; }
     }
 }

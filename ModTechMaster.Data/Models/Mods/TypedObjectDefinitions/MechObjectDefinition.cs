@@ -1,34 +1,39 @@
-﻿using System;
-using System.Linq;
-
-namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
+﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
+    using System;
     using System.Collections.Generic;
-    using Core.Constants;
-    using Core.Enums.Mods;
-    using Core.Interfaces.Models;
+    using System.Linq;
+
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
     using Newtonsoft.Json.Linq;
 
     public class MechObjectDefinition : ObjectDefinition
     {
         public MechObjectDefinition(
-            ObjectType objectType, IObjectDefinitionDescription objectDescription,
-            dynamic jsonObject, string filePath) : base(objectType, objectDescription, (JObject)jsonObject, filePath)
+            ObjectType objectType,
+            IObjectDefinitionDescription objectDescription,
+            dynamic jsonObject,
+            string filePath)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
         {
         }
 
         public override void AddMetaData()
         {
             base.AddMetaData();
-            var componentIdList = new Dictionary<string, HashSet<string>>()
-            {
-                { Keywords.UpgradeDefId, new HashSet<string>()} ,
-                { Keywords.WeaponDefId, new HashSet<string>()} ,
-                { Keywords.HeatSinkDefId, new HashSet<string>()} ,
-                { Keywords.AmmoBoxId, new HashSet<string>()} ,
-                { Keywords.JumpJetDefId, new HashSet<string>()} ,
-            };
-            //this.MetaData.Add(Keywords.ComponentDefId, mechComponentIdList);
+            var componentIdList = new Dictionary<string, HashSet<string>>
+                                      {
+                                          { Keywords.UpgradeDefId, new HashSet<string>() },
+                                          { Keywords.WeaponDefId, new HashSet<string>() },
+                                          { Keywords.HeatSinkDefId, new HashSet<string>() },
+                                          { Keywords.AmmoBoxId, new HashSet<string>() },
+                                          { Keywords.JumpJetDefId, new HashSet<string>() }
+                                      };
+
+            // this.MetaData.Add(Keywords.ComponentDefId, mechComponentIdList);
             foreach (var item in this.JsonObject.inventory)
             {
                 switch (item.ComponentDefType.ToString().Trim())
@@ -52,10 +57,8 @@ namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
                         throw new InvalidProgramException();
                 }
             }
-            componentIdList.ToList().ForEach(pair =>
-            {
-                this.MetaData.Add(pair.Key, pair.Value.ToList());
-            });
+
+            componentIdList.ToList().ForEach(pair => { this.MetaData.Add(pair.Key, pair.Value.ToList()); });
             this.MetaData.Add(Keywords.ChassisId, this.JsonObject.ChassisID);
         }
     }

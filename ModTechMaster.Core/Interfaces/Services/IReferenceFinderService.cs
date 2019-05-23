@@ -1,6 +1,6 @@
 ﻿namespace ModTechMaster.Core.Interfaces.Services
 {
-    using Models;
+    using ModTechMaster.Core.Interfaces.Models;
 
     public interface IReferenceFinderService
     {

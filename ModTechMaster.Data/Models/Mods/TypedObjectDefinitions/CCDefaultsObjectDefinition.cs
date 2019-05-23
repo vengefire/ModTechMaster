@@ -1,16 +1,21 @@
 ﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
     using System;
-    using Core.Constants;
-    using Core.Enums.Mods;
-    using Core.Interfaces.Models;
+
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
     using Newtonsoft.Json.Linq;
 
     public class CcDefaultsObjectDefinition : ObjectDefinition
     {
         public CcDefaultsObjectDefinition(
-            ObjectType objectType, IObjectDefinitionDescription objectDescription,
-            dynamic jsonObject, string filePath) : base(objectType, objectDescription, (JObject)jsonObject, filePath)
+            ObjectType objectType,
+            IObjectDefinitionDescription objectDescription,
+            dynamic jsonObject,
+            string filePath)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
         {
         }
 
@@ -27,7 +32,8 @@
                     this.MetaData.Add(Keywords.HeatSinkDefId, this.JsonObject.DefID);
                     break;
                 default:
-                    throw new InvalidProgramException($"Unknown CC default type encountered [{this.JsonObject.Type.ToString()}");
+                    throw new InvalidProgramException(
+                        $"Unknown CC default type encountered [{this.JsonObject.Type.ToString()}");
             }
         }
     }

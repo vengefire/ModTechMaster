@@ -2,28 +2,33 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Core.Enums.Mods;
-    using Core.Interfaces.Models;
+
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
     using Newtonsoft.Json.Linq;
 
     public class Manifest : JsonObjectBase, IManifest
     {
-        public Manifest(Mod mod, dynamic jsonObject) : base((JArray)jsonObject, ObjectType.Manifest)
+        public Manifest(Mod mod, dynamic jsonObject)
+            : base((JArray)jsonObject, ObjectType.Manifest)
         {
             this.Mod = mod;
             this.Entries = new HashSet<IManifestEntry>();
         }
 
+        public HashSet<IManifestEntry> Entries { get; }
+
+        public override string Id => this.Name;
+
         public IMod Mod { get; }
 
-        public HashSet<IManifestEntry> Entries { get; }
+        public override string Name => $"{this.Mod.Name}-Manifest";
 
         public List<IReferenceableObject> GetReferenceableObjects()
         {
-            return this.Entries.SelectMany(entry => entry.Objects.Select(definition => definition as IReferenceableObject)).ToList();
+            return this.Entries
+                .SelectMany(entry => entry.Objects.Select(definition => definition as IReferenceableObject)).ToList();
         }
-
-        public override string Name => $"{this.Mod.Name}-Manifest";
-        public override string Id => this.Name;
     }
 }

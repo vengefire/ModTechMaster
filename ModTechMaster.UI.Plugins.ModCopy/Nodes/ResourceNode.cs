@@ -1,17 +1,15 @@
 ﻿namespace ModTechMaster.UI.Plugins.ModCopy.Nodes
 {
     using System.IO;
+
     using ModTechMaster.Core.Interfaces.Models;
 
     public class ResourceNode : MtmTreeViewItem
     {
-        public ResourceNode(IMtmTreeViewItem parent, IResourceDefinition resourceDefinition) : base(parent, resourceDefinition)
+        public ResourceNode(IMtmTreeViewItem parent, IResourceDefinition resourceDefinition)
+            : base(parent, resourceDefinition)
         {
         }
-
-        private IResourceDefinition ResourceDefinition => this.Object as IResourceDefinition;
-
-        public override string Name => this.ResourceDefinition.Id;
 
         public override string HumanReadableContent
         {
@@ -26,5 +24,9 @@
                 return data;
             }
         }
+
+        public override string Name => this.ResourceDefinition.Id;
+
+        private IResourceDefinition ResourceDefinition => this.Object as IResourceDefinition;
     }
 }

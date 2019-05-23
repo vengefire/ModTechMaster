@@ -4,25 +4,28 @@
 
     public interface IMod : IJsonObjectBase, ISourcedFromFile, IReferenceableObject, IReferenceableObjectProvider
     {
-        bool Enabled { get; }
-
-        string Version { get; }
-
-        string Description { get; }
-
         string Author { get; }
 
-        string Website { get; }
+        HashSet<string> ConflictsWith { get; set; }
 
         string Contact { get; }
 
-        IManifest Manifest { get; }
-
         HashSet<string> DependsOn { get; }
 
-        HashSet<string> ConflictsWith { get; set; }
-        double SizeOnDisk { get; }
+        string Description { get; }
+
         string Dll { get; }
+
+        bool Enabled { get; }
+
+        IManifest Manifest { get; }
+
         List<IResourceDefinition> ResourceFiles { get; }
+
+        double SizeOnDisk { get; }
+
+        string Version { get; }
+
+        string Website { get; }
     }
 }

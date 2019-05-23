@@ -1,19 +1,21 @@
-﻿using System;
-using System.IO;
-using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
-using Newtonsoft.Json;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
+    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
-    using Core.Enums.Mods;
-    using Core.Interfaces.Models;
+
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
+
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     public class ManifestEntry : JsonObjectBase, IManifestEntry
     {
-        public ManifestEntry(IManifest manifest, ObjectType entryType, string path, dynamic jsonObject) : base((JObject)jsonObject, ObjectType.ManifestEntry)
+        public ManifestEntry(IManifest manifest, ObjectType entryType, string path, dynamic jsonObject)
+            : base((JObject)jsonObject, ObjectType.ManifestEntry)
         {
             this.Manifest = manifest;
             this.EntryType = entryType;
@@ -22,99 +24,122 @@ namespace ModTechMaster.Data.Models.Mods
             this.Resources = new HashSet<IResourceDefinition>();
         }
 
-        public HashSet<IResourceDefinition> Resources { get; }
+        public ObjectType EntryType { get; }
+
+        public override string Id => this.Name;
 
         public IManifest Manifest { get; }
 
-        public ObjectType EntryType { get; }
+        public override string Name => $"{this.EntryType.ToString()} - {this.Path}";
+
+        public HashSet<IObjectDefinition> Objects { get; }
 
         public string Path { get; }
 
-        public HashSet<IObjectDefinition> Objects { get; }
+        public HashSet<IResourceDefinition> Resources { get; }
 
         public List<IReferenceableObject> GetReferenceableObjects()
         {
             return this.Objects.Select(definition => definition as IReferenceableObject).ToList();
         }
 
-        public override string Name => $"{this.EntryType.ToString()} - {this.Path}";
-        public override string Id => this.Name;
-
         public void ParseStreamingAssets()
         {
-            void RecurseStreamingAssetsDirectory(string path)
+            this.RecurseStreamingAssetsDirectory(this.Path);
+        }
+
+        private void RecurseStreamingAssetsDirectory(string path)
+        {
+            var di = new DirectoryInfo(path);
+            foreach (var fi in di.EnumerateFiles())
             {
-                DirectoryInfo di = new DirectoryInfo(path);
-                foreach (var fi in di.EnumerateFiles())
+                var fileName = fi.Name;
+                var fileData = File.ReadAllText(fi.FullName);
+                var hostDirectory = di.Name;
+
+                if (fi.Extension == ".json")
                 {
-                    var fileName = fi.Name;
-                    var fileData = File.ReadAllText(fi.FullName);
-                    var hostDirectory = di.Name;
+                    // Handle json object definition...
+                    IObjectDefinition objectDefinition;
+                    dynamic jsonData = JsonConvert.DeserializeObject(fileData);
+                    var description = ObjectDefinitionDescription.CreateDefault(jsonData.Description);
 
-                    if (fi.Extension == ".json")
+                    // infer the object type from the current sub-directory.
+                    switch (hostDirectory.ToLower())
                     {
-                        // Handle json object definition...
-                        IObjectDefinition objectDefinition;
-                        dynamic jsonData = JsonConvert.DeserializeObject(fileData);
-                        var description = ObjectDefinitionDescription.CreateDefault(jsonData.Description);
-
-                        // infer the object type from the current sub-directory.
-                        switch (hostDirectory.ToLower())
-                        {
-                            case "constants":
-                            case "milestones":
-                            case "events":
-                            case "cast":
-                            case "behaviorvariables":
-                            case "buildings":
-                            case "hardpoints":
-                            case "factions":
-                            case "lifepathnode":
-                            case "campaign":
-                                objectDefinition = new ObjectDefinition(ObjectType.StreamingAssetsData, description, jsonData, fi.FullName);
-                                break;
-                            case "pilot":
-                                objectDefinition = new PilotObjectDefinition(ObjectType.PilotDef, description, jsonData, fi.FullName);
-                                break;
-                            case "simgameconstants":
-                                objectDefinition = new SimGameConstantsObjectDefinition(ObjectType.SimGameConstants, ObjectDefinitionDescription.CreateDefault(jsonData.Description), jsonData, fi.FullName);
-                                break;
-                            default:
-                                throw new InvalidProgramException($"Unknown streaming assets folder type detected [{hostDirectory}]");
-                        }
-
-                        Objects.Add(objectDefinition);
+                        case "constants":
+                        case "milestones":
+                        case "events":
+                        case "cast":
+                        case "behaviorvariables":
+                        case "buildings":
+                        case "hardpoints":
+                        case "factions":
+                        case "lifepathnode":
+                        case "campaign":
+                            objectDefinition = new ObjectDefinition(
+                                ObjectType.StreamingAssetsData,
+                                description,
+                                jsonData,
+                                fi.FullName);
+                            break;
+                        case "pilot":
+                            objectDefinition = new PilotObjectDefinition(
+                                ObjectType.PilotDef,
+                                description,
+                                jsonData,
+                                fi.FullName);
+                            break;
+                        case "simgameconstants":
+                            objectDefinition = new SimGameConstantsObjectDefinition(
+                                ObjectType.SimGameConstants,
+                                ObjectDefinitionDescription.CreateDefault(jsonData.Description),
+                                jsonData,
+                                fi.FullName);
+                            break;
+                        default:
+                            throw new InvalidProgramException(
+                                $"Unknown streaming assets folder type detected [{hostDirectory}]");
                     }
-                    else
-                    {
-                        switch (hostDirectory.ToLower())
-                        {
-                            case "itemcollections":
-                                var itemCollection = new ItemCollectionObjectDefinition(ObjectType.ItemCollectionDef, fileData, fi.FullName);
-                                itemCollection.AddMetaData();
-                                this.Objects.Add(itemCollection);
-                                break;
-                            default:
-                                IResourceDefinition resourceDefinition;
-                                // Handle resource file style definition...
-                                switch (fi.Name)
-                                {
-                                    default:
-                                        resourceDefinition = new ResourceDefinition(ObjectType.UnhandledResource, fi.FullName, fi.Name, fi.Name);
-                                        break;
-                                }
 
-                                Resources.Add(resourceDefinition);
-                                // TBD: Add Note here -- throw new InvalidProgramException();
-                                break;
-                        }
+                    this.Objects.Add(objectDefinition);
+                }
+                else
+                {
+                    switch (hostDirectory.ToLower())
+                    {
+                        case "itemcollections":
+                            var itemCollection = new ItemCollectionObjectDefinition(
+                                ObjectType.ItemCollectionDef,
+                                fileData,
+                                fi.FullName);
+                            itemCollection.AddMetaData();
+                            this.Objects.Add(itemCollection);
+                            break;
+                        default:
+                            IResourceDefinition resourceDefinition;
+
+                            // Handle resource file style definition...
+                            switch (fi.Name)
+                            {
+                                default:
+                                    resourceDefinition = new ResourceDefinition(
+                                        ObjectType.UnhandledResource,
+                                        fi.FullName,
+                                        fi.Name,
+                                        fi.Name);
+                                    break;
+                            }
+
+                            this.Resources.Add(resourceDefinition);
+
+                            // TBD: Add Note here -- throw new InvalidProgramException();
+                            break;
                     }
                 }
-
-                di.GetDirectories().ToList().ForEach(subdi => RecurseStreamingAssetsDirectory(subdi.FullName));
             }
 
-            RecurseStreamingAssetsDirectory(Path);
+            di.GetDirectories().ToList().ForEach(subdi => this.RecurseStreamingAssetsDirectory(subdi.FullName));
         }
     }
 }

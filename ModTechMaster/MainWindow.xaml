@@ -12,7 +12,7 @@
     <Window.Resources>
     </Window.Resources>
     <Window.CommandBindings>
-        <CommandBinding Command="commands:CommonCommands.SaveCurrentSettingsCommand"/>
+        <CommandBinding Command="commands:CommonCommands.SaveCurrentSettingsCommand" />
     </Window.CommandBindings>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -56,7 +56,9 @@
                 <DockPanel>
                     <ToolBarTray Name="toolbarTray" DockPanel.Dock="Bottom" utils:MarginSetter.Margin="5">
                         <ToolBar Name="tbCommon">
-                            <Button Content="Save Current Settings" Command="commands:CommonCommands.SaveCurrentSettingsCommand" CommandParameter="{Binding CurrentPluginControl}"></Button>
+                            <Button Content="Save Current Settings"
+                                    Command="commands:CommonCommands.SaveCurrentSettingsCommand"
+                                    CommandParameter="{Binding CurrentPluginControl}" />
                         </ToolBar>
                     </ToolBarTray>
                     <TabControl Name="tabPages" SelectionChanged="TabPages_SelectionChanged" />

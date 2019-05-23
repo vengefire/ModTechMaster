@@ -3,16 +3,21 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Core.Constants;
-    using Core.Enums.Mods;
+
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
 
     public class ItemCollectionObjectDefinition : CsvObjectBase
     {
-        public ItemCollectionObjectDefinition(ObjectType objectType, string csvText, string filePath) : base(objectType, filePath, csvText)
+        public ItemCollectionObjectDefinition(ObjectType objectType, string csvText, string filePath)
+            : base(objectType, filePath, csvText)
         {
         }
 
+        public override string Id => this.Name;
+
         public override string Name => this.CsvData[0][0]; // Default to first entry of first line...
+
         public override void AddMetaData()
         {
             base.AddMetaData();
@@ -28,6 +33,7 @@
             {
                 var id = line[0];
                 var type = line[1];
+
                 // What does 2 and 3 do?
                 switch (type)
                 {
@@ -57,6 +63,7 @@
                         throw new InvalidProgramException();
                 }
             }
+
             this.MetaData.Add(Keywords.MechDefId, new List<string>(mechDefs));
             this.MetaData.Add(Keywords.ItemCollectionId, new List<string>(itemCollections));
             this.MetaData.Add(Keywords.UpgradeDefId, new List<string>(upgrades));
@@ -65,7 +72,5 @@
             this.MetaData.Add(Keywords.AmmoBoxId, new List<string>(ammoBoxes));
             this.MetaData.Add(Keywords.JumpJetDefId, new List<string>(jumpJets));
         }
-
-        public override string Id => this.Name;
     }
 }

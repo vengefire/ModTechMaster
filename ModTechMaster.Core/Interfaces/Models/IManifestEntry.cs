@@ -1,16 +1,17 @@
 ﻿namespace ModTechMaster.Core.Interfaces.Models
 {
     using System.Collections.Generic;
-    using Enums.Mods;
+
+    using ModTechMaster.Core.Enums.Mods;
 
     public interface IManifestEntry : IJsonObjectBase, IReferenceableObjectProvider
     {
-        IManifest Manifest { get; }
-
         ObjectType EntryType { get; }
 
-        string Path { get; }
+        IManifest Manifest { get; }
 
         HashSet<IObjectDefinition> Objects { get; }
+
+        string Path { get; }
     }
 }

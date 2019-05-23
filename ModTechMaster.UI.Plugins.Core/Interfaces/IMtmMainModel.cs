@@ -4,8 +4,10 @@
 
     public interface IMtmMainModel
     {
-        bool IsBusy { get; set; }
         IContainer Container { get; }
+
         IPluginControl CurrentPluginControl { get; set; }
+
+        bool IsBusy { get; set; }
     }
 }

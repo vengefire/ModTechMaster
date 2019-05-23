@@ -1,9 +1,9 @@
 ﻿namespace ModTechMaster.Logic.Factories
 {
-    using Core.Enums.Mods;
-    using Core.Interfaces.Factories;
-    using Core.Interfaces.Processors;
-    using Processors;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Factories;
+    using ModTechMaster.Core.Interfaces.Processors;
+    using ModTechMaster.Logic.Processors;
 
     internal class ObjectDefinitionProcessorFactory : IObjectDefinitionProcessorFactory
     {
@@ -13,12 +13,12 @@
         {
             get
             {
-                if (ObjectDefinitionProcessorFactory.objectDefinitionProcessorFactory == null)
+                if (objectDefinitionProcessorFactory == null)
                 {
-                    ObjectDefinitionProcessorFactory.objectDefinitionProcessorFactory = new ObjectDefinitionProcessorFactory();
+                    objectDefinitionProcessorFactory = new ObjectDefinitionProcessorFactory();
                 }
 
-                return ObjectDefinitionProcessorFactory.objectDefinitionProcessorFactory;
+                return objectDefinitionProcessorFactory;
             }
         }
 

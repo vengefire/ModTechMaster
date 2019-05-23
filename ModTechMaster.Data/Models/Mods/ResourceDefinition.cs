@@ -1,23 +1,28 @@
 ﻿namespace ModTechMaster.Data.Models.Mods
 {
     using System.Collections.Generic;
-    using Core.Constants;
-    using Core.Enums.Mods;
-    using Core.Interfaces.Models;
+
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
 
     public class ResourceDefinition : SourcedFromFile, IResourceDefinition
     {
-        public ResourceDefinition(ObjectType objectType, string sourceFilePath, string name, string id) : base(sourceFilePath)
+        public ResourceDefinition(ObjectType objectType, string sourceFilePath, string name, string id)
+            : base(sourceFilePath)
         {
             this.ObjectType = objectType;
             this.Name = name;
             this.Id = id;
         }
 
-        public ObjectType ObjectType { get; }
-        public string Name { get; }
         public string Id { get; }
+
         public Dictionary<string, object> MetaData { get; } = new Dictionary<string, object>();
+
+        public string Name { get; }
+
+        public ObjectType ObjectType { get; }
 
         public void AddMetaData()
         {

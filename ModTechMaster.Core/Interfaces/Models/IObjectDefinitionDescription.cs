@@ -2,12 +2,12 @@
 {
     public interface IObjectDefinitionDescription
     {
-        string Id { get; }
-
-        string Name { get; }
-
         string Description { get; }
 
         string Icon { get; }
+
+        string Id { get; }
+
+        string Name { get; }
     }
 }

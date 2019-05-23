@@ -1,11 +1,12 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
-using IWin32Window = System.Windows.Forms.IWin32Window;
-
-namespace ModTechMaster.UI.Core.WinForms.Extensions
+﻿namespace ModTechMaster.UI.Core.WinForms.Extensions
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Interop;
+    using System.Windows.Media;
+
+    using IWin32Window = System.Windows.Forms.IWin32Window;
+
     public static class WpfExtensions
     {
         public static IWin32Window GetIWin32Window(this Visual visual)
@@ -17,18 +18,14 @@ namespace ModTechMaster.UI.Core.WinForms.Extensions
 
         private class OldWindow : IWin32Window
         {
-            private readonly IntPtr _handle;
+            private readonly IntPtr handle;
 
             public OldWindow(IntPtr handle)
             {
-                _handle = handle;
+                this.handle = handle;
             }
 
-            #region IWin32Window Members
-
-            IntPtr IWin32Window.Handle => _handle;
-
-            #endregion
+            IntPtr IWin32Window.Handle => this.handle;
         }
     }
 }

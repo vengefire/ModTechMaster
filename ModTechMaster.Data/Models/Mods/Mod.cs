@@ -1,9 +1,11 @@
 ﻿namespace ModTechMaster.Data.Models.Mods
 {
     using System.Collections.Generic;
-    using Core.Constants;
-    using Core.Enums.Mods;
-    using Core.Interfaces.Models;
+
+    using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
     using Newtonsoft.Json.Linq;
 
     public class Mod : JsonObjectSourcedFromFile, IMod
@@ -21,7 +23,10 @@
             HashSet<string> dependsOn,
             HashSet<string> conflictsWith,
             string sourceFilePath,
-            dynamic jsonObject, double sizeOnDisk, string dll) : base(ObjectType.Mod, sourceFilePath, (JObject)jsonObject)
+            dynamic jsonObject,
+            double sizeOnDisk,
+            string dll)
+            : base(ObjectType.Mod, sourceFilePath, (JObject)jsonObject)
         {
             this.Name = name;
             this.Id = this.GetId;
@@ -38,31 +43,37 @@
             this.AddMetaData();
         }
 
-        public override string Name { get; }
-        public override string Id { get; }
-
-        public bool Enabled => this.enabled ?? true;
-
-        public string Version { get; }
-
-        public string Description { get; }
-
         public string Author { get; }
 
-        public string Website { get; }
+        public HashSet<string> ConflictsWith { get; set; }
 
         public string Contact { get; }
 
-        public IManifest Manifest { get; set; }
-
         public HashSet<string> DependsOn { get; }
 
-        public HashSet<string> ConflictsWith { get; set; }
-        public double SizeOnDisk { get; }
+        public string Description { get; }
+
         public string Dll { get; }
-        public List<IResourceDefinition> ResourceFiles { get; } = new List<IResourceDefinition>();
+
+        public bool Enabled => this.enabled ?? true;
+
+        public string GetId => this.Name;
+
+        public override string Id { get; }
+
+        public IManifest Manifest { get; set; }
 
         public Dictionary<string, object> MetaData { get; } = new Dictionary<string, object>();
+
+        public override string Name { get; }
+
+        public List<IResourceDefinition> ResourceFiles { get; } = new List<IResourceDefinition>();
+
+        public double SizeOnDisk { get; }
+
+        public string Version { get; }
+
+        public string Website { get; }
 
         public void AddMetaData()
         {
@@ -70,8 +81,6 @@
             this.MetaData.Add(Keywords.Name, this.Name);
             this.MetaData.Add(Keywords.DependsOn, new List<string>(this.DependsOn));
         }
-
-        public string GetId => this.Name;
 
         public List<IReferenceableObject> GetReferenceableObjects()
         {

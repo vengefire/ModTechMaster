@@ -1,13 +1,14 @@
-﻿using ModTechMaster.Core.Enums.Mods;
-
-namespace ModTechMaster.Data.Models.Mods
+﻿namespace ModTechMaster.Data.Models.Mods
 {
-    using Core.Interfaces.Models;
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
+
     using Newtonsoft.Json.Linq;
 
     public class ObjectDefinitionDescription : JsonObjectBase, IObjectDefinitionDescription
     {
-        public ObjectDefinitionDescription(string id, string name, string description, string icon, dynamic jsonObject) : base((JObject)jsonObject, ObjectType.ObjectDefinitionDescription)
+        public ObjectDefinitionDescription(string id, string name, string description, string icon, dynamic jsonObject)
+            : base((JObject)jsonObject, ObjectType.ObjectDefinitionDescription)
         {
             this.Id = id;
             this.Name = name;
@@ -15,19 +16,20 @@ namespace ModTechMaster.Data.Models.Mods
             this.Icon = icon;
         }
 
-        public ObjectDefinitionDescription(string id, string name, dynamic jsonObject) : base((JObject)jsonObject, ObjectType.ObjectDefinitionDescription)
+        public ObjectDefinitionDescription(string id, string name, dynamic jsonObject)
+            : base((JObject)jsonObject, ObjectType.ObjectDefinitionDescription)
         {
             this.Id = id;
             this.Name = name;
         }
 
-        public override string Id { get; }
-
-        public override string Name { get; }
-
         public string Description { get; }
 
         public string Icon { get; }
+
+        public override string Id { get; }
+
+        public override string Name { get; }
 
         public static ObjectDefinitionDescription CreateDefault(dynamic description)
         {

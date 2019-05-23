@@ -1,15 +1,15 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using Castle.Core.Logging;
-using ModTechMaster.Core.Interfaces.Models;
-using ModTechMaster.Core.Interfaces.Services;
-using ModTechMaster.Data.Models.Mods;
-using MTM.Init;
-
-namespace MTM
+﻿namespace MTM
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+
+    using Castle.Core.Logging;
+
+    using ModTechMaster.Core.Interfaces.Services;
+
+    using MTM.Init;
+
     internal class Program
     {
         private static int Main(string[] args)
@@ -23,10 +23,10 @@ namespace MTM
                 logger.Info($"The target directory [{di.FullName}] foes not exist.");
                 return -1;
             }
+
             var modService = container.GetInstance<IModService>();
 
-            //IModCollection modCollection = new ModCollection("MTM Mod Collection", di.FullName);
-
+            // IModCollection modCollection = new ModCollection("MTM Mod Collection", di.FullName);
             logger.Info($"Processing mods from [{di.FullName}]");
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -34,17 +34,17 @@ namespace MTM
             stopwatch.Stop();
             var elapsedTime = stopwatch.ElapsedMilliseconds;
             logger.Info($"Mods processed in [{elapsedTime}] ms.");
-            /*di.GetDirectories().ToList().ForEach(
-                sub =>
-                {
-                    stopwatch.Start();
-                    logger.Info($"Processing [{sub.Name}]...");
-                    modCollection.AddModToCollection(modService.TryLoadFromPath(sub.FullName));
-                    stopwatch.Stop();
-                    logger.Info($"{stopwatch.ElapsedMilliseconds} ms");
-                    stopwatch.Reset();
-                });*/
 
+            /*di.GetDirectories().ToList().ForEach(
+                            sub =>
+                            {
+                                stopwatch.Start();
+                                logger.Info($"Processing [{sub.Name}]...");
+                                modCollection.AddModToCollection(modService.TryLoadFromPath(sub.FullName));
+                                stopwatch.Stop();
+                                logger.Info($"{stopwatch.ElapsedMilliseconds} ms");
+                                stopwatch.Reset();
+                            });*/
             var refService = container.GetInstance<IReferenceFinderService>();
             logger.Info("Processing Mod Collection object relationships...");
             elapsedTime = refService.ProcessModCollectionReferences(modCollection);

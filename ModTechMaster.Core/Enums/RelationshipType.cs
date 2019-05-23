@@ -3,7 +3,9 @@
     public enum RelationshipType
     {
         OneToOne,
+
         OneToMany,
+
         ManyToOne
     }
 }

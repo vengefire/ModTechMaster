@@ -4,13 +4,16 @@
 
     public class ObjectDefinitionNode : MtmTreeViewItem
     {
-        public ObjectDefinitionNode(IMtmTreeViewItem parent, IObjectDefinition objectDefinition) : base(parent, objectDefinition)
+        public ObjectDefinitionNode(IMtmTreeViewItem parent, IObjectDefinition objectDefinition)
+            : base(parent, objectDefinition)
         {
             this.ObjectDefinition = objectDefinition;
         }
 
-        public IObjectDefinition ObjectDefinition { get; }
-        public override string Name => this.ObjectDefinition.Id;
         public override string HumanReadableContent => this.ObjectDefinition.HumanReadableText;
+
+        public override string Name => this.ObjectDefinition.Id;
+
+        public IObjectDefinition ObjectDefinition { get; }
     }
 }

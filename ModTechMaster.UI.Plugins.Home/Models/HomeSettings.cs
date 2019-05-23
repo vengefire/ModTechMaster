@@ -2,12 +2,16 @@
 {
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
-    using Annotations;
+
+    using ModTechMaster.UI.Plugins.Home.Annotations;
 
     public class HomeSettings : INotifyPropertyChanged
     {
         private string modCollectionName;
+
         private string modDirectory;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public string ModCollectionName
         {
@@ -34,8 +38,6 @@
                 }
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
