@@ -52,7 +52,7 @@
                       PreviewMouseRightButtonDown="TvModControl_PreviewMouseRightButtonDown">
                 <TreeView.Resources>
                     <Style TargetType="CheckBox">
-                        <Setter Property="IsThreeState" Value="{Binding IsThreeState,Mode=TwoWay}" />
+                        <Setter Property="IsThreeState" Value="{Binding IsThreeState,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </Style>
                     <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:MtmTreeViewItem}">
                         <StackPanel Orientation="Horizontal">
@@ -64,7 +64,7 @@
                                 Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}"
                                 Width="15" IsEnabled="False" />
                             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                            <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay}" />
+                            <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </DataTemplate>
                     <HierarchicalDataTemplate DataType="{x:Type nodes:MtmTreeViewItem}"

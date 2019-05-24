@@ -43,6 +43,11 @@
             {
                 DictRefsToTreeViewItems.Add(referenceableObject, this);
             }
+
+            if (parent != null)
+            {
+                this.PropertyChanged += this.Parent.IncestPropertyChanged;
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -102,14 +107,16 @@
                                     CheckNode(this, value);
                                     ModCopyPage.Self.ModCopyModel.MainModel.IsBusy = false;
                                     this.PropertyChanged += this.OnPropertyChanged;
+                                    this.OnPropertyChanged();
                                     this.OnPropertyChanged("Selected");
                                     this.OnPropertyChanged("SelectionStatus");
-                                }).ConfigureAwait(false);
+                                });
                     }
                     else
                     {
                         CheckNode(this, value);
                         this.PropertyChanged += this.OnPropertyChanged;
+                        this.OnPropertyChanged();
                         this.OnPropertyChanged("Selected");
                         this.OnPropertyChanged("SelectionStatus");
                     }
@@ -312,8 +319,14 @@
             }
         }
 
+        // Propagates property changed events up the stack...
+        public virtual void IncestPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.OnPropertyChanged(e.PropertyName);
+        }
+
         // [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
@@ -330,7 +343,7 @@
                     {
                         currentNode.IsChecked = true;
                     }
-                    else if (currentNode.Children.All(Nodes => Nodes.IsChecked == false))
+                    else if (currentNode.Children.All(node => node.IsChecked == false))
                     {
                         currentNode.IsChecked = false;
                     }

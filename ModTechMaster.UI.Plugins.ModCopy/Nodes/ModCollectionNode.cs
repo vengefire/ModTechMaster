@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Linq;
 
     using ModTechMaster.Core.Enums.Mods;
@@ -18,7 +19,7 @@
                     {
                         var modNode = new ModNode(mod, this);
                         this.Children.Add(modNode);
-                        modNode.PropertyChanged += (sender, args) =>
+                        /*modNode.PropertyChanged += (sender, args) =>
                             {
                                 if (args.PropertyName == "Selected")
                                 {
@@ -32,9 +33,26 @@
                                     this.OnPropertyChanged(nameof(this.SelectedUpgradeCount));
                                     this.OnPropertyChanged(nameof(this.SelectedCoolingCount));
                                 }
-                            };
+                            };*/
                     });
             this.IsExpanded = true;
+        }
+
+        public override void IncestPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.IncestPropertyChanged(sender, e);
+            if (e.PropertyName == "Selected")
+            {
+                this.OnPropertyChanged(nameof(this.SelectedMods));
+                this.OnPropertyChanged(nameof(this.SelectedModSize));
+                this.OnPropertyChanged(nameof(this.SelectedModObjectCount));
+                this.OnPropertyChanged(nameof(this.SelectedMechCount));
+                this.OnPropertyChanged(nameof(this.SelectedVehicleCount));
+                this.OnPropertyChanged(nameof(this.SelectedTurretCount));
+                this.OnPropertyChanged(nameof(this.SelectedWeaponCount));
+                this.OnPropertyChanged(nameof(this.SelectedUpgradeCount));
+                this.OnPropertyChanged(nameof(this.SelectedCoolingCount));
+            }
         }
 
         public override string HumanReadableContent => this.ModCollection.Name;

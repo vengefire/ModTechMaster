@@ -53,5 +53,7 @@
         bool Filter(string filterText);
 
         void Sort();
+
+        void IncestPropertyChanged(object sender, PropertyChangedEventArgs e);
     }
 }
