@@ -4,6 +4,8 @@
 
     public class MechModel
     {
+        public string BaseModel { get; set; }
+
         public long BattleValue { get; set; }
 
         public string Chassis { get; set; }
@@ -18,19 +20,22 @@
 
         public bool Extinct { get; set; }
 
-        public bool Selected { get; set; }
-
         public string Name { get; set; }
 
         public string Rating { get; set; }
 
         public string RulesLevel { get; set; }
 
+        public bool Selected { get; set; }
+
         public string TechnologyBase { get; set; }
 
         public long Tonnage { get; set; }
 
+        public string Variant { get; set; }
+
         public long Year { get; set; }
+        public string HeroName { get; set; }
 
         public static MechModel FromCsv(string csvData, char separator = ',')
         {
@@ -40,10 +45,10 @@
                 throw new ArgumentException("Insufficient columns in CSV data to construct new Mech.", nameof(csvData));
             }
 
-            return new MechModel
+            var mech = new MechModel
                        {
                            DbId = long.Parse(parts[0]),
-                           Name = parts[1],
+                           Name = parts[1], // .Trim(' ', '"'),
                            Era = parts[2],
                            Year = long.Parse(parts[3]),
                            TechnologyBase = parts[4],
@@ -57,6 +62,52 @@
                            Extinct = parts[6].Contains("Extinct"),
                            Selected = false
                        };
+            var name = mech.Name;
+            var heroIndex = name.IndexOf('(');
+            string delim = ")";
+
+            if (heroIndex == -1)
+            {
+                heroIndex = name.IndexOf("\"\"");
+                delim = "\"\"";
+            }
+
+            if (heroIndex != -1)
+            {
+                var delimLen = delim.Length;
+                var heroEndIndex = name.IndexOf(delim, heroIndex + delimLen, StringComparison.Ordinal);
+                var heroName = name.Substring(heroIndex + delimLen, heroEndIndex - heroIndex - delimLen);
+                name = name.Substring(0, heroIndex) + name.Substring(heroEndIndex + delimLen);
+                name = name.Trim(' ', '\"');
+                mech.HeroName = heroName;
+            }
+
+            var index = name.IndexOf(' ');
+            var variantIndex = index;
+            if (index != -1)
+            {
+                var potentialVariant = name.Substring(++index);
+                // variantIndex += index;
+                while (potentialVariant.Contains(" "))
+                {
+                    index = potentialVariant.IndexOf(' ');
+                    if (index == -1)
+                    {
+                        break;
+                    }
+
+                    potentialVariant = potentialVariant.Substring(++index);
+                    variantIndex += index;
+                }
+                mech.BaseModel = name.Substring(0, variantIndex);
+                mech.Variant = name.Substring(++variantIndex);
+            }
+            else
+            {
+                mech.BaseModel = mech.Name;
+                mech.Variant = "N/A";
+            }
+            return mech;
         }
     }
 }

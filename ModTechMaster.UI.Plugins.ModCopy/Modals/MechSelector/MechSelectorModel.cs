@@ -56,6 +56,8 @@
                             var mech = o as MechModel;
                             return mech.Designer == "Catalyst Game Labs";
                         };
+                    collectionView.SortDescriptions.Add(new SortDescription(nameof(MechModel.Year), ListSortDirection.Ascending));
+                    collectionView.SortDescriptions.Add(new SortDescription(nameof(MechModel.Name), ListSortDirection.Ascending));
                     this.OnPropertyChanged(nameof(this.MechModels));
                 }
             }

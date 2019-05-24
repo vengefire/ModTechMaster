@@ -22,6 +22,23 @@
         </Grid.ColumnDefinitions>
         <Button Content="Load Mech File..." Command="local:MechSelectorCommands.ProcessMechSelectionFileCommand" CommandParameter="{Binding MechSelectorModel}"/>
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Model.MechFilePath, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-        <DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="5" ItemsSource="{Binding MechSelectorModel.MechModels, UpdateSourceTrigger=PropertyChanged}"></DataGrid>
+        <ListView Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding MechSelectorModel.MechModels, UpdateSourceTrigger=PropertyChanged}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                    <GridViewColumn Header="Base Model" DisplayMemberBinding="{Binding BaseModel}"></GridViewColumn>
+                    <GridViewColumn Header="Variant" DisplayMemberBinding="{Binding Variant}"></GridViewColumn>
+                    <GridViewColumn Header="Hero Name" DisplayMemberBinding="{Binding HeroName}"></GridViewColumn>
+                    <GridViewColumn Header="Chassis" DisplayMemberBinding="{Binding Chassis}"></GridViewColumn>
+                    <GridViewColumn Header="Tonnage" DisplayMemberBinding="{Binding Tonnage}"></GridViewColumn>
+                    <GridViewColumn Header="Era" DisplayMemberBinding="{Binding Era}"></GridViewColumn>
+                    <GridViewColumn Header="Technology Base" DisplayMemberBinding="{Binding TechnologyBase}"></GridViewColumn>
+                    <GridViewColumn Header="Rules Level" DisplayMemberBinding="{Binding RulesLevel}"></GridViewColumn>
+                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding Year}"></GridViewColumn>
+                    <GridViewColumn Header="Extinct" DisplayMemberBinding="{Binding Extinct}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <!--<DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="5" ItemsSource="{Binding MechSelectorModel.MechModels, UpdateSourceTrigger=PropertyChanged}"></DataGrid>-->
     </Grid>
 </Window>
