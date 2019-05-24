@@ -5,15 +5,20 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.IO;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Windows.Data;
     using System.Windows.Forms;
 
+    using ModTechMaster.Core.Enums.Mods;
+    using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.UI.Plugins.ModCopy.Annotations;
     using ModTechMaster.UI.Plugins.ModCopy.Model;
 
     public class MechSelectorModel : INotifyPropertyChanged
     {
+        private readonly List<IReferenceableObject> mechs;
+
         private readonly ModCopyModel modCopyModel;
 
         private string mechFilePath;
@@ -23,6 +28,8 @@
         public MechSelectorModel(ModCopyModel modCopyModel)
         {
             this.modCopyModel = modCopyModel;
+            this.mechs = this.modCopyModel.ModCollectionNode.ModCollection.GetReferenceableObjects()
+                .Where(referenceableObject => referenceableObject.ObjectType == ObjectType.ChassisDef).ToList();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -54,10 +61,31 @@
                     collectionView.Filter = o =>
                         {
                             var mech = o as MechModel;
-                            return mech.Designer == "Catalyst Game Labs";
+                            if (mech.Designer != "Catalyst Game Labs")
+                            {
+                                return false;
+                            }
+
+                            var searchTerm1 = ($"{mech.BaseModel}".Replace(" ", string.Empty) + $"_{mech.Variant}")
+                                .ToLower();
+                            var searchTerm2 = ($"{mech.HeroName}".Replace(" ", string.Empty) + $"_{mech.Variant}")
+                                .ToLower();
+                            if (this.mechs.Any(
+                                referenceableObject =>
+                                    {
+                                        var test = referenceableObject.Id.ToLower();
+                                        return test.Contains(searchTerm1) || test.Contains(searchTerm2);
+                                    }))
+                            {
+                                return true;
+                            }
+
+                            return false;
                         };
-                    collectionView.SortDescriptions.Add(new SortDescription(nameof(MechModel.Year), ListSortDirection.Ascending));
-                    collectionView.SortDescriptions.Add(new SortDescription(nameof(MechModel.Name), ListSortDirection.Ascending));
+                    collectionView.SortDescriptions.Add(
+                        new SortDescription(nameof(MechModel.Year), ListSortDirection.Ascending));
+                    collectionView.SortDescriptions.Add(
+                        new SortDescription(nameof(MechModel.Name), ListSortDirection.Ascending));
                     this.OnPropertyChanged(nameof(this.MechModels));
                 }
             }

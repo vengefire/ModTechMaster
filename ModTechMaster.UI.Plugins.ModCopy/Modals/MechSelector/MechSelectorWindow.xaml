@@ -25,6 +25,13 @@
         <ListView Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding MechSelectorModel.MechModels, UpdateSourceTrigger=PropertyChanged}">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="local:MechModel">
+                                <CheckBox Content="Include in collection" IsChecked="{Binding IsChecked}"></CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
                     <GridViewColumn Header="Base Model" DisplayMemberBinding="{Binding BaseModel}"></GridViewColumn>
                     <GridViewColumn Header="Variant" DisplayMemberBinding="{Binding Variant}"></GridViewColumn>

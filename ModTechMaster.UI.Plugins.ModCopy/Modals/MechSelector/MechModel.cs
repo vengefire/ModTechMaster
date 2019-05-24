@@ -26,7 +26,7 @@
 
         public string RulesLevel { get; set; }
 
-        public bool Selected { get; set; }
+        public bool IsChecked { get; set; }
 
         public string TechnologyBase { get; set; }
 
@@ -60,7 +60,7 @@
                            Cost = long.Parse(parts[10]),
                            Rating = parts[11],
                            Extinct = parts[6].Contains("Extinct"),
-                           Selected = false
+                           IsChecked = false
                        };
             var name = mech.Name;
             var heroIndex = name.IndexOf('(');
