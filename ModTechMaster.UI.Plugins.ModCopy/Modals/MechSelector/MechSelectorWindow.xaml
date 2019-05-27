@@ -29,15 +29,18 @@
         <TextBlock Grid.Row="0" Grid.Column="1"
                    Text="{Binding MechSelectorModel.MechFilePath, UpdateSourceTrigger=PropertyChanged}" />
         <Grid Row="1" Grid.Column="0" Grid.ColumnSpan="5">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Horizontal">
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <Label Content="Era" />
                 <xctk:CheckComboBox Name="filterEras" ItemsSource="{Binding MechSelectorModel.EraOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, diag:PresentationTraceSources.TraceLevel=High}"
                                     HorizontalAlignment="Center"
@@ -45,7 +48,7 @@
                                     DisplayMemberPath="Name"
                                     SelectedMemberPath="Selected"/>
             </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <Label Content="Technology Base" />
                 <xctk:CheckComboBox Name="filterTech" ItemsSource="{Binding MechSelectorModel.TechOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     HorizontalAlignment="Center"
@@ -53,7 +56,7 @@
                                     DisplayMemberPath="Name"
                                     SelectedMemberPath="Selected"/>
             </StackPanel>
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <Label Content="Rules Level" />
                 <xctk:CheckComboBox Name="filterRules" ItemsSource="{Binding MechSelectorModel.RulesOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     HorizontalAlignment="Center"
@@ -61,11 +64,11 @@
                                     DisplayMemberPath="Name"
                                     SelectedMemberPath="Selected"/>
             </StackPanel>
-            <StackPanel Grid.Column="3" Orientation="Horizontal">
+            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <Label Content="Maximum Production Year" />
                 <TextBox Width="35" Text="{Binding MechSelectorModel.MaxProdYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
             </StackPanel>
-            <StackPanel Grid.Column="4" Orientation="Horizontal">
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <Label Content="Non Extinct Only" />
                 <CheckBox VerticalAlignment="Center" IsChecked="{Binding MechSelectorModel.NonExtinctOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
             </StackPanel>
