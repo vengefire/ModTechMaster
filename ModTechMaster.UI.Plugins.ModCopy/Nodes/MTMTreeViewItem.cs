@@ -104,6 +104,7 @@
                                     this.PropertyChanged += this.OnPropertyChanged;
                                     this.OnPropertyChanged("Selected");
                                     this.OnPropertyChanged("SelectionStatus");
+                                    this.OnPropertyChanged();
                                 }).ConfigureAwait(false);
                     }
                     else
@@ -112,6 +113,7 @@
                         this.PropertyChanged += this.OnPropertyChanged;
                         this.OnPropertyChanged("Selected");
                         this.OnPropertyChanged("SelectionStatus");
+                        this.OnPropertyChanged();
                     }
                 }
             }
