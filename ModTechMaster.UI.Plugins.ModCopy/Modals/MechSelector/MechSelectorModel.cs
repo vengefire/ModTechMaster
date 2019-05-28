@@ -9,7 +9,8 @@
     using System.Runtime.CompilerServices;
     using System.Windows.Data;
     using System.Windows.Forms;
-    using System.Windows.Input;
+
+    using Castle.Core.Internal;
 
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
@@ -102,26 +103,11 @@
                     collectionView.Filter = o =>
                         {
                             var mech = o as MechModel;
-                            if (mech.Designer != "Catalyst Game Labs")
+                            if (mech.Designer != "Catalyst Game Labs" || mech.ResidentInCollection == false)
                             {
                                 return false;
                             }
-
-                            var searchTerm1 = ($"{mech.BaseModel}".Replace(" ", string.Empty) + $"_{mech.Variant}")
-                                .ToLower();
-                            var searchTerm2 = ($"{mech.HeroName}".Replace(" ", string.Empty) + $"_{mech.Variant}")
-                                .ToLower();
-                            if (this.mechs.Any(
-                                referenceableObject =>
-                                    {
-                                        var test = referenceableObject.Id.ToLower();
-                                        return test.Contains(searchTerm1) || test.Contains(searchTerm2);
-                                    }))
-                            {
-                                return true;
-                            }
-
-                            return false;
+                            return true;
                         };
                     collectionView.SortDescriptions.Add(
                         new SortDescription(nameof(MechModel.Year), ListSortDirection.Ascending));
@@ -219,6 +205,12 @@
             collectionView.Filter = o =>
                 {
                     var mech = o as MechModel;
+
+                    if (!mech.ResidentInCollection)
+                    {
+                        return false;
+                    }
+
                     if (mech.Designer != "Catalyst Game Labs")
                     {
                         return false;
@@ -285,7 +277,23 @@
                         continue;
                     }
 
-                    mechList.Add(MechModel.FromCsv(line));
+                    var mech = MechModel.FromCsv(line);
+
+                    var searchTerm1 = ($"{mech.BaseModel}".Replace(" ", string.Empty) + $"_{mech.Variant}")
+                        .ToLower();
+                    var searchTerm2 = mech.HeroName.IsNullOrEmpty() ? string.Empty : ($"{mech.HeroName}".Replace(" ", string.Empty) + $"_{mech.Variant}")
+                        .ToLower();
+                    if (mechSelectorModel.mechs.Any(
+                        referenceableObject =>
+                            {
+                                var test = referenceableObject.Id.ToLower();
+                                return test.Contains(searchTerm1) || (!searchTerm2.IsNullOrEmpty() && test.Contains(searchTerm2));
+                            }))
+                    {
+                        mech.ResidentInCollection = true;
+                    }
+
+                    mechList.Add(mech);
                 }
             }
 
