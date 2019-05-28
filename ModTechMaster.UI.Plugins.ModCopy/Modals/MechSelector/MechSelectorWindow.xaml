@@ -3,49 +3,105 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         xmlns:local="clr-namespace:ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:utils="clr-namespace:ModTechMaster.UI.Core.Utils;assembly=ModTechMaster.UI.Core"
         mc:Ignorable="d"
         Title="MechSelectorWindow" Height="450" Width="800">
-    <Grid>
+    <Grid utils:MarginSetter.Margin="5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Content="Load Mech File..." Command="local:MechSelectorCommands.ProcessMechSelectionFileCommand" CommandParameter="{Binding MechSelectorModel}"/>
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Model.MechFilePath, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-        <ListView Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="5" ItemsSource="{Binding MechSelectorModel.MechModels, UpdateSourceTrigger=PropertyChanged}">
+        <Button Content="Load Mech File..." Command="local:MechSelectorCommands.ProcessMechSelectionFileCommand"
+                CommandParameter="{Binding MechSelectorModel}" />
+        <TextBlock Grid.Row="0" Grid.Column="1"
+                   Text="{Binding MechSelectorModel.MechFilePath, UpdateSourceTrigger=PropertyChanged}" />
+        <Grid Row="1" Grid.Column="0" Grid.ColumnSpan="5">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <Label Content="Era" />
+                <xctk:CheckComboBox Name="filterEras" ItemsSource="{Binding MechSelectorModel.EraOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, diag:PresentationTraceSources.TraceLevel=High}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    DisplayMemberPath="Name"
+                                    SelectedMemberPath="Selected"/>
+            </StackPanel>
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <Label Content="Technology Base" />
+                <xctk:CheckComboBox Name="filterTech" ItemsSource="{Binding MechSelectorModel.TechOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    DisplayMemberPath="Name"
+                                    SelectedMemberPath="Selected"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <Label Content="Rules Level" />
+                <xctk:CheckComboBox Name="filterRules" ItemsSource="{Binding MechSelectorModel.RulesOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    DisplayMemberPath="Name"
+                                    SelectedMemberPath="Selected"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <Label Content="Maximum Production Year" />
+                <TextBox Width="35" Text="{Binding MechSelectorModel.MaxProdYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" VerticalContentAlignment="Center"></TextBox>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <Label Content="Non Extinct Only" />
+                <CheckBox VerticalAlignment="Center" IsChecked="{Binding MechSelectorModel.NonExtinctOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+            </StackPanel>
+        </Grid>
+        <ListView Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="5"
+                  ItemsSource="{Binding MechSelectorModel.MechModels, UpdateSourceTrigger=PropertyChanged}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn>
+                    <GridViewColumn Header="Included">
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="local:MechModel">
-                                <CheckBox Content="Include in collection" IsChecked="{Binding IsChecked}"></CheckBox>
+                            <DataTemplate>
+                                <CheckBox Content="Included" IsChecked="{Binding Selected}"></CheckBox>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                    <GridViewColumn Header="Base Model" DisplayMemberBinding="{Binding BaseModel}"></GridViewColumn>
-                    <GridViewColumn Header="Variant" DisplayMemberBinding="{Binding Variant}"></GridViewColumn>
-                    <GridViewColumn Header="Hero Name" DisplayMemberBinding="{Binding HeroName}"></GridViewColumn>
-                    <GridViewColumn Header="Chassis" DisplayMemberBinding="{Binding Chassis}"></GridViewColumn>
-                    <GridViewColumn Header="Tonnage" DisplayMemberBinding="{Binding Tonnage}"></GridViewColumn>
-                    <GridViewColumn Header="Era" DisplayMemberBinding="{Binding Era}"></GridViewColumn>
-                    <GridViewColumn Header="Technology Base" DisplayMemberBinding="{Binding TechnologyBase}"></GridViewColumn>
-                    <GridViewColumn Header="Rules Level" DisplayMemberBinding="{Binding RulesLevel}"></GridViewColumn>
-                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding Year}"></GridViewColumn>
-                    <GridViewColumn Header="Extinct" DisplayMemberBinding="{Binding Extinct}"></GridViewColumn>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Base Model" DisplayMemberBinding="{Binding BaseModel}" />
+                    <GridViewColumn Header="Variant" DisplayMemberBinding="{Binding Variant}" />
+                    <GridViewColumn Header="Hero Name" DisplayMemberBinding="{Binding HeroName}" />
+                    <GridViewColumn Header="Chassis" DisplayMemberBinding="{Binding Chassis}" />
+                    <GridViewColumn Header="Tonnage" DisplayMemberBinding="{Binding Tonnage}" />
+                    <GridViewColumn Header="Era" DisplayMemberBinding="{Binding Era}" />
+                    <GridViewColumn Header="Technology Base" DisplayMemberBinding="{Binding TechnologyBase}" />
+                    <GridViewColumn Header="Rules Level" DisplayMemberBinding="{Binding RulesLevel}" />
+                    <GridViewColumn Header="Year" DisplayMemberBinding="{Binding Year}" />
+                    <GridViewColumn Header="Extinct" DisplayMemberBinding="{Binding Extinct}" />
                 </GridView>
             </ListView.View>
         </ListView>
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Horizontal"  utils:MarginSetter.Margin="5">
+            <Button Content="Select 'Mechs in Collection"></Button>
+            <Button Content="Discard and return to ModCopy"></Button>
+        </StackPanel>
         <!--<DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="5" ItemsSource="{Binding MechSelectorModel.MechModels, UpdateSourceTrigger=PropertyChanged}"></DataGrid>-->
     </Grid>
 </Window>

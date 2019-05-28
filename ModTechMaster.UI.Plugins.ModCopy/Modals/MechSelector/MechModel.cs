@@ -1,9 +1,15 @@
 ﻿namespace ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector
 {
     using System;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
 
-    public class MechModel
+    using ModTechMaster.UI.Plugins.ModCopy.Annotations;
+
+    public class MechModel : INotifyPropertyChanged
     {
+        private bool selected;
+
         public string BaseModel { get; set; }
 
         public long BattleValue { get; set; }
@@ -26,7 +32,16 @@
 
         public string RulesLevel { get; set; }
 
-        public bool IsChecked { get; set; }
+        public bool Selected
+        {
+            get => this.selected;
+            set
+            {
+                if (value == this.selected) return;
+                this.selected = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public string TechnologyBase { get; set; }
 
@@ -60,7 +75,7 @@
                            Cost = long.Parse(parts[10]),
                            Rating = parts[11],
                            Extinct = parts[6].Contains("Extinct"),
-                           IsChecked = false
+                           Selected = false
                        };
             var name = mech.Name;
             var heroIndex = name.IndexOf('(');
@@ -108,6 +123,14 @@
                 mech.Variant = "N/A";
             }
             return mech;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
