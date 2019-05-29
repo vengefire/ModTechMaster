@@ -303,7 +303,7 @@
                    && File.Exists(mechSelectorModel.MechFilePath);
         }
 
-        internal void SelectAllMechs(bool value)
+        internal void SelectAllMechs(bool value, List<MechModel> unfilteredMechs)
         {
             this.modCopyModel.MainModel.IsBusy = true;
             if (!value)
@@ -312,15 +312,16 @@
             }
             else
             {
-                //this.MechModels.AsParallel().ForAll(
-                this.MechModels.ToList().ForEach(
+                this.MechModels.AsParallel().ForAll(
                     model =>
                         {
-                            if (!model.Selected && this.UnfilteredMechs.Contains(model))
+                            var isUnfiltered = unfilteredMechs.Contains(model);
+
+                            if (!model.Selected && isUnfiltered)
                             {
                                 model.Selected = true;
                             }
-                            else if (model.Selected && !this.UnfilteredMechs.Contains(model))
+                            else if (model.Selected && !isUnfiltered)
                             {
                                 model.Selected = false;
                             }

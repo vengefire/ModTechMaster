@@ -28,7 +28,11 @@
             this.MechSelectorModel = new MechSelectorModel(modCopyModel);
             this.InitializeComponent();
             this.SelectAllCommand =
-                new AwaitableDelegateCommand<bool>(b => Task.Run(() => this.MechSelectorModel.SelectAllMechs(b)));
+                new AwaitableDelegateCommand<bool>(b =>
+                    {
+                        var unfilteredMechs = this.MechSelectorModel.UnfilteredMechs;
+                        return Task.Run(() => this.MechSelectorModel.SelectAllMechs(b, unfilteredMechs));
+                    });
             this.DataContext = this;
         }
 
