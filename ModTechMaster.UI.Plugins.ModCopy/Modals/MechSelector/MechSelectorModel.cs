@@ -165,6 +165,7 @@
 
                                 this.OnPropertyChanged(nameof(this.UnfilteredMechs));
                                 this.OnPropertyChanged(nameof(this.MechModels));
+
                                 // collectionView.Refresh();
                             });
                 }
@@ -300,6 +301,32 @@
         {
             return mechSelectorModel?.MechFilePath.IsNullOrEmpty() == false
                    && File.Exists(mechSelectorModel.MechFilePath);
+        }
+
+        internal void SelectAllMechs(bool value)
+        {
+            this.modCopyModel.MainModel.IsBusy = true;
+            if (!value)
+            {
+                this.MechModels.ToList().ForEach(model => model.Selected = false);
+            }
+            else
+            {
+                //this.MechModels.AsParallel().ForAll(
+                this.MechModels.ToList().ForEach(
+                    model =>
+                        {
+                            if (!model.Selected && this.UnfilteredMechs.Contains(model))
+                            {
+                                model.Selected = true;
+                            }
+                            else if (model.Selected && !this.UnfilteredMechs.Contains(model))
+                            {
+                                model.Selected = false;
+                            }
+                        });
+            }
+            this.modCopyModel.MainModel.IsBusy = false;
         }
 
         internal static void ProcessMechSelectionFile(MechSelectorModel mechSelectorModel)

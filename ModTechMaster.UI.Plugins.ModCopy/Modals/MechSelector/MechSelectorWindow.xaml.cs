@@ -1,10 +1,12 @@
 ﻿namespace ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector
 {
     using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Forms;
     using System.Windows.Input;
 
+    using ModTechMaster.UI.Core.Async;
     using ModTechMaster.UI.Core.WinForms.Extensions;
     using ModTechMaster.UI.Plugins.ModCopy.Model;
 
@@ -25,12 +27,16 @@
             Self = this;
             this.MechSelectorModel = new MechSelectorModel(modCopyModel);
             this.InitializeComponent();
+            this.SelectAllCommand =
+                new AwaitableDelegateCommand<bool>(b => Task.Run(() => this.MechSelectorModel.SelectAllMechs(b)));
             this.DataContext = this;
         }
 
         public static MechSelectorWindow Self { get; private set; }
 
         public MechSelectorModel MechSelectorModel { get; }
+
+        public ICommand SelectAllCommand { get; }
 
         private static bool IsTextAllowed(string text)
         {
