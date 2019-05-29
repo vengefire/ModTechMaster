@@ -2,11 +2,15 @@
 {
     using System.Text.RegularExpressions;
     using System.Windows;
+    using System.Windows.Forms;
     using System.Windows.Input;
 
+    using ModTechMaster.UI.Core.WinForms.Extensions;
     using ModTechMaster.UI.Plugins.ModCopy.Model;
 
     using Xceed.Wpf.Toolkit;
+
+    using WindowStartupLocation = Xceed.Wpf.Toolkit.WindowStartupLocation;
 
     /// <summary>
     ///     Interaction logic for MechSelectorWindow.xaml
@@ -17,16 +21,32 @@
 
         public MechSelectorWindow(ModCopyModel modCopyModel)
         {
+            this.WindowStartupLocation = WindowStartupLocation.Center;
+            Self = this;
             this.MechSelectorModel = new MechSelectorModel(modCopyModel);
             this.InitializeComponent();
             this.DataContext = this;
         }
+
+        public static MechSelectorWindow Self { get; private set; }
 
         public MechSelectorModel MechSelectorModel { get; }
 
         private static bool IsTextAllowed(string text)
         {
             return !Regex.IsMatch(text);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            using (var fileDialog = new OpenFileDialog())
+            {
+                var result = fileDialog.ShowDialog(this.GetIWin32Window());
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    this.MechSelectorModel.MechFilePath = fileDialog.FileName;
+                }
+            }
         }
 
         private void PreviewMaxProdYearInput(object sender, TextCompositionEventArgs e)

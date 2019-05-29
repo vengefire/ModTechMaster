@@ -8,7 +8,6 @@
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Windows.Data;
-    using System.Windows.Forms;
 
     using Castle.Core.Internal;
 
@@ -27,11 +26,9 @@
 
         private long? maxProdYear;
 
-        private ListCollectionView mechCollectionView;
-
         private string mechFilePath;
 
-        private ObservableCollection<MechModel> mechModels = new ObservableCollection<MechModel>();
+        private ObservableCollection<MechModel> mechModels;
 
         private bool nonExtinctOnly;
 
@@ -81,23 +78,6 @@
             }
         }
 
-        public ListCollectionView MechCollectionView =>
-            this.mechCollectionView ?? (this.mechCollectionView = CollectionViewSource.GetDefaultView(this.MechModels) as ListCollectionView);
-
-        public List<MechModel> DisplayedModels
-        {
-            get
-            {
-                var list = new List<MechModel>();
-                foreach (var item in this.MechCollectionView)
-                {
-                    list.Add(item as MechModel);
-                }
-
-                return list;
-            }
-        }
-
         public string MechFilePath
         {
             get => this.mechFilePath;
@@ -113,8 +93,6 @@
             }
         }
 
-        public List<MechModel> SelectedModels => this.MechModels?.Where(model => model.Selected).ToList();
-
         public ObservableCollection<MechModel> MechModels
         {
             get => this.mechModels;
@@ -123,51 +101,72 @@
                 if (this.mechModels != value)
                 {
                     this.mechModels = value;
-                    var collectionView = this.mechCollectionView = CollectionViewSource.GetDefaultView(this.MechModels) as ListCollectionView;
 
-                    collectionView.Filter = o =>
-                        {
-                            var mech = o as MechModel;
-                            if (mech.Designer != "Catalyst Game Labs" || mech.ResidentInCollection == false)
-                            {
-                                return false;
-                            }
-
-                            return true;
-                        };
-                    collectionView.SortDescriptions.Add(
-                        new SortDescription(nameof(MechModel.Year), ListSortDirection.Ascending));
-                    collectionView.SortDescriptions.Add(
-                        new SortDescription(nameof(MechModel.Name), ListSortDirection.Ascending));
-                    this.OnPropertyChanged(nameof(this.MechModels));
-
-                    this.MechModels?.Select(model => model.Era).Distinct().OrderBy(s => s).ToList().ToList().ForEach(
+                    var eras = new List<FilterOption>();
+                    this.MechModels.Select(model => model.Era).Distinct().OrderBy(s => s).ToList().ForEach(
                         s =>
                             {
                                 var option = new FilterOption(s, false);
                                 option.PropertyChanged += this.Filter;
-                                this.EraOptions.Add(option);
+                                eras.Add(option);
                             });
 
-                    this.OnPropertyChanged(nameof(this.EraOptions));
-                    this.MechModels?.Select(model => model.RulesLevel).Distinct().OrderBy(s => s).ToList().ForEach(
+                    var rules = new List<FilterOption>();
+                    this.MechModels.Select(model => model.RulesLevel).Distinct().OrderBy(s => s).ToList().ForEach(
                         s =>
                             {
                                 var option = new FilterOption(s, false);
                                 option.PropertyChanged += this.Filter;
-                                this.RulesOptions.Add(option);
+                                rules.Add(option);
                             });
 
-                    this.OnPropertyChanged(nameof(this.RulesOptions));
-                    this.MechModels?.Select(model => model.TechnologyBase).Distinct().OrderBy(s => s).ToList().ForEach(
+                    var techs = new List<FilterOption>();
+                    this.MechModels.Select(model => model.TechnologyBase).Distinct().OrderBy(s => s).ToList().ForEach(
                         s =>
                             {
                                 var option = new FilterOption(s, false);
                                 option.PropertyChanged += this.Filter;
-                                this.TechOptions.Add(option);
+                                techs.Add(option);
                             });
-                    this.MechModels?.ToList().ForEach(model => model.PropertyChanged += (sender, args) => this.OnPropertyChanged(nameof(this.SelectedModels)));
-                    this.OnPropertyChanged(nameof(this.DisplayedModels));
+
+                    // Listen for changes to our models...
+                    this.MechModels.ToList().ForEach(
+                        model => model.PropertyChanged +=
+                                     (sender, args) => this.OnPropertyChanged(nameof(this.SelectedModels)));
+
+                    MechSelectorWindow.Self.Dispatcher.Invoke(
+                        () =>
+                            {
+                                this.EraOptions = new ObservableCollection<FilterOption>(eras);
+                                this.RulesOptions = new ObservableCollection<FilterOption>(rules);
+                                this.TechOptions = new ObservableCollection<FilterOption>(techs);
+                            });
+
+                    MechSelectorWindow.Self.Dispatcher.Invoke(
+                        () =>
+                            {
+                                var collectionView = CollectionViewSource.GetDefaultView(this.MechModels);
+
+                                collectionView.Filter = o =>
+                                    {
+                                        var mech = o as MechModel;
+                                        if (mech.Designer != "Catalyst Game Labs" || mech.ResidentInCollection == false)
+                                        {
+                                            return false;
+                                        }
+
+                                        return true;
+                                    };
+
+                                collectionView.SortDescriptions.Add(
+                                    new SortDescription(nameof(MechModel.Year), ListSortDirection.Ascending));
+                                collectionView.SortDescriptions.Add(
+                                    new SortDescription(nameof(MechModel.Name), ListSortDirection.Ascending));
+
+                                this.OnPropertyChanged(nameof(this.UnfilteredMechs));
+                                this.OnPropertyChanged(nameof(this.MechModels));
+                                // collectionView.Refresh();
+                            });
                 }
             }
         }
@@ -192,7 +191,7 @@
             get => this.rulesOptions;
             set
             {
-                if (Equals(value, this.rulesOptions))
+                if (value == this.rulesOptions)
                 {
                     return;
                 }
@@ -202,12 +201,14 @@
             }
         }
 
+        public List<MechModel> SelectedModels => this.MechModels?.Where(model => model.Selected).ToList();
+
         public ObservableCollection<FilterOption> TechOptions
         {
             get => this.techOptions;
             set
             {
-                if (Equals(value, this.techOptions))
+                if (value == this.techOptions)
                 {
                     return;
                 }
@@ -217,13 +218,24 @@
             }
         }
 
+        public List<MechModel> UnfilteredMechs
+        {
+            get
+            {
+                var view = CollectionViewSource.GetDefaultView(this.MechModels) as ListCollectionView;
+                if (view == null)
+                {
+                    return null;
+                }
+
+                return this.MechModels.Where(model => view.PassesFilter(model)).ToList();
+            }
+        }
+
         public void Filter(object sender, PropertyChangedEventArgs e)
         {
-            var filterProperties = new List<string>()
-                                       {
-                                           nameof(this.MaxProdYear),
-                                           nameof(this.NonExtinctOnly),
-                                       };
+            var filterProperties = new List<string> { nameof(this.MaxProdYear), nameof(this.NonExtinctOnly) };
+
             if (sender is FilterOption || !filterProperties.Contains(e.PropertyName))
             {
                 return;
@@ -238,7 +250,7 @@
             var rules = this.RulesOptions.Where(option => option.Selected).Select(option => option.Name).ToList();
             var techs = this.TechOptions.Where(option => option.Selected).Select(option => option.Name).ToList();
 
-            var collectionView = this.MechCollectionView;
+            var collectionView = CollectionViewSource.GetDefaultView(this.MechModels);
 
             collectionView.Filter = o =>
                 {
@@ -281,70 +293,72 @@
 
                     return true;
                 };
-            this.OnPropertyChanged(nameof(this.DisplayedModels));
+            this.OnPropertyChanged(nameof(this.UnfilteredMechs));
         }
 
         internal static bool CanProcessMechSelectionFile(MechSelectorModel mechSelectorModel)
         {
-            return true;
+            return mechSelectorModel?.MechFilePath.IsNullOrEmpty() == false
+                   && File.Exists(mechSelectorModel.MechFilePath);
         }
 
         internal static void ProcessMechSelectionFile(MechSelectorModel mechSelectorModel)
         {
-            using (var fileDialog = new OpenFileDialog())
+            try
             {
-                // var result = fileDialog.ShowDialog(this.GetIWin32Window());
-                var result = fileDialog.ShowDialog();
-                if (result == DialogResult.OK)
+                mechSelectorModel.modCopyModel.MainModel.IsBusy = true;
+
+                if (!File.Exists(mechSelectorModel.MechFilePath))
                 {
-                    mechSelectorModel.MechFilePath = fileDialog.FileName;
+                    throw new ArgumentException(
+                        $@"The file [{mechSelectorModel.MechFilePath}] does not exist.",
+                        nameof(mechSelectorModel.MechFilePath));
                 }
-            }
 
-            if (!File.Exists(mechSelectorModel.MechFilePath))
-            {
-                throw new ArgumentException(
-                    $"The file [{mechSelectorModel.MechFilePath}] does not exist.",
-                    nameof(mechSelectorModel.MechFilePath));
-            }
+                var mechList = new List<MechModel>();
 
-            var mechList = new List<MechModel>();
-
-            using (var reader = new StreamReader(mechSelectorModel.MechFilePath))
-            {
-                // First line headers...
-                var line = reader.ReadLine();
-                while ((line = reader.ReadLine()) != null)
+                using (var reader = new StreamReader(mechSelectorModel.MechFilePath))
                 {
-                    if (string.IsNullOrEmpty(line))
+                    // First line headers...
+                    var line = reader.ReadLine();
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        continue;
+                        if (string.IsNullOrEmpty(line))
+                        {
+                            continue;
+                        }
+
+                        var mech = MechModel.FromCsv(line);
+
+                        var searchTerm1 =
+                            ($"{mech.BaseModel}".Replace(" ", string.Empty) + $"_{mech.Variant}").ToLower();
+                        var searchTerm2 = mech.HeroName.IsNullOrEmpty()
+                                              ? string.Empty
+                                              : ($"{mech.HeroName}".Replace(" ", string.Empty) + $"_{mech.Variant}")
+                                              .ToLower();
+                        if (mechSelectorModel.mechs.Any(
+                            referenceableObject =>
+                                {
+                                    var test = referenceableObject.Id.ToLower();
+                                    return test.Contains(searchTerm1)
+                                           || !searchTerm2.IsNullOrEmpty() && test.Contains(searchTerm2);
+                                }))
+                        {
+                            mech.ResidentInCollection = true;
+                        }
+
+                        mechList.Add(mech);
                     }
-
-                    var mech = MechModel.FromCsv(line);
-
-                    var searchTerm1 = ($"{mech.BaseModel}".Replace(" ", string.Empty) + $"_{mech.Variant}").ToLower();
-                    var searchTerm2 = mech.HeroName.IsNullOrEmpty()
-                                          ? string.Empty
-                                          : ($"{mech.HeroName}".Replace(" ", string.Empty) + $"_{mech.Variant}")
-                                          .ToLower();
-                    if (mechSelectorModel.mechs.Any(
-                        referenceableObject =>
-                            {
-                                var test = referenceableObject.Id.ToLower();
-                                return test.Contains(searchTerm1)
-                                       || !searchTerm2.IsNullOrEmpty() && test.Contains(searchTerm2);
-                            }))
-                    {
-                        mech.ResidentInCollection = true;
-                    }
-
-                    mechList.Add(mech);
                 }
-            }
 
-            mechList.Sort((model, mechModel) => string.Compare(model.Name, mechModel.Name, StringComparison.Ordinal));
-            mechSelectorModel.MechModels = new ObservableCollection<MechModel>(mechList);
+                /*mechList.Sort(
+                    (model, mechModel) => string.Compare(model.Name, mechModel.Name, StringComparison.Ordinal));*/
+                mechSelectorModel.MechModels = new ObservableCollection<MechModel>(mechList);
+            }
+            finally
+            {
+                mechSelectorModel.modCopyModel.MainModel.IsBusy = false;
+            }
         }
 
         [NotifyPropertyChangedInvocator]
