@@ -9,6 +9,7 @@
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
@@ -16,256 +17,258 @@
         <valueConverters:SelectionStatusToIconConverter x:Key="SelectionStatusToIconConverter" />
         <valueConverters:ObjectStatusToIconConverter x:Key="ObjectStatusConverter" />
     </UserControl.Resources>
-
-    <DockPanel>
-        <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0">Filter Text:</Label>
-            <TextBox Name="txtFilter" Grid.Column="1"
+    <Grid>
+        <xctk:WindowContainer Name="WindowContainer" ZIndex="999"></xctk:WindowContainer>
+        <DockPanel>
+            <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">Filter Text:</Label>
+                <TextBox Name="txtFilter" Grid.Column="1"
                      Text="{Binding ModCopyModel.FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=750}"
                      VerticalAlignment="Center" />
-            <Button Grid.Column="2" Content="Clear Filter" VerticalAlignment="Center"
+                <Button Grid.Column="2" Content="Clear Filter" VerticalAlignment="Center"
                     VerticalContentAlignment="Center">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <ei:ChangePropertyAction TargetName="txtFilter" PropertyName="Text" Value="" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-        </Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-            <TreeView Name="tvModControl" Grid.Column="0" Grid.Row="0"
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <ei:ChangePropertyAction TargetName="txtFilter" PropertyName="Text" Value="" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <TreeView Name="tvModControl" Grid.Column="0" Grid.Row="0"
                       PreviewMouseRightButtonDown="TvModControl_PreviewMouseRightButtonDown">
-                <TreeView.Resources>
-                    <Style TargetType="CheckBox">
-                        <Setter Property="IsThreeState" Value="{Binding IsThreeState,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </Style>
-                    <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:MtmTreeViewItem}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image
+                    <TreeView.Resources>
+                        <Style TargetType="CheckBox">
+                            <Setter Property="IsThreeState" Value="{Binding IsThreeState,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Style>
+                        <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:MtmTreeViewItem}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image
                                 Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}, UpdateSourceTrigger=PropertyChanged}"
                                 Width="15" IsEnabled="False" />
-                            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                            <Image
+                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                <Image
                                 Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}"
                                 Width="15" IsEnabled="False" />
-                            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                            <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </StackPanel>
-                    </DataTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type nodes:MtmTreeViewItem}"
+                                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                        </DataTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type nodes:MtmTreeViewItem}"
                                               ItemsSource="{Binding Children}">
-                        <StackPanel Orientation="Horizontal">
-                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
-                            <TextBlock Text="{Binding Name}" />
-                            <TextBlock Text=" [" Foreground="Blue" />
-                            <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
-                            <TextBlock Text="]" Foreground="Blue" />
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
-                    <DataTemplate DataType="{x:Type nodes:ObjectDefinitionNode}">
-                        <StackPanel Orientation="Horizontal">
-                            <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
-                            <TextBlock Text="{Binding ObjectDefinition.Id}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </TreeView.Resources>
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="TreeViewItem">
-                        <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}" />
-                        <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}" />
-                        <Setter Property="Visibility" Value="{Binding Visibility,Mode=TwoWay}" />
-                    </Style>
-                </TreeView.ItemContainerStyle>
-            </TreeView>
-            <GridSplitter Grid.Column="1" Width="5" Grid.Row="0" VerticalAlignment="Stretch"
+                            <StackPanel Orientation="Horizontal">
+                                <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
+                                <TextBlock Text="{Binding Name}" />
+                                <TextBlock Text=" [" Foreground="Blue" />
+                                <TextBlock Text="{Binding Children.Count}" Foreground="Blue" />
+                                <TextBlock Text="]" Foreground="Blue" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                        <DataTemplate DataType="{x:Type nodes:ObjectDefinitionNode}">
+                            <StackPanel Orientation="Horizontal">
+                                <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
+                                <TextBlock Text="{Binding ObjectDefinition.Id}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeView.Resources>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected,Mode=TwoWay}" />
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded,Mode=TwoWay}" />
+                            <Setter Property="Visibility" Value="{Binding Visibility,Mode=TwoWay}" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                </TreeView>
+                <GridSplitter Grid.Column="1" Width="5" Grid.Row="0" VerticalAlignment="Stretch"
                           HorizontalAlignment="Center" />
-            <Grid Grid.Column="2" Grid.Row="0">
-                <TabControl>
-                    <TabItem Header="Summary">
-                        <Grid utils:MarginSetter.Margin="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.ColumnSpan="4" Grid.RowSpan="3" VerticalAlignment="Top"
+                <Grid Grid.Column="2" Grid.Row="0">
+                    <TabControl>
+                        <TabItem Header="Summary">
+                            <Grid utils:MarginSetter.Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.ColumnSpan="4" Grid.RowSpan="3" VerticalAlignment="Top"
                                   utils:MarginSetter.Margin="1"
                                   DataContext="{Binding ModCopyModel.ModCollectionNode, UpdateSourceTrigger=PropertyChanged}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Separator Grid.Row="0" Grid.Column="1" Grid.RowSpan="10"
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Separator Grid.Row="0" Grid.Column="1" Grid.RowSpan="10"
                                            Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                                <TextBlock Grid.Row="0" Text="Selected Mod Count" />
-                                <TextBlock Grid.Row="0" Grid.Column="2"
+                                    <TextBlock Grid.Row="0" Text="Selected Mod Count" />
+                                    <TextBlock Grid.Row="0" Grid.Column="2"
                                            Text="{Binding SelectedMods.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBlock Grid.Row="1" Text="Selected Mod Size on Disk" />
-                                <TextBlock Grid.Row="1" Grid.Column="2"
+                                    <TextBlock Grid.Row="1" Text="Selected Mod Size on Disk" />
+                                    <TextBlock Grid.Row="1" Grid.Column="2"
                                            Text="{Binding SelectedModSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,#.00}}" />
-                                <TextBlock Grid.Row="2" Text="Selected Item Count" />
-                                <TextBlock Grid.Row="2" Grid.Column="2"
+                                    <TextBlock Grid.Row="2" Text="Selected Item Count" />
+                                    <TextBlock Grid.Row="2" Grid.Column="2"
                                            Text="{Binding SelectedModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <Separator Grid.Row="3" Grid.ColumnSpan="4" />
-                                <TextBlock Grid.Row="4" Text="Number of Mech Definitions" />
-                                <TextBlock Grid.Row="4" Grid.Column="2"
+                                    <Separator Grid.Row="3" Grid.ColumnSpan="4" />
+                                    <TextBlock Grid.Row="4" Text="Number of Mech Definitions" />
+                                    <TextBlock Grid.Row="4" Grid.Column="2"
                                            Text="{Binding SelectedMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBlock Grid.Row="5" Text="Number of Vehicle Definitions" />
-                                <TextBlock Grid.Row="5" Grid.Column="2"
+                                    <TextBlock Grid.Row="5" Text="Number of Vehicle Definitions" />
+                                    <TextBlock Grid.Row="5" Grid.Column="2"
                                            Text="{Binding SelectedVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBlock Grid.Row="6" Text="Number of Turret Definitions" />
-                                <TextBlock Grid.Row="6" Grid.Column="2"
+                                    <TextBlock Grid.Row="6" Text="Number of Turret Definitions" />
+                                    <TextBlock Grid.Row="6" Grid.Column="2"
                                            Text="{Binding SelectedTurretCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBlock Grid.Row="7" Text="Number of Weapon Definitions" />
-                                <TextBlock Grid.Row="7" Grid.Column="2"
+                                    <TextBlock Grid.Row="7" Text="Number of Weapon Definitions" />
+                                    <TextBlock Grid.Row="7" Grid.Column="2"
                                            Text="{Binding SelectedWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBlock Grid.Row="8" Text="Number of Upgrade Definitions" />
-                                <TextBlock Grid.Row="8" Grid.Column="2"
+                                    <TextBlock Grid.Row="8" Text="Number of Upgrade Definitions" />
+                                    <TextBlock Grid.Row="8" Grid.Column="2"
                                            Text="{Binding SelectedUpgradeCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBlock Grid.Row="9" Text="Number of Cooling Definitions" />
-                                <TextBlock Grid.Row="9" Grid.Column="2"
+                                    <TextBlock Grid.Row="9" Text="Number of Cooling Definitions" />
+                                    <TextBlock Grid.Row="9" Grid.Column="2"
                                            Text="{Binding SelectedCoolingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                            </Grid>
-                            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
+                                </Grid>
+                                <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
                                   DataContext="{Binding ModCopyModel.Settings}" utils:MarginSetter.Margin="5">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <CheckBox Grid.Row="0" Grid.Column="0" Content="Auto Include Dependents"
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Row="0" Grid.Column="0" Content="Auto Include Dependents"
                                           IsChecked="{Binding AutoIncludeDependents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           VerticalAlignment="Center" />
-                                <Label Grid.Row="0" Grid.Column="2" Content="Output Directory"
+                                    <Label Grid.Row="0" Grid.Column="2" Content="Output Directory"
                                        VerticalAlignment="Center" />
-                                <TextBox Grid.Row="0" Grid.Column="3"
+                                    <TextBox Grid.Row="0" Grid.Column="3"
                                          Text="{Binding OutputDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          VerticalAlignment="Center" />
-                                <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
+                                    <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
                                           ItemsSource="{Binding AlwaysIncludedMods}">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Auto Included Mod"
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Auto Included Mod"
                                                             DisplayMemberBinding="{Binding}" />
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                                <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                    <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
                                           ItemsSource="{Binding DependentTypesToIgnore}">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Dependent Types to Ignore"
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Dependent Types to Ignore"
                                                             DisplayMemberBinding="{Binding Name}" />
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="Selected Item Details">
-                        <ContentPresenter Content="{Binding ElementName=tvModControl, Path=SelectedItem}">
-                            <ContentPresenter.Resources>
-                                <DataTemplate DataType="{x:Type nodes:ModCollectionNode}">
-                                    <StackPanel>
-                                        <TextBox Text="{Binding Name, Mode=OneWay}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                                <DataTemplate DataType="{x:Type nodes:ModNode}">
-                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                                  VerticalScrollBarVisibility="Auto">
+                        </TabItem>
+                        <TabItem Header="Selected Item Details">
+                            <ContentPresenter Content="{Binding ElementName=tvModControl, Path=SelectedItem}">
+                                <ContentPresenter.Resources>
+                                    <DataTemplate DataType="{x:Type nodes:ModCollectionNode}">
                                         <StackPanel>
                                             <TextBox Text="{Binding Name, Mode=OneWay}" />
-                                            <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
                                         </StackPanel>
-                                    </ScrollViewer>
-                                </DataTemplate>
-                                <DataTemplate DataType="{x:Type nodes:MtmTreeViewItem}">
-                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type nodes:ModNode}">
+                                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
                                                   VerticalScrollBarVisibility="Auto">
-                                        <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
-                                    </ScrollViewer>
-                                </DataTemplate>
-                            </ContentPresenter.Resources>
-                        </ContentPresenter>
-                    </TabItem>
-                    <TabItem Header="Selected Item Dependencies">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="0.5*" />
-                            </Grid.RowDefinitions>
-                            <Expander Grid.Row="0" Header="Dependencies" IsExpanded="True">
-                                <ListView ItemsSource="{Binding ModCopyModel.CurrentSelectedItem.Dependencies}">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Object Type"
+                                            <StackPanel>
+                                                <TextBox Text="{Binding Name, Mode=OneWay}" />
+                                                <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
+                                            </StackPanel>
+                                        </ScrollViewer>
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type nodes:MtmTreeViewItem}">
+                                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                  VerticalScrollBarVisibility="Auto">
+                                            <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
+                                        </ScrollViewer>
+                                    </DataTemplate>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+                        </TabItem>
+                        <TabItem Header="Selected Item Dependencies">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="0.5*" />
+                                </Grid.RowDefinitions>
+                                <Expander Grid.Row="0" Header="Dependencies" IsExpanded="True">
+                                    <ListView ItemsSource="{Binding ModCopyModel.CurrentSelectedItem.Dependencies}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Object Type"
                                                             DisplayMemberBinding="{Binding ReferenceObject.ObjectType}" />
-                                            <GridViewColumn Header="Object Name"
+                                                <GridViewColumn Header="Object Name"
                                                             DisplayMemberBinding="{Binding ReferenceObject.Id}" />
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                            </Expander>
-                            <Expander Grid.Row="1" Header="Dependents" IsExpanded="True">
-                                <ListView ItemsSource="{Binding ModCopyModel.CurrentSelectedItem.Dependents}">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="Object Type"
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Expander>
+                                <Expander Grid.Row="1" Header="Dependents" IsExpanded="True">
+                                    <ListView ItemsSource="{Binding ModCopyModel.CurrentSelectedItem.Dependents}">
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn Header="Object Type"
                                                             DisplayMemberBinding="{Binding ReferenceObject.ObjectType}" />
-                                            <GridViewColumn Header="Object Name"
+                                                <GridViewColumn Header="Object Name"
                                                             DisplayMemberBinding="{Binding ReferenceObject.Id}" />
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
-                            </Expander>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
-            </Grid>
-            <GridSplitter Grid.Column="0" Grid.Row="1" Height="5" Grid.ColumnSpan="3"
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </Expander>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+                <GridSplitter Grid.Column="0" Grid.Row="1" Height="5" Grid.ColumnSpan="3"
                           HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" />
-        </Grid>
-    </DockPanel>
+                <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" />
+            </Grid>
+        </DockPanel>
+    </Grid>
 </UserControl>

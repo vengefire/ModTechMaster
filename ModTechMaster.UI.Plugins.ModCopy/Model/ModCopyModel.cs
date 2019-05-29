@@ -145,7 +145,8 @@
         public static void SelectMechsFromDataFile(ModCopyModel modCopyModel)
         {
             var mechSelectorWindow = new MechSelectorWindow(modCopyModel);
-            var result = mechSelectorWindow.ShowDialog();
+            ModCopyPage.Self.WindowContainer.Children.Add(mechSelectorWindow);
+            mechSelectorWindow.Show();
         }
 
         public void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

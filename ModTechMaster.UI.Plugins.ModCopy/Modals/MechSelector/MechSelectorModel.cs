@@ -25,11 +25,13 @@
 
         private ObservableCollection<FilterOption> eraOptions = new ObservableCollection<FilterOption>();
 
-        private long maxProdYear;
+        private long? maxProdYear;
+
+        private ListCollectionView mechCollectionView;
 
         private string mechFilePath;
 
-        private ObservableCollection<MechModel> mechModels;
+        private ObservableCollection<MechModel> mechModels = new ObservableCollection<MechModel>();
 
         private bool nonExtinctOnly;
 
@@ -42,6 +44,9 @@
             this.modCopyModel = modCopyModel;
             this.mechs = this.modCopyModel.ModCollectionNode.ModCollection.GetReferenceableObjects()
                 .Where(referenceableObject => referenceableObject.ObjectType == ObjectType.ChassisDef).ToList();
+
+            // Hit it with a hammer for the moment...
+            this.PropertyChanged += this.Filter;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -61,7 +66,7 @@
             }
         }
 
-        public long MaxProdYear
+        public long? MaxProdYear
         {
             get => this.maxProdYear;
             set
@@ -73,6 +78,23 @@
 
                 this.maxProdYear = value;
                 this.OnPropertyChanged();
+            }
+        }
+
+        public ListCollectionView MechCollectionView =>
+            this.mechCollectionView ?? (this.mechCollectionView = CollectionViewSource.GetDefaultView(this.MechModels) as ListCollectionView);
+
+        public List<MechModel> DisplayedModels
+        {
+            get
+            {
+                var list = new List<MechModel>();
+                foreach (var item in this.MechCollectionView)
+                {
+                    list.Add(item as MechModel);
+                }
+
+                return list;
             }
         }
 
@@ -91,6 +113,8 @@
             }
         }
 
+        public List<MechModel> SelectedModels => this.MechModels?.Where(model => model.Selected).ToList();
+
         public ObservableCollection<MechModel> MechModels
         {
             get => this.mechModels;
@@ -99,7 +123,8 @@
                 if (this.mechModels != value)
                 {
                     this.mechModels = value;
-                    var collectionView = CollectionViewSource.GetDefaultView(this.mechModels);
+                    var collectionView = this.mechCollectionView = CollectionViewSource.GetDefaultView(this.MechModels) as ListCollectionView;
+
                     collectionView.Filter = o =>
                         {
                             var mech = o as MechModel;
@@ -107,6 +132,7 @@
                             {
                                 return false;
                             }
+
                             return true;
                         };
                     collectionView.SortDescriptions.Add(
@@ -140,8 +166,8 @@
                                 option.PropertyChanged += this.Filter;
                                 this.TechOptions.Add(option);
                             });
-
-                    this.OnPropertyChanged(nameof(this.TechOptions));
+                    this.MechModels?.ToList().ForEach(model => model.PropertyChanged += (sender, args) => this.OnPropertyChanged(nameof(this.SelectedModels)));
+                    this.OnPropertyChanged(nameof(this.DisplayedModels));
                 }
             }
         }
@@ -157,9 +183,6 @@
                 }
 
                 this.nonExtinctOnly = value;
-                var view = CollectionViewSource.GetDefaultView(this.mechModels);
-
-                // Do the filter...
                 this.OnPropertyChanged();
             }
         }
@@ -196,11 +219,26 @@
 
         public void Filter(object sender, PropertyChangedEventArgs e)
         {
+            var filterProperties = new List<string>()
+                                       {
+                                           nameof(this.MaxProdYear),
+                                           nameof(this.NonExtinctOnly),
+                                       };
+            if (sender is FilterOption || !filterProperties.Contains(e.PropertyName))
+            {
+                return;
+            }
+
+            if (this.MechModels == null)
+            {
+                return;
+            }
+
             var eras = this.EraOptions.Where(option => option.Selected).Select(option => option.Name).ToList();
             var rules = this.RulesOptions.Where(option => option.Selected).Select(option => option.Name).ToList();
             var techs = this.TechOptions.Where(option => option.Selected).Select(option => option.Name).ToList();
 
-            var collectionView = CollectionViewSource.GetDefaultView(this.MechModels);
+            var collectionView = this.MechCollectionView;
 
             collectionView.Filter = o =>
                 {
@@ -236,8 +274,14 @@
                         return false;
                     }
 
+                    if (this.MaxProdYear != null && mech.Year > this.MaxProdYear)
+                    {
+                        return false;
+                    }
+
                     return true;
                 };
+            this.OnPropertyChanged(nameof(this.DisplayedModels));
         }
 
         internal static bool CanProcessMechSelectionFile(MechSelectorModel mechSelectorModel)
@@ -279,15 +323,17 @@
 
                     var mech = MechModel.FromCsv(line);
 
-                    var searchTerm1 = ($"{mech.BaseModel}".Replace(" ", string.Empty) + $"_{mech.Variant}")
-                        .ToLower();
-                    var searchTerm2 = mech.HeroName.IsNullOrEmpty() ? string.Empty : ($"{mech.HeroName}".Replace(" ", string.Empty) + $"_{mech.Variant}")
-                        .ToLower();
+                    var searchTerm1 = ($"{mech.BaseModel}".Replace(" ", string.Empty) + $"_{mech.Variant}").ToLower();
+                    var searchTerm2 = mech.HeroName.IsNullOrEmpty()
+                                          ? string.Empty
+                                          : ($"{mech.HeroName}".Replace(" ", string.Empty) + $"_{mech.Variant}")
+                                          .ToLower();
                     if (mechSelectorModel.mechs.Any(
                         referenceableObject =>
                             {
                                 var test = referenceableObject.Id.ToLower();
-                                return test.Contains(searchTerm1) || (!searchTerm2.IsNullOrEmpty() && test.Contains(searchTerm2));
+                                return test.Contains(searchTerm1)
+                                       || !searchTerm2.IsNullOrEmpty() && test.Contains(searchTerm2);
                             }))
                     {
                         mech.ResidentInCollection = true;
