@@ -61,6 +61,11 @@
                                     SelectedMemberPath="Selected" />
             </StackPanel>
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <Label Content="Resident in Mod Collection Only" />
+                <CheckBox VerticalAlignment="Center"
+                          IsChecked="{Binding MechSelectorModel.ResidentInCollectionOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <Label Content="Technology Base" />
                 <xctk:CheckComboBox Name="filterTech"
                                     ItemsSource="{Binding MechSelectorModel.TechOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -69,21 +74,22 @@
                                     DisplayMemberPath="Name"
                                     SelectedMemberPath="Selected" />
             </StackPanel>
-            <!--<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
-                <Label Content="Rules Level" />
-                <xctk:CheckComboBox Name="filterRules" ItemsSource="{Binding MechSelectorModel.RulesOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    DisplayMemberPath="Name"
-                                    SelectedMemberPath="Selected"/>
-            </StackPanel>-->
-            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <Label Content="Maximum Production Year" />
                 <TextBox Width="35" PreviewTextInput="PreviewMaxProdYearInput"
                          Text="{Binding MechSelectorModel.MaxProdYear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
                          VerticalAlignment="Center" VerticalContentAlignment="Center" />
             </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
+            <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <Label Content="Chassis" />
+                <xctk:CheckComboBox Name="filterChassis"
+                                    ItemsSource="{Binding MechSelectorModel.ChassisOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    DisplayMemberPath="Name"
+                                    SelectedMemberPath="Selected" />
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <Label Content="Non Extinct Only" />
                 <CheckBox VerticalAlignment="Center"
                           IsChecked="{Binding MechSelectorModel.NonExtinctOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -116,6 +122,7 @@
                     <!--<GridViewColumn Header="Rules Level" DisplayMemberBinding="{Binding RulesLevel}" />-->
                     <GridViewColumn Header="Year" DisplayMemberBinding="{Binding Year}" />
                     <GridViewColumn Header="Extinct" DisplayMemberBinding="{Binding Extinct}" />
+                    <GridViewColumn Header="In Collection" DisplayMemberBinding="{Binding ResidentInCollection}" />
                 </GridView>
             </ListView.View>
         </ListView>

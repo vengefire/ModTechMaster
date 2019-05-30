@@ -22,6 +22,8 @@
 
         private readonly ModCopyModel modCopyModel;
 
+        private ObservableCollection<FilterOption> chassisOptions = new ObservableCollection<FilterOption>();
+
         private ObservableCollection<FilterOption> eraOptions = new ObservableCollection<FilterOption>();
 
         private long? maxProdYear;
@@ -32,6 +34,8 @@
 
         private bool nonExtinctOnly;
 
+        private bool residentInCollectionOnly = true;
+
         private ObservableCollection<FilterOption> rulesOptions = new ObservableCollection<FilterOption>();
 
         private ObservableCollection<FilterOption> techOptions = new ObservableCollection<FilterOption>();
@@ -39,14 +43,30 @@
         public MechSelectorModel(ModCopyModel modCopyModel)
         {
             this.modCopyModel = modCopyModel;
+            var chassisTypes = new List<ObjectType> { ObjectType.ChassisDef, ObjectType.VehicleChassisDef };
             this.mechs = this.modCopyModel.ModCollectionNode.ModCollection.GetReferenceableObjects()
-                .Where(referenceableObject => referenceableObject.ObjectType == ObjectType.ChassisDef).ToList();
+                .Where(referenceableObject => chassisTypes.Contains(referenceableObject.ObjectType)).ToList();
 
             // Hit it with a hammer for the moment...
             this.PropertyChanged += this.Filter;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public ObservableCollection<FilterOption> ChassisOptions
+        {
+            get => this.chassisOptions;
+            set
+            {
+                if (value == this.chassisOptions)
+                {
+                    return;
+                }
+
+                this.chassisOptions = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<FilterOption> EraOptions
         {
@@ -129,6 +149,15 @@
                                 techs.Add(option);
                             });
 
+                    var chassis = new List<FilterOption>();
+                    this.MechModels.Select(model => model.Chassis).Distinct().OrderBy(s => s).ToList().ForEach(
+                        s =>
+                            {
+                                var option = new FilterOption(s, false);
+                                option.PropertyChanged += this.Filter;
+                                chassis.Add(option);
+                            });
+
                     // Listen for changes to our models...
                     this.MechModels.ToList().ForEach(
                         model => model.PropertyChanged +=
@@ -140,6 +169,7 @@
                                 this.EraOptions = new ObservableCollection<FilterOption>(eras);
                                 this.RulesOptions = new ObservableCollection<FilterOption>(rules);
                                 this.TechOptions = new ObservableCollection<FilterOption>(techs);
+                                this.ChassisOptions = new ObservableCollection<FilterOption>(chassis);
                             });
 
                     MechSelectorWindow.Self.Dispatcher.Invoke(
@@ -165,8 +195,6 @@
 
                                 this.OnPropertyChanged(nameof(this.UnfilteredMechs));
                                 this.OnPropertyChanged(nameof(this.MechModels));
-
-                                // collectionView.Refresh();
                             });
                 }
             }
@@ -183,6 +211,21 @@
                 }
 
                 this.nonExtinctOnly = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public bool ResidentInCollectionOnly
+        {
+            get => this.residentInCollectionOnly;
+            set
+            {
+                if (value == this.residentInCollectionOnly)
+                {
+                    return;
+                }
+
+                this.residentInCollectionOnly = value;
                 this.OnPropertyChanged();
             }
         }
@@ -235,9 +278,14 @@
 
         public void Filter(object sender, PropertyChangedEventArgs e)
         {
-            var filterProperties = new List<string> { nameof(this.MaxProdYear), nameof(this.NonExtinctOnly) };
+            var filterProperties = new List<string>
+                                       {
+                                           nameof(this.MaxProdYear),
+                                           nameof(this.NonExtinctOnly),
+                                           nameof(this.ResidentInCollectionOnly)
+                                       };
 
-            if (sender is FilterOption || !filterProperties.Contains(e.PropertyName))
+            if (!(sender is FilterOption || filterProperties.Contains(e.PropertyName)))
             {
                 return;
             }
@@ -250,6 +298,7 @@
             var eras = this.EraOptions.Where(option => option.Selected).Select(option => option.Name).ToList();
             var rules = this.RulesOptions.Where(option => option.Selected).Select(option => option.Name).ToList();
             var techs = this.TechOptions.Where(option => option.Selected).Select(option => option.Name).ToList();
+            var chassis = this.ChassisOptions.Where(option => option.Selected).Select(option => option.Name).ToList();
 
             var collectionView = CollectionViewSource.GetDefaultView(this.MechModels);
 
@@ -257,7 +306,7 @@
                 {
                     var mech = o as MechModel;
 
-                    if (!mech.ResidentInCollection)
+                    if (this.ResidentInCollectionOnly && !mech.ResidentInCollection)
                     {
                         return false;
                     }
@@ -282,6 +331,11 @@
                         return false;
                     }
 
+                    if (chassis.Any() && !chassis.Contains(mech.Chassis))
+                    {
+                        return false;
+                    }
+
                     if (this.NonExtinctOnly && mech.Extinct)
                     {
                         return false;
@@ -301,33 +355,6 @@
         {
             return mechSelectorModel?.MechFilePath.IsNullOrEmpty() == false
                    && File.Exists(mechSelectorModel.MechFilePath);
-        }
-
-        internal void SelectAllMechs(bool value, List<MechModel> unfilteredMechs)
-        {
-            this.modCopyModel.MainModel.IsBusy = true;
-            if (!value)
-            {
-                this.MechModels.ToList().ForEach(model => model.Selected = false);
-            }
-            else
-            {
-                this.MechModels.AsParallel().ForAll(
-                    model =>
-                        {
-                            var isUnfiltered = unfilteredMechs.Contains(model);
-
-                            if (!model.Selected && isUnfiltered)
-                            {
-                                model.Selected = true;
-                            }
-                            else if (model.Selected && !isUnfiltered)
-                            {
-                                model.Selected = false;
-                            }
-                        });
-            }
-            this.modCopyModel.MainModel.IsBusy = false;
         }
 
         internal static void ProcessMechSelectionFile(MechSelectorModel mechSelectorModel)
@@ -379,14 +406,40 @@
                     }
                 }
 
-                /*mechList.Sort(
-                    (model, mechModel) => string.Compare(model.Name, mechModel.Name, StringComparison.Ordinal));*/
                 mechSelectorModel.MechModels = new ObservableCollection<MechModel>(mechList);
             }
             finally
             {
                 mechSelectorModel.modCopyModel.MainModel.IsBusy = false;
             }
+        }
+
+        internal void SelectAllMechs(bool value, List<MechModel> unfilteredMechs)
+        {
+            this.modCopyModel.MainModel.IsBusy = true;
+            if (!value)
+            {
+                this.MechModels.ToList().ForEach(model => model.Selected = false);
+            }
+            else
+            {
+                this.MechModels.AsParallel().ForAll(
+                    model =>
+                        {
+                            var isUnfiltered = unfilteredMechs.Contains(model);
+
+                            if (!model.Selected && isUnfiltered)
+                            {
+                                model.Selected = true;
+                            }
+                            else if (model.Selected && !isUnfiltered)
+                            {
+                                model.Selected = false;
+                            }
+                        });
+            }
+
+            this.modCopyModel.MainModel.IsBusy = false;
         }
 
         [NotifyPropertyChangedInvocator]

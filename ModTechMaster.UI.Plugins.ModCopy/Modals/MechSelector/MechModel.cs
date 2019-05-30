@@ -66,7 +66,7 @@
             var parts = csvData.Split(separator);
             if (parts.Length != 12)
             {
-                throw new ArgumentException("Insufficient columns in CSV data to construct new Mech.", nameof(csvData));
+                throw new ArgumentException(@"Insufficient columns in CSV data to construct new Mech.", nameof(csvData));
             }
 
             var mech = new MechModel
