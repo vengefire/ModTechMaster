@@ -43,7 +43,12 @@
         public MechSelectorModel(ModCopyModel modCopyModel)
         {
             this.modCopyModel = modCopyModel;
-            var chassisTypes = new List<ObjectType> { ObjectType.MechDef, ObjectType.VehicleDef };
+            var chassisTypes = new List<ObjectType>
+                                   {
+                                       ObjectType.MechDef
+
+                                       // ObjectType.VehicleDef
+                                   };
             this.mechs = this.modCopyModel.ModCollectionNode.ModCollection.GetReferenceableObjects()
                 .Where(referenceableObject => chassisTypes.Contains(referenceableObject.ObjectType)).ToList();
 
@@ -385,20 +390,97 @@
 
                         var mech = MechModel.FromCsv(line);
 
-                        var searchTerm1 =
-                            ($"{mech.BaseModel}".Replace(" ", string.Empty) + $"_{mech.Variant}").ToLower();
-                        var searchTerm2 = mech.HeroName.IsNullOrEmpty()
-                                              ? string.Empty
-                                              : ($"{mech.HeroName}".Replace(" ", string.Empty) + $"_{mech.Variant}")
-                                              .ToLower();
+                        var objectDefinition = mechSelectorModel.mechs
+                            .Where(o => 
+                                o.Id.StartsWith($"mechdef_{mech.PrimitiveBaseModel.Replace(" ", "")}", StringComparison.OrdinalIgnoreCase) || 
+                                (!mech.PossibleClanName.IsNullOrEmpty() && o.Id.StartsWith($"mechdef_{mech.PossibleClanName.Replace(" ", "")}", StringComparison.OrdinalIgnoreCase)))
+                            .FirstOrDefault(
+                                referenceableObject =>
+                                    {
+                                        var testParts = referenceableObject.Id.ToLower().Split('_');
+                                        var baseModel = testParts[1];
 
-                        var objectDefinition = mechSelectorModel.mechs.FirstOrDefault(
-                            referenceableObject =>
-                                {
-                                    var test = referenceableObject.Id.ToLower();
-                                    return test.Contains(searchTerm1)
-                                           || !searchTerm2.IsNullOrEmpty() && test.Contains(searchTerm2);
-                                });
+                                        // var potentialVariantIds = new List<string>();
+                                        var variantId = testParts.Length >= 3 ? testParts[2] : "N/A";
+                                        var hadToSplitBaseModel = false; // FFS RT
+
+                                        var alternativeVariantId = string.Empty;
+
+                                        if (testParts.Length == 2)
+                                        {
+                                            // Handle RT bad classification 1
+                                            var subParts = testParts[1].Split('-');
+                                            if (subParts.Length == 2)
+                                            {
+                                                baseModel = subParts[0];
+                                                variantId = subParts[1];
+                                                hadToSplitBaseModel = true;
+                                            }
+                                        }
+
+                                        if (testParts.Length == 3)
+                                        {
+                                            // Handle RT bad classification 5
+                                            var subParts = testParts[2].Split('-');
+                                            if (subParts.Length > 1 && subParts[1].Length == 1)
+                                            {
+                                                alternativeVariantId =
+                                                    subParts
+                                                        [1]; // Have to use an alternative variantId here because it's ambiguous one way or the other.
+                                            }
+                                        }
+
+                                        if (testParts.Length > 3)
+                                        {
+                                            if (testParts[3].Length == 1)
+                                            {
+                                                // Handle RT bad classification 2
+                                                variantId = testParts[3];
+                                            }
+                                            else
+                                            {
+                                                // Handle RT bad classification 3
+                                                var concatenatedVariant = testParts[2];
+                                                for (var i = 3; i < testParts.Length; i++)
+                                                {
+                                                    concatenatedVariant += $"-{testParts[i]}";
+                                                }
+
+                                                alternativeVariantId = concatenatedVariant;
+                                            }
+                                        }
+
+                                        // Handle RT bad classification 4
+                                        var heroName = testParts.Length >= 4
+                                                           ? testParts[testParts.Length - 1].Any(char.IsDigit)
+                                                                 ?
+                                                                 string.Empty
+                                                                 : testParts[testParts.Length - 1]
+                                                           : string.Empty;
+
+                                        // variantId = variantId == "C" ? "clan" : variantId; // Handle RT bad classification 6
+                                        var isCorrectBase = baseModel == mech.BaseModel.ToLower() ||
+                                                            baseModel == mech.BaseModel.Replace(" ", "").ToLower() ||
+                                                            baseModel == mech.PrimitiveBaseModel.ToLower() || // Fuck IT ROGUE TECH, AN AS7-D2 IS AN ATLAS II AS7-D2, NOT AN ATLAS AS7-D2
+                                                            baseModel == mech.PossibleClanName.ToLower(); // Fuck IT ROGUE TECH, USE THE OFFICIAL CLAN NAME, NOT THE FKN IS NAME
+                                        var isCorrectVariant =
+                                            variantId == mech.Variant.ToLower()
+                                            || (hadToSplitBaseModel && mech.Variant.Split('-').Length > 1 && mech.Variant.Split('-')[1].ToLower() == variantId)
+                                            || // JFC RT
+                                            alternativeVariantId == mech.Variant.ToLower() || // JFC RT
+                                            variantId == "clan" && mech.Variant.ToLower() == "c" || // JFC RT
+                                            variantId == "p" && mech.Variant.ToLower() == "prime"; // JFC RT AGAIN
+
+                                        var isCorrectHeroName = heroName == mech.HeroName.ToLower() || baseModel == mech.PossibleClanName.ToLower();
+                                        if (isCorrectBase && isCorrectVariant && isCorrectHeroName)
+                                        {
+                                            return true;
+                                        }
+
+                                        return false;
+
+                                        // return test.Contains(searchTerm1) || (!searchTerm2.IsNullOrEmpty() && test.Contains(searchTerm2));
+                                    });
 
                         if (objectDefinition != null)
                         {

@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.CompilerServices;
 
     using ModTechMaster.Core.Interfaces.Models;
@@ -14,6 +15,17 @@
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string BaseModel { get; set; }
+
+        public string PrimitiveBaseModel
+        {
+            get
+            {
+                var iterativeIndex = this.BaseModel.IndexOf(" II", StringComparison.OrdinalIgnoreCase);
+                return iterativeIndex == -1 ? this.BaseModel : this.BaseModel.Substring(0, iterativeIndex);
+            }
+        }
+
+        public string PossibleClanName { get; set; } = string.Empty;
 
         public long BattleValue { get; set; }
 
@@ -29,7 +41,7 @@
 
         public bool Extinct { get; set; }
 
-        public string HeroName { get; set; }
+        public string HeroName { get; set; } = string.Empty;
 
         public string Name { get; set; }
 
@@ -93,6 +105,8 @@
             var heroIndex = name.IndexOf('(');
             var delim = ")";
 
+            // var isClanName = heroIndex != -1 && name.Substring(0, heroIndex).Count(c => c == ' ') == 1; // Can't do this... Black Hawk has 2 spaces ffs
+
             if (heroIndex == -1)
             {
                 heroIndex = name.IndexOf("\"\"");
@@ -136,6 +150,9 @@
                 mech.BaseModel = mech.Name.Trim('"');
                 mech.Variant = "N/A";
             }
+
+            // We have to do this because the file format is ambiguous, as in the case of the Archer (Wolf) which is a hero mech of Archer, and Baboon (Howler) which is a clan mech named Howler, referred to as Baboon by IS.
+            mech.PossibleClanName = mech.HeroName;
 
             return mech;
         }
