@@ -43,7 +43,7 @@
         public MechSelectorModel(ModCopyModel modCopyModel)
         {
             this.modCopyModel = modCopyModel;
-            var chassisTypes = new List<ObjectType> { ObjectType.ChassisDef, ObjectType.VehicleChassisDef };
+            var chassisTypes = new List<ObjectType> { ObjectType.MechDef, ObjectType.VehicleDef };
             this.mechs = this.modCopyModel.ModCollectionNode.ModCollection.GetReferenceableObjects()
                 .Where(referenceableObject => chassisTypes.Contains(referenceableObject.ObjectType)).ToList();
 
@@ -391,15 +391,19 @@
                                               ? string.Empty
                                               : ($"{mech.HeroName}".Replace(" ", string.Empty) + $"_{mech.Variant}")
                                               .ToLower();
-                        if (mechSelectorModel.mechs.Any(
+
+                        var objectDefinition = mechSelectorModel.mechs.FirstOrDefault(
                             referenceableObject =>
                                 {
                                     var test = referenceableObject.Id.ToLower();
                                     return test.Contains(searchTerm1)
                                            || !searchTerm2.IsNullOrEmpty() && test.Contains(searchTerm2);
-                                }))
+                                });
+
+                        if (objectDefinition != null)
                         {
                             mech.ResidentInCollection = true;
+                            mech.ObjectDefinition = objectDefinition;
                         }
 
                         mechList.Add(mech);

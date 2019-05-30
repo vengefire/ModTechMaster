@@ -27,8 +27,8 @@
             Self = this;
             this.MechSelectorModel = new MechSelectorModel(modCopyModel);
             this.InitializeComponent();
-            this.SelectAllCommand =
-                new AwaitableDelegateCommand<bool>(b =>
+            this.SelectAllCommand = new AwaitableDelegateCommand<bool>(
+                b =>
                     {
                         var unfilteredMechs = this.MechSelectorModel.UnfilteredMechs;
                         return Task.Run(() => this.MechSelectorModel.SelectAllMechs(b, unfilteredMechs));
@@ -41,6 +41,8 @@
         public MechSelectorModel MechSelectorModel { get; }
 
         public ICommand SelectAllCommand { get; }
+
+        public bool SelectMechs { get; set; }
 
         private static bool IsTextAllowed(string text)
         {
@@ -57,6 +59,12 @@
                     this.MechSelectorModel.MechFilePath = fileDialog.FileName;
                 }
             }
+        }
+
+        private void SelectMechsAndCloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.SelectMechs = true;
+            this.Close();
         }
 
         private void PreviewMaxProdYearInput(object sender, TextCompositionEventArgs e)

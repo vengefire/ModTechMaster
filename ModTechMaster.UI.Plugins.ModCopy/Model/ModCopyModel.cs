@@ -145,8 +145,26 @@
         public static void SelectMechsFromDataFile(ModCopyModel modCopyModel)
         {
             var mechSelectorWindow = new MechSelectorWindow(modCopyModel);
+            mechSelectorWindow.Closed += MechSelectorWindowOnClosed;
             ModCopyPage.Self.WindowContainer.Children.Add(mechSelectorWindow);
             mechSelectorWindow.Show();
+        }
+
+        private static void MechSelectorWindowOnClosed(object sender, EventArgs e)
+        {
+            var selectorWindow = sender as MechSelectorWindow;
+            if (selectorWindow.SelectMechs)
+            {
+                var mechsObjectsToSelect = selectorWindow.MechSelectorModel.SelectedModels.Select(model => model.ObjectDefinition);
+                foreach (var objectReference in mechsObjectsToSelect)
+                {
+                    IMtmTreeViewItem treeItem;
+                    if (MtmTreeViewItem.DictRefsToTreeViewItems.TryGetValue(objectReference, out treeItem))
+                    {
+                        treeItem.IsChecked = true;
+                    }
+                }
+            }
         }
 
         public void OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

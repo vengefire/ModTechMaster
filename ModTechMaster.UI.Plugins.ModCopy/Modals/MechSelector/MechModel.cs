@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
 
+    using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.UI.Plugins.ModCopy.Annotations;
 
     public class MechModel : INotifyPropertyChanged
@@ -61,6 +62,8 @@
 
         public long Year { get; set; }
 
+        public IReferenceableObject ObjectDefinition { get; set; }
+
         public static MechModel FromCsv(string csvData, char separator = ',')
         {
             var parts = csvData.Split(separator);
@@ -73,13 +76,13 @@
                            {
                                DbId = long.Parse(parts[0]),
                                Name = parts[1], // .Trim(' ', '"'),
-                               Era = parts[2],
+                               Era = parts[2].Trim(' ', '"'),
                                Year = long.Parse(parts[3]),
-                               TechnologyBase = parts[4],
+                               TechnologyBase = parts[4].Trim(' ', '"'),
                                Chassis = parts[5],
-                               RulesLevel = parts[6],
+                               RulesLevel = parts[6].Trim(' ', '"'),
                                Tonnage = long.Parse(parts[7]),
-                               Designer = parts[8],
+                               Designer = parts[8].Trim(' ', '"'),
                                BattleValue = long.Parse(parts[9]),
                                Cost = long.Parse(parts[10]),
                                Rating = parts[11],
@@ -125,12 +128,12 @@
                     variantIndex += index;
                 }
 
-                mech.BaseModel = name.Substring(0, variantIndex);
-                mech.Variant = name.Substring(++variantIndex);
+                mech.BaseModel = name.Substring(0, variantIndex).Trim('"');
+                mech.Variant = name.Substring(++variantIndex).Trim('"');
             }
             else
             {
-                mech.BaseModel = mech.Name;
+                mech.BaseModel = mech.Name.Trim('"');
                 mech.Variant = "N/A";
             }
 

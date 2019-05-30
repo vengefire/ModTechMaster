@@ -20,7 +20,7 @@
     // using Annotations;
     public abstract class MtmTreeViewItem : IMtmTreeViewItem
     {
-        private static readonly Dictionary<IReferenceableObject, IMtmTreeViewItem> DictRefsToTreeViewItems =
+        public static readonly Dictionary<IReferenceableObject, IMtmTreeViewItem> DictRefsToTreeViewItems =
             new Dictionary<IReferenceableObject, IMtmTreeViewItem>();
 
         private bool? isChecked = false;
