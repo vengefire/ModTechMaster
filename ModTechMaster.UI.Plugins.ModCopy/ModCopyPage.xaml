@@ -135,33 +135,81 @@
                                     <Separator Grid.Row="0" Grid.Column="1" Grid.RowSpan="10"
                                            Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                     <TextBlock Grid.Row="0" Text="Selected Mod Count" />
-                                    <TextBlock Grid.Row="0" Grid.Column="2"
-                                           Text="{Binding SelectedMods.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock
+                                                   Text="{Binding SelectedMods.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock
+                                            Text="{Binding TotalMods, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
                                     <TextBlock Grid.Row="1" Text="Selected Mod Size on Disk" />
-                                    <TextBlock Grid.Row="1" Grid.Column="2"
-                                           Text="{Binding SelectedModSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,#.00}}" />
+                                    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock Grid.Row="1" Grid.Column="2"
+                                                   Text="{Binding SelectedModSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,#.00}}" />
+                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock Grid.Row="1" Grid.Column="2"
+                                                   Text="{Binding TotalModSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,#.00}}" />
+                                    </StackPanel>
                                     <TextBlock Grid.Row="2" Text="Selected Item Count" />
-                                    <TextBlock Grid.Row="2" Grid.Column="2"
-                                           Text="{Binding SelectedModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock 
+                                                   Text="{Binding SelectedModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock 
+                                            Text="{Binding TotalModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                    
                                     <Separator Grid.Row="3" Grid.ColumnSpan="4" />
                                     <TextBlock Grid.Row="4" Text="Number of Mech Definitions" />
-                                    <TextBlock Grid.Row="4" Grid.Column="2"
-                                           Text="{Binding SelectedMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock 
+                                                   Text="{Binding SelectedMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock 
+                                            Text="{Binding TotalMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+                                    
                                     <TextBlock Grid.Row="5" Text="Number of Vehicle Definitions" />
-                                    <TextBlock Grid.Row="5" Grid.Column="2"
-                                           Text="{Binding SelectedVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <StackPanel Grid.Row="5" Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock 
+                                                   Text="{Binding SelectedVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock 
+                                            Text="{Binding TotalVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
+
                                     <TextBlock Grid.Row="6" Text="Number of Turret Definitions" />
-                                    <TextBlock Grid.Row="6" Grid.Column="2"
+                                    <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock 
                                            Text="{Binding SelectedTurretCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock 
+                                            Text="{Binding TotalTurretCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
                                     <TextBlock Grid.Row="7" Text="Number of Weapon Definitions" />
-                                    <TextBlock Grid.Row="7" Grid.Column="2"
-                                           Text="{Binding SelectedWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <StackPanel Grid.Row="7" Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock 
+                                               Text="{Binding SelectedWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock 
+                                            Text="{Binding TotalWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
                                     <TextBlock Grid.Row="8" Text="Number of Upgrade Definitions" />
-                                    <TextBlock Grid.Row="8" Grid.Column="2"
+                                    <StackPanel Grid.Row="8" Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock 
                                            Text="{Binding SelectedUpgradeCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock 
+                                            Text="{Binding TotalUpgradeCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
                                     <TextBlock Grid.Row="9" Text="Number of Cooling Definitions" />
-                                    <TextBlock Grid.Row="9" Grid.Column="2"
+                                    <StackPanel Grid.Row="9" Grid.Column="2" Orientation="Horizontal">
+                                        <TextBlock 
                                            Text="{Binding SelectedCoolingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock 
+                                            Text="{Binding TotalCoolingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </StackPanel>
                                 </Grid>
                                 <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
                                   DataContext="{Binding ModCopyModel.Settings}" utils:MarginSetter.Margin="5">
