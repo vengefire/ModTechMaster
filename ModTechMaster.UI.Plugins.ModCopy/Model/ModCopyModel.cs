@@ -155,7 +155,7 @@
             var selectorWindow = sender as MechSelectorWindow;
             if (selectorWindow.SelectMechs)
             {
-                var mechsObjectsToSelect = selectorWindow.MechSelectorModel.SelectedModels.Select(model => model.ObjectDefinition);
+                var mechsObjectsToSelect = selectorWindow.MechSelectorModel.SelectedModels.SelectMany(model => model.ObjectDefinitions.Select(o => o));
                 foreach (var objectReference in mechsObjectsToSelect)
                 {
                     IMtmTreeViewItem treeItem;

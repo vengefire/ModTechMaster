@@ -1,6 +1,7 @@
 ﻿namespace ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -74,7 +75,7 @@
 
         public long Year { get; set; }
 
-        public IReferenceableObject ObjectDefinition { get; set; }
+        public List<IReferenceableObject> ObjectDefinitions { get; set; }
 
         public static MechModel FromCsv(string csvData, char separator = ',')
         {

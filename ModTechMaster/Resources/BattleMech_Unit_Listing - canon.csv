@@ -1,4 +1,4 @@
-DBID,Name/Model,Era,Year,"Technology Base",Chassis,"Rules Level (Current)",Tonnage,Designer,"Battle Value",Cost,Rating
+CPDBID,Name/Model,Era,Year,"Technology Base",Chassis,"Rules Level (Current)",Tonnage,Designer,"Battle Value",Cost,Rating
 3478,"Agrotera AGT-1A",Republic,3108,"Inner Sphere",Biped,Advanced,50,"Catalyst Game Labs",1578,13230000,-----
 4020,"Agrotera AGT-UA (Ariel)","Dark Age",3144,"Inner Sphere (Mixed)",Biped,Advanced,50,"Catalyst Game Labs",1913,11472000,-----
 1085,"Akuma AKU-1X","Clan Invasion",3058,"Inner Sphere",Biped,"Tournament Legal",90,"Catalyst Game Labs",1959,9232480,3.000000

@@ -390,11 +390,16 @@
 
                         var mech = MechModel.FromCsv(line);
 
-                        var objectDefinition = mechSelectorModel.mechs
-                            .Where(o => 
-                                o.Id.StartsWith($"mechdef_{mech.PrimitiveBaseModel.Replace(" ", "")}", StringComparison.OrdinalIgnoreCase) || 
-                                (!mech.PossibleClanName.IsNullOrEmpty() && o.Id.StartsWith($"mechdef_{mech.PossibleClanName.Replace(" ", "")}", StringComparison.OrdinalIgnoreCase)))
-                            .FirstOrDefault(
+                        var filteredMechs = mechSelectorModel.mechs.Where(
+                            o => o.Id.StartsWith(
+                                     $"mechdef_{mech.PrimitiveBaseModel.Replace(" ", string.Empty)}",
+                                     StringComparison.OrdinalIgnoreCase)
+                                 || (!mech.PossibleClanName.IsNullOrEmpty() && o.Id.StartsWith(
+                                         $"mechdef_{mech.PossibleClanName.Replace(" ", string.Empty)}",
+                                         StringComparison.OrdinalIgnoreCase)));
+
+                        var objectDefinitions = filteredMechs
+                            .Where(
                                 referenceableObject =>
                                     {
                                         var testParts = referenceableObject.Id.ToLower().Split('_');
@@ -451,18 +456,37 @@
                                         }
 
                                         // Handle RT bad classification 4
-                                        var heroName = testParts.Length >= 4
-                                                           ? testParts[testParts.Length - 1].Any(char.IsDigit)
-                                                                 ?
-                                                                 string.Empty
-                                                                 : testParts[testParts.Length - 1]
-                                                           : string.Empty;
+                                        var heroName = string.Empty;
+                                        if (testParts.Length >= 4)
+                                        {
+                                            var potentialHeroName = string.Empty;
+                                            for (int i = 3; i < testParts.Length; i++)
+                                            {
+                                                potentialHeroName += "_" + testParts[i];
+                                            }
 
-                                        // variantId = variantId == "C" ? "clan" : variantId; // Handle RT bad classification 6
+                                            if (potentialHeroName.Any(char.IsDigit) && !potentialHeroName.Contains("_"))
+                                            {
+                                                heroName = string.Empty;
+                                            }
+                                            else
+                                            {
+                                                heroName = potentialHeroName;
+                                            }
+                                        }
+
+                                        var matchedOnClanName = false;
                                         var isCorrectBase = baseModel == mech.BaseModel.ToLower() ||
-                                                            baseModel == mech.BaseModel.Replace(" ", "").ToLower() ||
-                                                            baseModel == mech.PrimitiveBaseModel.ToLower() || // Fuck IT ROGUE TECH, AN AS7-D2 IS AN ATLAS II AS7-D2, NOT AN ATLAS AS7-D2
-                                                            baseModel == mech.PossibleClanName.ToLower(); // Fuck IT ROGUE TECH, USE THE OFFICIAL CLAN NAME, NOT THE FKN IS NAME
+                                                            baseModel == mech.BaseModel.Replace(" ", string.Empty).ToLower() ||
+                                                            baseModel == mech.PrimitiveBaseModel.ToLower();
+
+                                        // Fuck IT ROGUE TECH, USE THE OFFICIAL CLAN NAME, NOT THE FKN IS NAME
+                                        if (!isCorrectBase && baseModel == mech.PossibleClanName.ToLower())
+                                        {
+                                            isCorrectBase = true;
+                                            matchedOnClanName = true;
+                                        }
+
                                         var isCorrectVariant =
                                             variantId == mech.Variant.ToLower()
                                             || (hadToSplitBaseModel && mech.Variant.Split('-').Length > 1 && mech.Variant.Split('-')[1].ToLower() == variantId)
@@ -471,21 +495,37 @@
                                             variantId == "clan" && mech.Variant.ToLower() == "c" || // JFC RT
                                             variantId == "p" && mech.Variant.ToLower() == "prime"; // JFC RT AGAIN
 
-                                        var isCorrectHeroName = heroName == mech.HeroName.ToLower() || baseModel == mech.PossibleClanName.ToLower();
-                                        if (isCorrectBase && isCorrectVariant && isCorrectHeroName)
+                                        var matches = 0;
+
+                                        var testValue = referenceableObject.Id.ToLower();
+                                        if (isCorrectBase)
+                                        {
+                                            matches += 1;
+                                        }
+
+                                        if (isCorrectVariant)
+                                        {
+                                            matches += 1;
+                                        }
+
+                                        var hasHeroName = !matchedOnClanName && (!mech.HeroName.IsNullOrEmpty() || !heroName.IsNullOrEmpty());
+                                        if (!mech.HeroName.IsNullOrEmpty() && !heroName.IsNullOrEmpty() && testValue.Contains(mech.HeroName.ToLower()))
+                                        {
+                                            matches += 1;
+                                        }
+
+                                        if ((!hasHeroName && matches >= 2) || (hasHeroName && matches >= 3))
                                         {
                                             return true;
                                         }
 
                                         return false;
+                                    }).ToList();
 
-                                        // return test.Contains(searchTerm1) || (!searchTerm2.IsNullOrEmpty() && test.Contains(searchTerm2));
-                                    });
-
-                        if (objectDefinition != null)
+                        if (objectDefinitions.Any())
                         {
                             mech.ResidentInCollection = true;
-                            mech.ObjectDefinition = objectDefinition;
+                            mech.ObjectDefinitions = objectDefinitions;
                         }
 
                         mechList.Add(mech);
