@@ -108,6 +108,11 @@
 
         SimGameConstants,
 
-        Dll
+        Dll,
+
+        DebugSettings,
+        SimGameStatDescDef,
+        GameTip,
+        SoundBank
     }
 }

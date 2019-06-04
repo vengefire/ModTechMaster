@@ -1,5 +1,6 @@
 ﻿namespace ModTechMaster.Logic.Processors
 {
+    using System.Diagnostics;
     using System.IO;
 
     using ModTechMaster.Core.Interfaces.Models;
@@ -13,6 +14,12 @@
     {
         public IObjectDefinition ProcessObjectDefinition(IManifestEntry manifestEntry, DirectoryInfo di, FileInfo fi)
         {
+            if (fi.Extension != ".json")
+            {
+                Debug.WriteLine($"File {fi.FullName} is not a JSON file.");
+                return null;
+            }
+
             dynamic json = JsonConvert.DeserializeObject(File.ReadAllText(fi.FullName));
             return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
                 manifestEntry.EntryType,

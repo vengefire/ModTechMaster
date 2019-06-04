@@ -1,0 +1,1099 @@
+Name		Tons	BV	PV	TRO/RS	Rules	Era	Intro	
+AC/2 Carrier (LB-X)		60	536	15	TR3039 RS3058Uu-I	Standard		3063	
+AC/2 Carrier (Standard)		60	403	12	TR3039 RS3039u	Introductory		2520	
+Aeron Strike VTOL (BAP)		25	775	27	TR3085S RS3085u-CE	Standard		3084	
+Aeron Strike VTOL (Standard)		25	875	24	TR3085S RS3085u-CE	Standard		3082	
+Aesir Medium AA Vehicle (HAG)		55	1,505	28	TR3145TC TR3145TC	Advanced		3142	
+Aesir Medium AA Vehicle (Standard)		55	768	20	TR3145TC TR3145TC	Advanced		3097	
+Aithon Assault Transport (Standard)		100	1,666	43	TRPrototypes None	Advanced		3084	
+Aithon Assault Transport 2		100			TRPrototypes None	--		N/A	
+Ajax Assault Tank (Sealed)		90	1,551	47	TR3085 RS3085u-ONN	Advanced		3078	
+Ajax Assault Tank <Base>		90	939		TR3067 None	Standard		3065	
+Ajax Assault Tank A		90	2,042	53	TR3067 RS3067u	Standard		3065	
+Ajax Assault Tank B		90	1,706	56	TR3067 RS3067u	Standard		3065	
+Ajax Assault Tank C		90	1,883	51	TR3067 RS3067u	Standard		3068	
+Ajax Assault Tank D		90	1,507	46	TR3067 RS3067u	Advanced		3075	
+Ajax Assault Tank Prime		90	1,789	50	TR3067 RS3067u	Standard		3065	
+Alacorn Heavy Tank Mk III		95	1,432	35	TR3058U RS3058Uu-C	Standard		2587	
+Alacorn Heavy Tank Mk IV		95	1,400	38	TR3058U RS3058Uu-C	Standard		2588	
+Alacorn Heavy Tank Mk VI		95	1,850	39	TR3058U RS3058Uu-C	Standard		2590	
+Alacorn Heavy Tank Mk VII		95	2,163	40	TR3058U RS3058Uu-C	Standard		3063	
+Alacorn Heavy Tank Mk. I		95	1,080	27	XTRPrimitives III XTRPrimitives III	Experimental		2561	
+Alacorn Heavy Tank Mk. II		95	1,017	29	XTRPrimitives III XTRPrimitives III	Experimental		2561	
+Anat APC (Standard)		25	308	14	TR3145TC TR3145TC	Advanced		3092	
+Anhur (P-Stealth)		30	1,035	29	XTRPirates XTRPirates	Experimental		3074	
+Anhur Transport (BA)		30	637	19	TR3060 RS3060u	Standard		3069	
+Anhur Transport (Standard)		30	720	22	TR3060 RS3060u	Standard		2840	
+Ares Medium Tank (Plasma)		40	1,201	24	TR3060 RS3060u	Standard		3069	
+Ares Medium Tank (Standard)		40	1,151	27	TR3060 RS3060u	Standard		2842	
+Armored Personnel Carrier (Hover LRM)		10	193	12	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Hover MG)		10	114	11	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Hover SRM)		10	131	11	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Hover Sensors)		10	79	10	TR3039 RS3039u	Advanced		2620	
+Armored Personnel Carrier (Hover)		10	102	10	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Tracked LRM)		10	208	8	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Tracked MG)		10	157	6	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Tracked SRM)		10	168	7	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Tracked)		10	142	6	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Wheeled LRM)		10	194	8	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Wheeled MG)		10	172	8	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Wheeled SRM)		10	176	9	TR3039 RS3039u	Introductory		2500	
+Armored Personnel Carrier (Wheeled)		10	157	8	TR3039 RS3039u	Introductory		2500	
+Arrow IV Assault Vehicle (Standard)		80	1,404	44	TR3145CC TR3145CC	Advanced		3089	
+Arrow IV Carrier (Standard)		60			FMDC None	--		3058	
+Asshur Artillery Spotter (Standard)		20	930	25	TR3060 RS3060u	Standard		2893	
+Asshur Fast Reconnaissance Vehicle (Proto AC)		20	333	15	TR3060 RS3060u	Advanced		3073	
+Asshur Fast Reconnaissance Vehicle (Standard)		20	952	25	TR3060 RS3060u	Standard		2842	
+Athena Combat Vehicle (HAG)		75	2,444	48	TR3060 RS3060u	Standard		3071	
+Athena Combat Vehicle (Standard)		75	1,855	38	TR3060 RS3060u	Standard		3008	
+Athena Combat Vehicle XR		75	1,427	37	XTRClans XTRClans	Experimental		3068	
+Axel Heavy Tank IIC (Standard)		65	1,612	40	TR3058U RS3058Uu-I	Standard		3074	
+Axel Heavy Tank IIC (XL)		65	2,003	46	TR3058U RS3058Uu-I	Standard		3074	
+Axel Heavy Tank Mk 1		65	931	28	TR3039 RS3039u	Introductory		3036	
+Axel Heavy Tank Mk 2		65	902	28	TR3039 RS3039u	Introductory		3036	
+Badger (C) Tracked Transport <Base>		30			TR3058U None	Standard		2875	
+Badger (C) Tracked Transport A		30	492	20	TR3058U RS3058Uu-I	Standard		2875	
+Badger (C) Tracked Transport B		30	540	19	TR3058U RS3058Uu-I	Standard		2875	
+Badger (C) Tracked Transport C		30	537	21	TR3058U RS3058Uu-I	Standard		2875	
+Badger (C) Tracked Transport D		30	506	19	TR3058U RS3058Uu-I	Standard		2875	
+Badger (C) Tracked Transport E		30	474	16	TR3058U RS3058Uu-I	Standard		3062	
+Badger (C) Tracked Transport F		30	441	19	TR3058U RS3058Uu-I	Standard		3072	
+Badger (C) Tracked Transport H		30	516	19	TR3058U RS3058Uu-I	Standard		3062	
+Badger (C) Tracked Transport Prime		30	602	19	TR3058U RS3058Uu-I	Standard		2875	
+Badger Tracked Transport "Booze Cruiser"		30			TR3058U None	--		3053	
+Badger Tracked Transport <Base>		30	283		TR3058U None	Standard		3008	
+Badger Tracked Transport A		30	437	15	TR3058U RS3058Uu-I	Standard		3008	
+Badger Tracked Transport B		30	431	19	TR3058U RS3058Uu-I	Standard		3008	
+Badger Tracked Transport C		30	450	16	TR3058U RS3058Uu-I	Standard		3008	
+Badger Tracked Transport D		30	540	20	TR3058U RS3058Uu-I	Standard		3008	
+Badger Tracked Transport E		30	434	14	TR3058U RS3058Uu-I	Standard		3008	
+Badger Tracked Transport F		30	399	15	TR3058U RS3058Uu-I	Standard		3058	
+Badger Tracked Transport G		30	474	16	TR3058U RS3058Uu-I	Standard		3070	
+Badger Tracked Transport Prime		30	549	21	TR3058U RS3058Uu-I	Standard		3008	
+Balac Strike VTOL (Hybrid)		25	797	29	RS3145NTNU RS3145NTNU	Standard		3090	
+Balac Strike VTOL (LRM)		25	1,278	35	TR3085 RS3085u-CE	Standard		3079	
+Balac Strike VTOL (Spotter)		25	934	34	TR3085 RS3085u-CE	Standard		3079	
+Balac Strike VTOL (Standard)		25	1,271	34	TR3085 RS3085u-CE	Standard		3079	
+Ballista Artillery Trailer (Standard)		100	1,461	64	TR3145FS TR3145FS	Advanced		3100	
+Ballista Self-Propelled Artillery Tank (Standard)		55	531	24	H:LoT2 H:LoT2	Advanced		2480	
+Bandit (C) Hovercraft <Base>		50			TR3058U None	--		2875	
+Bandit (C) Hovercraft A		50	1,145	36	TR3058U RS3058Uu-I	Standard		2875	
+Bandit (C) Hovercraft B		50	1,162	38	TR3058U RS3058Uu-I	Standard		2875	
+Bandit (C) Hovercraft C		50	1,231	40	TR3058U RS3058Uu-I	Standard		2875	
+Bandit (C) Hovercraft D		50	1,093	36	TR3058U RS3058Uu-I	Standard		2875	
+Bandit (C) Hovercraft E		50	1,063	37	TR3058U RS3058Uu-I	Standard		3062	
+Bandit (C) Hovercraft F		50	1,119	37	TR3058U RS3058Uu-I	Standard		3072	
+Bandit (C) Hovercraft G		50	915	37	TR3058U RS3058Uu-I	Standard		3072	
+Bandit (C) Hovercraft H		50	1,209	40	TR3058U RS3058Uu-I	Standard		3062	
+Bandit (C) Hovercraft Prime		50	1,054	35	TR3058U RS3058Uu-I	Standard		2875	
+Bandit Hovercraft "Warthog"		50	872	32	XTRGladiators XTRGladiators	Experimental		3077	
+Bandit Hovercraft <Base>		50	522		TR3058U None	Standard		3008	
+Bandit Hovercraft A		50	902	31	TR3058U RS3058Uu-I	Standard		3008	
+Bandit Hovercraft B		50	753	35	TR3058U RS3058Uu-I	Standard		3008	
+Bandit Hovercraft C		50	792	35	TR3058U RS3058Uu-I	Standard		3008	
+Bandit Hovercraft D		50	827	32	TR3058U RS3058Uu-I	Standard		3008	
+Bandit Hovercraft E		50	839	36	TR3058U RS3058Uu-I	Standard		3008	
+Bandit Hovercraft F		50	887	35	TR3058U RS3058Uu-I	Standard		3008	
+Bandit Hovercraft G		50	837	32	TR3058U RS3058Uu-I	Standard		3008	
+Bandit Hovercraft H		50	708	30	TR3058U RS3058Uu-I	Standard		3058	
+Bandit Hovercraft I		50	914	35	TR3058U RS3058Uu-I	Standard		3070	
+Bandit Hovercraft Mk 2 (Standard)		50	770	32	TRPrototypes None	Advanced		3084	
+Bandit Hovercraft Prime		50	929	36	TR3058U RS3058Uu-I	Standard		3008	
+Bardiche Heavy Strike Tank (Minesweeper)		70	1,198	32	TR3145FW TR3145FW	Advanced		3114	
+Bardiche Heavy Strike Tank (Standard)		70	1,305	35	TR3145FW TR3145FW	Advanced		3101	
+BattleMech Recovery Vehicle (Standard)		50	90	4	TR3060 RS3060u	Introductory		2500	
+Beagle Hover Scout (C3i)		15	266	16	TR3050U RS3050Uu-C	Standard		3069	
+Beagle Hover Scout (Sealed)		15	249	15	TR3085 RS3085u-ONN	Advanced		3076	
+Beagle Hover Scout (Standard)		15	335	21	TR3050U RS3050Uu-C	Standard		2666	
+Beagle Hover Scout (TAG)		15	295	18	TR3050U RS3050Uu-C	Standard		3069	
+Beagle Hover Scout LRRP		15	219	17	XTRGunslingers XTRGunslingers	Experimental		2723	
+Behemoth Heavy Tank (Armor)		100	1,406	44	TR3039 RS3039u	Introductory		2952	
+Behemoth Heavy Tank (Flamer)		100	1,130	39	TR3039 RS3039u	Introductory		2981	
+Behemoth Heavy Tank (Kurita)		100	1,336	44	TR3039 RS3058Uu-I	Standard		3062	
+Behemoth Heavy Tank (Standard)		100	1,173	39	TR3039 RS3039u	Introductory		2952	
+Behemoth II Heavy Tank (Standard)		100	1,903	50	TR3145CC TR3145CC	Standard		3102	
+Behemoth II Heavy Tank (Support)		100	1,781	44	TR3145CC TR3145CC	Standard		3102	
+Bellona Hover Tank (Laser)		45	1,262	33	TR3075 RS3075u-CE	Standard		3076	
+Bellona Hover Tank (Standard)		45	1,018	32	TR3075 RS3075u-CE	Standard		3070	
+Blizzard Hover Transport "Black Blizzard"		25	464	24	TR3058U RS3058Uu-I	Standard		3064	
+Blizzard Hover Transport (SRM)		25	264	14	TR3058U RS3058Uu-I	Introductory		3062	
+Blizzard Hover Transport (Standard)		25	277	15	TR3058U RS3058Uu-I	Introductory		3054	
+Bokkusu Support Trailer (Standard)		75		19	TR3085S None	--		3086	
+Bolla Stealth Tank (RotS) <Base>		60			TR3085 None	--		3084	
+Bolla Stealth Tank (RotS) A		60	1,059	35	TR3085 RS3085u-CE	Experimental		3084	
+Bolla Stealth Tank (RotS) B		60	961	45	TR3085 RS3085u-CE	Experimental		3084	
+Bolla Stealth Tank (RotS) C		60	1,068	42	TR3085 RS3085u-CE	Experimental		3084	
+Bolla Stealth Tank (RotS) D		60	877	39	RS3145NTNU RS3145NTNU	Experimental		3091	
+Bolla Stealth Tank (RotS) Prime		60	1,243	44	TR3085 RS3085u-CE	Experimental		3084	
+Bolla Stealth Tank <Base>		60	681		JHS3076 None	Experimental		3074	
+Bolla Stealth Tank Comminus		60	1,005	34	JHS3076 RS3085u-CE	Experimental		3074	
+Bolla Stealth Tank Dominus		60	908	38	JHS3076 RS3085u-CE	Experimental		3074	
+Bolla Stealth Tank Infernus		60	1,076	46	JHS3076 RS3085u-CE	Experimental		3074	
+Bolla Stealth Tank Invictus		60	968	41	JHS3076 RS3085u-CE	Experimental		3074	
+Brutus Assault Tank (HPPC)		75	1,186	36	TR3085 RS3085u-ONN	Standard		3075	
+Brutus Assault Tank (LRM)		75	1,248	33	TR3058U RS3058Uu-I	Introductory		3001	
+Brutus Assault Tank (PPC 2)		75	979	28	TR3058U RS3058Uu-I	Introductory		3011	
+Brutus Assault Tank (PPC)		75	1,208	32	TR3058U RS3058Uu-I	Introductory		3005	
+Brutus Assault Tank (Standard)		75	1,115	32	TR3058U RS3058Uu-I	Introductory		2998	
+Bulldog Medium Tank (AC2)		60	556	17	TR3039 RS3039u	Introductory		2812	
+Bulldog Medium Tank (Cell)		60	861	25	RS3145NTNU RS3145NTNU	Standard		3088	
+Bulldog Medium Tank (LRM)		60	748	21	TR3039 RS3039u	Introductory		2793	
+Bulldog Medium Tank (Standard)		60	605	17	TR3039 RS3039u	Introductory		2673	
+Bulwark Assault Vehicle (Original)		85	1,681	35	TR3145FW TR3145FW	Standard		3068	
+Bulwark Assault Vehicle (Standard)		85	1,737	38	TR3145FW TR3145FW	Standard		3114	
+Burke Defense Tank (HPPC)		75	875	29	TR3050U RS3050Uu-C	Standard		3068	
+Burke Defense Tank (Royal)		75	1,105	30	HistOK RSOK	Standard		2713	
+Burke Defense Tank (Standard)		75	815	26	TR3050U RS3050Uu-C	Standard		2580	
+Burke II Superheavy Tank (Standard)		140	1,222	45	XTRGunslingers XTRGunslingers	Experimental		2776	
+Cardinal Transport (RAF)		50	582	28	TR3145ME TR3145ME	Standard		3112	
+Cardinal Transport (Standard)		50	641	28	TR3145ME TR3145ME	Standard		3112	
+Carnivore Assault Tank (HAG)		80	2,286	45	TR3085 RS3085u-CE	Standard		3083	
+Carnivore Assault Tank (Second Line)		80	1,248	31	TR3085 RS3085u-CE	Standard		3084	
+Carnivore Assault Tank (Standard)		80	1,997	41	TR3085 RS3085u-CE	Standard		3082	
+Cavalry Attack Helicopter (Infantry)		25	615	30	TR3058U RS3058Uu-I	Standard		3063	
+Cavalry Attack Helicopter (Infiltrator)		25	446	24	TRPrototypes None	Advanced		3085	
+Cavalry Attack Helicopter (LRM)		25	487	22	TR3058U RS3058Uu-I	Introductory		3055	
+Cavalry Attack Helicopter (SRM)		25	509	23	TR3058U RS3058Uu-I	Introductory		3055	
+Cavalry Attack Helicopter (Standard)		25	503	26	TR3058U RS3058Uu-I	Introductory		3054	
+Cavalry Attack Helicopter (TAG)		25	495	25	TR3058U RS3058Uu-I	Standard		3059	
+Cavalry Attack Helicopter (Two Crewman)		25			TR3058U None	--		3062	
+Cavalry Attack Helicopter Cadence Rain		25	568	24	XTRDavion XTRDavion	Experimental		3075	
+Centipede (Wheeled Fusion)					TR3025 None	--			
+Centipede (Wheeled ICE)					TR3025 None	--			
+Centipede Scout Car (SRM)		20	431	15	TR3058U RS3058Uu-I	Introductory		3062	
+Centipede Scout Car (Standard)		20	271	18	TR3058U RS3058Uu-I	Standard		3054	
+Centipede Scout Car (TAG)		20	327	19	TR3058U RS3058Uu-I	Standard		3067	
+Centipede Scout Car Commando		20	455	15	XTRSteiner XTRSteiner	Experimental		3074	
+Chalchiuhtotolin Support Tank (Bombast Laser)		50	912	29	TR3085S RS3085u-CE	Experimental		3085	
+Chalchiuhtotolin Support Tank (Chemical Laser)		50	1,177	33	TR3085S RS3085u-CE	--		3085	
+Chalchiuhtotolin Support Tank (Standard)		50	1,057	28	TR3085S RS3085u-CE	Standard		3084	
+Chalchiuhtotolin Support Tank (XL)		50	1,498	38	RS3145NTNU RS3145NTNU	Standard		3120	
+Challenger MBT Mk. XV		90	1,724	40	TRPrototypes None	Advanced		3081	
+Challenger MBT X		90	1,710	44	TR3058U RS3058Uu-I	Standard		3057	
+Challenger MBT XI		90	1,830	46	TR3058U RS3058Uu-I	Standard		3062	
+Challenger MBT XII		90	1,851	49	TR3058U RS3058Uu-I	Standard		3065	
+Challenger MBT XIVs		90	1,512	40	TR3085 RS3085u-ONN	Advanced		3077	
+Challenger MBT XVc		90	1,894	44	XTRDavion XTRDavion	Experimental		3075	
+Chaparral Missile Artillery Tank (CASE)		50	814	27	TR3085 RS3085u-ONN	Advanced		3071	
+Chaparral Missile Artillery Tank (ERML)		50	847	27	TR3050U RS3050Uu-C	Advanced		3074	
+Chaparral Missile Artillery Tank (MG)		50	801	27	TR3050U RS3050Uu-C	Advanced		3062	
+Chaparral Missile Artillery Tank (SRM)		50	832	27	TR3050U RS3050Uu-C	Advanced		3064	
+Chaparral Missile Artillery Tank (Standard)		50	812	27	TR3050U RS3050Uu-C	Advanced		2611	
+Chevalier Light Tank (BAP)		35	583	20	TR3060 RS3060u	Standard		2958	
+Chevalier Light Tank (MML)		35	671	23	TR3060 RS3060u	Standard		3069	
+Chevalier Light Tank (Speed)		35	613	22	TR3060 RS3060u	Standard		3051	
+Chevalier Light Tank (Standard)		35	668	19	TR3060 RS3060u	Standard		2690	
+Cizin Hover Tank (Standard)		45	1,762	46	TR3145DC TR3145DC	Standard		3097	
+Cizin Hover Tank (Support)		45	1,932	45	TR3145DC TR3145DC	Standard		3124	
+Cobra Transport VTOL (Command)		30	367	27	TR3075 RS3075u-AW	Standard		2622	
+Cobra Transport VTOL (MASH)		30	367	18	TR3075 RS3075u-AW	Standard		2669	
+Cobra Transport VTOL (Original)		30	265	17	TR3075 RS3075u-AW	Introductory		2582	
+Cobra Transport VTOL (Standard)		30	367	18	TR3075 RS3075u-AW	Standard		2620	
+Command Van (Fusion)					MW1e None	--		ES	
+Command Van (Standard)					MW1e None	--		ES	
+Condor Heavy Hover Tank (Davion)		50	592	23	TR3039 RS3039u	Introductory		2952	
+Condor Heavy Hover Tank (Fission)		50	721	33	XTRSW I XTRSW I	Experimental		3014	
+Condor Heavy Hover Tank (Flamer)		50	715	33	TR3039 RS3039u	Introductory		3025	
+Condor Heavy Hover Tank (Laser Upgrade)		50	803	32	RS3145NTNU RS3145NTNU	Standard		3130	
+Condor Heavy Hover Tank (Laser)		50	977	34	TR3039 RS3058Uu-I	Standard		3061	
+Condor Heavy Hover Tank (Liao)		50	765	32	TR3039 RS3039u	Introductory		2878	
+Condor Heavy Hover Tank (Standard)		50	653	27	TR3039 RS3039u	Introductory		2564	
+Condor Heavy Hover Tank (Upgrade) (Laser)		50	1,197	35	TR3075 RS3075u-CE	Standard		3068	
+Condor Heavy Hover Tank (Upgrade) (Standard)		50	965	32	TR3075 RS3075u-CE	Standard		3066	
+Condor Multi-Purpose Tank (Reactive)		50	963	24	XTR RotS 1 XTR RotS 1	Standard		3118	
+Condor Multi-Purpose Tank (Standard)		50	811	23	XTR RotS 1 XTR RotS 1	Standard		3083	
+Condor Trans-Track (Standard)		50			XTROBoondoggles XTROBoondoggles	Experimental		3043	
+Coolant Truck (Hover)		30	347	19	TR3039 RS3039u	Introductory		2602	
+Coolant Truck (Tracked)		30	357	9	TR3039 RS3039u	Introductory		2592	
+Coolant Truck 135-K "Lifesaver"		30	321	8	TR3039 RS3039u	Introductory		2583	
+Crane Heavy Transport (Standard)		30	385	20	TR3145RS TR3145RS	Standard		3130	
+Crow Scout Helicopter (C3)		15	288	21	TR3075 RS3075u-CE	Standard		3070	
+Crow Scout Helicopter (Export)		15	415	20	TR3075 RS3075u-CE	Standard		3069	
+Crow Scout Helicopter (Standard)		15	288	20	TR3075 RS3075u-CE	Standard		3068	
+Cyrano Gunship (ML)		30	645	27	TR3050U RS3050Uu-C	Standard		3071	
+Cyrano Gunship (Plasma)		30	927	21	TR3050U RS3050Uu-C	Standard		3071	
+Cyrano Gunship (Royal)		30	740	23	TR3075 RS3075u-AW	Standard		2721	
+Cyrano Gunship (Standard)		30	459	20	TR3050U RS3050Uu-C	Standard		2622	
+Cyrano Gunship Fury		30	594	26	XTRGunslingers XTRGunslingers	Experimental		2754	
+DI Morgan Assault Tank (Gauss)		100	1,623	37	TR3075 RS3075u-CE	Standard		3075	
+DI Morgan Assault Tank (LRM)		100	1,869	58	TR3075 RS3075u-CE	Standard		3075	
+DI Morgan Assault Tank (Standard)		100	1,390	33	TR3075 RS3075u-CE	Standard		3073	
+DI Multipurpose Light VTOL (Gunship)		25	711	30	TR3145LC TR3145LC	Standard		3097	
+DI Multipurpose Light VTOL (Standard)		25	542	28	TR3145LC TR3145LC	Standard		3097	
+DI Schmitt Tank (Standard)		80	1,457	36	TR3145LC TR3145LC	Standard		3115	
+DI Schmitt Tank (Targeting Computer)		80	1,625	38	TR3145LC TR3145LC	Standard		3115	
+Daimyo HQ 67-K		50	583	25	TR3075 RS3075u-AW	Standard		2781	
+Daimyo HQ 67-K2		50	647	26	TR3075 RS3075u-AW	Standard		3067	
+Daimyo HQ 67-R		50	683	29	TR3075 RS3075u-AW	Standard		3068	
+Danai Support Vehicle (Standard)		45	576	21	TR3075 RS3075u-CE	Advanced		3073	
+Danai Support Vehicle Arrow		45	855	30	XTRPeriphery XTRPeriphery	Experimental		3076	
+Darter Scout Car "ABC's Folly"		13			TR3075 None	--		3070	
+Darter Scout Car (BAP)		13	136	10	TR3075 RS3075u-AW	Standard		3053	
+Darter Scout Car (C3)		13	125	9	TR3075 RS3075u-AW	Standard		3057	
+Darter Scout Car (ECM)		13	193	9	TR3075 RS3075u-AW	Standard		3054	
+Darter Scout Car (SRM)		13	192	11	TR3075 RS3075u-AW	Standard		2835	
+Darter Scout Car (SRM2)		13	167	9	TR3026r None	Introductory		2835	
+Darter Scout Car (Standard)		13	125	7	TR3075 RS3075u-AW	Introductory		2822	
+Demolisher Heavy Tank (Arrow IV)		80	1,297	42	TR3039 RS3058Uu-I	Advanced		3062	
+Demolisher Heavy Tank (Clan)		80	1,563	33	TR3039 RS3058Uu-I	Standard		3058	
+Demolisher Heavy Tank (Defensive)		80	891	26	TR3039 RS3039u	Introductory		2823	
+Demolisher Heavy Tank (Gauss)		80	1,529	34	TR3039 RS3058Uu-I	Standard		3053	
+Demolisher Heavy Tank (MRM)		80	1,242	38	TR3039 RS3058Uu-I	Standard		3060	
+Demolisher Heavy Tank (Standard, Mk. I)		80	981		TR3039 RS3039u	Introductory		2803	
+Demolisher Heavy Tank (Standard, Mk. II)		80	981	27	TR3039 RS3039u	Introductory		2823	
+Demolisher Heavy Tank II-X		100	1,927	43	XTRSteiner XTRSteiner	Experimental		3077	
+Demolisher II Heavy Tank (MML)		100	1,397	48	TR3085 RS3085u-ONN	Standard		3076	
+Demolisher II Heavy Tank (Standard)		100	1,619	39	TR3060 RS3060u	Standard		3059	
+Demolisher II Heavy Tank (Thunderbolt)		100	2,336	57	TR3060 RS3060u	Advanced		3074	
+Demon Medium Tank (Armor)		45	636	25	RS3145NTNU RS3145NTNU	Standard		3100	
+Demon Medium Tank (Rifle)		45	386	18	TR3085 RS3085u-CE	Experimental		3084	
+Demon Medium Tank (Standard)		45	454	23	TR3085 RS3085u-CE	Standard		3077	
+Demon Tank (HGR)		60	1,314	34	TR3050U RS3050Uu-C	Standard		3070	
+Demon Tank (Horned Demon)		60	1,179	30	TR3050U RS3050Uu-C	Standard		2721	
+Demon Tank (PPC)		60	836	22	TR3050U RS3050Uu-C	Standard		2729	
+Demon Tank (Royal)		60	1,333	38	TR3075 RS3075u-AW	Standard		2744	
+Demon Tank (Standard)		60	1,094	28	TR3050U RS3050Uu-C	Standard		2716	
+Demon Tank CX-2		60		33	XTRComstar XTRComstar	Experimental		3070	
+Destrier Siege Vehicle (Standard)		200	2,859	90	TR3145FS TR3145FS	Advanced		3100
+Devastator Heavy Tank (Standard)		80	1,037	31	TR3039 RS3039u	Introductory		3003	
+Diggs Drone Control Tank (Standard)		35	785	21	XTR RotS 1 XTR RotS 1	Advanced		3101	
+Donar Assault Helicopter (Close Support)		21	582	26	TR3060 RS3060u	Advanced		3066	
+Donar Assault Helicopter (Recon)		21	808	24	TR3060 RS3060u	Standard		3019	
+Donar Assault Helicopter (Standard)		21	915	23	TR3060 RS3060u	Standard		3017	
+Drillson Heavy Hover Tank (ERLL)		50	960	29	TR3039 RS3058Uu-I	Standard		3039	
+Drillson Heavy Hover Tank (SRM)		50	926	27	TR3039 RS3039u	Introductory		3028	
+Drillson Heavy Hover Tank (Sealed)		50	870	32	TR3085 RS3085u-ONN	Advanced		3076	
+Drillson Heavy Hover Tank (Standard)		50	949	28	TR3039 RS3039u	Introductory		3025	
+Drillson Heavy Hover Tank (Streak)		50	899	34	TR3039 RS3058Uu-I	Standard		3053	
+Eldingar Hover Sled (HMMHV) "HumHov"		50	1,289	33	RS3145NTNU RS3145NTNU	Standard		3103	
+Eldingar Hover Sled (Standard)		50	1,402	41	TR3085 RS3085u-CE	Standard		3081	
+Eldingar Hover Sled (Streak)		50	1,843	40	TR3085 RS3085u-CE	Experimental		3085	
+Engineering Vehicle (AC)		40	423	14	TR3039 RS3039u	Introductory		2570	
+Engineering Vehicle (Flamer)		40	196	8	TR3039 RS3039u	Introductory		2570	
+Engineering Vehicle (Standard)		40	194	6	TR3039 RS3039u	Standard		2570	
+Enyo Strike Tank (ER Pulse)		55	1,130	34	TRPrototypes None	Advanced		3083	
+Enyo Strike Tank (LB-X) "Sholef"		55	1,527	37	TR3067 RS3067u	Standard		3075	
+Enyo Strike Tank (Standard)		55	1,527	39	TR3067 RS3067u	Standard		3063	
+Enyo Strike Tank XR		55	1,144	33	XTRClans XTRClans	Experimental		3075	
+Epona Pursuit Tank <Base>		50	326		TR3060 None	Standard		2884	
+Epona Pursuit Tank A		50	1,976	42	TR3060 RS3060u	Standard		2884	
+Epona Pursuit Tank B		50	1,255	38	TR3060 RS3060u	Standard		2884	
+Epona Pursuit Tank C		50	1,563	36	TR3060 RS3060u	Standard		2884	
+Epona Pursuit Tank D		50	1,773	34	TR3060 RS3060u	Standard		3068	
+Epona Pursuit Tank E		50	1,436	29	TR3060 RS3060u	Standard		3070	
+Epona Pursuit Tank Prime		50	1,477	36	TR3060 RS3060u	Standard		2884	
+Falcon Hover Tank (Standard)		50	691		RS5 None	--		3023	
+Fensalir Combat WiGE (HAG)		80	2,356	59	TR3085 None	Experimental		3084	
+Fensalir Combat WiGE (Infantry)		80	1,379	43	TR3085 None	Standard		3084	
+Fensalir Combat WiGE (Standard)		80	1,643	52	TR3085 None	Standard		3084	
+Fensalir Combat WiGE (XXL)		80	1,513	45	XTROMostWanted XTROMostWanted	Experimental		3084	
+Ferret Light Scout VTOL "Fermi"		5	108	8	XTRPhantoms XTRPhantoms	Experimental		3076	
+Ferret Light Scout VTOL (Armor) "Wild Weasel"		5	103	11	TR3039 RS3039u	Introductory		2967	
+Ferret Light Scout VTOL (Cargo)		5	17	6	TR3039 RS3039u	Introductory		2972	
+Ferret Light Scout VTOL (Sensor)		5			TR3039 None	Introductory		2901	
+Ferret Light Scout VTOL (Standard)		5	58	8	TR3039 RS3039u	Introductory		2901	
+Flatbed Truck (Armor)		10	117	4	TR3060 RS3060u	Introductory		2580	
+Flatbed Truck (LRM)		10	172	8	HistOK RSOK	Introductory		2801	
+Flatbed Truck (Mortar)		10	65	5	TR3060 RS3060u	Advanced		2580	
+Flatbed Truck (RL)		10	232	6	HistOK RSOK	Advanced		2801	
+Flatbed Truck (SRM)		10	67	4	TR3060 RS3060u	Introductory		2580	
+Flatbed Truck (Standard)		10	34	2	TR3060 RS3060u	Introductory		2580	
+Fortune Wheeled Assault Vehicle (C3M)		80	1,178	32	TR3085 RS3085u-ONN	Standard		3077	
+Fortune Wheeled Assault Vehicle (Standard)		80	1,349	27	TR3067 RS3067u	Standard		3067	
+Fortune Wheeled Assault Vehicle (Thunderbolt)		80	1,402	38	TR3067 RS3067u	Advanced		3075	
+Fox Armored Car (Flamer)		20	530	23	TR3085 RS3085u-CE	Standard		3084	
+Fox Armored Car (Interdictor)		20	547	24	RS3145NTNU RS3145NTNU	Standard		3088	
+Fox Armored Car (Standard)		20	549	23	TR3085 RS3085u-CE	Standard		3084	
+Fox Armored Car (VSP)		20	543	23	TR3085 RS3085u-CE	Advanced		3084	
+Fulcrum Heavy Hover Tank (Hybrid)		50	1,543	43	TRPrototypes None	Advanced		3084	
+Fulcrum Heavy Hovertank (Standard)		50	1,167	42	TR3058U RS3058Uu-I	Standard		3057	
+Fulcrum Heavy Hovertank II		50	1,248	48	TR3058U RS3058Uu-I	Standard		3067	
+Fulcrum Heavy Hovertank III		50	1,185	48	TR3085 RS3085u-ONN	Standard		3078	
+Fulcrum Heavy Hovertank X		50	1,686	49	XTRDavion XTRDavion	Experimental		3075	
+Fury Command Tank (C3M)		80	1,336	37	TR3050U RS3050Uu-C	Standard		3070	
+Fury Command Tank (C3S)		80	1,413	34	TR3050U RS3050Uu-C	Standard		3069	
+Fury Command Tank (Fury II)		80	1,234	29	TR3050U RS3050Uu-C	Standard		2732	
+Fury Command Tank (Fury III)		80	1,827	45	RS3145NTNU RS3145NTNU	Advanced		3114	
+Fury Command Tank (Fury IIIm)		80	1,720	44	RS3145NTNU RS3145NTNU	Advanced		3114	
+Fury Command Tank (Original)		80	1,184	29	TR3050U RS3050Uu-C	Standard		2637	
+Fury Command Tank (Royal)		80	1,255	30	TR3075 RS3075u-AW	Standard		2751	
+Fury Command Tank (Standard)		80	1,184	29	TR3050U RS3050Uu-C	Standard		3064	
+Fury Command Tank CX-17		80		32	XTRComstar XTRComstar	Experimental		3052	
+Gabriel Reconnaissance Hovercraft (ERSL)		5	162	15	TR3050U RS3050Uu-C	Standard		3067	
+Gabriel Reconnaissance Hovercraft (Standard)		5	198	15	TR3050U RS3050Uu-C	Standard		2712	
+Gabriel Reconnaissance Hovercraft (TDF)		5	168	12	TR3050U RS3050Uu-C	Standard		3065	
+Gallant Urban Assault Tank (Fusion)		70			HistRW None	Standard		2576	
+Gallant Urban Assault Tank (Original)		70		32	HistRW None	Introductory		2550	
+Gallant Urban Assault Tank (Standard)		70	1,056	30	HistRW None	Standard		2574	
+Galleon Light Tank GAL-100		30	309	13	TR3058U RS3058Uu-I	Introductory		2692	
+Galleon Light Tank GAL-102		30	651	31	TR3058U RS3058Uu-I	Standard		3048	
+Galleon Light Tank GAL-103		30	872	40	TR3058U RS3058Uu-I	Standard		3066	
+Galleon Light Tank GAL-104		30	779	27	TR3058U RS3058Uu-I	Standard		3066	
+Galleon Light Tank GAL-200		30	345	12	TR3025 RS3058Uu-I	Introductory		2915	
+Galleon Light Tank GAL-200 (RL)		30	443	11	HistOK RSOK	Standard		2801	
+Galleon Light Tank Maxwell		30	451	16	XTRMarik XTRMarik	Experimental		3076	
+Garrot Superheavy Transport (Standard)		30	316	15	TR3145ME TR3145ME	Standard		3100	
+Garuda Heavy VTOL (Standard)		40	1,484	41	TRPrototypes None	Advanced		3084	
+Giggins APC (Fire Support)		40	718	24	TR3085 RS3085u-CE	Standard		3085	
+Giggins APC (Standard)		40	476	15	TR3085 RS3085u-CE	Standard		3085	
+Gladius Medium Hover Tank Mk II		40	613	25	TR3060 RS3060u	Standard		3073	
+Gladius Medium Hovertank (Standard)		40	586	20	TR3060 RS3060u	Introductory		3042	
+Glaive Medium Tank (MFB)		45	277	9	TR3067 RS3067u	Standard		3068	
+Glaive Medium Tank (Standard)		45	806	22	TR3067 RS3067u	Standard		3066	
+Glory Heavy Fire Support Vehicle (3090 Upgrade)		85	1,980	57	RS3145NTNU RS3145NTNU	Standard		3090	
+Glory Heavy Fire Support Vehicle (Arrow IV)		85	1,704	49	TR3067 RS3067u	Advanced		3080	
+Glory Heavy Fire Support Vehicle (Light Gauss)		85	1,452	40	TR3067 RS3067u	Standard		3067	
+Glory Heavy Fire Support Vehicle (Standard)		85	1,686	43	TR3067 RS3067u	Standard		3067	
+Goblin II Infantry Support Vehicle (Standard)		45	839	25	TR3058U RS3058Uu-I	Standard		3068	
+Goblin Infantry Support Vehicle (Sealed)		45	897	23	TR3085 RS3085u-ONN	Standard		3076	
+Goblin Infantry Support Vehicle (Standard)		45	790	24	TR3058U RS3058Uu-I	Standard		3053	
+Goblin Medium Tank (LRM)		45	656	20	TR3039 RS3039u	Introductory		Unknown	
+Goblin Medium Tank (MG)		45	527	16	TR3039 RS3039u	Introductory		Unknown	
+Goblin Medium Tank (SRM)		45	647	21	TR3039 RS3039u	Introductory		Unknown	
+Goblin Medium Tank (Standard)		45	555	15	TR3039 RS3039u	Introductory		Unknown	
+Goblin Medium Tank X		45	886	24	XTRBoondocks XTRBoondocks	Experimental		3073	
+Gossamer VTOL (Standard)		25	1,091	32	TR3145ME TR3145ME	Standard		3123	
+Gossamer VTOL (XL)		25	663	21	TR3145ME TR3145ME	Standard		3124	
+Ground Car (Standard)			55		MW1e None	--		ES	
+Gulltoppr OmniMonitor <Base>		190	3,228		TR3145LC TR3145LC	Advanced		3102	
+Gulltoppr OmniMonitor A		190	3,704	100	TR3145LC TR3145LC	Advanced		3102	
+Gulltoppr OmniMonitor B		190	2,938	98	TR3145LC TR3145LC	Advanced		3102	
+Gulltoppr OmniMonitor Prime		190	3,228	85	TR3145LC TR3145LC	Advanced		3102
+Gulltoppr OmniMonitor Prime		190	3,228	85	TR3145LC TR3145LC	Advanced		3102	
+Gun Trailer (Ambush)		35	137	5	TR3145ME TR3145ME	Advanced		3092	
+Gun Trailer (Artillery/AAA)		35	452	19	TR3145ME TR3145ME	Advanced		3096	
+Gun Trailer (LRM)		35	407	16	TR3145ME TR3145ME	Advanced		3095	
+Gun Trailer (Mjolnir)		35	502	16	TR3145ME TR3145ME	Advanced		3112	
+Gun Trailer (SC)		35	299	13	TR3145ME TR3145ME	Advanced		3101	
+Gun Trailer (Siege)		35	248	12	TR3145ME TR3145ME	Advanced		3094	
+Gun Trailer (Stronghold)		35	224	9	TR3145ME TR3145ME	Advanced		3092	
+Gun Trailer (Thumper)		35	265	13	TR3145ME TR3145ME	Advanced		3096	
+Gun Trailer (Thunderbolt)		35	513	17	TR3145ME TR3145ME	Advanced		3099	
+Gun Trailer (Ultra)		35	491	16	TR3145ME TR3145ME	Advanced		3098	
+Gurzil Support Tank (Standard)		80	1,765	47	TR3145TC TR3145TC	Advanced		3126	
+Gürteltier MBT (C3M)		100	1,863	56	TR3085 RS3085u-CE	Standard		3086	
+Gürteltier MBT (Standard)		100	2,125	55	TR3085 RS3085u-CE	Standard		3081	
+Hachiman Fire Support Tank (AAA)		50	1,418	28	TR3060 RS3060u	Standard		3070	
+Hachiman Fire Support Tank (Standard)		50	1,484	37	TR3060 RS3060u	Standard		2842	
+Hadur Fast Support Vehicle (Standard)		50	1,667	37	TR3145TC TR3145TC	Advanced		3102	
+Hanse MBT (Standard)		75	1,537	35	TR3145FS TR3145FS	Standard		3108	
+Harasser Laser Platform (Standard)		25	321	16	TR3039 RS3039u	Introductory		2957	
+Harasser Missile Platform "Leaping Lisa"		25	300	23	TR3039 RS3039u	Advanced		2815	
+Harasser Missile Platform "Mini-Peggy"		25	351	22	TR3039 RS3039u	Standard		3028	
+Harasser Missile Platform (Flamer)		25	365	22	TR3039 RS3039u	Introductory		2851	
+Harasser Missile Platform (Fuel Cell)		25	477	24	XTROMostWanted XTROMostWanted	Experimental		3081	
+Harasser Missile Platform (LRM)		25	412	18	TR3039 RS3039u	Introductory		2821	
+Harasser Missile Platform (MML)		25	427	20	RS3145NTNU RS3145NTNU	Standard		3087	
+Harasser Missile Platform (Standard)		25	413	22	TR3039 RS3039u	Introductory		2811	
+Harasser Missile Platform (Thunderbolt)		25	541	19	RS3145NTNU RS3145NTNU	Standard		3089	
+Hasek Mechanized Combat Vehicle (Standard)		40	841	23	TR3145FS TR3145FS	Standard		3101	
+Hawk Moth Gunship "Verwandlung"		25	749	21	XTROMostWanted XTROMostWanted	Experimental		3081	
+Hawk Moth Gunship (Armor)		25	501	15	TR3060 RS3060u	Standard		3060	
+Hawk Moth Gunship (Standard)		25	492	15	TR3060 RS3060u	Standard		3060	
+Hawk Moth Gunship (Thunderbolt)		25	745	24	TR3060 RS3060u	Advanced		3072	
+Hawk Moth II Gunship (MML)		25	851	32	TR3145RS TR3145RS	Standard		3114	
+Hawk Moth II Gunship (Sniper)		25	490	22	TR3145RS TR3145RS	Advanced		3113	
+Hawk Moth II Gunship (Standard)		25	928	35	TR3145RS TR3145RS	Standard		3112	
+Heavy BattleMech Recovery Vehicle (Standard)		70	176	6	TR3060 RS3060u	Introductory		2500	
+Heavy Hover APC (LRM)		20	284	14	TR3060 RS3060u	Introductory		2470	
+Heavy Hover APC (MG)		20	218	12	TR3060 RS3060u	Introductory		ES	
+Heavy Hover APC (Primitive LRM)					TR3060 None	Standard		2400	
+Heavy Hover APC (Primitive SRM)		20			TR3060 None	Introductory		2370	
+Heavy Hover APC (Primitive)		20			TR3060 None	Introductory		0	
+Heavy Hover APC (SRM)		20	271	15	TR3060 RS3060u	Introductory		2470	
+Heavy Hover APC (Scout Tank)		20	330	15	TR3060 RS3060u	Standard		3070	
+Heavy Hover APC (Standard)		20	188	11	TR3060 RS3060u	Introductory		2470	
+Heavy LRM Carrier (EN Variant)		80	1,058	32	XTRBoondocks XTRBoondocks	Experimental		3073	
+Heavy LRM Carrier (Standard)		80	948	31	TR3060 RS3060u	Introductory		3058	
+Heavy MML Carrier (Standard)		80	722	30	TR3060 RS3060u	Standard		3075	
+Heavy NLRM Carrier (Standard)		80	1,245	35	TRPrototypes None	Advanced		3083	
+Heavy Tracked APC (LRM)		20	276	10	TR3060 RS3060u	Introductory		2470	
+Heavy Tracked APC (MG)		20	228	6	TR3060 RS3060u	Introductory		2470	
+Heavy Tracked APC (SRM)		20	266	11	TR3060 RS3060u	Introductory		2470	
+Heavy Tracked APC (Standard)		20	206	5	TR3060 RS3060u	Introductory		2470	
+Heavy Transport B1					MW1e None	--		ES	
+Heavy Transport B1 (MG)					MW1e None	--		ES	
+Heavy Transport B1 (SL)					MW1e None	--		2400	
+Heavy Transport B1 (SRM)					MW1e None	--		2370	
+Heavy Weapons Carrier (PPC)		20	445	13	HTPGlengary HTPGlengary	Introductory		3056	
+Heavy Wheeled APC (LRM)		20	265	11	TR3060 RS3060u	Introductory		2400	
+Heavy Wheeled APC (MG)		20	213	8	TR3060 RS3060u	Introductory		ES	
+Heavy Wheeled APC (SRM)		20	255	11	TR3060 RS3060u	Introductory		2370	
+Heavy Wheeled APC (Standard)		20	189	8	TR3060 RS3060u	Introductory		ES	
+Heavy Wheeled APC (WoB)		20	330	18	TR3060 RS3060u	Advanced		3072	
+Heimdall Ground Monitor Tank <Base>		95	1,432		TR3067 None	Standard		3063	
+Heimdall Ground Monitor Tank A		95	2,244	57	TR3067 RS3067u	Standard		3063	
+Heimdall Ground Monitor Tank B		95	2,254	54	TR3067 RS3067u	Standard		3068	
+Heimdall Ground Monitor Tank C		95	2,131	48	TR3067 RS3067u	Standard		3075	
+Heimdall Ground Monitor Tank D		95	1,990	47	RS3145NTNU RS3145NTNU	Standard		3092	
+Heimdall Ground Monitor Tank Prime		95	1,943	50	TR3067 RS3067u	Standard		3063	
+Hephaestus Jump Tank (Anti-Infantry)		35			TRPrototypes None	--		3089	
+Hephaestus Jump Tank (Standard)		35	1,044	34	TRPrototypes None	Advanced		3083	
+Hephaestus Scout Tank <Base>		30	297		TR3067 None	Standard		3064	
+Hephaestus Scout Tank A		30	768	30	TR3067 RS3067u	Standard		3064	
+Hephaestus Scout Tank B		30	957	33	TR3067 RS3067u	Standard		3064	
+Hephaestus Scout Tank C		30	577	24	TR3067 RS3067u	Standard		3064	
+Hephaestus Scout Tank D		30	850	30	TR3067 RS3067u	Standard		3071	
+Hephaestus Scout Tank Prime		30	777	30	TR3067 RS3067u	Standard		3064	
+Hetzer Wheeled Assault Gun (AC10)		40	536	14	TR3039 RS3039u	Introductory		2893	
+Hetzer Wheeled Assault Gun (LB-X)		40	767	17	TR3039 RS3058Uu-I	Standard		3063	
+Hetzer Wheeled Assault Gun (LRM)		40	657	18	TR3039 RS3039u	Introductory		3001	
+Hetzer Wheeled Assault Gun (Laser)		40	520	17	TR3039 RS3039u	Introductory		2889	
+Hetzer Wheeled Assault Gun (SRM)		40	630	18	TR3039 RS3039u	Introductory		2957	
+Hetzer Wheeled Assault Gun (Scout)		40	553	15	TR3039 RS3039u	Standard		3014	
+Hetzer Wheeled Assault Gun (Sealed)		40	775	20	TR3085 RS3085u-ONN	Standard		3076	
+Hetzer Wheeled Assault Gun (Standard)		40	574	15	TR3039 RS3039u	Introductory		2887	
+Hexareme HQ Hovercraft (Standard)		90	1,408	50	XTR RotS 1 XTR RotS 1	Advanced		3115	
+Hi-Scout Drone Carrier "Cunnington"		60	515	21	XTRPhantoms XTRPhantoms	Experimental		3077	
+Hi-Scout Drone Carrier (Standard)		60	347	12	TR3039 RS3039u	Introductory		3000	
+Hipparch Cavalry Tank (Standard)		30	382	17	HistRW None	Introductory		2562	
+Hiryo Armored Infantry Transport "Hound"		40	628	29	XTRKurita XTRKurita	Experimental		3077	
+Hiryo Armored Infantry Transport (Bloodhound)		40	504	24	TRPrototypes None	Advanced		3083	
+Hiryo Armored Infantry Transport (Light PPC)		40	686	24	TR3075 RS3075u-CE	Standard		3070	
+Hiryo Armored Infantry Transport (MRM)		40	644	28	TR3075 RS3075u-CE	Standard		3070	
+Hiryo Armored Infantry Transport (Standard)		40	665	23	TR3075 RS3075u-CE	Standard		3069	
+Hover Scout (Standard)			189	20	RS5 None	--		2801	
+Huitzilopochtli Assault Tank "Huey" (AAA)		85	1,454	52	TR3060 RS3060u	Advanced		3070	
+Huitzilopochtli Assault Tank "Huey" (Original)		85			TR3060 None	--		2816	
+Huitzilopochtli Assault Tank "Huey" (Standard)		85	1,132	48	TR3060 RS3060u	Advanced		2845	
+Hunter Light Support Tank "Assault Hunter"		35	670	16	TR3058U RS3058Uu-I	Standard		3064	
+Hunter Light Support Tank (3054 Upgrade)		35	641	16	TR3058U RS3058Uu-I	Standard		3054	
+Hunter Light Support Tank (Ammo)		35	675	20	TR3039 RS3039u	Introductory		2960	
+Hunter Light Support Tank (Amphibious)		35	639	20	TRPrototypes None	Advanced		3085	
+Hunter Light Support Tank (ERLL)		35	660	16	TR3058U RS3058Uu-I	Standard		3059	
+Hunter Light Support Tank (LPL)		35	610	18	TR3058U RS3058Uu-I	Standard		3061	
+Hunter Light Support Tank (LRM10)		35	645	21	TR3039 RS3039u	Introductory		2954	
+Hunter Light Support Tank (LRM15)		35	599	17	TR3039 RS3039u	Introductory		2956	
+Hunter Light Support Tank (Standard)		35	648	20	TR3039 RS3039u	Introductory		2937	
+Ignis Infantry Support Tank (SRM)		30	502	15	TR3075 RS3075u-AW	Introductory		2751	
+Ignis Infantry Support Tank (Standard)		30	463	11	TR3075 RS3075u-AW	Introductory		2512	
+Indra Infantry Transport (BA)		35	728	22	TR3060 RS3060u	Standard		3069	
+Indra Infantry Transport (Standard)		35	897	21	TR3060 RS3060u	Standard		2842	
+Ishtar Heavy Fire Support Tank (Gauss)		65	1,616	38	TR3060 RS3060u	Standard		3068	
+Ishtar Heavy Fire Support Tank (Original)		65	1,072	26	TR3060 RS3060u	Standard		2842	
+Ishtar Heavy Fire Support Tank (Standard)		65	1,404	36	TR3060 RS3060u	Standard		2976	
+J-27 Ordnance Transport (Armor)		20	70	4	TR3039 RS3039u	Advanced		2833	
+J-27 Ordnance Transport (Fusion)		20	47	2	TR3039 RS3039u	Advanced		2578	
+J-27 Ordnance Transport (Standard)		20	47	2	TR3039 RS3039u	Advanced		2650	
+J-27 Ordnance Transport (Trailer)		20	36	3	TR3039 RS3039u	Introductory		2650	
+J-27 Ordnance Transport K-27 "Killjoy"		20	170	9	TR3039 RS3039u	Advanced		2847	
+J. Edgar Light Hover Tank (Cell)		25	398	20	XTRSW I XTRSW I	Experimental		2998	
+J. Edgar Light Hover Tank (Flamer)		25	459	24	TR3039 RS3039u	Introductory		2793	
+J. Edgar Light Hover Tank (ICE)		25	433	20	TR3039 RS3039u	Introductory		2854	
+J. Edgar Light Hover Tank (Kurita)		25	740	35	TR3039 RS3058Uu-I	Standard		3053	
+J. Edgar Light Hover Tank (MG)		25	482	24	TR3039 RS3039u	Introductory		2794	
+J. Edgar Light Hover Tank (Standard)		25	544	23	TR3039 RS3039u	Introductory		2722	
+J. Edgar Light Hover Tank (TAG)		25	489	30	TR3039 RS3058Uu-I	Standard		3053	
+JES I Tactical Missile Carrier (3082 Upgrade)		50	978	43	TR3085 RS3085u-ONN	Standard		3082	
+JES I Tactical Missile Carrier (Standard)		50	752	33	TR3075 RS3075u-CE	Standard		3075	
+JES II Strategic Missile Carrier (Ammo)		95	1,362	45	TR3085 RS3085u-CE	Standard		3080	
+JES II Strategic Missile Carrier (Standard)		95	1,349	48	TR3085 RS3085u-CE	Standard		3079	
+JES II Strategic Missile Carrier (Support)		95	1,209	44	RS3145NTNU RS3145NTNU	Standard		3088	
+JES III Missile Carrier (C3)		60	1,020	33	TR3145RS TR3145RS	Standard		3140	
+JES III Missile Carrier (MML)		60	947	30	TR3145RS TR3145RS	Standard		3133	
+JES III Missile Carrier (Speed)		60	1,108	30	TR3145RS TR3145RS	Standard		3135	
+JES III Missile Carrier (Standard)		60	1,037	31	TR3145RS TR3145RS	Standard		3133	
+JES III Missile Carrier (Thunderbolt)		60	995	31	TR3145RS TR3145RS	Standard		3133	
+JI-100 Transportable Field Repair Unit (Standard)		70	199	5	TR3085 RS3085u-CE	Standard		3074	
+JI2A1 Attack APC (MML)		25	396	24	TR3145FS TR3145FS	Standard		3093	
+JI2A1 Attack APC (Standard)		25	435	29	TR3145FS TR3145FS	Standard		3093	
+Jagdpanzer II (Standard)		40	1,009	25	XTRBoondocks XTRBoondocks	Experimental		3074	
+Jeep (MG)					MW1e None	--		ES	
+Jeep (SRM)					MW1e None	--		2370	
+Jeep (Standard)			78		MW1e None	--		ES	
+Jet Sled (MG)					MW1e None	--		ES	
+Jet Sled (Standard)			36		MW1e None	--		ES	
+Joust Medium Tank BE700		40	1,315	35	TR3085 RS3085u-CE	Standard		3077	
+Joust Medium Tank BE701		40	1,077	29	TR3085 RS3085u-CE	Standard		3086	
+Kalki Cruise Missile Launcher (Standard)		150	1,036	51	TRPrototypes None	Experimental		3079	
+Kamakiri Attack VTOL (Gauss)		55	1,552	37	TR3145DC TR3145DC	Standard		3106	
+Kamakiri Attack VTOL (Standard)		55	1,378	39	TR3145DC TR3145DC	Standard		3100	
+Kanga Medium Hovertank (AC)		50	744	24	HistOK RSOK	Introductory		2801	
+Kanga Medium Hovertank (Standard)		50	752	25	TR3050U RS3050Uu-C	Standard		2653	
+Kanga Medium Hovertank (WiGE)					TR3050U None	--		3071	
+Kanga Medium Hovertank KGA-3X		50			TR3050U None	--		n/a	
+Kanga-X Jump Tank (Standard)		50	1,154	36	XTRMercs XTRMercs	Experimental		3075	
+Karnov UR Gunship (Standard)		30	221	17	TR3039 RS3039u	Introductory		3039	
+Karnov UR Transport (3055 Upgrade)		30	152	12	TR3058U RS3058Uu-I	Standard		3055	
+Karnov UR Transport (AC)		30	556	19	TR3039 RS3039u	Introductory		Unknown	
+Karnov UR Transport (Artillery)		30	227	15	TR3039 RS3039u	Advanced		Unknown	
+Karnov UR Transport (BA)		30	499	19	TR3058U RS3058Uu-I	Standard		3063	
+Karnov UR Transport (Heavy Stealth)		45	416	20	XTROMostWanted XTROMostWanted	Experimental		3080	
+Karnov UR Transport (Missiles)		30			TR3039 None	--		Unknown	
+Karnov UR Transport (Periphery)		30	590	17	TR3058U RS3058Uu-I	Standard		3064	
+Karnov UR Transport (Standard)		30	125	11	TR3039 RS3039u	Introductory		Unknown	
+Karnov UR Transport (Stealth)		30			TR3039 None	--		2993	
+Kelswa Assault Tank (Standard)		95	1,632	38	TR3145LC TR3145LC	Standard		3105	
+Kestrel VTOL (Clan)		25	166	13	TR3058U RS3058Uu-I	Standard		2880	
+Kestrel VTOL (ML)		25	252	17	TR3058U RS3058Uu-I	Introductory		3030	
+Kestrel VTOL (MedEvac)		25	126	11	TR3058U RS3058Uu-I	Standard		3022	
+Kestrel VTOL (SL)		25	175	14	TR3058U RS3058Uu-I	Introductory		3017	
+Kestrel VTOL (SRM)		25	192	14	TR3058U RS3058Uu-I	Introductory		3042	
+Kestrel VTOL (Scout)		25	175	14	XTRSW I XTRSW I	Experimental		3030	
+Kestrel VTOL (Standard)		25	155	13	TR3058U RS3058Uu-I	Introductory		3007	
+Kinnol MBT (PPC)		70	1,212	40	TR3085 RS3085u-CE	Standard		3086	
+Kinnol MBT (RAC)		70	1,671	38	RS3145NTNU RS3145NTNU	Advanced		3122	
+Kinnol MBT (Standard)		70	1,200	36	TR3085 RS3085u-CE	Standard		3083	
+Kite Reconnaissance Vehicle (Standard)		30	671	27	TR3145ME TR3145ME	Advanced		3105	
+Korvin Tank KRV-3		50	809	23	TR3075 RS3075u-AW	Introductory		2544	
+Kruger Combat Car (Original)		10	336	14	TR3145FS TR3145FS	Standard		2620	
+Kruger Combat Car (Standard)		10	429	14	TR3145FS TR3145FS	Standard		3091	
+Ku Wheeled Assault Tank (IFV) "Turhan II"		50	1,042	34	TR3060 RS3060u	Standard		3074	
+Ku Wheeled Assault Tank (Standard)		50	1,091	27	TR3060 RS3060u	Standard		2842	
+LB-X Carrier (Ambush)		60		24	H:LoT2 H:LoT2	Standard		2773	
+LB-X Carrier (Standard)		60	901	24	H:LoT2 H:LoT2	Standard		2773	
+LB-X Carrier (Ultra)		60		20	H:LoT2 H:LoT2	Standard		2773	
+LRM Carrier (3055 Upgrade)		60	798	33	TR3058U RS3058Uu-I	Standard		3055	
+LRM Carrier (Standard)		60	833	22	TR3039 RS3039u	Introductory		2407	
+LRM Carrier (WoB)		60	1,050	35	TR3058U RS3058Uu-I	Standard		3064	
+LTV-4 Hover Tank (Standard)		50	684	27	XTRPrimitives II XTRPrimitives II	Introductory		2464	
+Lamprey Transport Helicopter (Standard)		30	478	25	TR3145ME TR3145ME	Introductory		3119	
+Large Agricultural Robot (Standard)					MW1e None	--		2538	
+Laser Carrier (Standard)		60	566	20	TR3039 RS3039u	Introductory		2874	
+Light SRM Carrier (Standard)		40	578	16	TR3060 RS3060u	Introductory		3058	
+Light Thunderbolt Carrier (Standard)		40	714	20	TR3060 RS3060u	Advanced		3072	
+Lightning Attack Hovercraft (ERML)		35	956	26	TR3050U RS3050Uu-C	Standard		3067	
+Lightning Attack Hovercraft (ERSL)		35	884	26	TR3050U RS3050Uu-C	Standard		3067	
+Lightning Attack Hovercraft (RL)		35	709	18	TR3050U RS3050Uu-C	Standard		3067	
+Lightning Attack Hovercraft (Royal)		35	633	32	TR3075 RS3075u-AW	Standard		2720	
+Lightning Attack Hovercraft (Standard)		35	510	26	TR3050U RS3050Uu-C	Standard		2696	
+Lightning Attack Hovercraft CX-3		35	710	25	XTRComstar XTRComstar	Experimental		3069	
+Luduan Scout Vehicle (Standard)		25	453	26	TR3145CC TR3145CC	Standard		3136	
+M.A.S.H. Truck (ICE)		20	213	7	TR3039 RS3039u	Advanced		2810	
+M.A.S.H. Truck (Standard)		20	220	6	TR3039 RS3039u	Advanced		2671	
+MHI Amphibious APC (Standard)		35	564	16	TR3145RS TR3145RS	Advanced		3101	
+MHI Defense AA Tank (Standard)		60	1,026	24	TR3145RS TR3145RS	Advanced		3106	
+MIT 23 MASH Vehicle (Standard)		20	153	7	TR3075 RS3075u-CE	Advanced		3067	
+MIT 24 MASH Vehicle (Standard)		20	206	8	RS3145NTNU RS3145NTNU	Advanced		3086	
+MRM Carrier (Standard)		60	779	22	TR3058U RS3058Uu-I	Standard		3063	
+Magi Infantry Support Vehicle (Standard)		70	798	26	TR3050U RS3050Uu-C	Standard		2727	
+Magi Infantry Support Vehicle (UCSV)		70	831	30	TR3050U RS3050Uu-C	Standard		3068	
+Main Gauche Light Support Tank (C3)		30	472	17	TR3067 RS3067u	Standard		3066	
+Main Gauche Light Support Tank (IFV)		30	725	19	TR3067 RS3067u	Standard		3081	
+Main Gauche Light Support Tank (Standard)		30	464	13	TR3067 RS3067u	Standard		3064	
+Main Gauche Light Support Tank (XL)		30	565	16	TR3067 RS3067u	Standard		3066	
+Mamono IFV (Standard)		70	1,422	29	TR3145DC TR3145DC	Advanced		3095	
+Manteuffel Attack Tank <Base>		70	712		TR3067 None	Standard		3062	
+Manteuffel Attack Tank A		70	1,486	44	TR3067 RS3067u	Standard		3062	
+Manteuffel Attack Tank B		70	1,508	34	TR3067 RS3067u	Standard		3062	
+Manteuffel Attack Tank C		70	1,274	38	TR3067 RS3067u	Standard		3068	
+Manteuffel Attack Tank D		70	1,172	33	TR3067 RS3067u	Standard		3075	
+Manteuffel Attack Tank E		70	1,256	33	RS3145NTNU RS3145NTNU	Advanced		3087	
+Manteuffel Attack Tank Prime		70	1,504	42	TR3067 RS3067u	Standard		3062	
+Manticore "The Ballista"		60	1,135	32	XTRGladiators XTRGladiators	Experimental		3076	
+Manticore Heavy Tank (3055 Upgrade)		60	957	29	TR3058U RS3058Uu-I	Standard		3055	
+Manticore Heavy Tank (C3M)		60	958	34	TR3058U RS3058Uu-I	Standard		3063	
+Manticore Heavy Tank (C3S)		60	1,008	31	TR3058U RS3058Uu-I	Standard		3063	
+Manticore Heavy Tank (HPPC)		60	1,149	30	TR3085 RS3085u-ONN	Standard		3074	
+Manticore Heavy Tank (LB-X)		60	961	26	TR3058U RS3058Uu-I	Standard		3060	
+Manticore Heavy Tank (RAC)		60	1,241	28	TR3058U RS3058Uu-I	Standard		3069	
+Manticore Heavy Tank (Standard)		60	993	28	TR3039 RS3039u	Introductory		2668	
+Manticore II Heavy Tank (Standard)		70	1,435	31	TR3145LC TR3145LC	Advanced		3112	
+Mantis Light Attack VTOL (ECCM)		15	304	13	TR3060 RS3060u	Advanced		3073	
+Mantis Light Attack VTOL (Standard)		15	434	25	TR3060 RS3060u	Standard		3061	
+Marksman Artillery Vehicle (AC)		65	976	28	HistOK RSOK	Advanced		2801	
+Marksman Artillery Vehicle (Light PPC)		65	684	31	TR3050U RS3050Uu-C	Advanced		3068	
+Marksman Artillery Vehicle (Standard)		65	688	29	TR3050U RS3050Uu-C	Advanced		2702	
+Marksman MBT M1		95	1,474	40	TR3085S RS3085u-CE	Standard		3088	
+Marksman MBT M1A		95	1,778	47	TR3085S RS3085u-CE	Standard		3088	
+Marksman MBT M1J		95	1,702	46	RS3145NTNU RS3145NTNU	Standard		3128	
+Mars Assault Vehicle (ATM)		100	1,948	54	TR3060 RS3060u	Standard		3065	
+Mars Assault Vehicle (HAG)		100	2,545	68	TR3060 RS3060u	Standard		3075	
+Mars Assault Vehicle (Original)		100			TR3060 None	--		2842	
+Mars Assault Vehicle (Standard)		100	2,076	56	TR3060 RS3060u	Standard		2871	
+Mars Assault Vehicle (XL)		100	2,520	57	TR3060 RS3060u	Standard		3061	
+Marsden MBT II		60	1,056	30	TR3075 RS3075u-AW	Introductory		2473	
+Marsden MBT II -A		60	1,054	26	TR3075 RS3075u-AW	Introductory		2482	
+Marsden MBT II-A (LB-X)		60	1,090	27	TR3075 RS3075u-AW	Standard		3068	
+Marsden MBT III		60			TR3075 None	--		2545	
+Marten Scout VTOL (Infantry)		15	107	9	TR3145FS TR3145FS	Standard		3024	
+Marten Scout VTOL (Standard)		15	179	12	TR3145FS TR3145FS	Standard		3021	
+Maultier Hover APC (BA)		15	165	9	TR3058U RS3058Uu-C	Standard		3070	
+Maultier Hover APC (Basic)		15	197	12	TR3058U RS3058Uu-C	Introductory		3019	
+Maultier Hover APC (Fusion)		15	301	18	TR3058U RS3058Uu-C	Standard		3070	
+Maultier Hover APC (Intermediate)		15	210	12	TR3058U RS3058Uu-C	Standard		3043	
+Maultier Hover APC (MG)		15	170	11	TR3058U RS3058Uu-C	Standard		3070	
+Maultier Hover APC (Standard)		15	209	9	TR3058U RS3058Uu-C	Standard		2647	
+Maxim (I) Heavy Hover Transport (Company Command)		50	851	48	TR3058U RS3058Uu-I	Standard		3069	
+Maxim (I) Heavy Hover Transport (Standard)		50	770	35	TR3058U RS3058Uu-I	Standard		3060	
+Maxim Flanker (Standard)		50	781	27	XTRCorps XTRCorps	Experimental		3074	
+Maxim Heavy Hover Transport (3052 Upgrade)		50	794	37	TR3058U RS3058Uu-I	Standard		3052	
+Maxim Heavy Hover Transport (Anti-Infantry)		50	715	30	TR3058U RS3058Uu-I	Standard		3054	
+Maxim Heavy Hover Transport (BA Factory Upgrade)		50	794	36	TR3058U RS3058Uu-I	Standard		3055	
+Maxim Heavy Hover Transport (BA Field Upgrade)		50	817	36	TR3058U RS3058Uu-I	Standard		3056	
+Maxim Heavy Hover Transport (C3M)		50	817	42	TR3058U RS3058Uu-I	Standard		3068	
+Maxim Heavy Hover Transport (C3S)		50	773	38	TR3058U RS3058Uu-I	Standard		3068	
+Maxim Heavy Hover Transport (Clan)		50	1,147	38	TR3058U RS3058Uu-I	Standard		3059	
+Maxim Heavy Hover Transport (Fire Support)		50	869	33	TR3058U RS3058Uu-I	Standard		3053	
+Maxim Heavy Hover Transport (SRM2)		50	763	29	TR3039 RS3039u	Introductory		2967	
+Maxim Heavy Hover Transport (SRM4)		50	682	27	TR3039 RS3039u	Introductory		2875	
+Maxim Heavy Hover Transport (Standard)		50	764	29	TR3039 RS3039u	Introductory		2689	
+Maxim Mk II Transport (ECM)		50	483	24	RS3145NTNU RS3145NTNU	Standard		3087	
+Maxim Mk II Transport (Infantry Support) "Shiloh"		50	828	32	TR3085 RS3085u-CE	Standard		3084	
+Maxim Mk II Transport (Standard)		50	476	25	TR3085 RS3085u-CE	Standard		3083	
+Merkava Heavy Tank Mk IX		75	1,038	28	TR3075 RS3075u-AW	Standard		3073	
+Merkava Heavy Tank Mk VIII		75	879	25	TR3075 RS3075u-AW	Introductory		2465	
+Mining Robot (Standard)					MW1e None	--		2530	
+Minion Advanced Tactical Vehicle "Silver Bullet"		20	560	22	XTRGladiators XTRGladiators	Experimental		3072	
+Minion Advanced Tactical Vehicle (Gauss) "Sandblaster"		20	512	23	TR3067 RS3067u	Standard		3080	
+Minion Advanced Tactical Vehicle (Standard)		20	456	25	TR3067 RS3067u	Standard		3064	
+Minion Advanced Tactical Vehicle (TAG)		20	456	23	TR3067 RS3067u	Standard		3067	
+Minion Advanced Tactical Vehicle (Targeting Computer)		20	508	23	TR3067 RS3067u	Standard		3065	
+Mithras Light Tank (ERLL)		25	750	18	TR3060 RS3060u	Standard		3075	
+Mithras Light Tank (Standard)		25	670	17	TR3060 RS3060u	Standard		2845	
+Mobile Headquarters (ICE - LL)		25	249	10	TR3039 RS3039u	Standard		2850	
+Mobile Headquarters (ICE - LRM)		25	387	18	TR3039 RS3039u	Standard		2850	
+Mobile Headquarters (ICE)		25	319	16	TR3039 RS3039u	Introductory		2850	
+Mobile Headquarters (LL)		25	435	17	TR3039 RS3039u	Introductory		2620	
+Mobile Headquarters (LRM)		25	402	18	TR3039 RS3039u	Introductory		2620	
+Mobile Headquarters (Standard)		25	319	21	TR3039 RS3039u	Standard		2620	
+Mobile Long Tom Artillery Ammunition Carriage LT-MOB-25		95	144	5	TR3039 RS3039u	Advanced		2602	
+Mobile Long Tom Artillery LT-MOB-25		95	515	37	TR3039 RS3039u	Advanced		2602	
+Mobile Long Tom Artillery Support Carriage LT-MOB-25		95	144	5	TR3039 RS3039u	Advanced		2602	
+Moltke MBT M1		75	1,355	32	TR3085 RS3085u-CE	Standard		3076	
+Moltke MBT M2		75	1,363	38	TR3085 RS3085u-CE	Standard		3077	
+Moltke MBT M3		75	1,438	33	TR3085 RS3085u-CE	Standard		3080	
+Morningstar City Command Vehicle (Company Command)		60	680	34	TR3067 RS3067u	Standard		3068	
+Morningstar City Command Vehicle (HPG)		60	458	17	TR3067 RS3067u	Advanced		3076	
+Morningstar City Command Vehicle (Laser)		60	940	23	TR3067 RS3067u	Standard		3065	
+Morningstar City Command Vehicle (Standard)		60	736	30	TR3067 RS3067u	Standard		3065	
+Morrigu Fire Support Vehicle (HAG)		80	2,059	43	TR3067 RS3067u	Standard		3083	
+Morrigu Fire Support Vehicle (Laser)		80	1,324	29	TR3067 RS3067u	Standard		3067	
+Morrigu Fire Support Vehicle (Standard)		80	1,685	42	TR3067 RS3067u	Standard		3064	
+Mortar Carrier (Standard)		60	517	24	RS3145NTNU RS3145NTNU	Advanced		3083	
+Musketeer Hover Tank (3080 Upgrade)		50	1,114	33	TR3067 RS3067u	Standard		3080	
+Musketeer Hover Tank (Armor)		50	897	36	TR3067 RS3067u	Standard		3068	
+Musketeer Hover Tank (Standard)		50	1,120	34	TR3067 RS3067u	Standard		3065	
+Myrmidon Medium Tank (Anti-Infantry)		40	749	23	TRPrototypes None	Advanced		3080	
+Myrmidon Medium Tank (Standard)		40	815	23	TR3060 RS3060u	Introductory		3060	
+Myrmidon Medium Tank P (Tate)		40	780	22	XTRPirates XTRPirates	Experimental		3069	
+Myrmidon Medium Tank Type 2		40	984	25	TR3060 RS3060u	Advanced		3075	
+Nacon Armored Scout (Standard)		20	690	28	TR3145TC TR3145TC	Standard		3096	
+Narukami Heavy Tank NK-1C		90	1,719	41	TR3145DC TR3145DC	Advanced		3097	
+Narukami Heavy Tank NK-BC3		90	1,859	44	TR3145DC TR3145DC	Advanced		3108	
+Nightshade ECM VTOL (Armor)		25	344	21	TR3050U RS3050Uu-C	Standard		2820	
+Nightshade ECM VTOL (LAC)		25	325	19	TR3050U RS3050Uu-C	Standard		3070	
+Nightshade ECM VTOL (Light PPC)		25	490	22	TR3050U RS3050Uu-C	Standard		3069	
+Nightshade ECM VTOL (Royal)		25	631	20	TR3075 RS3075u-AW	Standard		2717	
+Nightshade ECM VTOL (Standard)		25	367	19	TR3050U RS3050Uu-C	Standard		2597	
+Nisos Attack WiGE (Standard)		35	1,090	28	TR3145CC TR3145CC	Standard		3122	
+Nisos Attack WiGE (Support)		35	1,010	30	TR3145CC TR3145CC	Advanced		3123	
+Nuberu Anti-Aircraft Tank (Standard)		60	1,100	22	TRPrototypes None	Advanced		3083	
+Nuberu Anti-Aircraft Tank 2 "Numantia"		60			TRPrototypes None	--		3083	
+Odin Scout Tank (Spotter)		20	338	18	TR3060 RS3060u	Advanced		3071	
+Odin Scout Tank (Standard)		20	691	25	TR3060 RS3060u	Standard		2844	
+Ontos Heavy Tank (3053 Upgrade)		95	1,156	42	TR3058U RS3058Uu-I	Standard		3053	
+Ontos Heavy Tank (Fusion)		95	1,287	41	TR3039 RS3039u	Introductory		2863	
+Ontos Heavy Tank (LRM)		95	1,164	33	TR3039 RS3039u	Introductory		2876	
+Ontos Heavy Tank (Light Gauss)		95	1,269	32	TR3058U RS3058Uu-I	Standard		3065	
+Ontos Heavy Tank (MML)		95	1,268	34	TR3085 RS3085u-ONN	Standard		3074	
+Ontos Heavy Tank (Sealed)		95	1,156	37	TR3085 RS3085u-ONN	Advanced		3078	
+Ontos Heavy Tank (Standard)		95	938	31	TR3039 RS3039u	Introductory		2832	
+Ontos Heavy Tank HEAT		95	1,173	32	TRPrototypes None	Advanced		3084	
+Ontos Heavy Tank X All-Aspect Assault Tank		95	1,031	31	XTRPirates XTRPirates	Experimental		3072	
+Oro Heavy Tank (AC)		60			TR3060 None	--		2815	
+Oro Heavy Tank (HAG)		60	1,492	27	TR3060 RS3060u	Standard		3073	
+Oro Heavy Tank (Standard)		60	1,116	26	TR3060 RS3060u	Standard		2844	
+Packrat LRPV "Gespenst"		20	397	19	XTRPhantoms XTRPhantoms	Experimental		3073	
+Packrat LRPV PKR-T5		20	344	14	TR3039 RS3039u	Introductory		2650	
+Packrat LRPV PKR-T5 (ICE)		20	294	14	TR3039 RS3039u	Introductory		2846	
+Packrat LRPV PKR-T5 (ML)		20	501	19	TR3039 RS3039u	Introductory		2798	
+Packrat LRPV PKR-T5 (Mobile TacOps)		20			1SS None	--		3041	
+Packrat LRPV PKR-T5 (SRM2)		20	263	14	TR3039 RS3039u	Introductory		2824	
+Padilla Anti-Missile Tank (Standard)		55	1,155	24	XTR RotS 3 XTR RotS 3	Advanced		3134	
+Padilla Heavy Artillery Tank (LRM)		75	1,113	30	TR3058U RS3058Uu-C	Standard		2830	
+Padilla Heavy Artillery Tank (Standard)		75	1,135	34	TR3058U RS3058Uu-C	Advanced		2620	
+Padilla Tube Artillery Tank (LTC)		55	985	29	TR3085 RS3085u-CE	Experimental		3077	
+Padilla Tube Artillery Tank (Standard)		55	592	29	TR3085 RS3085u-CE	Advanced		3077	
+Padilla Tube Artillery Tank (Thumper)		55	690	31	TR3085 RS3085u-CE	Advanced		3082	
+Paladin Defense System (Standard)		130	1,624	83	TR3145FS TR3145FS	Advanced		3109	
+Palmoni Assault Infantry Fighting Vehicle (Standard)		85	1,116	34	TR3085 RS3085u-CE	Standard		3076	
+Pandion Combat WiGE (C3)		20	373	23	TR3085 None	Standard		3078	
+Pandion Combat WiGE (Infantry)		20	507	21	TR3085 None	Standard		3078	
+Pandion Combat WiGE (Standard)		20	658	27	TR3085 None	Standard		3078	
+Partisan AA Vehicle (3134 Upgrade)		50	553	15	TR3145FW TR3145FW	Standard		3134	
+Partisan AA Vehicle (Standard)		50	597	16	TR3145FW TR3145FW	Standard		3110	
+Partisan Air Defense Tank (Cell)		80	980	26	TR3085 RS3085u-CE	Advanced		3075	
+Partisan Air Defense Tank (Company Command)		80	920	35	TR3058U RS3058Uu-I	Standard		3058	
+Partisan Air Defense Tank (LRM)		80	1,303	42	TR3085 RS3085u-ONN	Advanced		3075	
+Partisan Air Defense Tank (Lance Command)		80	836	30	TR3058U RS3058Uu-I	Standard		3058	
+Partisan Air Defense Tank (Quad RAC)		80	1,296	34	TR3058U RS3058Uu-I	Standard		3069	
+Partisan Air Defense Tank (RAC)		80	1,247	31	TR3058U RS3058Uu-I	Standard		3067	
+Partisan Air Defense Tank (Standard)		80	923	25	TR3058U RS3058Uu-I	Standard		3058	
+Partisan Air Defense Tank (XL)		80	1,110	30	TR3058U RS3058Uu-I	Standard		3059	
+Partisan Heavy Tank (AC2)		80	580	16	TR3039 RS3039u	Introductory		3002	
+Partisan Heavy Tank (C3)		80	662	21	TR3058U RS3058Uu-I	Standard		3062	
+Partisan Heavy Tank (LRM)		80	1,021	30	TR3039 RS3039u	Introductory		3017	
+Partisan Heavy Tank (Standard)		80	673	19	TR3039 RS3039u	Introductory		2791	
+Partisan Hull Defense (Standard)		80	1,113	24	XTRCorps XTRCorps	Experimental		3072	
+Patton Tank (Standard)		65	961	28	TR3039 RS3039u	Introductory		3027	
+Patton Tank (Ultra)		65	1,160	32	TR3039 RS3058Uu-I	Standard		3062	
+Patton Tank -SB		65	1,468	32	XTRPeriphery XTRPeriphery	Experimental		3079	
+Pegasus Scout Hover Tank (3058 Upgrade)		35	706	30	TR3058U RS3058Uu-I	Standard		3058	
+Pegasus Scout Hover Tank (C3)		35	787	32	TR3058U RS3058Uu-I	Standard		3070	
+Pegasus Scout Hover Tank (MG)					MW1e None	--			
+Pegasus Scout Hover Tank (MRM)		35	781	29	TR3058U RS3058Uu-I	Standard		3063	
+Pegasus Scout Hover Tank (Missile)		35	678	30	TR3039 RS3039u	Introductory		2854	
+Pegasus Scout Hover Tank (Sealed)		35	618	31	TR3085 RS3085u-ONN	Advanced		3076	
+Pegasus Scout Hover Tank (Sensors)		35	571	25	TR3039 RS3039u	Standard		2798	
+Pegasus Scout Hover Tank (Standard)		35	640	25	TR3039 RS3039u	Introductory		2791	
+Pegasus Scout Hover Tank (Unarmed)		35	317	15	TR3039 RS3039u	Introductory		2873	
+Pegasus Scout Hover Tank (X-Pulse)		35	1,119	38	TRPrototypes None	Advanced		3086	
+Pegasus Scout Hover Tank X		35	1,119	38	XTRKurita XTRKurita	Experimental		3073	
+Peregrine Attack VTOL (Cargo)		30	88	8	TR3058U RS3058Uu-I	Introductory		3036	
+Peregrine Attack VTOL (Kurita)		30	564	26	TR3058U RS3058Uu-I	Introductory		3033	
+Peregrine Attack VTOL (Standard)		30	344	20	TR3058U RS3058Uu-I	Introductory		3021	
+Phalanx Support Tank (Prototype)		40	461	16	XTRMarik XTRMarik	Experimental		3079	
+Phalanx Support Tank (Standard)		40	533	18	TRPrototypes None	Advanced		3080	
+Pike Support Vehicle (AC5)		60	715	21	TR3039 RS3039u	Introductory		3004	
+Pike Support Vehicle (Clan)		60	892	22	TR3039 RS3058Uu-I	Standard		3055	
+Pike Support Vehicle (Missile)		60	943	26	TR3039 RS3039u	Introductory		2993	
+Pike Support Vehicle (RAC) "Assault Pike"		60	961	28	TR3039 RS3058Uu-I	Standard		3064	
+Pike Support Vehicle (Standard)		60	648	18	TR3039 RS3039u	Introductory		2987	
+Pilum Heavy Tank (Arrow IV)		70	1,102	38	TR3058U RS3058Uu-I	Advanced		3059	
+Pilum Heavy Tank (Standard)		70	1,121	36	TR3058U RS3058Uu-I	Standard		3057	
+Pinto Attack VTOL (Standard)		30	710	30	TR3060 RS3060u	Standard		3055	
+Pinto Attack VTOL (WoB)		30	703	30	TR3060 RS3060u	Standard		3070	
+Pixiu Heavy Tank (Standard)		70	1,450	40	TR3145CC TR3145CC	Standard		3093	
+Plainsman Medium Hovertank (Scout)		35	578	28	TR3058U RS3058Uu-I	Standard		3065	
+Plainsman Medium Hovertank (Sealed)		35	632	25	TR3085 RS3085u-ONN	Advanced		3074	
+Plainsman Medium Hovertank (Standard)		35	600	25	TR3058U RS3058Uu-I	Introductory		3030	
+Plainsman Medium Hovertank (Streak)		35	600	25	TR3058U RS3058Uu-I	Standard		3071	
+Po Heavy Tank (HV Prototype)		60	870	26	XTRLiao XTRLiao	Experimental		3077	
+Po Heavy Tank (HV)		60	1,021	28	TRPrototypes None	Advanced		3079	
+Po Heavy Tank (LB-X)		60	778	21	TR3058U RS3058Uu-I	Standard		3069	
+Po Heavy Tank (Light Gauss)		60	734	19	TR3058U RS3058Uu-I	Standard		3059	
+Po Heavy Tank (Standard)		60	719	20	TR3058U RS3058Uu-I	Introductory		3031	
+Po II Heavy Tank (Arrow IV)		60	1,118	36	TR3085 RS3085u-CE	Advanced		3085	
+Po II Heavy Tank (Gauss)		60	1,215	27	RS3145NTNU RS3145NTNU	Standard		3086	
+Po II Heavy Tank (Standard)		60	1,181	30	TR3085 RS3085u-CE	Standard		3077	
+Po II Heavy Tank (Stealth)		60	1,415	32	RS3145NTNU RS3145NTNU	Standard		3089	
+Pollux ADA Heavy Tank (Standard)		75	772	32	H:LoT2 H:LoT2	Advanced		2710	
+Pollux II ADA Heavy Tank (Standard)		75	1,224	34	TP:EE TP:EE	Advanced			
+Praetorian Mobile Command HQ (Standard)		60	785	34	None DTP:Liao	Experimental			
+Praetorian Mobile Strategic Command HQ (Standard)		60	785	34	EDDA EDDA	Advanced		3091	
+Predator Tank Destroyer (Original)		45	480	16	TR3145CC TR3145CC	Introductory		2942	
+Predator Tank Destroyer (Standard)		45	775	19	TR3145CC TR3145CC	Standard		3103	
+Prowler Multi-Terrain Vehicle (3140 Upgrade)		55	1,245	26	RS3145NTNU RS3145NTNU	Advanced		3140	
+Prowler Multi-Terrain Vehicle (ECM)		55	788	24	TR3085S RS3085u-CE	Advanced		2614	
+Prowler Multi-Terrain Vehicle (RAF)		55	679	25	TR3085S RS3085u-CE	Advanced		3081	
+Prowler Multi-Terrain Vehicle (Sealed)		55	680	25	TR3085S RS3085u-CE	Advanced		2960	
+Prowler Multi-Terrain Vehicle (Security)		55	1,160	25	RS3145NTNU RS3145NTNU	Advanced		3123	
+Prowler Multi-Terrain Vehicle (Standard)		55	721	25	TR3085S RS3085u-CE	Advanced		2611	
+Prowler Multi-Terrain Vehicle (Succession Wars)		55	703	20	TR3085S RS3085u-CE	Advanced		2863	
+Prowler Multi-Terrain Vehicle (Support)		55	799	22	TR3085S RS3085u-CE	Advanced		2878	
+Prowler Multi-Terrain Vehicle (WoB)		55	697	22	TR3085S RS3085u-CE	Advanced		3077	
+Puma Assault Tank PAT-001		95			TR2750 None	--		2650	
+Puma Assault Tank PAT-002		95			TR2750 None	--		2657	
+Puma Assault Tank PAT-005		95	1,353	37	TR3050U RS3050Uu-C	Introductory		2681	
+Puma Assault Tank PAT-005b		95	1,546	43	TR3075 RS3075u-AW	Standard		2751	
+Puma Assault Tank PAT-007		95	1,323	41	TR3050U RS3050Uu-C	Standard		3069	
+Puma Assault Tank PAT-008		95	1,631	45	TR3050U RS3050Uu-C	Standard		3069	
+Quaestor Mobile Tactical Command HQ (Standard)		30	437	19	XTR RotS 1 XTR RotS 1	Standard		3095	
+R10 Mechanized ICV (Coolant Truck)		45	355	9	TR3145FW TR3145FW	Standard		3097	
+R10 Mechanized ICV <Base>		45			TR3145FW TR3145FW	Standard		3097	
+R10 Mechanized ICV A		45	639	25	TR3145FW TR3145FW	Standard		3097	
+R10 Mechanized ICV B		45	756	24	TR3145FW TR3145FW	Standard		3097	
+R10 Mechanized ICV Prime		45	746	25	TR3145FW TR3145FW	Standard		3097	
+Ranger Armored Fighting Vehicle VV1		45	604	21	TR3085 RS3085u-CE	Standard		3076	
+Ranger Armored Fighting Vehicle VV1 (Interdictor)		45	688	23	RS3145NTNU RS3145NTNU	Standard		3087	
+Ranger Armored Fighting Vehicle VV1 (MG)		45	607	19	TR3085 RS3085u-CE	Introductory		3076	
+Ranger Armored Fighting Vehicle VV2		45	711	28	TR3085 RS3085u-CE	Advanced		3082	
+Ranger Armored Fighting Vehicle VV22		45	786	28	TR3085 RS3085u-CE	Experimental		3082	
+Red Kite Attack VTOL (Standard)		25	835	32	TR3145FW TR3145FW	Advanced		3121	
+Regulator Hovertank (Alan)		45	896	23	XTRLiao XTRLiao	Experimental		3077	
+Regulator Hovertank (Arrow IV)		45	1,016	28	TR3058U RS3058Uu-I	Advanced		3064	
+Regulator Hovertank (RAC)		45	1,282	34	TR3058U RS3058Uu-I	Standard		3068	
+Regulator Hovertank (Standard)		45	1,212	31	TR3058U RS3058Uu-I	Standard		3057	
+Regulator II Hovertank (RAC)		50	1,490	49	TR3085 RS3085u-CE	Standard		3083	
+Regulator II Hovertank (Standard)		50	1,426	43	TR3085 RS3085u-CE	Standard		3076	
+Regulator II Hovertank (Stealth)		50	971	34	TR3085 RS3085u-CE	Experimental		3082	
+Rhino Fire Support Tank (Flamer)		80	1,439	39	TR3050U RS3050Uu-C	Introductory		2835	
+Rhino Fire Support Tank (MG)		80	1,444	39	TR3050U RS3050Uu-C	Introductory		2653	
+Rhino Fire Support Tank (ML)		80	1,478	39	TR3050U RS3050Uu-C	Introductory		3068	
+Rhino Fire Support Tank (Royal)		80	1,670	46	TR3075 RS3075u-AW	Standard		2708	
+Rhino Fire Support Tank (SL)		80	1,464	39	TR3050U RS3050Uu-C	Introductory		2840	
+Rhino Fire Support Tank (Standard)		80	1,463	39	TR3050U RS3050Uu-C	Introductory		2669	
+Rhino Fire Support Tank Hagar		80	1,574	45	XTRGunslingers XTRGunslingers	Experimental		2765	
+Ripper Infantry Transport (ERML)		10	432	15	TR3050U RS3050Uu-C	Standard		3058	
+Ripper Infantry Transport (Infantry)		10	108	10	TR3050U RS3050Uu-C	Standard		3069	
+Ripper Infantry Transport (Light PPC)		10	371	16	TR3050U RS3050Uu-C	Standard		3069	
+Ripper Infantry Transport (MG)		10	125	10	TR3050U RS3050Uu-C	Standard		3053	
+Ripper Infantry Transport (Royal)		10	228	15	TR3075 RS3075u-AW	Standard		2696	
+Ripper Infantry Transport (SPL)		10	160	12	TR3050U RS3050Uu-C	Standard		3059	
+Ripper Infantry Transport (Standard)		10	345	15	TR3050U RS3050Uu-C	Standard		2680	
+Rommel Tank (Gauss)		65	1,178	30	TR3039 RS3058Uu-I	Standard		3054	
+Rommel Tank (Sealed)		60	1,270	34	TR3085 RS3085u-ONN	Advanced		3076	
+Rommel Tank (Standard)		65	933	27	TR3039 RS3039u	Introductory		3027	
+Rommel Tank Howitzer		65	1,353	41	TRPrototypes None	Advanced		3087	
+Rommel Tank Howitzer Prototype		65	1,507	41	XTRSteiner XTRSteiner	Experimental		3077	
+Rotunda Scout Vehicle RND-J-1-11		20	400	12	TR3050U RS3050Uu-C	Standard		2725	
+Rotunda Scout Vehicle RND-J-1-11 (LRM)		20	303	14	HistOK RSOK	Introductory		2801	
+Rotunda Scout Vehicle RND-J-1-11 (RL)		20	320	9	HistOK RSOK	Advanced		2801	
+Rotunda Scout Vehicle RND-J-1-11 (SRM)		20	286	12	HistOK RSOK	Introductory		2801	
+Rotunda Scout Vehicle RND-J-100					TR3050U None	--		2717	
+Rotunda Scout Vehicle RND-J-110					TR3050U None	--		2721	
+SM Tank Destroyer SM1		50	1,585	42	TR3075 RS3075u-CE	Standard		3068	
+SM Tank Destroyer SM1 "Telos"		50	1,055	29	XTRPhantoms XTRPhantoms	Experimental		3077	
+SM Tank Destroyer SM1A		50	1,214	35	TR3075 RS3075u-CE	Standard		3070	
+SM Tank Destroyer SM3		50	1,593	39	TR3075 RS3075u-CE	Standard		3074	
+SM2 Heavy Artillery Vehicle (LTC)		75	1,422	36	TR3145DC TR3145DC	Advanced		3093	
+SM2 Heavy Artillery Vehicle (Standard)		75	1,028	36	TR3145DC TR3145DC	Advanced		3093	
+SRM Carrier (3054 Upgrade)		60	794	27	TR3058U RS3058Uu-I	Standard		3054	
+SRM Carrier (C3)		60	903	32	TR3058U RS3058Uu-I	Standard		3065	
+SRM Carrier (Standard)		60	816	26	TR3039 RS3039u	Introductory		2407	
+SRM Carrier (WoB)		60	958	33	TR3058U RS3058Uu-I	Standard		3069	
+Sabaku Kaze Heavy Scout Hover Tank (Standard)		50	997	38	TR3075 RS3075u-AW	Introductory		2695	
+Saladin Assault Hover Tank (Armor)		35	594	22	TR3039 RS3039u	Introductory		2960	
+Saladin Assault Hover Tank (Clan Cargo)		35	150	9	TR3039 RS3058Uu-I	Standard		3050	
+Saladin Assault Hover Tank (LB-X)		35	760	19	TR3039 RS3058Uu-I	Standard		3061	
+Saladin Assault Hover Tank (Standard)		35	596	19	TR3039 RS3039u	Introductory		2942	
+Saladin Assault Hover Tank (Ultra)		35	808	24	TR3039 RS3058Uu-I	Standard		3064	
+Saladin Assault Hover Tank Ifrit		35	955	24	XTRPeriphery XTRPeriphery	Experimental		3080	
+Saladin Mk II HCV (BC3)		35	793	30	TR3145DC TR3145DC	Advanced		3138	
+Saladin Mk II HCV (Standard)		35	862	32	TR3145DC TR3145DC	Standard		3137	
+Saracen Medium Hover Tank (MRM)		35	676	28	TR3039 RS3058Uu-I	Standard		3062	
+Saracen Medium Hover Tank (Standard)		35	673	29	TR3039 RS3039u	Introductory		2932	
+Saracen Mk II HCV (BC3)		35	635	31	TR3145DC TR3145DC	Advanced		3138	
+Saracen Mk II HCV (Standard)		35	837	33	TR3145DC TR3145DC	Standard		3137	
+Savannah Master Hovercraft (Interdictor)		5	128	11	TR3085 RS3085u-CE	Standard		3077	
+Savannah Master Hovercraft (SL)		5	131	12	TR3039 RS3039u	Introductory		3033	
+Savannah Master Hovercraft (Standard)		5	215	15	TR3039 RS3039u	Introductory		3025	
+Saxon APC (HQ)		35	708	33	TR3075 RS3075u-CE	Standard		3074	
+Saxon APC (Laser)		35	565	30	TR3075 RS3075u-CE	Standard		3071	
+Saxon APC (MASH)		35	436	25	TR3075 RS3075u-CE	Advanced		3071	
+Saxon APC (Standard)		35	435	25	TR3075 RS3075u-CE	Standard		3070	
+Scapha Hovertank A		40	1,399	32	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank B		40	984	27	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank C		40	1,002	27	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank D		40	1,141	27	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank E		40	666	23	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank F		40	794	28	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank G		40	736	29	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank H		40	811	36	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank I		40	2,096	32	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank J		40	1,047	35	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank Prime		40	1,425	40	TR3145RS TR3145RS	Advanced		3123	
+Scapha Hovertank [Base]		40			TR3145RS TR3145RS	Advanced		3123	
+Schildkröte Line Tank (HPPC)		50	1,057	27	TR3145LC TR3145LC	Standard		3133	
+Schildkröte Line Tank (Standard)		50	1,009	27	TR3145LC TR3145LC	Standard		3122	
+Schiltron Mobile Fire-Support Platform <Base>		80	586		TR3060 None	Standard		3059	
+Schiltron Mobile Fire-Support Platform A		80	1,456	48	TR3060 RS3060u	Standard		3059	
+Schiltron Mobile Fire-Support Platform B		80	1,439	52	TR3060 RS3060u	Standard		3059	
+Schiltron Mobile Fire-Support Platform C		80	1,078	37	TR3060 RS3060u	Standard		3059	
+Schiltron Mobile Fire-Support Platform D		80	1,603	46	TR3060 RS3060u	Standard		3063	
+Schiltron Mobile Fire-Support Platform E		80	1,120	42	TR3060 RS3060u	Standard		3068	
+Schiltron Mobile Fire-Support Platform F		80	1,466	52	TR3060 RS3060u	Advanced		3072	
+Schiltron Mobile Fire-Support Platform Prime		80	1,434	55	TR3060 RS3060u	Advanced		3059	
+Schrek AC Carrier (Standard)		80	773	24	TR3039 RS3039u	Introductory		2916	
+Schrek II-X PPC Carrier (Standard)		95	1,242	32	XTRMercs XTRMercs	Experimental		3076	
+Schrek PPC Carrier (Anti-Infantry)		80	881	23	TR3039 RS3039u	Introductory		2833	
+Schrek PPC Carrier (Armor)		80	1,040	28	TR3085 RS3085u-ONN	Standard		3072	
+Schrek PPC Carrier (C3M)		80	993	34	TR3085 RS3085u-ONN	Standard		3076	
+Schrek PPC Carrier (Standard)		80	935	25	TR3039 RS3039u	Introductory		2813	
+Scimitar Medium Hover Tank (C3)		35	680	29	TR3085 RS3085u-ONN	Standard		3073	
+Scimitar Medium Hover Tank (Missile)		35	704	26	TR3039 RS3039u	Introductory		2957	
+Scimitar Medium Hover Tank (Standard)		35	532	21	TR3039 RS3039u	Introductory		2937	
+Scimitar Medium Hover Tank (TAG)		35	582	29	TR3039 RS3058Uu-I	Standard		3050	
+Scimitar Mk II HCV (3136 Upgrade)		35	783	36	TR3145DC TR3145DC	Standard		3137	
+Scimitar Mk II HCV (BC3)		35	665	35	TR3145DC TR3145DC	Advanced		3138	
+Scimitar Mk II HCV (Standard)		35	631	27	TR3145DC TR3145DC	Standard		3105	
+Scorpion Light Tank (LAC)		25	289	10	TR3085 RS3085u-ONN	Standard		3072	
+Scorpion Light Tank (LRM)		25	425	14	TR3039 RS3039u	Introductory		2813	
+Scorpion Light Tank (ML)		25	320	11	TR3039 RS3039u	Introductory		2875	
+Scorpion Light Tank (MRM)		25	469	13	TR3039 RS3058Uu-I	Standard		3060	
+Scorpion Light Tank (Minesweeper Prototype)		25	350	12	XTRLiao XTRLiao	Experimental		3078	
+Scorpion Light Tank (Minesweeper)		25	452	14	TRPrototypes None	Advanced		3087	
+Scorpion Light Tank (SRM)		25	373	13	TR3039 RS3039u	Introductory		2840	
+Scorpion Light Tank (Standard)		25	306	11	TR3039 RS3039u	Introductory		2807	
+Sea Hunter Maritime Tank (Standard)		35	570	20	XTRBoondocks XTRBoondocks	Experimental		3068	
+Security Robot (Standard)					MW1e None	--		2650	
+Sekhmet Assault Vehicle (Standard)		65	1,606	41	TR3145DC TR3145DC	Standard		3113	
+Shamash Reconnaissance Vehicle (Flamer)		11	228	15	TR3060 RS3060u	Advanced		3069	
+Shamash Reconnaissance Vehicle (Interdictor)		11	520	17	TR3085 RS3085u-CE	Standard		3077	
+Shamash Reconnaissance Vehicle (Standard)		11	504	21	TR3060 RS3060u	Standard		2887	
+Shandra Advanced Scout Vehicle (Original)		25	311		TR3145RS TR3145RS	Standard		3087	
+Shandra Advanced Scout Vehicle (Standard)		25	417		TR3145RS TR3145RS	Standard		3089	
+Sheriff Infantry Support Tank (Standard)		50	810	23	TR3145CC TR3145CC	Standard		3098	
+Shillelagh Missile Tank (Original)		40	584	17	TR3145DC TR3145DC	Standard		2859	
+Shillelagh Missile Tank (Standard)		40	669	22	TR3145DC TR3145DC	Standard		3093	
+Shoden Assault Vehicle (LB-X)		70	1,314	36	TR3067 RS3067u	Standard		3073	
+Shoden Assault Vehicle (Standard)		70	1,412	37	TR3067 RS3067u	Standard		3064	
+Shoden Assault Vehicle (Streak)		70	1,425	40	TR3067 RS3067u	Standard		3068	
+Shun Transport VTOL (Standard)		40	499	27	TR3145CC TR3145CC	Standard		3122	
+Skadi Swift Attack VTOL (Standard)		30	923	31	TR3145TC TR3145TC	Standard		3099	
+Skanda Light Tank (Standard)		35	1,078	29	TR3145TC TR3145TC	Standard		3094	
+Skulker Wheeled Scout Tank "Matahari"		20			TR3026 None	--		3026	
+Skulker Wheeled Scout Tank (C3M)		20	230	15	TR3085 RS3085u-ONN	Standard		3077	
+Skulker Wheeled Scout Tank (MG)		20	252	10	TR3039 RS3039u	Introductory		2897	
+Skulker Wheeled Scout Tank (SRM)		20	319	14	TR3039 RS3039u	Introductory		2901	
+Skulker Wheeled Scout Tank (Standard)		20	314	14	TR3039 RS3039u	Introductory		2659	
+Skulker Wheeled Scout Tank Mk 2 (Mission)		20			TRPrototypes None	--		3088	
+Skulker Wheeled Scout Tank Mk 2 (Sealed)		20			TRPrototypes None	--		3090	
+Skulker Wheeled Scout Tank Mk 2 (Standard)		20	454	21	TRPrototypes None	Advanced		3082	
+Skulker Wheeled Scout Tank X-5		20	491	22	XTRCorps XTRCorps	Experimental		3071	
+Small Agricultural Robot (Standard)					MW1e None	--		ES	
+Sniper Artillery (Standard)		80	895	36	TR3145FS TR3145FS	Advanced		3094	
+Sniper Artillery Tank (Standard)					MH None	--			
+Sokar Urban Combat Tank (Standard)		50	599	19	TRPrototypes None	Advanced		3084	
+Sortek Assault Craft (Interdictor)		45	884	30	TR3145FS TR3145FS	Advanced		3101	
+Sortek Assault Craft (Standard)		45	937	28	TR3145FS TR3145FS	Standard		3098	
+Speeder (Standard)			69		MW1e None	--		ES	
+Sprint Scout Helicopter (C3)		10	82	13	TR3058U RS3058Uu-I	Standard		3057	
+Sprint Scout Helicopter (C3i)		10	71	11	TR3058U RS3058Uu-I	Standard		3068	
+Sprint Scout Helicopter (Interdictor)		10	139	11	TR3085 RS3085u-ONN	Standard		3076	
+Sprint Scout Helicopter (Laser)		10	220	18	TR3058U RS3058Uu-I	Standard		3056	
+Sprint Scout Helicopter (Standard)		10	82	12	TR3058U RS3058Uu-I	Standard		3052	
+Sprint Scout Helicopter (Troop Transport)		10	71	9	TR3058U RS3058Uu-I	Standard		3056	
+Striker Light Tank "Wet Striker"		35	573	15	XTRPirates XTRPirates	Experimental		3070	
+Striker Light Tank (3053 Upgrade)		35	691	23	TR3058U RS3058Uu-I	Standard		3053	
+Striker Light Tank (3061 Upgrade)		35	775	27	TR3058U RS3058Uu-I	Standard		3061	
+Striker Light Tank (Ammo)		35	701	22	TR3058U RS3058Uu-I	Introductory		3054	
+Striker Light Tank (LRM)		35	605	16	TR3039 RS3039u	Introductory		3022	
+Striker Light Tank (Laser)		35	860	28	TR3058U RS3058Uu-I	Standard		3062	
+Striker Light Tank (Narc)		35	621	19	TR3058U RS3058Uu-I	Standard		3053	
+Striker Light Tank (SRM)		35	583	20	TR3039 RS3039u	Introductory		3011	
+Striker Light Tank (Sealed)		35	590	19	TR3085 RS3085u-ONN	Advanced		3077	
+Striker Light Tank (Standard)		35	564	20	TR3039 RS3039u	Introductory		3006	
+Strix Stealth VTOL (Standard)		30	688	29	XTR RotS 1 XTR RotS 1	Advanced		3117	
+SturmFeur "Kalki" Cruise Missile Launcher (Standard)		125	803	47	XTRCorps XTRCorps	Experimental		3068	
+SturmFeur Heavy Tank (Heavy Gauss)		85	1,711	40	TR3039 RS3058Uu-I	Standard		3066	
+SturmFeur Heavy Tank (Moore)		85			TR3039 None	Introductory		3019	
+SturmFeur Heavy Tank (SRM)		85	1,390	41	TR3039 RS3039u	Introductory		3023	
+SturmFeur Heavy Tank (Standard)		85	1,400	36	TR3039 RS3039u	Introductory		3018	
+Sturmfeur Heavy Tank (WoB)		85	1,578	53	JTP: Herperus II JTP: Herperus II	Standard			
+Stygian Strike Tank (Armor)		40	1,001	30	TR3067 RS3067u	Standard		3065	
+Stygian Strike Tank (Standard)		40	960	27	TR3067 RS3067u	Standard		3062	
+Stygian Strike Tank (WoB)		40	714	30	TR3067 RS3067u	Standard		3068	
+Suvorov Tank 0					BattleCorps None	--			
+Svantovit Infantry Fighting Vehicle (ATM) "Masada"		35	988	28	TR3060 RS3060u	Standard		3069	
+Svantovit Infantry Fighting Vehicle (Original)		35	889	34	TR3060 RS3060u	Standard		2843	
+Svantovit Infantry Fighting Vehicle (Standard)		35	698	28	TR3060 RS3060u	Standard		2870	
+Swallow Attack WiGE (Original)		45	1,408	36	TR3145LC TR3145LC	Advanced		3092	
+Swallow Attack WiGE (Standard)		45	1,313	36	TR3145LC TR3145LC	Advanced		3095	
+Swift Wind Scout Car (ICE - Cargo)		8	81	7	TR3039 RS3039u	Introductory		2845	
+Swift Wind Scout Car (ICE - Speed)		8	39	5	TR3039 RS3039u	Introductory		2891	
+Swift Wind Scout Car (ICE)		8	83	10	TR3039 RS3039u	Introductory		2841	
+Swift Wind Scout Car (Standard)		8	83	10	TR3039 RS3039u	Introductory		2817	
+Tamerlane Strike Sled (Flamer)		20	436	19	TR3075 RS3075u-CE	Standard		3074	
+Tamerlane Strike Sled (RL)		20	484	19	TR3075 RS3075u-CE	Standard		3073	
+Tamerlane Strike Sled (Standard)		20	403	18	TR3075 RS3075u-CE	Standard		3071	
+Tamerlane Strike Sled 2		20	359	18	TR3075 RS3075u-CE	Standard		3073	
+Tenmaku Command Trailer (Standard)		75		52	TR3085S None	--		3086	
+Teppō Artillery Vehicle (Standard)		150		87	TR3085S None	Experimental		3086	
+Testudo Siege Tank (Standard)		75	1,336	39	TR3145ME TR3145ME	Advanced		3131	
+Thang-Ta APC (Standard)		10	241	15	TR3145FW TR3145FW	Standard		3093	
+Thor Artillery Vehicle (AC)		55	664	21	HistOK RSOK	Experimental		2801	
+Thor Artillery Vehicle (C3i)		55	482	22	TR3050U RS3050Uu-C	Advanced		3066	
+Thor Artillery Vehicle (Clan)		55	830	29	TR3050U RS3050Uu-C	Advanced		2870	
+Thor Artillery Vehicle (Standard)		55	608	23	TR3050U RS3050Uu-C	Advanced		2680	
+Thumper Artillery Vehicle (Angel)		60	758	27	TRPrototypes None	Advanced		3089	
+Thumper Artillery Vehicle (Standard)		60	731	22	TR3075 RS3075u-CE	Advanced		2734	
+Thumper Artillery Vehicle Maxwell		60	758	27	XTRMarik XTRMarik	Experimental		3079	
+Thumper Artillery Vehicle TAV-1		60	568	29	TR3075 RS3075u-CE	Advanced		3072	
+Thumper Artillery Vehicle TAV-2		60	682	30	TR3075 RS3075u-CE	Advanced		N/A	
+Tiger Medium Tank T-12		55	574	16	HistRW None	Introductory		2478	
+Tigershrike Hovercraft 0					BattleCorps None	--			
+Tokugawa Heavy Tank (C3)		60	891	28	TR3058U RS3058Uu-I	Standard		3061	
+Tokugawa Heavy Tank (MRM)		60	941	31	TR3058U RS3058Uu-I	Standard		3062	
+Tokugawa Heavy Tank (SD2)		60	991	31	JTPAtreus JTPAtreus	Standard		3068	
+Tokugawa Heavy Tank (Standard)		60	912	26	TR3058U RS3058Uu-I	Standard		3053	
+Tokugawa Heavy Tank (Streak)		60	921	29	TR3058U RS3058Uu-I	Standard		3063	
+Tokugawa Heavy Tank TKG-150		60	731	22	TR3058U RS3058Uu-I	Introductory		2792	
+Tokugawa Heavy Tank TKG-151		60	654	22	TR3058U RS3058Uu-I	Introductory		3025	
+Tokugawa Heavy Tank Yumi		60	1,127	28	XTRKurita XTRKurita	Experimental		3067	
+Trajan Assault Infantry Fighting Vehicle (ICE)		85	1,043	32	TR3085 RS3085u-CE	Standard		3076	
+Trajan Assault Infantry Fighting Vehicle (Standard)		85	1,182	37	TR3085 RS3085u-CE	Standard		3080	
+Tribune Mobile Tactical Command HQ (Standard)		30	424	24	EDDA EDDA	Advanced		3091	
+Tufana Hovercraft (Standard)		35	583	25	TR3085 RS3085u-CE	Standard		3079	
+Tufana Hovercraft (iNarc)		35	756	30	TR3085 RS3085u-CE	Standard		3083	
+Turhan Urban Combat Vehicle (C3)		50	709	26	TR3075 RS3075u-AW	Standard		3072	
+Turhan Urban Combat Vehicle (Original)		50	640	18	TR3075 RS3075u-AW	--		2530	
+Turhan Urban Combat Vehicle (Standard)		50	673	18	TR3075 RS3075u-AW	Standard		2583	
+Typhoon Urban Assault Vehicle (LB-X)		70	1,064	32	TR3058U RS3058Uu-I	Standard		3065	
+Typhoon Urban Assault Vehicle (RAC)		70	1,434	39	TR3058U RS3058Uu-I	Standard		3064	
+Typhoon Urban Assault Vehicle (Standard)		70	1,104	39	TR3058U RS3058Uu-I	Standard		3057	
+Typhoon Urban Assault Vehicle (Tracked)		70	1,166	40	TR3058U RS3058Uu-I	Standard		3057	
+Tyr Infantry Support Tank (Kurita)		45	687	28	TR3067 RS3067u	Standard		3070	
+Tyr Infantry Support Tank (Standard)		45	1,260	32	TR3067 RS3067u	Standard		3063	
+Vali Artillery Vehicle (Original)		40			H:LoT2 None	Advanced		2595	
+Vali Artillery Vehicle (Standard)		40	653	19	H:LoT2 H:LoT2	Advanced		2600	
+Vector Combat Support VTOL (Attack)		22		27	H:LoT2 None	Standard		2732	
+Vector Combat Support VTOL (EW)		22		24	H:LoT2 None	Standard		2732	
+Vector Combat Support VTOL (Scout)		22		25	H:LoT2 None	Standard		2732	
+Vector Combat Support VTOL (Standard)		22	512	22	H:LoT2 H:LoT2	Standard		2732	
+Vedette Medium Tank "Doris' Delight"		50	1,219	26	TR3058U RS3058Uu-I	Standard		3065	
+Vedette Medium Tank (AC2)		50	458	16	TR3039 RS3039u	Introductory		2962	
+Vedette Medium Tank (Cell)		50	731	20	TR3085 RS3085u-ONN	Advanced		3075	
+Vedette Medium Tank (LB-X)		50	552	18	TR3058U RS3058Uu-I	Standard		3069	
+Vedette Medium Tank (Liao)		50	495	16	TR3039 RS3039u	Introductory		2968	
+Vedette Medium Tank (Light Gauss)		50	478	14	TR3058U RS3058Uu-I	Standard		3068	
+Vedette Medium Tank (NETC)		50	545	16	TR3058U RS3058Uu-I	Standard		3056	
+Vedette Medium Tank (RAC)		50	712	17	TR3058U RS3058Uu-I	Standard		3067	
+Vedette Medium Tank (Standard)		50	475	16	TR3039 RS3039u	Introductory		2943	
+Vedette Medium Tank (Ultra)		50	590	18	TR3058U RS3058Uu-I	Standard		3054	
+Vedette Medium Tank V-G7X		50	1,223	29	XTRMercs XTRMercs	Experimental		3074	
+Vedette Medium Tank V7		50	599	19	TRPrototypes None	Advanced		3084	
+Vedette Medium Tank V9		50	1,146	21	RS3145NTNU RS3145NTNU	Advanced		3105	
+Vidar Heavy Defense Tank (Standard)		75	1,396	43	TRPrototypes None	Advanced		3085	
+Vidar Heavy Defense Tank 2		75			TRPrototypes None	--		3090	
+Von Luckner Heavy Tank (Royal)		75	1,261	35	HistOK RSOK	Standard		2761	
+Von Luckner Heavy Tank (Star League)		75	1,261	35	HistOK RSOK	Standard		2683	
+Von Luckner Heavy Tank VNL-K100		75	1,001	30	TR3039 RS3039u	Introductory		3002	
+Von Luckner Heavy Tank VNL-K65N		75	1,100	30	TR3039 RS3039u	Introductory		2612	
+Von Luckner Heavy Tank VNL-K70		75	1,060	27	TR3039 RS3039u	Introductory		3008	
+Von Luckner Heavy Tank VNL-K75N		75	1,350	36	TR3039 RS3058Uu-I	Standard		3062	
+Von Luckner Heavy Tank VNL-X71 (Yakuza)		75	1,847	46	XTROMostWanted XTROMostWanted	Experimental		3076	
+Warrior Attack Helicopter H-10		20	180	10	TR3058U RS3058Uu-I	Standard		3070	
+Warrior Attack Helicopter H-7		21	295	13	TR3039 RS3039u	Introductory		2957	
+Warrior Attack Helicopter H-7A		21	292	13	TR3039 RS3039u	Introductory		2965	
+Warrior Attack Helicopter H-7C		21	446	18	TR3039 RS3039u	Introductory		2974	
+Warrior Attack Helicopter H-8		20	419	20	TR3058U RS3058Uu-I	Standard		3054	
+Warrior Attack Helicopter H-9		20	484	19	TR3058U RS3058Uu-I	Standard		3068	
+Warrior Attack Helicopter HX-9		20	392	18	XTRMercs XTRMercs	Experimental		3073	
+Warrior Stealth Helicopter S-9		21	668	22	TRPrototypes None	Advanced		3084	
+Weapons Carrier A (LL)					RS5 None	--		2925	
+Weapons Carrier A (LRM)					GDL None	--		2924	
+Wheeled PPC Carrier (Standard)					Decision At Thunder Rift None	--			
+Wheeled Scout (Standard)			291		MW1e None	--		2963	
+Winston Combat Vehicle (LAC)		70	1,314	40	TR3085 RS3085u-CE	Standard		3086	
+Winston Combat Vehicle (Standard)		70	1,551	44	TR3085 RS3085u-CE	Standard		3086	
+Winston Combat Vehicle (Support)		70	1,830	48	RS3145NTNU RS3145NTNU	Standard		3107	
+Winston Combat Vehicle (TSEMP)		70	2,565	46	RS3145NTNU RS3145NTNU	Advanced		3114	
+Winston Combat Vehicle (XXL)		70	1,621	42	RS3145NTNU RS3145NTNU	Advanced		3133	
+Winterhawk APC (Standard)		20	204	15	TR3145LC TR3145LC	Standard		3059	
+Yasha VTOL "Spectre"		30	677	21	TR3085 RS3085u-CE	Experimental		3085	
+Yasha VTOL (Interdictor)		30	631	30	TR3085 RS3085u-CE	Standard		3085	
+Yasha VTOL (Standard)		30	799	26	TR3085 RS3085u-CE	Standard		3085	
+Yellow Jacket Gunship (Ammo)		30	803	18	TR3058U RS3058Uu-I	Standard		3058	
+Yellow Jacket Gunship (Arrow IV)		30	612	23	TR3058U RS3058Uu-I	Advanced		3067	
+Yellow Jacket Gunship (PPC)		30	582	20	TR3085 RS3085u-ONN	Standard		3076	
+Yellow Jacket Gunship (RAC)		30	797	21	TR3058U RS3058Uu-I	Standard		3066	
+Yellow Jacket Gunship (Standard)		30	782	21	TR3058U RS3058Uu-I	Standard		3058	
+Zahn Heavy Transport (Standard)		65	792	28	TR3145CC TR3145CC	Standard		3108	
+Zephyr Hovertank (C3i)		40	820	33	TR3050U RS3050Uu-C	Standard		3062	
+Zephyr Hovertank (LRM)		40	867	33	TR3050U RS3050Uu-C	Standard		3063	
+Zephyr Hovertank (OmniDrone) A		40	686	31	XTR RotS 1 XTR RotS 1	Advanced		3096	
+Zephyr Hovertank (OmniDrone) B		40	509	29	XTR RotS 1 XTR RotS 1	Advanced		3096	
+Zephyr Hovertank (OmniDrone) C		40	478	23	XTR RotS 1 XTR RotS 1	Advanced		3096	
+Zephyr Hovertank (OmniDrone) Prime		40	676	26	XTR RotS 1 XTR RotS 1	Advanced		3096	
+Zephyr Hovertank (Royal)		40	811	31	TR3075 RS3075u-AW	Standard		2621	
+Zephyr Hovertank (SRM2)		40	896	33	TR3050U RS3050Uu-C	Standard		2620	
+Zephyr Hovertank (Standard)		40	904	35	TR3050U RS3050Uu-C	Standard		2621	
+Zephyros Infantry Support Vehicle (Dual Turret)		25	844	30	TR3085 RS3085u-CE	Experimental		3086	
+Zephyros Infantry Support Vehicle (Standard)		25	840	30	TR3085 RS3085u-CE	Standard		3084	
+Zhukov Heavy Tank (LB-X)		75	956	29	TR3085 RS3085u-ONN	Standard		3073	
+Zhukov Heavy Tank (Liao)		75	1,021	30	TR3085 RS3085u-ONN	Standard		3076	
+Zhukov Heavy Tank (Standard)		75	920	26	TR3058U RS3058Uu-I	Introductory		3030	
+Zhukov Heavy Tank (WoB)		75	939	32	TR3058U RS3058Uu-I	Advanced		3072	
+Zibler Fast Strike Tank <Base>		50			TR3145FS TR3145FS	Standard		3096	
+Zibler Fast Strike Tank A		50	664	28	TR3145FS TR3145FS	Standard		3096	
+Zibler Fast Strike Tank B		50	1,072	38	TR3145FS TR3145FS	Standard		3096	
+Zibler Fast Strike Tank C		50	1,017	38	TR3145FS TR3145FS	Standard		3096	
+Zibler Fast Strike Tank D		50	1,021	37	TR3145FS TR3145FS	Standard		3096	
+Zibler Fast Strike Tank Prime		50	1,205	50	TR3145FS TR3145FS	Standard		3096	
+Zorya Light Tank (ATM)		35	693	19	TR3060 RS3060u	Advanced		3068	
+Zorya Light Tank (Ammo)		35	575	14	TR3060 RS3060u	Standard		2841	
+Zorya Light Tank (Standard)		35	562	18	TR3060 RS3060u	Standard		2842	
+Şoarece Superheavy MBT (Standard)		175	2,285	66	XTRSW I XTRSW I	Experimental		2881
+Şoarece Superheavy MBT (Standard)		175	2,285	66	XTRSW I XTRSW I	Experimental		2881	

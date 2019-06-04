@@ -1,0 +1,235 @@
+Name|Type|Base|Level|Protoype|Production|Common|Extinct|Re-introduced
+Binary Laser (Blazer) Cannon|Energy|IS|3|2812(FW)|3077(WB)|3085|-|-
+ER Flamer|Energy|IS|1|-|3070(FS)|3081|-|-
+ER Large Laser|Energy|IS|1|2610(TH)|2620(TH)|3045|2950|3037(DC)
+ER Medium Laser|Energy|IS|1|3052(FW,WB)|3058(FW)|3062|-|-
+ER PPC|Energy|IS|1|2740(TH)|2751(TH)|3042|2860|3037(DC)
+ER Small Laser|Energy|IS|1|3052(FW,WB)|3058(FW)|3062|-|-
+Flamer|Energy|IS|0|ES|ES|ES|-|-
+Flamer (Vehicle)|Energy|All|0|PS|PS|PS|-|-
+Heavy Flamer|Energy|IS|1|-|3068(LC)|3079|-|-
+Heavy PPC|Energy|IS|1|3062(DC)|3067(DC,FW)|3068|-|-
+Large Laser|Energy|IS|0|2306(TA)|2316(TH)|2320|-|-
+Large Pulse Laser|Energy|IS|1|2595(TH)|2609(TH)|3042|2950|3037(DC)
+Large X-Pulse Laser|Energy|IS|3|3057(LC,FS)|3078(LC)|3082|-|-
+Large Re-Engineered Laser|Energy|IS|1|3120(FS)|3130(FS)|-|-|-
+Light PPC|Energy|IS|1|3064(DC)|3067(DC,FW)|3068|-|-
+Medium Laser|Energy|IS|0|2290(TA)|2300(TA)|2310|-|-
+Medium Pulse Laser|Energy|IS|1|2595(TH)|2609(TH)|3042|2950|3037(DC)
+Medium X-Pulse Laser|Energy|IS|3|3057(LC,FS)|3078(LC)|3082|-|-
+Medium Re-Engineered Laser|Energy|IS|1|3120(FS)|3130(FS)|-|-|-
+Plasma Rifle|Energy|IS|1|3061(CC)|3068(CC)|3072|-|-
+PPC|Energy|IS|0|2440(TH)|2460(TH)|2500|-|-
+Primitive Prototype Large Laser|Energy|IS|1|2306(TA)|-|-|-|-
+Primitive Prototype Medium Laser|Energy|IS|1|2290(TA)|-|-|-|-
+Primitive Prototype PPC|Energy|IS|1|2439(TA)|-|-|-|-
+Primitive Prototype Small Laser|Energy|IS|1|2290(TA)|-|-|-|-
+Small Laser|Energy|IS|0|2290(TA)|2300(TA)|2310|-|-
+Small Pulse Laser|Energy|IS|1|2595(TH)|2609(TH)|3042|2950|3037(DC)
+Small X-Pulse Laser|Energy|IS|3|3057(LC,FS)|3078(LC)|3082|-|-
+Small Re-Engineered Laser|Energy|IS|1|3120(FS)|3130(FS)|-|-|-
+Snub-Nose PPC|Energy|IS|1|2779(TH)|2784(TH)|3068|2790|3067(DC,FW)
+TSEMP Cannon|Energy|IS|1|3100(RS)|3109(RS)|-|-|-
+TSEMP One-Shot|Energy|IS|1|3090(RS)|3095(RS)|-|-|-
+Large Chem Laser|Energy|Clan|3|3059(CHH)|3083(CHH)|3145|-|-
+Medium Chem Laser|Energy|Clan|3|3059(CHH)|3083(CHH)|3145|-|-
+Small Chem Laser|Energy|Clan|3|3059(CHH)|3083(CHH)|3145|-|-
+ER Flamer|Energy|Clan|1|3065(CJF)|3067(CJF)|3081|-|-
+ER Large Laser|Energy|Clan|1|2820(CNC)|2825(CNC)|2830|-|-
+ER Large Pulse Laser|Energy|Clan|3|3057(CWF)|3082(CWF)|3095|-|-
+ER Medium Laser|Energy|Clan|1|2822(CJF)|2824(CJF)|2830|-|-
+ER Medium Pulse Laser|Energy|Clan|3|3057(CWF)|3082(CWF)|3095|-|-
+ER Micro Laser|Energy|Clan|1|3059(CSJ)|3060(CSJ)|3061|-|-
+ER PPC|Energy|Clan|1|2823(CSR)|3060(CSR)|2828|-|-
+ER Small Laser|Energy|Clan|1|2822(CJF)|2525(CFJ)|2830|-|-
+ER Small Pulse Laser|Energy|Clan|3|3057(CWF)|3082(CWF)|3095|-|-
+Flamer|Energy|Clan|1|2820(CFM)|2827(CFM)|2828|-|-
+Heavy Flamer|Energy|Clan|1|3065(CJF)|3067(CJF)|3079|-|-
+Heavy Large Laser|Energy|Clan|1|3057(CBR,CSA)|3059(CSA)|3064|-|-
+Heavy Medium Laser|Energy|Clan|1|3057(CBR,CSA)|3059(CSA)|3064|-|-
+Heavy Small Laser|Energy|Clan|1|3057(CBR,CSA)|3059(CSA)|3064|-|-
+Improved Heavy Large Laser|Energy|Clan|3|3069(CGS)|3079|3085|-|-
+Improved Heavy Medium Laser|Energy|Clan|3|3069(CGS)|3079|3085|-|-
+Improved Heavy Small Laser|Energy|Clan|3|3069(CGS)|3079|3085|-|-
+Large Pulse Laser|Energy|Clan|1|2820(CCY)|2824(CCY)|2831|-|-
+Medium Pulse Laser|Energy|Clan|1|2825(CJF,CGB)|2827(CJF)|2831|-|-
+Micro Pulse Laser|Energy|Clan|1|3059(CSJ)|3060(CSJ)|3061|-|-
+Plasma Cannon|Energy|Clan|1|3068(CSF)|3069(CSF)|3070|-|-
+Small Pulse Laser|Energy|Clan|1|2825(CJF,CGB)|2829(CGB)|2831|-|-
+AC/10|Ballistic|IS|0|2443(TH)|2460(TH)|2465|-|-
+AC/2|Ballistic|IS|0|2290(TA)|2300(TA)|2305|-|-
+AC/20|Ballistic|IS|0|2488(LC)|2500(LC)|2502|-|-
+AC/5|Ballistic|IS|0|2240(TA)|2250(TA)|2255|-|-
+Anti-BattleArmor Pods (B-Pod)|Ballistic|All|1|3068(LC,WB,FW)|3068|3070|-|-
+Fluid Gun|Ballistic|IS|1|PS|PS|PS|-|-
+Gauss Rifle|Ballistic|IS|1|2587(TH)|2590(TH)|3045|2865|3040(FC,FW,DC)
+Heavy Gauss Rifle|Ballistic|IS|1|3051(FW)|3061(FC)|3067|-|-
+Heavy Machine Gun|Ballistic|IS|1|3063(TC)|3068(TC)|3070|-|-
+Heavy Machine Gun Array|Ballistic|IS|1|2509(TH)|2595(TH)|3040|2840|3035(FS)
+LB 10-X AC|Ballistic|IS|1|2590(TH)|2595(TH)|3040|2840|3035(FS)
+LB 20-X AC|Ballistic|IS|1|3055(FS)|3058(FS)|3060|-|-
+LB 2-X AC|Ballistic|IS|1|3055(FS)|3058(FS)|3060|-|-
+LB 5-X AC|Ballistic|IS|1|3055(FS)|3058(FS)|3060|-|-
+Light AC/2|Ballistic|IS|1|3062(FS)|3068(FS)|3070|-|-
+Light AC/5|Ballistic|IS|1|3062(FS)|3068(FS)|3070|-|-
+Light Gauss Rifle|Ballistic|IS|1|3049(FW)|3056(FW)|3065|-|-
+Light Machine Gun|Ballistic|IS|1|3064(CC)|3068(CC)|3070|-|-
+Light Machine Gun Array|Ballistic|IS|1|3066(CC)|3068(TC)|3070|-|-
+Machine Gun|Ballistic|IS|0|PS|PS|PS|-|-
+Machine Gun Array|Ballistic|IS|1|3066(FS)|3068(TC)|3070|-|-
+MagSHot|Ballistic|IS|1|3059(FS)|3072(FS)|3090|-|-
+M-Pod|Ballistic|IS|1|3060(LC)|3064(LC)|3099|-|-
+Nail/Rivet Gun|Ballistic|All|1|2309(FW)|2310(FW)|2312|-|-
+Primative Prototype Autocannon/10|Ballistic|IS|1|2450(TA)|-|-|-|-
+Primative Prototype Autocannon/2|Ballistic|IS|1|2290(TA)|-|-|-|-
+Primative Prototype Autocannon/20|Ballistic|IS|1|2488(TA)|-|-|-|-
+Primative Prototype Autocannon/5|Ballistic|IS|1|2240(TA)|-|-|-|-
+Prototype Gauss Rifle|Ballistic|IS|1|2587(TH)|-|-|2590|3038(FS,LC)
+Prototype LB 10-X Autocannon|Ballistic|IS|1|2590(TH)|-|-|2595|3035(FS,LC)
+Rotary AC/2|Ballistic|IS|1|3060(FS)|3062(FS)|3071|-|-
+Rotary AC/5|Ballistic|IS|1|3060(FS)|3062(FS)|3071|-|-
+Ultra AC/10|Ballistic|IS|1|3055(FW)|3057(FW)|3060|-|-
+Ultra AC/2|Ballistic|IS|1|3055(FW)|3057(FW)|3060|-|-
+Ultra AC/20|Ballistic|IS|1|3057(FW)|3060(LC,FW)|3061|-|-
+Ultra AC/5|Ballistic|IS|1|2635(TH)|2640(TH)|3040|2915|3035(FS)
+Vehicular Grenade Launcher|Ballistic|All|1|PS|ES|3078|-|-
+AP Gauss Rifle|Ballistic|Clan|1|3065(CJF)|3069(CJF)|3072|-|-
+Fluid Gun|Ballistic|Clan|1|PS|PS|PS|-|-
+Gauss Rifle|Ballistic|Clan|1|2822(CBR)|2828(CBR)|2830|-|-
+HAG/20|Ballistic|Clan|1|3062(CHH)|3068(CHH)|3072|-|-
+HAG/30|Ballistic|Clan|1|3062(CHH)|3068(CHH)|3072|-|-
+HAG/40|Ballistic|Clan|1|3062(CHH)|3068(CHH)|3072|-|-
+Heavy Machine Gun|Ballistic|Clan|1|3054(CHH)|3059(CHH)|3072|-|-
+Heavy Machine Gun Array|Ballistic|Clan|1|-|-|3069|-|-
+LB 10-X AC|Ballistic|Clan|1|2824(CCY)|2826(CCY)|2828|-|-
+LB 20-X AC|Ballistic|Clan|1|2824(CCY)|2826(CCY)|2828|-|-
+LB 2-X AC|Ballistic|Clan|1|2824(CCY)|2826(CCY)|2828|-|-
+LB 5-X AC|Ballistic|Clan|1|2824(CCY)|2826(CCY)|2828|-|-
+Light Machine Gun|Ballistic|Clan|1|3055(CSJ)|3060(CSJ)|3070|-|-
+Light Machine Gun Array|Ballistic|Clan|1|-|-|3069|-|-
+Machine Gun|Ballistic|Clan|1|2821(CSF)|2825(CSF)|2830|-|-
+Machine Gun Array|Ballistic|Clan|1|-|-|3069|-|-
+Nail/Rivet Gun|Ballistic|Clan|1|2309|2310|2312|-|-
+Ultra AC/10|Ballistic|Clan|1|2825(Clan)|2827(Clan)|2829|-|-
+Ultra AC/2|Ballistic|Clan|1|2825(Clan)|2827(Clan)|2829|-|-
+Ultra AC/20|Ballistic|Clan|1|2825(Clan)|2827(Clan)|2829|-|-
+Ultra AC/5|Ballistic|Clan|1|2825(Clan)|2827(Clan)|2829|-|-
+Mortar 1|Missile|IS|1|2526(TH)|2531(TH)|3052|2819|3043(FS,LC)
+Mortar 2|Missile|IS|1|2526(TH)|2531(TH)|3052|2819|3043(FS,LC)
+Mortar 4|Missile|IS|1|2526(TH)|2531(TH)|3052|2819|3043(FS,LC)
+Mortar 8|Missile|IS|1|2526(TH)|2531(TH)|3052|2819|3043(FS,LC)
+Arrow IV|Missile|IS|2|2593(TH)|2600(TH)|-|-|-
+iNarc|Missile|IS|1|3054(CS)|3062(IS)|-|-|-
+LRM 10|Missile|IS|0|2295(TA)|2300(TA)|2400|-|-
+LRM 15|Missile|IS|0|2295(TA)|2300(TA)|2400|-|-
+LRM 20|Missile|IS|0|2295(TA)|2300(TA)|2400|-|-
+LRM 5|Missile|IS|0|2295(TA)|2300(TA)|2400|-|-
+MML 3|Missile|IS|1|3067(Merc)|3068(WB)|3072|-|-
+MML 5|Missile|IS|1|3067(Merc)|3068(WB)|3072|-|-
+MML 7|Missile|IS|1|3067(Merc)|3068(WB)|3072|-|-
+MML 9|Missile|IS|1|3067(Merc)|3068(WB)|3072|-|-
+MRM 10|Missile|IS|1|3052(DC)|3058(DC)|3063|-|-
+MRM 20|Missile|IS|1|3052(DC)|3058(DC)|3063|-|-
+MRM 30|Missile|IS|1|3052(DC)|3058(DC)|3063|-|-
+MRM 40|Missile|IS|1|3052(DC)|3058(DC)|3063|-|-
+Narc|Missile|IS|1|2580(TH)|2587(TH)|3049|2795|3035(FS,LC)
+Rocket Launcher 10|Missile|IS|1|ES|3064(MH)|3067|-|-
+Rocket Launcher 15|Missile|IS|1|ES|3064(MH)|3067|-|-
+Rocket Launcher 20|Missile|IS|1|ES|3064(MH)|3067|-|-
+SRM 2|Missile|IS|0|2365(TH)|2370(TH)|2400|-|-
+SRM 4|Missile|IS|0|2365(TH)|2370(TH)|2400|-|-
+SRM 6|Missile|IS|0|2365(TH)|2370(TH)|2400|-|-
+Streak SRM 2|Missile|IS|1|2645(TH)|2647(TH)|2650|2845|3035
+Streak SRM 4|Missile|IS|1|3055(DC)|3058(DC)|3060|-|-
+Streak SRM 6|Missile|IS|1|3055(DC)|3058(DC)|3060|-|-
+Thunderbol 10|Missile|IS|1|3052(FS)|3072(FS,LC)|3081|-|-
+Thunderbol 15|Missile|IS|1|3052(FS)|3072(FS,LC)|3081|-|-
+Thunderbol 20|Missile|IS|1|3052(FS)|3072(FS,LC)|3081|-|-
+Thunderbol 5|Missile|IS|1|3052(FS)|3072(FS,LC)|3081|-|-
+Mortar 1|Missile|Clan|1|2835(CBR)|2840(CBR)|-|-|-
+Mortar 2|Missile|Clan|1|2835(CBR)|2840(CBR)|-|-|-
+Mortar 4|Missile|Clan|1|2835(CBR)|2840(CBR)|-|-|-
+Mortar 8|Missile|Clan|1|2835(CBR)|2840(CBR)|-|-|-
+Arrow IV|Missile|Clan|2|-|2844|2850|-|-
+ATM 12|Missile|Clan|1|3052(CCY)|3053(CCY)|3054|-|-
+ATM 3|Missile|Clan|1|3052(CCY)|3053(CCY)|3054|-|-
+ATM 6|Missile|Clan|1|3052(CCY)|3053(CCY)|3054|-|-
+ATM 9|Missile|Clan|1|3052(CCY)|3053(CCY)|3054|-|-
+Improved ATM 12|Missile|Clan|1|3054(CCY)|3070(CCY)|-|-|-
+Improved ATM 3|Missile|Clan|1|3054(CCY)|3070(CCY)|-|-|-
+Improved ATM 6|Missile|Clan|1|3054(CCY)|3070(CCY)|-|-|-
+Improved ATM 9|Missile|Clan|1|3054(CCY)|3070(CCY)|-|-|-
+LRM 10|Missile|Clan|1|2820(CCY)|2824(CCY)|2825|-|-
+LRM 15|Missile|Clan|1|2820(CCY)|2824(CCY)|2825|-|-
+LRM 20|Missile|Clan|1|2820(CCY)|2824(CCY)|2825|-|-
+LRM 5|Missile|Clan|1|2820(CCY)|2824(CCY)|2825|-|-
+Narc|Missile|Clan|1|2820(CHH,CIH)|2828(CIH)|2830|-|-
+SRM 2|Missile|Clan|1|2820(CCC)|2824(CCC)|2825|-|-
+SRM 4|Missile|Clan|1|2820(CCC)|2824(CCC)|2825|-|-
+SRM 6|Missile|Clan|1|2820(CCC)|2824(CCC)|2825|-|-
+Streak SRM 2|Missile|Clan|1|2819(CSA)|2822(CSA)|2830|-|-
+Streak SRM 4|Missile|Clan|1|2819(CSA)|2822(CSA)|2830|-|-
+Streak SRM 6|Missile|Clan|1|2819(CSA)|2822(CSA)|2830|-|-
+Long Tom|Artillery|All|2|2445(TH)|2500(TH)|2520|-|-
+Sniper|Artillery|All|2|PS(TH)|PS(TH)|PS|-|-
+Thumper|Artillery|All|2|PS(TH)|PS(TH)|PS|-|-
+Rifle (Cannon, Heavy)|Ballistic|IS|3|PS|PS|3085|2825|3084
+Rifle (Cannon, Light)|Ballistic|IS|3|PS|PS|3085|2825|3084
+Rifle (Cannon, Medium)|Ballistic|IS|3|PS|PS|3085|2825|3084
+Backhoe|Physical|All|1|PS|PS|PS|-|-
+Buzzsaw|Physical|All|1|PS|PS|PS|-|-
+Chainsaw|Physical|All|1|PS|PS|PS|-|-
+Claw|Physical|All|2|3050(LC)|3060(LC)|3145|-|-
+Combine|Physical|All|1|PS|PS|PS|-|-
+Dual Saw|Physical|All|1|PS|PS|PS|-|-
+Hatchet|Physical|IS|0|3015(LC,FS)|3022(LC)|3025|-|-
+Heavy-Duty Pile Driver|Physical|All|1|PS|PS|PS|-|-
+Mace|Physical|IS|2|3061(LC)|3079(LC)|3085|-|-
+Minigh Drill|Physical|All|1|PS(TA)|PS(TA)|PS|-|-
+Retractable Blade|Physical|IS|1|2400(TH)|2420(TH)|3075|-|-
+Rock Cutter|Physical|All|1|PS|PS|PS|-|-
+Spot Welder|Physical|All|1|2312|2320|2323|-|-
+Sword|Physical|IS|1|3050(DC)|3058(DC)|3060|-|-
+Wrecking Ball|Physical|All|1|PS|PS|PS|-|-
+Talson|Py|Clan|3|3072(CJF)|3087(CJF)|-|-|-
+Active Probe (Beagle)|Equipment|IS|1|2560(TH)|2576(TH)|3048|2835|3045(CC)
+Active Probe (Bloodhound)|Equipment|IS|3|3059(CS)|3082(RS)|3094|-|-
+Anti-Missile System|Equipment|IS|1|2613(TH)|2617(TH)|3048|2835|3045(CC)
+Anti-Missile System (Laser)|Equipment|IS|1|3059(FS)|3079(FS)|3145|-|-
+Anti-Personnel Pods (A-Pod)|Equipment|All|1|-|-|3055|-|-
+Artemis IV FCS|Equipment|IS|1|2592(TH)|2598(TH)|3045|2855|3035(FW)
+C3 Bosted System Master|Equipment|IS|3|3071(FS)|3100(FS)|-|-|-
+C3 Bosted System Slave|Equipment|IS|3|3071(FS)|3100(FS)|-|-|-
+C3 Computer Master|Equipment|IS|1|3039(DC)|3050(DC)|3065|-|-
+C3 Computer Slave|Equipment|IS|1|3039(DC)|3050(DC)|3065|-|-
+C3 Emergency Master|Equipment|IS|3|3071(DC)|3099(DC)|-|-|-
+CASE|Equipment|IS|1|2452(TH)|2476(TH)|3045|2840|3036(DC)
+CASE II|Equipment|IS|3|3064(FW)|3082(RS)|3105|-|-
+Coolant Pod|Equipment|All|3|3049(FS,LC)|3079(FS,LC)|3098|-|-
+ECM SUite (Angel)|Equipment|IS|3|3057(DC)|3080(DC)|3085|-|-
+ECM Suite (Guardian)|Equipment|IS|1|2595(TH)|2597(TH)|3050|2845|3045(CC)
+Mechanical Jump Boosters|Equipment|IS|3|3060(FS)|3083(FS,LC)|3090|-|-
+Null Signature System|Equipment|IS|3|2615(TH)|2630(TH)|-|2790|3110(CS)
+Partial Wing|Equipment|IS|3|3074(Merc)|-|3090|-|-
+PPC Capacitor|Equipment|All|3|3060(DC)|3081(DC)|-|-|-
+Radical Heat Sink System|Equipment|IS|3|3112(FS)|3115(FS)|-|-|-
+Spikes|Equipment|IS|3|3051(LC)|3082(LC)|-|-|-
+Supercharger|Equipment|IS|3|ES|3078|-|-|-
+TAG|Equipment|IS|1|2593(TH)|2600(TH)|3045|2835|3044(FS,LC)
+Targeting Computer|Equipment|IS|1|3052(FS,LC)|3062(FS)|3067|-|-
+Void Signature System|Equipment|IS|3|3070(WB)|3085(RS)|-|-|-
+Active Probe (Clan)|Equipment|Clan|1|2830(CGS)|2832(CGS)|2835|-|-
+Active Probe (Clan Light)|Equipment|Clan|1|2890(CSJ)|2900(CSJ)|2905|-|-
+ECM Suite (Clan)|Equipment|Clan|1|2830(CSJ)|2832(CSJ)|2835|-|-
+Anti-Missile System|Equipment|Clan|1|2824(CSA)|2831(CSA)|2835|-|-
+Anti-Missile System (Laser)|Equipment|Clan|1|3048(CWF)|3079(CWF)|3145|-|-
+Artemis IV FCS|Equipment|Clan|1|2816(CSA)|2818(CSA)|2830|-|-
+Artemis V FCS|Equipment|Clan|3|3061(CGS)|3085(CSF)|3093|-|-
+CASE|Equipment|Clan|1|2824(CCY)|2825(CCY)|2828|-|-
+CASE II|Equipment|Clan|3|3062(CCY)|3082(CWF)|3105|-|-
+Partial Wing|Equipment|Clan|3|3067(CJF)|3085(CJF)|3090|-|-
+Supercharger|Equipment|Clan|3|ES|3078|-|-|-
+TAG|Equipment|Clan|1|2828(CHH)|2830(CHH)|2834|-|-
+TAG (Light)|Equipment|Clan|1|3051(CWF)|3054(CWF)|3059|-|-
+Targeting Computer|Equipment|Clan|1|2850(CMN)|2860(CMN)|2863|-|-
+Watchdog Composite Electronic Warfare System|Equipment|Clan|3|3059(CSJ)|3080(CSF)|3085|-|-

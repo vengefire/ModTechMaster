@@ -244,6 +244,10 @@
                 case ObjectType.DesignMaskDef:
                 case ObjectType.BackgroundDef:
                 case ObjectType.SimGameMilestoneDef:
+                case ObjectType.DebugSettings:
+                case ObjectType.SimGameStatDescDef:
+                case ObjectType.GameTip:
+                case ObjectType.SoundBank:
                     objectDefinition = new ObjectDefinition(
                         entryType,
                         objectDescription,

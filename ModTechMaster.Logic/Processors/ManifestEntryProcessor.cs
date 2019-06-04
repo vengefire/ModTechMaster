@@ -1,5 +1,6 @@
 ﻿namespace ModTechMaster.Logic.Processors
 {
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
 
@@ -22,12 +23,22 @@
             var objectDefinitionProcessor =
                 ObjectDefinitionProcessorFactory.ObjectDefinitionProcessorFactorySingleton.Get(entryType);
 
-            var di = new DirectoryInfo(Path.Combine(manifest.Mod.SourceDirectoryPath, manifestEntry.Path));
+            var targetDirectory = Path.Combine(manifest.Mod.SourceDirectoryPath, manifestEntry.Path);
+            if (!Directory.Exists(targetDirectory))
+            {
+                Debug.WriteLine($"Folder does not exist {targetDirectory}");
+                return manifestEntry;
+            }
+
+            var di = new DirectoryInfo(targetDirectory);
             di.GetFiles("*.*").ToList().ForEach(
                 fi =>
                     {
                         var objectDefinition = objectDefinitionProcessor.ProcessObjectDefinition(manifestEntry, di, fi);
-                        manifestEntry.Objects.Add(objectDefinition);
+                        if (objectDefinition != null)
+                        {
+                            manifestEntry.Objects.Add(objectDefinition);
+                        }
                     });
 
             return manifestEntry;
