@@ -35,6 +35,85 @@
             this.IsExpanded = true;
         }
 
+        public override string HumanReadableContent => this.ModCollection.Name;
+
+        public IModCollection ModCollection { get; }
+
+        public override string Name => this.ModCollection.Name;
+
+        public override IReferenceableObjectProvider ReferenceableObjectProvider => this.ModCollection;
+
+        public long SelectedCoolingCount =>
+            this.SelectedMods.Sum(
+                node => node.SelectedObjects.Count(
+                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.HeatSinkDef));
+
+        public long SelectedJumpJetCount =>
+            this.SelectedMods.Sum(
+                node => node.SelectedObjects.Count(
+                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.JumpJetDef));
+
+        public long SelectedMechCount =>
+            this.SelectedMods.Sum(
+                node => node.SelectedObjects.Count(
+                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.MechDef));
+
+        public long SelectedModObjectCount => this.SelectedMods.Sum(node => node.SelectedObjects.Count);
+
+        // Null checks are partials...
+        public ObservableCollection<ModNode> SelectedMods =>
+            new ObservableCollection<ModNode>(
+                this.Children.Where(item => item.IsChecked == true || item.IsChecked == null).Cast<ModNode>());
+
+        public double SelectedModSize => this.SelectedMods.Sum(node => node.Mod.SizeOnDisk);
+
+        public long SelectedTurretCount =>
+            this.SelectedMods.Sum(
+                node => node.SelectedObjects.Count(
+                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.TurretDef));
+
+        public long SelectedUpgradeCount =>
+            this.SelectedMods.Sum(
+                node => node.SelectedObjects.Count(
+                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.UpgradeDef));
+
+        public long SelectedVehicleCount =>
+            this.SelectedMods.Sum(
+                node => node.SelectedObjects.Count(
+                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.VehicleDef));
+
+        public long SelectedWeaponCount =>
+            this.SelectedMods.Sum(
+                node => node.SelectedObjects.Count(
+                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.WeaponDef));
+
+        public long TotalCoolingCount =>
+            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.HeatSinkDef);
+
+        public long TotalJumpJetCount =>
+            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.JumpJetDef);
+
+        public long TotalMechCount =>
+            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.MechDef);
+
+        public long TotalModObjectCount => this.ModCollection.GetReferenceableObjects().Count;
+
+        public int TotalMods => this.ModCollection.Mods.Count;
+
+        public double TotalModSize => this.ModCollection.Mods.Sum(mod => mod.SizeOnDisk);
+
+        public long TotalTurretCount =>
+            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.TurretDef);
+
+        public long TotalUpgradeCount =>
+            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.UpgradeDef);
+
+        public long TotalVehicleCount =>
+            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.VehicleDef);
+
+        public long TotalWeaponCount =>
+            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.WeaponDef);
+
         public override void IncestPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.IncestPropertyChanged(sender, e);
@@ -51,85 +130,6 @@
                 this.OnPropertyChanged(nameof(this.SelectedCoolingCount));
             }
         }
-
-        public override string HumanReadableContent => this.ModCollection.Name;
-
-        public IModCollection ModCollection { get; }
-
-        public override string Name => this.ModCollection.Name;
-
-        public override IReferenceableObjectProvider ReferenceableObjectProvider => this.ModCollection;
-
-        public long SelectedCoolingCount =>
-            this.SelectedMods.Sum(
-                node => node.SelectedObjects.Count(
-                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.HeatSinkDef));
-
-        public long SelectedMechCount =>
-            this.SelectedMods.Sum(
-                node => node.SelectedObjects.Count(
-                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.MechDef));
-
-        public long TotalMechCount =>
-            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.MechDef);
-
-        public long SelectedModObjectCount => this.SelectedMods.Sum(node => node.SelectedObjects.Count);
-
-        public long TotalModObjectCount => this.ModCollection.GetReferenceableObjects().Count;
-
-        // Null checks are partials...
-        public ObservableCollection<ModNode> SelectedMods =>
-            new ObservableCollection<ModNode>(
-                this.Children.Where(item => item.IsChecked == true || item.IsChecked == null).Cast<ModNode>());
-
-        public int TotalMods => this.ModCollection.Mods.Count;
-
-        public double SelectedModSize => this.SelectedMods.Sum(node => node.Mod.SizeOnDisk);
-
-        public double TotalModSize => this.ModCollection.Mods.Sum(mod => mod.SizeOnDisk);
-
-        public long SelectedTurretCount =>
-            this.SelectedMods.Sum(
-                node => node.SelectedObjects.Count(
-                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.TurretDef));
-
-        public long TotalTurretCount =>
-            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.TurretDef);
-
-        public long SelectedUpgradeCount =>
-            this.SelectedMods.Sum(
-                node => node.SelectedObjects.Count(
-                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.UpgradeDef));
-
-        public long TotalUpgradeCount =>
-            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.UpgradeDef);
-
-        public long SelectedVehicleCount =>
-            this.SelectedMods.Sum(
-                node => node.SelectedObjects.Count(
-                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.VehicleDef));
-
-        public long TotalVehicleCount =>
-            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.VehicleDef);
-
-        public long SelectedWeaponCount =>
-            this.SelectedMods.Sum(
-                node => node.SelectedObjects.Count(
-                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.WeaponDef));
-
-        public long TotalWeaponCount =>
-            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.WeaponDef);
-
-        public long TotalCoolingCount =>
-            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.HeatSinkDef);
-
-        public long SelectedJumpJetCount =>
-            this.SelectedMods.Sum(
-                node => node.SelectedObjects.Count(
-                    item => ((IObjectDefinition)item.Object).ObjectType == ObjectType.JumpJetDef));
-
-        public long TotalJumpJetCount =>
-            this.ModCollection.GetReferenceableObjects().Count(o => o.ObjectType == ObjectType.JumpJetDef);
 
         public void SelectMods(IEnumerable<string> settingsAlwaysIncludedMods)
         {

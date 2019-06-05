@@ -133,8 +133,11 @@
                 {
                     if (value)
                     {
-                        var viewSource = CollectionViewSource.GetDefaultView(this);
-                        viewSource?.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                        if (this.Children.Any())
+                        {
+                            var viewSource = CollectionViewSource.GetDefaultView(this.Children);
+                            viewSource?.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                        }
                     }
 
                     this.isExpanded = value;
@@ -313,7 +316,7 @@
         {
             if (this.Children.Count > 0)
             {
-                var collectionView = CollectionViewSource.GetDefaultView(this);
+                var collectionView = CollectionViewSource.GetDefaultView(this.Children);
                 collectionView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
                 this.Children.ToList().ForEach(item => item.Sort());
             }

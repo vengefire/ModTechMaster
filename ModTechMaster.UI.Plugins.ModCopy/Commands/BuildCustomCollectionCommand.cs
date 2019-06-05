@@ -30,7 +30,7 @@
 
         private static async Task Execute(ModCopyModel model)
         {
-            await Task.Run(model.BuildCustomCollection).ConfigureAwait(false);
+            await Task.Run((Action)model.BuildCustomCollection).ConfigureAwait(false);
         }
     }
 }

@@ -147,7 +147,7 @@
                 Task.Run(
                     async () =>
                         {
-                            await this.SelectImperativeMods();
+                            await this.SelectImperativeMods().ConfigureAwait(false);
                             this.OnPropertyChanged();
                         });
             }
@@ -287,7 +287,7 @@
                         this.MainModel.IsBusy = true;
                         this.ModCollectionNode.SelectMods(this.Settings.AlwaysIncludedMods);
                         this.MainModel.IsBusy = false;
-                    });
+                    }).ConfigureAwait(false);
         }
 
         private static string GetModDestinationPath(string targetCollectionDirectory, string modDirectoryName)
