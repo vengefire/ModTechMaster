@@ -56,6 +56,15 @@
 
         public string SourceFilePath { get; }
 
+        public string SourceFileNameWithoutExtension
+        {
+            get
+            {
+                var fi = new FileInfo(this.SourceFilePath);
+                return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+            }
+        }
+
         public virtual void AddMetaData()
         {
             this.MetaData.Add(Keywords.Id, this.CsvData[0][0]);

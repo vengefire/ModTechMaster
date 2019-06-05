@@ -159,9 +159,17 @@
       <Project>{D2F2AA1A-8A0D-45B9-8491-CFDFF2B78A47}</Project>
       <Name>Framework.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Framework\Framework.Utils\Framework.Utils.csproj">
+      <Project>{e851e212-1eb4-40b4-8596-31ff26ae2594}</Project>
+      <Name>Framework.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.Core\ModTechMaster.Core.csproj">
       <Project>{f1c5c7c8-c8f3-46fc-9339-746dc0a2a185}</Project>
       <Name>ModTechMaster.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.Data\ModTechMaster.Data.csproj">
+      <Project>{0a8e1776-19b5-41ae-959d-e887e06c4c4a}</Project>
+      <Name>ModTechMaster.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.Logic\ModTechMaster.Logic.csproj">
       <Project>{D9D9B467-A546-49C2-843D-45BE8E730FF8}</Project>
@@ -170,6 +178,10 @@
     <ProjectReference Include="..\ModTechMaster.UI.Core\ModTechMaster.UI.Core.csproj">
       <Project>{2517ef78-4c4f-4f3a-a245-31ccbc0e2003}</Project>
       <Name>ModTechMaster.UI.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.UI.Data\ModTechMaster.UI.Data.csproj">
+      <Project>{305b2295-0c04-48d6-914b-4b1c30c153cc}</Project>
+      <Name>ModTechMaster.UI.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.UI.Plugins.Core\ModTechMaster.UI.Plugins.Core.csproj">
       <Project>{5043194f-4908-4337-a148-97b9cbd8cb82}</Project>

@@ -57,6 +57,7 @@
                 if (result == System.Windows.Forms.DialogResult.OK)
                 {
                     this.MechSelectorModel.MechFilePath = fileDialog.FileName;
+                    Task.Run(() => MechSelectorModel.ProcessMechSelectionFile(this.MechSelectorModel));
                 }
             }
         }

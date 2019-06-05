@@ -9,5 +9,7 @@
         string SourceFileName { get; }
 
         string SourceFilePath { get; }
+
+        string SourceFileNameWithoutExtension { get; }
     }
 }

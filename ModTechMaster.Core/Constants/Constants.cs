@@ -93,5 +93,7 @@
         public static readonly string VehicleId = "VehicleId";
 
         public static readonly string WeaponDefId = "WeaponDefId";
+
+        public static readonly string Icon = "Icon";
     }
 }

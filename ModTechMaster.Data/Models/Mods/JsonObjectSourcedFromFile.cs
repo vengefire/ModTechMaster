@@ -21,6 +21,15 @@
 
         public string SourceFileName => new FileInfo(this.SourceFilePath).Name;
 
+        public string SourceFileNameWithoutExtension
+        {
+            get
+            {
+                var fi = new FileInfo(this.SourceFilePath);
+                return fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+            }
+        }
+
         public string SourceFilePath { get; }
     }
 }

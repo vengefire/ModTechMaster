@@ -60,6 +60,7 @@
 
             componentIdList.ToList().ForEach(pair => { this.MetaData.Add(pair.Key, pair.Value.ToList()); });
             this.MetaData.Add(Keywords.ChassisId, this.JsonObject.ChassisID);
+            this.MetaData.Add(Keywords.Icon, this.JsonObject.Description.Icon);
         }
     }
 }

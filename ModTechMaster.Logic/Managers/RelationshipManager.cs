@@ -97,6 +97,11 @@
                                     ObjectType.MechDef,
                                     ObjectType.ChassisDef,
                                     Keywords.ChassisId,
+                                    Keywords.Id),
+                                new ObjectRelationship(
+                                    ObjectType.MechDef,
+                                    ObjectType.Sprite,
+                                    Keywords.Icon,
                                     Keywords.Id)
                             }
                     },
