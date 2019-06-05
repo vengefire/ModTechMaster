@@ -22,6 +22,7 @@
                     {
                         if (!string.IsNullOrEmpty(s.Trim()))
                         {
+                            s = s.Trim().Trim(new[] { '\r', '\n' });
                             var lineData = new List<string>();
                             s.Split(',').ToList().ForEach(s1 => lineData.Add(s1));
                             if (lineData.Count >= 4)

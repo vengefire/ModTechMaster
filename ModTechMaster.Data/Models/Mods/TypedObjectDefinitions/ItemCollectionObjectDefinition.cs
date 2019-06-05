@@ -29,10 +29,16 @@
             var heatsinks = new HashSet<string>();
             var ammoBoxes = new HashSet<string>();
             var jumpJets = new HashSet<string>();
+            var rarity = string.Empty;
+            var count = string.Empty;
+
             foreach (var line in this.CsvData.Skip(1))
             {
+                
                 var id = line[0];
                 var type = line[1];
+                count = line[2];
+                rarity = line[3];
 
                 // What does 2 and 3 do?
                 switch (type)
@@ -71,6 +77,8 @@
             this.MetaData.Add(Keywords.HeatSinkDefId, new List<string>(heatsinks));
             this.MetaData.Add(Keywords.AmmoBoxId, new List<string>(ammoBoxes));
             this.MetaData.Add(Keywords.JumpJetDefId, new List<string>(jumpJets));
+            this.MetaData.Add(Keywords.Count, count);
+            this.MetaData.Add(Keywords.Rarity, rarity);
         }
     }
 }

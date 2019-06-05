@@ -95,5 +95,9 @@
         public static readonly string WeaponDefId = "WeaponDefId";
 
         public static readonly string Icon = "Icon";
+
+        public static readonly string Count = "Count";
+
+        public static readonly string Rarity = "Rarity";
     }
 }

@@ -267,32 +267,49 @@
             // If we're setting the node to an unspecified state, we don't want to roll that down to our children.
             node.isChecked = value;
 
-            // We don't go down the fucking list if we're setting partial. Cunt.
-            if (value == null)
+            // We don't go down the fucking list if we're setting partial. Cunt. Unless we're an Item Collection. Oh Fuck.
+            IReferenceableObject referenceableObject = node.Object is IReferenceableObject o ? o : null;
+            bool isItemCollection = referenceableObject != null && referenceableObject.ObjectType == ObjectType.ItemCollectionDef;
+
+            if (value == null && !isItemCollection)
             {
                 return;
             }
 
-            foreach (var child in node.Children)
+            if (!isItemCollection)
             {
-                child.IsChecked = value;
+                foreach (var child in node.Children)
+                {
+                    child.IsChecked = value;
+                }
             }
 
-            IEnumerable<IObjectReference<IReferenceableObject>> objects;
+            List<IObjectReference<IReferenceableObject>> objects;
 
             // We check for not true so that we will select dependencies for partially selected mods.
             objects = value == true
                           ? node.ObjectReferences.Where(
-                              reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency)
+                              reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency).ToList()
                           : node.ObjectReferences.Where(
-                              reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent);
+                              reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent).ToList();
+
+            // Add any item collections our object may belong to
+            objects.AddRange(node.Dependents.Where(reference => reference.ReferenceObject.ObjectType == ObjectType.ItemCollectionDef).ToList());
+
+            // Remove any dependency non-item collections if we're selecting an item collection
+            if (isItemCollection)
+            {
+                objects.RemoveAll(
+                    reference => reference.ReferenceObject.ObjectType != ObjectType.ItemCollectionDef);
+            }
 
             foreach (var objectReference in objects)
             {
                 IMtmTreeViewItem treeItem;
                 if (DictRefsToTreeViewItems.TryGetValue(objectReference.ReferenceObject, out treeItem))
                 {
-                    treeItem.IsChecked = value;
+                    // If we're selecting an item collection, flag it as a partial.
+                    treeItem.IsChecked = objectReference.ReferenceObject.ObjectType == ObjectType.ItemCollectionDef ? null : value;
                 }
             }
 

@@ -23,7 +23,7 @@
             di.GetFiles().ToList().ForEach(
                 fi =>
                     {
-                        if (filesToCopy == null || filesToCopy.Count == 0 || filesToCopy.Contains(fi.Name))
+                        if (filesToCopy == null || filesToCopy.Contains(fi.Name))
                         {
                             File.Copy(fi.FullName, Path.Combine(dest, fi.Name));
                         }

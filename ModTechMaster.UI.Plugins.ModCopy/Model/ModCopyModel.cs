@@ -1,6 +1,7 @@
 ﻿namespace ModTechMaster.UI.Plugins.ModCopy.Model
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Diagnostics;
@@ -16,8 +17,10 @@
 
     using Framework.Utils.Directory;
 
+    using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Services;
+    using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
     using ModTechMaster.UI.Plugins.Core.Interfaces;
     using ModTechMaster.UI.Plugins.ModCopy.Annotations;
     using ModTechMaster.UI.Plugins.ModCopy.Commands;
@@ -211,7 +214,7 @@
                                 foreach (var entry in manifest.Entries)
                                 {
                                     var group = entryGroups.First(entryNode => entryNode.ManifestEntry.EntryType == entry.EntryType);
-                                    var intersect = entry.Objects.Intersect(group.Children.Cast<ObjectDefinitionNode>().Where(definitionNode => definitionNode.IsChecked == true).Select(definitionNode => definitionNode.ObjectDefinition));
+                                    var intersect = entry.Objects.Intersect(group.Children.Cast<ObjectDefinitionNode>().Where(definitionNode => definitionNode.IsChecked != false).Select(definitionNode => definitionNode.ObjectDefinition));
                                     if (!intersect.Any())
                                     {
                                         if (entry.JsonObject == null)
@@ -233,22 +236,75 @@
                                     }
                                 }
 
+                                // Skip copying prefabs, they're hosted in the selected asset bundle.
                                 var usedManifestEntries = manifestNode.Children.Where(item => item is ManifestEntryNode)
                                     .Cast<ManifestEntryNode>().Where(
-                                        entryNode => entryNode.Children.Any(item => item.IsChecked == true)).ToList();
+                                        entryNode => entryNode.ManifestEntry.EntryType != ObjectType.Prefab && entryNode.Children.Any(item => item.IsChecked != false)).ToList();
 
                                 usedManifestEntries.ForEach(
                                     entryNode =>
                                         {
-                                            var objects = entryNode.Children.Where(item => item.IsChecked == true)
-                                                .Select(item => item.Object)
-                                                .Cast<ISourcedFromFile>();
-                                            var files = objects.Select(file => file.SourceFileName).ToList();
+                                            var objects = entryNode.Children
+                                                .Where(item => item.IsChecked != false)
+                                                .Select(item => new {itemNode = item, itemObject = item.Object}).ToList();
+
+                                            var itemCollectionObjects = objects.Where(
+                                                o => o.itemObject is IReferenceableObject referenceableObject
+                                                      && referenceableObject.ObjectType
+                                                      == ObjectType.ItemCollectionDef);
+
+                                            var objectTypesToIgnore =
+                                                new List<ObjectType>
+                                                    {
+                                                        ObjectType.ItemCollectionDef, ObjectType.Prefab
+                                                    };
+
+                                            var fileObjectsToCopy = objects.Where(
+                                                o => o.itemObject is IReferenceableObject referenceableObject
+                                                     && !objectTypesToIgnore.Contains(referenceableObject.ObjectType)).Select(arg => arg.itemObject).Cast<ISourcedFromFile>();
+
+                                            // Copy non-item list objects...
+                                            var files = fileObjectsToCopy.Select(file => file.SourceFileName).ToList();
                                             DirectoryUtils.DirectoryCopy(
                                                 Path.Combine(mod.SourceDirectoryPath, entryNode.ManifestEntry.Path),
                                                 Path.Combine(modDestinationDirectory, entryNode.ManifestEntry.Path),
                                                 true,
                                                 files);
+
+                                            // Handle Item Lists
+                                            foreach (var itemCollectionObject in itemCollectionObjects)
+                                            {
+                                                var itemCollection = itemCollectionObject.itemObject as ItemCollectionObjectDefinition;
+
+                                                var selectedItemLines = new List<string>
+                                                                            {
+                                                                                string.Join(",", new[] {itemCollection.Id, string.Empty, string.Empty, string.Empty})
+                                                                            };
+
+                                                var selectedItemNodes = itemCollectionObject.itemNode.Dependencies.Where(
+                                                    reference =>
+                                                        {
+                                                            var referencedNode =
+                                                                MtmTreeViewItem.DictRefsToTreeViewItems[
+                                                                    reference.ReferenceObject];
+                                                            return referencedNode.IsChecked != false;
+                                                        });
+
+                                                selectedItemNodes.ToList().ForEach(
+                                                    reference =>
+                                                        {
+                                                            var selectedItem = reference.ReferenceObject;
+                                                            var matchedItemCollectionLine = itemCollection.CsvData.First(list => list.Any(s => string.Equals(s, selectedItem.Id, StringComparison.OrdinalIgnoreCase)));
+                                                            selectedItemLines.Add(string.Join(",", matchedItemCollectionLine));
+                                                        });
+
+                                                var targetFile = Path.Combine(
+                                                    modDestinationDirectory,
+                                                    entryNode.ManifestEntry.Path,
+                                                    itemCollection.SourceFileName);
+
+                                                File.WriteAllText(targetFile, string.Join("\r\n", selectedItemLines));
+                                            }
                                         });
                             }
 
@@ -297,21 +353,35 @@
 
         private static void MechSelectorWindowOnClosed(object sender, EventArgs e)
         {
-            var selectorWindow = sender as MechSelectorWindow;
-            if (selectorWindow.SelectMechs)
-            {
-                var mechsObjectsToSelect =
-                    selectorWindow.MechSelectorModel.SelectedModels.SelectMany(
-                        model => model.ObjectDefinitions.Select(o => o));
-                foreach (var objectReference in mechsObjectsToSelect)
-                {
-                    IMtmTreeViewItem treeItem;
-                    if (MtmTreeViewItem.DictRefsToTreeViewItems.TryGetValue(objectReference, out treeItem))
+            Task.Run(
+                () =>
                     {
-                        treeItem.IsChecked = true;
-                    }
-                }
-            }
+                        var selectorWindow = sender as MechSelectorWindow;
+                        try
+                        {
+                            selectorWindow.MechSelectorModel.ModCopyModel.MainModel.IsBusy = true;
+                            if (selectorWindow.SelectMechs)
+                            {
+                                var mechsObjectsToSelect =
+                                    selectorWindow.MechSelectorModel.SelectedModels.SelectMany(
+                                        model => model.ObjectDefinitions.Select(o => o));
+                                foreach (var objectReference in mechsObjectsToSelect)
+                                {
+                                    IMtmTreeViewItem treeItem;
+                                    if (MtmTreeViewItem.DictRefsToTreeViewItems.TryGetValue(
+                                        objectReference,
+                                        out treeItem))
+                                    {
+                                        treeItem.IsChecked = true;
+                                    }
+                                }
+                            }
+                        }
+                        finally
+                        {
+                            selectorWindow.MechSelectorModel.ModCopyModel.MainModel.IsBusy = false;
+                        }
+                    }).ConfigureAwait(false);
         }
 
         private string GetModDestinationPath(string modDirectoryName)
