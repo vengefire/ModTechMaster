@@ -45,7 +45,7 @@
                                                            catch (Exception ex)
                                                            {
                                                                invalidJsonFiles.Add(info.FullName);
-                                                               if (ex.Message.Contains("unexpected character"))
+                                                               /*if (ex.Message.Contains("unexpected character"))
                                                                {
                                                                    var failed = false;
                                                                    while (true)
@@ -71,7 +71,7 @@
 
                                                                    // Console.Write(sb.ToString());
                                                                    if (!failed) Console.WriteLine($"Fixed {info.FullName}");
-                                                               }
+                                                               }*/
                                                            }
                                                        });
 

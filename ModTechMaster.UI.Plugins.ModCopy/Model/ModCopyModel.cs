@@ -4,6 +4,7 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.IO;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
@@ -13,12 +14,18 @@
 
     using Castle.Core.Logging;
 
+    using Framework.Utils.Directory;
+
+    using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.UI.Plugins.Core.Interfaces;
     using ModTechMaster.UI.Plugins.ModCopy.Annotations;
     using ModTechMaster.UI.Plugins.ModCopy.Commands;
     using ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector;
     using ModTechMaster.UI.Plugins.ModCopy.Nodes;
+
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     public sealed class ModCopyModel : INotifyPropertyChanged
     {
@@ -66,11 +73,15 @@
             this.modService.PropertyChanged += this.ModServiceOnPropertyChanged;
             ResetSelectionsCommand = new ResetSelectionsCommand(this);
             SelectMechsFromDataFileCommand = new SelectMechsFromDataFileCommand(this);
+            BuildCustomCollectionCommand = new BuildCustomCollectionCommand(this);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public static IPluginCommand BuildCustomCollectionCommand { get; private set; }
+
         public static IPluginCommand ResetSelectionsCommand { get; private set; }
+
         public static IPluginCommand SelectMechsFromDataFileCommand { get; private set; }
 
         public IMtmTreeViewItem CurrentSelectedItem
@@ -150,20 +161,103 @@
             mechSelectorWindow.Show();
         }
 
-        private static void MechSelectorWindowOnClosed(object sender, EventArgs e)
+        public void BuildCustomCollection()
         {
-            var selectorWindow = sender as MechSelectorWindow;
-            if (selectorWindow.SelectMechs)
+            this.MainModel.IsBusy = true;
+            try
             {
-                var mechsObjectsToSelect = selectorWindow.MechSelectorModel.SelectedModels.SelectMany(model => model.ObjectDefinitions.Select(o => o));
-                foreach (var objectReference in mechsObjectsToSelect)
+                if (Directory.Exists(this.settings.OutputDirectory))
                 {
-                    IMtmTreeViewItem treeItem;
-                    if (MtmTreeViewItem.DictRefsToTreeViewItems.TryGetValue(objectReference, out treeItem))
-                    {
-                        treeItem.IsChecked = true;
-                    }
+                    Directory.Delete(this.settings.OutputDirectory, true);
                 }
+
+                // Copy all fully selected mod packages...
+                this.ModCollectionNode.SelectedMods.Where(node => node.IsChecked == true).ToList().ForEach(
+                    node =>
+                        {
+                            var di = new DirectoryInfo(node.Mod.SourceDirectoryPath);
+                            DirectoryUtils.DirectoryCopy(di.FullName, this.GetModDestinationPath(di.Name), true, null);
+                        });
+
+                // Copy partially selected mod packages...
+                this.ModCollectionNode.SelectedMods.Where(node => !node.IsChecked.HasValue).ToList().ForEach(
+                    node =>
+                        {
+                            var mod = node.Mod;
+                            var di = new DirectoryInfo(mod.SourceDirectoryPath);
+                            var modDestinationDirectory = this.GetModDestinationPath(di.Name);
+                            DirectoryUtils.EnsureExists(modDestinationDirectory);
+
+                            // Copy Resource Files. Don't copy the mod.json file. This will be written after unselected items have been removed from child manifests.
+                            mod.ResourceFiles
+                                .Where(definition => definition.SourceFileName.ToLowerInvariant() != "mod.json")
+                                .ToList().ForEach(
+                                    definition =>
+                                        {
+                                            var sourceFilePath = definition.SourceFilePath;
+                                            var destinationFilePath = Path.Combine(
+                                                modDestinationDirectory,
+                                                definition.SourceFileName);
+                                            File.Copy(sourceFilePath, destinationFilePath);
+                                        });
+
+                            if (node.Children.FirstOrDefault(item => item is ManifestNode) is ManifestNode manifestNode)
+                            {
+                                var manifest = manifestNode.Object as IManifest;
+                                var entryGroups = manifestNode.Children.Where(item => item is ManifestEntryNode)
+                                    .Cast<ManifestEntryNode>().ToList();
+
+                                // We need to check whether each entry instance has any selected items in the UI group.
+                                foreach (var entry in manifest.Entries)
+                                {
+                                    var group = entryGroups.First(entryNode => entryNode.ManifestEntry.EntryType == entry.EntryType);
+                                    var intersect = entry.Objects.Intersect(group.Children.Cast<ObjectDefinitionNode>().Where(definitionNode => definitionNode.IsChecked == true).Select(definitionNode => definitionNode.ObjectDefinition));
+                                    if (!intersect.Any())
+                                    {
+                                        if (entry.JsonObject == null)
+                                        {
+                                            this.logger.Warn($@"Encountered null entry {entry.Id}");
+                                            continue;
+                                        }
+
+                                        var jsonObject = (JObject)entry.JsonObject;
+                                        var parent = jsonObject.Parent;
+                                        if (parent != null)
+                                        {
+                                            jsonObject.Remove();
+                                        }
+                                        else
+                                        {
+                                            this.logger.Warn($@"Encountered parentless entry {entry.JsonString}");
+                                        }
+                                    }
+                                }
+
+                                var usedManifestEntries = manifestNode.Children.Where(item => item is ManifestEntryNode)
+                                    .Cast<ManifestEntryNode>().Where(
+                                        entryNode => entryNode.Children.Any(item => item.IsChecked == true)).ToList();
+
+                                usedManifestEntries.ForEach(
+                                    entryNode =>
+                                        {
+                                            var objects = entryNode.Children.Where(item => item.IsChecked == true)
+                                                .Select(item => item.Object)
+                                                .Cast<ISourcedFromFile>();
+                                            var files = objects.Select(file => file.SourceFileName).ToList();
+                                            DirectoryUtils.DirectoryCopy(
+                                                Path.Combine(mod.SourceDirectoryPath, entryNode.ManifestEntry.Path),
+                                                Path.Combine(modDestinationDirectory, entryNode.ManifestEntry.Path),
+                                                true,
+                                                files);
+                                        });
+                            }
+
+                            File.WriteAllText(Path.Combine(modDestinationDirectory, "mod.json"), JsonConvert.SerializeObject(mod.JsonObject, Formatting.Indented));
+                        });
+            }
+            finally
+            {
+                this.MainModel.IsBusy = false;
             }
         }
 
@@ -194,6 +288,35 @@
                         this.ModCollectionNode.SelectMods(this.Settings.AlwaysIncludedMods);
                         this.MainModel.IsBusy = false;
                     });
+        }
+
+        private static string GetModDestinationPath(string targetCollectionDirectory, string modDirectoryName)
+        {
+            return Path.Combine(targetCollectionDirectory, modDirectoryName);
+        }
+
+        private static void MechSelectorWindowOnClosed(object sender, EventArgs e)
+        {
+            var selectorWindow = sender as MechSelectorWindow;
+            if (selectorWindow.SelectMechs)
+            {
+                var mechsObjectsToSelect =
+                    selectorWindow.MechSelectorModel.SelectedModels.SelectMany(
+                        model => model.ObjectDefinitions.Select(o => o));
+                foreach (var objectReference in mechsObjectsToSelect)
+                {
+                    IMtmTreeViewItem treeItem;
+                    if (MtmTreeViewItem.DictRefsToTreeViewItems.TryGetValue(objectReference, out treeItem))
+                    {
+                        treeItem.IsChecked = true;
+                    }
+                }
+            }
+        }
+
+        private string GetModDestinationPath(string modDirectoryName)
+        {
+            return GetModDestinationPath(this.settings.OutputDirectory, modDirectoryName);
         }
 
         private void ModServiceOnPropertyChanged(object sender, PropertyChangedEventArgs e)

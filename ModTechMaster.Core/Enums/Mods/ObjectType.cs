@@ -113,6 +113,7 @@
         DebugSettings,
         SimGameStatDescDef,
         GameTip,
-        SoundBank
+        SoundBank,
+        ModSettings
     }
 }

@@ -335,21 +335,31 @@
         {
             if (item.Children.Count == 0)
             {
+                bool? valueSet;
                 var currentNode = item.Parent;
 
                 while (currentNode != null)
                 {
                     if (currentNode.Children.All(node => node.IsChecked == true))
                     {
-                        currentNode.IsChecked = true;
+                        currentNode.IsChecked = valueSet = true;
                     }
                     else if (currentNode.Children.All(node => node.IsChecked == false))
                     {
-                        currentNode.IsChecked = false;
+                        currentNode.IsChecked = valueSet = false;
                     }
                     else
                     {
-                        currentNode.IsChecked = null;
+                        currentNode.IsChecked = valueSet = null;
+                    }
+
+                    // Set siblings to mod node children values...
+                    if (currentNode.Parent is ModNode modNode)
+                    {
+                        modNode.Children.Where(viewItem => viewItem is ResourceNode).ToList().ForEach(viewItem =>
+                                {
+                                    viewItem.IsChecked = valueSet != false;
+                                });
                     }
 
                     currentNode = currentNode.Parent;

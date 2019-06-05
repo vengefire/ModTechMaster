@@ -25,12 +25,12 @@
 
         private static bool CanExecute(ModCopyModel model)
         {
-            throw new NotImplementedException();
+            return model?.ModCollectionNode.SelectedModObjectCount > 0;
         }
 
         private static async Task Execute(ModCopyModel model)
         {
-            throw new NotImplementedException();
+            await Task.Run(model.BuildCustomCollection).ConfigureAwait(false);
         }
     }
 }

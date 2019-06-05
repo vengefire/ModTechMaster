@@ -15,6 +15,7 @@
             this.Manifest = modManifest;
             var groupedManifestEntries =
                 this.Manifest.Entries.GroupBy(entry => entry.EntryType).OrderBy(entries => entries.Key);
+
             foreach (var groupedManifestEntry in groupedManifestEntries)
             {
                 var firstEntry = groupedManifestEntry.First();
