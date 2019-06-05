@@ -20,7 +20,7 @@
 
             var objectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
                 entryType,
-                new ObjectDefinitionDescription(path, null, null, null, (JObject)jsonObject),
+                new ObjectDefinitionDescription(null, null, null, null, (JObject)jsonObject),
                 (JObject)jsonObject,
                 path);
             manifestEntry.Objects.Add(objectDefinition);

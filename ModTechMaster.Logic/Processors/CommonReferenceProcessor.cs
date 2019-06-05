@@ -1,5 +1,6 @@
 ﻿namespace ModTechMaster.Logic.Processors
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -33,14 +34,10 @@
             }
 
             var targetObjectTypes = new HashSet<ObjectType>();
-            dependenciesRels.Select(ship => ship.DependencyType).Distinct().ToList()
-                .ForEach(type => targetObjectTypes.Add(type));
             dependantRels.Select(ship => ship.DependentType).Distinct().ToList()
                 .ForEach(type => targetObjectTypes.Add(type));
 
-            // dependantRels = dependantRels.Where(ship => !dependantTypesToIgnore.Contains(ship.DependentType)).ToList();
-            var candidates = objectProvider.GetReferenceableObjects();
-            candidates = candidates.Where(o => targetObjectTypes.Contains(o.ObjectType)).ToList();
+            var candidates = objectProvider.GetReferenceableObjects().Where(o => targetObjectTypes.Contains(o.ObjectType)).ToList();
             var dependentRecs = new List<ObjectReference<TType>>();
             Parallel.ForEach(
                 dependantRels,
@@ -61,11 +58,12 @@
                                         return;
                                     }
 
-                                    var objectKey = objectDefinition.MetaData[relationship.DependencyKey];
+                                    var objectKey = objectDefinition.MetaData[relationship.DependencyKey].ToString();
                                     var dependentKeys = candidate.MetaData[relationship.DependentKey];
+
                                     if ((relationship.HasMultipleDependencies
-                                        && ((List<string>)dependentKeys).Contains(objectKey))
-                                        || dependentKeys.ToString() == objectKey.ToString())
+                                        && ((List<string>)dependentKeys).Any(s => string.Equals(s, objectKey, StringComparison.OrdinalIgnoreCase)))
+                                        || string.Compare(dependentKeys.ToString(), objectKey, StringComparison.InvariantCultureIgnoreCase) == 0)
                                     {
                                         lock (dependentRecs)
                                         {
@@ -79,6 +77,11 @@
                                     }
                                 });
                     });
+
+            targetObjectTypes.Clear();
+            dependenciesRels.Select(ship => ship.DependencyType).Distinct().ToList()
+                .ForEach(type => targetObjectTypes.Add(type));
+            candidates = objectProvider.GetReferenceableObjects().Where(o => targetObjectTypes.Contains(o.ObjectType)).ToList();
 
             var dependencyRecs = new List<ObjectReference<TType>>();
             Parallel.ForEach(
@@ -102,11 +105,9 @@
 
                                     var objectKeys = objectDefinition.MetaData[relationship.DependentKey];
 
-                                    var dependencyKey = candidate.MetaData[relationship.DependencyKey];
-                                    if ((relationship.HasMultipleDependencies
-                                        && ((List<string>)objectKeys).Contains(dependencyKey)) || string.CompareOrdinal(
-                                            objectKeys.ToString(),
-                                            dependencyKey.ToString()) == 0)
+                                    var dependencyKey = candidate.MetaData[relationship.DependencyKey].ToString();
+                                    if ((relationship.HasMultipleDependencies && ((List<string>)objectKeys).Any(s => s.Equals(dependencyKey, StringComparison.OrdinalIgnoreCase))) 
+                                        || string.Equals(dependencyKey, objectKeys.ToString(), StringComparison.OrdinalIgnoreCase))
                                     {
                                         lock (dependencyRecs)
                                         {

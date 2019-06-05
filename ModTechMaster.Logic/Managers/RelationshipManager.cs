@@ -128,7 +128,7 @@
                                     ObjectType.ChassisDef,
                                     ObjectType.Prefab,
                                     Keywords.PrefabId,
-                                    Keywords.Id)
+                                    Keywords.AssetBundle)
                             }
                     },
                     {
@@ -177,7 +177,7 @@
                                     ObjectType.VehicleChassisDef,
                                     ObjectType.Prefab,
                                     Keywords.PrefabId,
-                                    Keywords.Id)
+                                    Keywords.AssetBundle)
                             }
                     },
                     {
@@ -216,7 +216,7 @@
                                     ObjectType.TurretChassisDef,
                                     ObjectType.Prefab,
                                     Keywords.PrefabId,
-                                    Keywords.Id)
+                                    Keywords.AssetBundle)
                             }
                     },
                     {

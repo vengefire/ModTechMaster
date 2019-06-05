@@ -12,6 +12,7 @@
 
         public override string HumanReadableContent => this.ObjectDefinition.HumanReadableText;
 
+        // public override string Name => this.ObjectDefinition.Id;
         public override string Name => this.ObjectDefinition.Id;
 
         public IObjectDefinition ObjectDefinition { get; }
