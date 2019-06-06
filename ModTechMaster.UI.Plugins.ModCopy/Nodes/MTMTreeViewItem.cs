@@ -287,14 +287,18 @@
                 }
             }
 
-            List<IObjectReference<IReferenceableObject>> objects;
+            List<IObjectReference<IReferenceableObject>> objects = new List<IObjectReference<IReferenceableObject>>();
 
             // We check for not true so that we will select dependencies for partially selected mods.
-            objects = value == true
-                          ? node.ObjectReferences.Where(
-                              reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency).ToList()
-                          : node.ObjectReferences.Where(
-                              reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent).ToList();
+            // Never select dependencies for mods. Handled elsewhere.
+            if (!(node is ModNode))
+            {
+                objects = value == true
+                              ? node.ObjectReferences.Where(
+                                  reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency).ToList()
+                              : node.ObjectReferences.Where(
+                                  reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent).ToList();
+            }
 
             // Add any item collections our object may belong to
             objects.AddRange(
@@ -350,17 +354,26 @@
         public void SelectAbsentModDependencies()
         {
             // Check if any partially selected mods are missing dependencies and select them.
-            this.TopNode.Children.Where(item => item.IsChecked == null).SelectMany(item => item.Dependencies).Distinct()
-                .ToList().ForEach(
-                    dependency =>
-                        {
-                            IMtmTreeViewItem modDependencyNode;
-                            if (DictRefsToTreeViewItems.TryGetValue(dependency.ReferenceObject, out modDependencyNode)
-                                && modDependencyNode.IsChecked == false)
+            int lastCount = 0;
+            var referencedDependencies = new List<IMtmTreeViewItem>();
+            do
+            {
+                lastCount = 0;
+                this.TopNode.Children.Where(item => item.IsChecked == null || referencedDependencies.Contains(item)).SelectMany(item => item.Dependencies).Distinct()
+                    .ToList().ForEach(
+                        dependency =>
                             {
-                                modDependencyNode.IsChecked = true;
-                            }
-                        });
+                                IMtmTreeViewItem modDependencyNode;
+                                if (DictRefsToTreeViewItems.TryGetValue(dependency.ReferenceObject, out modDependencyNode)
+                                    && modDependencyNode.IsChecked == false)
+                                {
+                                    modDependencyNode.IsChecked = true;
+                                    lastCount += 1;
+                                    referencedDependencies.Add(modDependencyNode);
+                                }
+                            });
+            }
+            while (lastCount != 0);
         }
 
         public void Sort()

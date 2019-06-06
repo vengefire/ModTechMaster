@@ -347,6 +347,28 @@
                                                 }
                                             }
                                         });
+
+                                var handledPaths = manifest.Entries.Select(
+                                    entry =>
+                                        {
+                                            var path = entry.Path;
+                                            var subIndex = entry.Path.IndexOfAny(new[] { '/', '\\' });
+
+                                            if (subIndex == -1)
+                                            {
+                                                return path;
+                                            }
+
+                                            return path.Substring(0, subIndex);
+                                        }).Distinct();
+
+                                var assetDirectories = di.EnumerateDirectories().Select(info => info.Name).ToList()
+                                    .Except(handledPaths);
+
+                                foreach (var assetDirectory in assetDirectories)
+                                {
+                                    DirectoryUtils.DirectoryCopy(Path.Combine(mod.SourceDirectoryPath, assetDirectory), Path.Combine(modDestinationDirectory, assetDirectory), true, null);
+                                }
                             }
 
                             File.WriteAllText(

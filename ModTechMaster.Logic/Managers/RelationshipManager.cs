@@ -242,12 +242,12 @@
                                 new ObjectRelationship(
                                     ObjectType.CCDefaults,
                                     ObjectType.UpgradeDef,
-                                    Keywords.DefId,
+                                    Keywords.UpgradeDefId,
                                     Keywords.Id),
                                 new ObjectRelationship(
                                     ObjectType.CCDefaults,
                                     ObjectType.HeatSinkDef,
-                                    Keywords.DefId,
+                                    Keywords.HeatSinkDefId,
                                     Keywords.Id)
                             }
                     },

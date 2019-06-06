@@ -28,7 +28,7 @@
             {
                 foreach (var dialogueContent in dialog.dialogueContent)
                 {
-                    castList.Add(dialogueContent.SelectedCastDefId);
+                    castList.Add(dialogueContent.selectedCastDefId.ToString());
                 }
             }
 
