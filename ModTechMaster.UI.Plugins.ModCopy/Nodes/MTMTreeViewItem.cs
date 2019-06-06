@@ -17,7 +17,6 @@
     using ModTechMaster.Logic.Processors;
     using ModTechMaster.UI.Data.Enums;
 
-    // using Annotations;
     public abstract class MtmTreeViewItem : IMtmTreeViewItem
     {
         public static readonly Dictionary<IReferenceableObject, IMtmTreeViewItem> DictRefsToTreeViewItems =
@@ -106,16 +105,7 @@
                                     ModCopyPage.Self.ModCopyModel.MainModel.IsBusy = true;
                                     CheckNode(this, value);
 
-                                    // Check if any partially selected mods are missing dependencies and select them.
-                                    this.TopNode.Children.Where(item => item.IsChecked == null).SelectMany(item => item.Dependencies).Distinct().ToList().ForEach(
-                                        dependency =>
-                                            {
-                                                IMtmTreeViewItem modDependencyNode;
-                                                if (DictRefsToTreeViewItems.TryGetValue(dependency.ReferenceObject, out modDependencyNode) && modDependencyNode.IsChecked == false)
-                                                {
-                                                    modDependencyNode.IsChecked = true;
-                                                }
-                                            });
+                                    this.SelectAbsentModDependencies();
 
                                     ModCopyPage.Self.ModCopyModel.MainModel.IsBusy = false;
                                     this.PropertyChanged += this.OnPropertyChanged;
@@ -280,8 +270,9 @@
             node.isChecked = value;
 
             // We don't go down the fucking list if we're setting partial. Cunt. Unless we're an Item Collection. Oh Fuck.
-            IReferenceableObject referenceableObject = node.Object is IReferenceableObject o ? o : null;
-            bool isItemCollection = referenceableObject != null && referenceableObject.ObjectType == ObjectType.ItemCollectionDef;
+            var referenceableObject = node.Object is IReferenceableObject o ? o : null;
+            var isItemCollection = referenceableObject != null
+                                   && referenceableObject.ObjectType == ObjectType.ItemCollectionDef;
 
             if (value == null && !isItemCollection)
             {
@@ -306,13 +297,14 @@
                               reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent).ToList();
 
             // Add any item collections our object may belong to
-            objects.AddRange(node.Dependents.Where(reference => reference.ReferenceObject.ObjectType == ObjectType.ItemCollectionDef).ToList());
+            objects.AddRange(
+                node.Dependents.Where(reference => reference.ReferenceObject.ObjectType == ObjectType.ItemCollectionDef)
+                    .ToList());
 
             // Remove any dependency non-item collections if we're selecting an item collection
             if (isItemCollection)
             {
-                objects.RemoveAll(
-                    reference => reference.ReferenceObject.ObjectType != ObjectType.ItemCollectionDef);
+                objects.RemoveAll(reference => reference.ReferenceObject.ObjectType != ObjectType.ItemCollectionDef);
             }
 
             foreach (var objectReference in objects)
@@ -321,7 +313,9 @@
                 if (DictRefsToTreeViewItems.TryGetValue(objectReference.ReferenceObject, out treeItem))
                 {
                     // If we're selecting an item collection, flag it as a partial.
-                    treeItem.IsChecked = objectReference.ReferenceObject.ObjectType == ObjectType.ItemCollectionDef ? null : value;
+                    treeItem.IsChecked = objectReference.ReferenceObject.ObjectType == ObjectType.ItemCollectionDef
+                                             ? null
+                                             : value;
                 }
             }
 
@@ -341,16 +335,6 @@
             return this.Name.Contains(filterText) || this.HumanReadableContent.Contains(filterText);
         }
 
-        public void Sort()
-        {
-            if (this.Children.Count > 0)
-            {
-                var collectionView = CollectionViewSource.GetDefaultView(this.Children);
-                collectionView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-                this.Children.ToList().ForEach(item => item.Sort());
-            }
-        }
-
         // Propagates property changed events up the stack...
         public virtual void IncestPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -361,6 +345,32 @@
         public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void SelectAbsentModDependencies()
+        {
+            // Check if any partially selected mods are missing dependencies and select them.
+            this.TopNode.Children.Where(item => item.IsChecked == null).SelectMany(item => item.Dependencies).Distinct()
+                .ToList().ForEach(
+                    dependency =>
+                        {
+                            IMtmTreeViewItem modDependencyNode;
+                            if (DictRefsToTreeViewItems.TryGetValue(dependency.ReferenceObject, out modDependencyNode)
+                                && modDependencyNode.IsChecked == false)
+                            {
+                                modDependencyNode.IsChecked = true;
+                            }
+                        });
+        }
+
+        public void Sort()
+        {
+            if (this.Children.Count > 0)
+            {
+                var collectionView = CollectionViewSource.GetDefaultView(this.Children);
+                collectionView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                this.Children.ToList().ForEach(item => item.Sort());
+            }
         }
 
         private static void CheckParentChildrenSelectedState(IMtmTreeViewItem item)
@@ -388,26 +398,9 @@
                     // Set siblings to mod node children resource objects...
                     if (currentNode.Parent is ModNode modNode)
                     {
-                        modNode.Children.Where(viewItem => viewItem is ResourceNode).ToList().ForEach(viewItem =>
-                                {
-                                    viewItem.IsChecked = valueSet != false;
-                                });
+                        modNode.Children.Where(viewItem => viewItem is ResourceNode).ToList()
+                            .ForEach(viewItem => { viewItem.IsChecked = valueSet != false; });
                     }
-
-                    /*if (currentNode is ModNode && valueSet == null)
-                    {
-                        // TODO : We need to see if we're missing any prerequisite mods...
-                        currentNode.Dependencies.ForEach(
-                            reference =>
-                                {
-                                    IMtmTreeViewItem treeItem;
-                                    if (DictRefsToTreeViewItems.TryGetValue(reference.ReferenceObject, out treeItem))
-                                    {
-                                        treeItem.IsChecked = true;
-                                    }
-                                });
-                    }*/
-
                     currentNode = currentNode.Parent;
                 }
             }

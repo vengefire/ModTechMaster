@@ -255,9 +255,16 @@
                                                             manifest = entryNode.ManifestEntryLookupByObject[item],
                                                             itemNode = item,
                                                             itemObject = item.Object as IObjectDefinition
-                                                        }))
-                                    .GroupBy(arg => arg.entryNode, (entryNode, items) => new {entryNode, manifestEntries = items.GroupBy(arg => arg.manifest, (entry, objects) => new { entry, objects }).ToList()})
-                                    .ToList();
+                                                        })).GroupBy(
+                                        arg => arg.entryNode,
+                                        (entryNode, items) =>
+                                            new
+                                                {
+                                                    entryNode,
+                                                    manifestEntries = items.GroupBy(
+                                                        arg => arg.manifest,
+                                                        (entry, objects) => new { entry, objects }).ToList()
+                                                }).ToList();
 
                                 manifestSelectionData.ForEach(
                                     entryNode =>
@@ -275,8 +282,8 @@
                                                         };
 
                                                 var fileObjectsToCopy = objects.Where(
-                                                        o => !objectTypesToIgnore.Contains(o.itemObject.ObjectType)).Select(arg => arg.itemObject)
-                                                    .Cast<ISourcedFromFile>();
+                                                        o => !objectTypesToIgnore.Contains(o.itemObject.ObjectType))
+                                                    .Select(arg => arg.itemObject).Cast<ISourcedFromFile>();
 
                                                 // Copy non-item list objects...
                                                 var files = fileObjectsToCopy.Select(file => file.SourceFileName)
@@ -401,6 +408,7 @@
                                 var mechsObjectsToSelect =
                                     selectorWindow.MechSelectorModel.SelectedModels.SelectMany(
                                         model => model.ObjectDefinitions.Select(o => o));
+
                                 foreach (var objectReference in mechsObjectsToSelect)
                                 {
                                     IMtmTreeViewItem treeItem;
@@ -411,6 +419,9 @@
                                         treeItem.IsChecked = true;
                                     }
                                 }
+
+                                selectorWindow.MechSelectorModel.ModCopyModel.ModCollectionNode
+                                    .SelectAbsentModDependencies();
                             }
                         }
                         finally
