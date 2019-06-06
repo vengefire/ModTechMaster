@@ -105,6 +105,18 @@
                                 {
                                     ModCopyPage.Self.ModCopyModel.MainModel.IsBusy = true;
                                     CheckNode(this, value);
+
+                                    // Check if any partially selected mods are missing dependencies and select them.
+                                    this.TopNode.Children.Where(item => item.IsChecked == null).SelectMany(item => item.Dependencies).Distinct().ToList().ForEach(
+                                        dependency =>
+                                            {
+                                                IMtmTreeViewItem modDependencyNode;
+                                                if (DictRefsToTreeViewItems.TryGetValue(dependency.ReferenceObject, out modDependencyNode) && modDependencyNode.IsChecked == false)
+                                                {
+                                                    modDependencyNode.IsChecked = true;
+                                                }
+                                            });
+
                                     ModCopyPage.Self.ModCopyModel.MainModel.IsBusy = false;
                                     this.PropertyChanged += this.OnPropertyChanged;
                                     this.OnPropertyChanged();
@@ -373,7 +385,7 @@
                         currentNode.IsChecked = valueSet = null;
                     }
 
-                    // Set siblings to mod node children values...
+                    // Set siblings to mod node children resource objects...
                     if (currentNode.Parent is ModNode modNode)
                     {
                         modNode.Children.Where(viewItem => viewItem is ResourceNode).ToList().ForEach(viewItem =>
@@ -381,6 +393,20 @@
                                     viewItem.IsChecked = valueSet != false;
                                 });
                     }
+
+                    /*if (currentNode is ModNode && valueSet == null)
+                    {
+                        // TODO : We need to see if we're missing any prerequisite mods...
+                        currentNode.Dependencies.ForEach(
+                            reference =>
+                                {
+                                    IMtmTreeViewItem treeItem;
+                                    if (DictRefsToTreeViewItems.TryGetValue(reference.ReferenceObject, out treeItem))
+                                    {
+                                        treeItem.IsChecked = true;
+                                    }
+                                });
+                    }*/
 
                     currentNode = currentNode.Parent;
                 }
