@@ -3,34 +3,50 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
 
     public class ManifestEntryNode : MtmTreeViewItem
     {
-        public ManifestEntryNode(IMtmTreeViewItem parent, IManifestEntry manifestEntry)
-            : base(parent, manifestEntry)
+        public ManifestEntryNode(IMtmTreeViewItem parent, List<IManifestEntry> manifestEntries, ObjectType entryType)
+            : base(parent, manifestEntries)
         {
-            this.ManifestEntry = manifestEntry;
-            this.ManifestEntry.Objects.ToList()
-                .ForEach(definition => this.Children.Add(new ObjectDefinitionNode(this, definition)));
+            this.ManifestEntries = manifestEntries;
+            this.EntryType = entryType;
+            this.ManifestEntryLookupByObject = new Dictionary<IMtmTreeViewItem, IManifestEntry>();
+            this.ManifestEntries.ForEach(
+                entry =>
+                    {
+                        entry.Objects.ToList().ForEach(
+                            definition =>
+                                {
+                                    var objectDefinitionNode = new ObjectDefinitionNode(this, definition);
+                                    this.Children.Add(objectDefinitionNode);
+                                    this.ManifestEntryLookupByObject.Add(objectDefinitionNode, entry);
+                                });
+                    });
         }
+
+        public Dictionary<IMtmTreeViewItem, IManifestEntry> ManifestEntryLookupByObject { get; }
 
         public ManifestEntryNode(
             IMtmTreeViewItem parent,
-            IManifestEntry manifestEntry,
+            List<IManifestEntry> manifestEntries, 
             List<HashSet<IObjectDefinition>> objectLists)
-            : base(parent, manifestEntry)
+            : base(parent, manifestEntries)
         {
-            this.ManifestEntry = manifestEntry;
+            this.ManifestEntries = manifestEntries;
             objectLists.ForEach(
                 list => list.OrderBy(definition => definition.Name).ToList().ForEach(
                     definition => this.Children.Add(new ObjectDefinitionNode(this, definition))));
         }
 
-        public override string HumanReadableContent => this.ManifestEntry.EntryType.ToString();
+        public override string HumanReadableContent => this.ManifestEntries.First().EntryType.ToString();
 
-        public IManifestEntry ManifestEntry { get; }
+        public List<IManifestEntry> ManifestEntries { get; }
 
-        public override string Name => this.ManifestEntry.EntryType.ToString();
+        public ObjectType EntryType { get; }
+
+        public override string Name => this.ManifestEntries.First().EntryType.ToString();
     }
 }

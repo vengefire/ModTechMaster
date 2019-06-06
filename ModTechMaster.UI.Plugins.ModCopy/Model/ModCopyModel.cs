@@ -213,8 +213,11 @@
                                 // We need to check whether each entry instance has any selected items in the UI group.
                                 foreach (var entry in manifest.Entries)
                                 {
-                                    var group = entryGroups.First(entryNode => entryNode.ManifestEntry.EntryType == entry.EntryType);
-                                    var intersect = entry.Objects.Intersect(group.Children.Cast<ObjectDefinitionNode>().Where(definitionNode => definitionNode.IsChecked != false).Select(definitionNode => definitionNode.ObjectDefinition));
+                                    var group = entryGroups.First(entryNode => entryNode.EntryType == entry.EntryType);
+                                    var intersect = entry.Objects.Intersect(
+                                        group.Children.Cast<ObjectDefinitionNode>()
+                                            .Where(definitionNode => definitionNode.IsChecked != false)
+                                            .Select(definitionNode => definitionNode.ObjectDefinition));
                                     if (!intersect.Any())
                                     {
                                         if (entry.JsonObject == null)
@@ -237,78 +240,111 @@
                                 }
 
                                 // Skip copying prefabs, they're hosted in the selected asset bundle.
-                                var usedManifestEntries = manifestNode.Children.Where(item => item is ManifestEntryNode)
+                                var manifestEntryNodes = manifestNode.Children.Where(item => item is ManifestEntryNode)
                                     .Cast<ManifestEntryNode>().Where(
-                                        entryNode => entryNode.ManifestEntry.EntryType != ObjectType.Prefab && entryNode.Children.Any(item => item.IsChecked != false)).ToList();
+                                        entryNode =>
+                                            entryNode.EntryType != ObjectType.Prefab
+                                            && entryNode.Children.Any(item => item.IsChecked != false)).ToList();
 
-                                usedManifestEntries.ForEach(
+                                var manifestSelectionData = manifestEntryNodes
+                                    .SelectMany(
+                                        entryNode => entryNode.Children.Where(item => item.IsChecked != false).Select(
+                                            item => new
+                                                        {
+                                                            entryNode,
+                                                            manifest = entryNode.ManifestEntryLookupByObject[item],
+                                                            itemNode = item,
+                                                            itemObject = item.Object as IObjectDefinition
+                                                        }))
+                                    .GroupBy(arg => arg.entryNode, (entryNode, items) => new {entryNode, manifestEntries = items.GroupBy(arg => arg.manifest, (entry, objects) => new { entry, objects }).ToList()})
+                                    .ToList();
+
+                                manifestSelectionData.ForEach(
                                     entryNode =>
                                         {
-                                            var objects = entryNode.Children
-                                                .Where(item => item.IsChecked != false)
-                                                .Select(item => new {itemNode = item, itemObject = item.Object}).ToList();
-
-                                            var itemCollectionObjects = objects.Where(
-                                                o => o.itemObject is IReferenceableObject referenceableObject
-                                                      && referenceableObject.ObjectType
-                                                      == ObjectType.ItemCollectionDef);
-
-                                            var objectTypesToIgnore =
-                                                new List<ObjectType>
-                                                    {
-                                                        ObjectType.ItemCollectionDef, ObjectType.Prefab
-                                                    };
-
-                                            var fileObjectsToCopy = objects.Where(
-                                                o => o.itemObject is IReferenceableObject referenceableObject
-                                                     && !objectTypesToIgnore.Contains(referenceableObject.ObjectType)).Select(arg => arg.itemObject).Cast<ISourcedFromFile>();
-
-                                            // Copy non-item list objects...
-                                            var files = fileObjectsToCopy.Select(file => file.SourceFileName).ToList();
-                                            DirectoryUtils.DirectoryCopy(
-                                                Path.Combine(mod.SourceDirectoryPath, entryNode.ManifestEntry.Path),
-                                                Path.Combine(modDestinationDirectory, entryNode.ManifestEntry.Path),
-                                                true,
-                                                files);
-
-                                            // Handle Item Lists
-                                            foreach (var itemCollectionObject in itemCollectionObjects)
+                                            foreach (var manifestEntry in entryNode.manifestEntries)
                                             {
-                                                var itemCollection = itemCollectionObject.itemObject as ItemCollectionObjectDefinition;
+                                                var objects = manifestEntry.objects.ToList();
+                                                var itemCollectionObjects = objects.Where(
+                                                    o => o.itemObject.ObjectType == ObjectType.ItemCollectionDef);
 
-                                                var selectedItemLines = new List<string>
-                                                                            {
-                                                                                string.Join(",", new[] {itemCollection.Id, string.Empty, string.Empty, string.Empty})
-                                                                            };
-
-                                                var selectedItemNodes = itemCollectionObject.itemNode.Dependencies.Where(
-                                                    reference =>
+                                                var objectTypesToIgnore =
+                                                    new List<ObjectType>
                                                         {
-                                                            var referencedNode =
-                                                                MtmTreeViewItem.DictRefsToTreeViewItems[
-                                                                    reference.ReferenceObject];
-                                                            return referencedNode.IsChecked != false;
-                                                        });
+                                                            ObjectType.ItemCollectionDef, ObjectType.Prefab
+                                                        };
 
-                                                selectedItemNodes.ToList().ForEach(
-                                                    reference =>
-                                                        {
-                                                            var selectedItem = reference.ReferenceObject;
-                                                            var matchedItemCollectionLine = itemCollection.CsvData.First(list => list.Any(s => string.Equals(s, selectedItem.Id, StringComparison.OrdinalIgnoreCase)));
-                                                            selectedItemLines.Add(string.Join(",", matchedItemCollectionLine));
-                                                        });
+                                                var fileObjectsToCopy = objects.Where(
+                                                        o => !objectTypesToIgnore.Contains(o.itemObject.ObjectType)).Select(arg => arg.itemObject)
+                                                    .Cast<ISourcedFromFile>();
 
-                                                var targetFile = Path.Combine(
-                                                    modDestinationDirectory,
-                                                    entryNode.ManifestEntry.Path,
-                                                    itemCollection.SourceFileName);
+                                                // Copy non-item list objects...
+                                                var files = fileObjectsToCopy.Select(file => file.SourceFileName)
+                                                    .ToList();
+                                                DirectoryUtils.DirectoryCopy(
+                                                    Path.Combine(mod.SourceDirectoryPath, manifestEntry.entry.Path),
+                                                    Path.Combine(modDestinationDirectory, manifestEntry.entry.Path),
+                                                    true,
+                                                    files);
 
-                                                File.WriteAllText(targetFile, string.Join("\r\n", selectedItemLines));
+                                                // Handle Item Lists
+                                                foreach (var itemCollectionObject in itemCollectionObjects)
+                                                {
+                                                    var itemCollection =
+                                                        itemCollectionObject.itemObject as
+                                                            ItemCollectionObjectDefinition;
+
+                                                    var selectedItemLines = new List<string>
+                                                                                {
+                                                                                    string.Join(
+                                                                                        ",",
+                                                                                        itemCollection.Id,
+                                                                                        string.Empty,
+                                                                                        string.Empty,
+                                                                                        string.Empty)
+                                                                                };
+
+                                                    var selectedItemNodes =
+                                                        itemCollectionObject.itemNode.Dependencies.Where(
+                                                            reference =>
+                                                                {
+                                                                    var referencedNode =
+                                                                        MtmTreeViewItem.DictRefsToTreeViewItems[
+                                                                            reference.ReferenceObject];
+                                                                    return referencedNode.IsChecked != false;
+                                                                });
+
+                                                    selectedItemNodes.ToList().ForEach(
+                                                        reference =>
+                                                            {
+                                                                var selectedItem = reference.ReferenceObject;
+                                                                var matchedItemCollectionLine =
+                                                                    itemCollection.CsvData.First(
+                                                                        list => list.Any(
+                                                                            s => string.Equals(
+                                                                                s,
+                                                                                selectedItem.Id,
+                                                                                StringComparison.OrdinalIgnoreCase)));
+                                                                selectedItemLines.Add(
+                                                                    string.Join(",", matchedItemCollectionLine));
+                                                            });
+
+                                                    var targetFile = Path.Combine(
+                                                        modDestinationDirectory,
+                                                        manifestEntry.entry.Path,
+                                                        itemCollection.SourceFileName);
+
+                                                    File.WriteAllText(
+                                                        targetFile,
+                                                        string.Join("\r\n", selectedItemLines));
+                                                }
                                             }
                                         });
                             }
 
-                            File.WriteAllText(Path.Combine(modDestinationDirectory, "mod.json"), JsonConvert.SerializeObject(mod.JsonObject, Formatting.Indented));
+                            File.WriteAllText(
+                                Path.Combine(modDestinationDirectory, "mod.json"),
+                                JsonConvert.SerializeObject(mod.JsonObject, Formatting.Indented));
                         });
             }
             finally

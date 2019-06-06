@@ -18,9 +18,7 @@
 
             foreach (var groupedManifestEntry in groupedManifestEntries)
             {
-                var firstEntry = groupedManifestEntry.First();
-                var groupObjects = groupedManifestEntry.Select(entry => entry.Objects).ToList();
-                this.Children.Add(new ManifestEntryNode(this, firstEntry, groupObjects));
+                this.Children.Add(new ManifestEntryNode(this, groupedManifestEntry.Select(entry => entry).ToList(), groupedManifestEntry.Key));
             }
         }
 
