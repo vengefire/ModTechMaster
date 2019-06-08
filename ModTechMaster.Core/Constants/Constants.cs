@@ -100,7 +100,7 @@
 
         public static readonly string Rarity = "Rarity";
 
-        public static readonly string Tags = "Tags";
+        public static readonly string MyTags = "MyTags";
 
         public static readonly string UnitTags = "UnitTags";
 

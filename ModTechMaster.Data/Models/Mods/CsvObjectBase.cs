@@ -71,7 +71,7 @@
 
         public virtual void AddMetaData()
         {
-            this.MetaData.Add(Keywords.Id, this.CsvData[0][0]);
+            this.MetaData.Add(Keywords.Id, this.CsvData[0][0].Replace(".csv", string.Empty));
             this.MetaData.Add(Keywords.Name, this.CsvData[0][0]);
         }
     }

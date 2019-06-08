@@ -11,6 +11,8 @@
 
     public class ObjectDefinition : JsonObjectSourcedFromFile, IObjectDefinition
     {
+        private readonly Dictionary<string, List<string>> tags;
+
         public ObjectDefinition(
             ObjectType objectType,
             IObjectDefinitionDescription objectDescription,
@@ -20,7 +22,7 @@
         {
             this.ObjectDescription = objectDescription;
             this.MetaData = new Dictionary<string, dynamic>();
-            this.Tags = new Dictionary<string, List<string>>();
+            this.tags = new Dictionary<string, List<string>>();
         }
 
         public string HumanReadableText => this.JsonString;
@@ -34,7 +36,7 @@
 
         public IObjectDefinitionDescription ObjectDescription { get; }
 
-        public Dictionary<string, List<string>> Tags { get; }
+        public Dictionary<string, List<string>> Tags => this.tags;
 
         public virtual void AddMetaData()
         {
@@ -78,7 +80,7 @@
 
             // Add tag data. Not all relationships are defined via tight IDs. Some are defined by loose tags.
             var jobject = this.JsonObject as JObject;
-            var tags = jobject.Properties().FirstOrDefault(property => property.Name.Contains("Tags"))?.Value?.First;
+            var tags = jobject.Properties().FirstOrDefault(property => property.Name.Contains("MyTags"))?.Value?.First;
             var tagList = new List<string>();
             if (tags != null)
             {
@@ -91,7 +93,7 @@
                 }
             }
 
-            this.Tags.Add(Keywords.Tags, tagList);
+            this.tags.Add(Keywords.MyTags, tagList);
         }
     }
 }

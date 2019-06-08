@@ -5,6 +5,7 @@
 
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.UI.Plugins.ModCopy.Nodes.SpecialisedNodes;
 
     public class ManifestEntryNode : MtmTreeViewItem
     {
@@ -20,7 +21,7 @@
                         entry.Objects.ToList().ForEach(
                             definition =>
                                 {
-                                    var objectDefinitionNode = new ObjectDefinitionNode(this, definition);
+                                    var objectDefinitionNode = definition.ObjectType == ObjectType.LanceDef ? new LanceDefNode(this, definition) : new ObjectDefinitionNode(this, definition);
                                     this.Children.Add(objectDefinitionNode);
                                     this.ManifestEntryLookupByObject.Add(objectDefinitionNode, entry);
                                 });

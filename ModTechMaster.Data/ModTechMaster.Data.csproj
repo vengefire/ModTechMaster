@@ -45,6 +45,7 @@
     <Compile Include="Models\Mods\ResourceDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\LanceDefObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\CcCategoryObjectDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\LanceSlotDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\ShopDefObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\HardpointDataObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\MilestoneSetObjectDefinition.cs" />

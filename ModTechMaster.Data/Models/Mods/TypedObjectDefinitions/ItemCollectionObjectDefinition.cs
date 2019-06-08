@@ -14,7 +14,7 @@
         {
         }
 
-        public override string Id => this.Name;
+        public override string Id => this.CsvData[0][0].Replace(".csv", string.Empty);
 
         public override string Name => this.CsvData[0][0]; // Default to first entry of first line...
 

@@ -114,6 +114,8 @@
         SimGameStatDescDef,
         GameTip,
         SoundBank,
-        ModSettings
+        ModSettings,
+
+        LanceSlotDef // Custom Definition to support lance validation and control
     }
 }
