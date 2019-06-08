@@ -1,5 +1,6 @@
 ﻿namespace ModTechMaster.Data.Models.Mods
 {
+    using System;
     using System.Collections.Generic;
 
     using ModTechMaster.Core.Constants;
@@ -64,6 +65,8 @@
         public IManifest Manifest { get; set; }
 
         public Dictionary<string, object> MetaData { get; } = new Dictionary<string, object>();
+
+        public Dictionary<string, List<string>> Tags => throw new NotImplementedException();
 
         public override string Name { get; }
 

@@ -343,7 +343,7 @@
 
                                                     File.WriteAllText(
                                                         targetFile,
-                                                        string.Join("\r\n", selectedItemLines));
+                                                        string.Join("\r\n", selectedItemLines) + "\r\n");
                                                 }
                                             }
                                         });

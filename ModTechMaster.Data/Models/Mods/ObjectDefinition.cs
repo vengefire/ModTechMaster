@@ -1,6 +1,7 @@
 ﻿namespace ModTechMaster.Data.Models.Mods
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     using ModTechMaster.Core.Constants;
     using ModTechMaster.Core.Enums.Mods;
@@ -19,6 +20,7 @@
         {
             this.ObjectDescription = objectDescription;
             this.MetaData = new Dictionary<string, dynamic>();
+            this.Tags = new Dictionary<string, List<string>>();
         }
 
         public string HumanReadableText => this.JsonString;
@@ -31,6 +33,8 @@
             this.MetaData.ContainsKey(Keywords.Name) ? this.MetaData[Keywords.Name] : this.SourceFileName;
 
         public IObjectDefinitionDescription ObjectDescription { get; }
+
+        public Dictionary<string, List<string>> Tags { get; }
 
         public virtual void AddMetaData()
         {
@@ -71,6 +75,23 @@
             {
                 this.MetaData.Add(Keywords.Id, this.Name);
             }
+
+            // Add tag data. Not all relationships are defined via tight IDs. Some are defined by loose tags.
+            var jobject = this.JsonObject as JObject;
+            var tags = jobject.Properties().FirstOrDefault(property => property.Name.Contains("Tags"))?.Value?.First;
+            var tagList = new List<string>();
+            if (tags != null)
+            {
+                foreach (var tagArray in tags.Children())
+                {
+                    foreach (var tag in tagArray)
+                    {
+                        tagList.Add(tag.ToString());
+                    }
+                }
+            }
+
+            this.Tags.Add(Keywords.Tags, tagList);
         }
     }
 }

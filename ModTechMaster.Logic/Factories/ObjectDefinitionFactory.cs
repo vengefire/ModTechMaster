@@ -227,9 +227,15 @@
                         (JObject)jsonObject,
                         filePath);
                     break;
+                case ObjectType.LanceDef:
+                    objectDefinition = new LanceDefObjectDefinition(
+                        entryType,
+                        objectDescription,
+                        (JObject)jsonObject,
+                        filePath);
+                    break;
                 case ObjectType.AbilityDef:
                 case ObjectType.MovementCapabilitiesDef:
-                case ObjectType.LanceDef:
                 case ObjectType.ApplicationConstants:
                 case ObjectType.CCTagRestrictions:
                 case ObjectType.SimGameConversations:
@@ -256,8 +262,9 @@
                     break;
                 default:
                     throw new InvalidProgramException();
-                    // objectDefinition = new ObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
-                    // break;
+
+                // objectDefinition = new ObjectDefinition(entryType, objectDescription, (JObject)jsonObject, filePath);
+                // break;
             }
 
             objectDefinition.AddMetaData();

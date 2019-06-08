@@ -1,5 +1,6 @@
 ﻿namespace ModTechMaster.Data.Models.Mods
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -42,6 +43,8 @@
         public abstract string Id { get; }
 
         public Dictionary<string, object> MetaData { get; } = new Dictionary<string, object>();
+
+        public Dictionary<string, List<string>> Tags => throw new NotImplementedException();
 
         public abstract string Name { get; }
 

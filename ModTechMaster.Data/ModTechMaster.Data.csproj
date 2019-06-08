@@ -43,6 +43,7 @@
     <Compile Include="Models\Mods\CsvObjectBase.cs" />
     <Compile Include="Models\Mods\ModCollection.cs" />
     <Compile Include="Models\Mods\ResourceDefinition.cs" />
+    <Compile Include="Models\Mods\TypedObjectDefinitions\LanceDefObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\CcCategoryObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\ShopDefObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\HardpointDataObjectDefinition.cs" />

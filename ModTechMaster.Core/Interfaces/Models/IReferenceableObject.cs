@@ -6,6 +6,8 @@
     {
         Dictionary<string, object> MetaData { get; }
 
+        Dictionary<string, List<string>> Tags { get; }
+
         void AddMetaData();
     }
 }

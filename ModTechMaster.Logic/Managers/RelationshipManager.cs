@@ -128,7 +128,37 @@
                                     ObjectType.ChassisDef,
                                     ObjectType.Prefab,
                                     Keywords.PrefabId,
-                                    Keywords.AssetBundle)
+                                    Keywords.AssetBundle),
+                                new ObjectRelationship(
+                                    ObjectType.ChassisDef,
+                                    ObjectType.WeaponDef,
+                                    Keywords.WeaponDefId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.ChassisDef,
+                                    ObjectType.UpgradeDef,
+                                    Keywords.UpgradeDefId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.ChassisDef,
+                                    ObjectType.HeatSinkDef,
+                                    Keywords.HeatSinkDefId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.ChassisDef,
+                                    ObjectType.JumpJetDef,
+                                    Keywords.JumpJetDefId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.ChassisDef,
+                                    ObjectType.AmmunitionBoxDef,
+                                    Keywords.AmmoBoxId,
+                                    Keywords.Id,
+                                    true),
                             }
                     },
                     {

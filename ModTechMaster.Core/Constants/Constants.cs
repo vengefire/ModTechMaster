@@ -99,5 +99,15 @@
         public static readonly string Count = "Count";
 
         public static readonly string Rarity = "Rarity";
+
+        public static readonly string Tags = "Tags";
+
+        public static readonly string UnitTags = "UnitTags";
+
+        public static readonly string ExcludedUnitTags = "ExcludedUnitTags";
+
+        public static readonly string PilotTags = "PilotTags";
+
+        public static readonly string ExcludedPilotTags = "ExcludedPilotTags";
     }
 }

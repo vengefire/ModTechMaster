@@ -59,14 +59,14 @@
 
             this.logger.Info($"Processing mods from [{di.FullName}]");
 
-            var result = Parallel.ForEach(
-                di.GetDirectories(),
+            di.GetDirectories().AsParallel().ForAll(
                 sub =>
                     {
                         this.logger.Debug(".");
                         var mod = this.TryLoadFromPath(sub.FullName);
                         this.ModCollection.AddModToCollection(mod);
                     });
+
             this.ModCollection.Mods.Sort(
                 (mod, mod1) => string.Compare(mod.Name, mod1.Name, StringComparison.OrdinalIgnoreCase));
 

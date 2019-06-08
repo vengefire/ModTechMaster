@@ -10,14 +10,16 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:ei="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converters="clr-namespace:ModTechMaster.UI.Core.Converters;assembly=ModTechMaster.UI.Core"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
     <UserControl.Resources>
         <valueConverters:SelectionStatusToIconConverter x:Key="SelectionStatusToIconConverter" />
         <valueConverters:ObjectStatusToIconConverter x:Key="ObjectStatusConverter" />
+        <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
     </UserControl.Resources>
-    <Grid>
+    <Grid Visibility="{Binding ModCopyModel.ModCollectionNode, Converter={StaticResource NullVisibilityConverter}}">
         <xctk:WindowContainer Name="WindowContainer" ZIndex="999"></xctk:WindowContainer>
         <DockPanel>
             <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="5">
@@ -101,8 +103,6 @@
                         <TabItem Header="Summary">
                             <Grid utils:MarginSetter.Margin="5">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
@@ -215,7 +215,7 @@
                                   DataContext="{Binding ModCopyModel.Settings}" utils:MarginSetter.Margin="5">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="2*" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
