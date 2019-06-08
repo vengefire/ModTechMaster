@@ -41,8 +41,8 @@
         public override void AddMetaData()
         {
             // Hacky, need to fix this shit up. If only this was my day job.
-            this.MetaData.Add(Keywords.Id, $"{base.Id} - Slot {this.LanceSlotNumber}");
-            this.MetaData.Add(Keywords.Name, $"{base.Id} - Slot {this.LanceSlotNumber}");
+            this.MetaData.Add(Keywords.Id, $"{this.Id} - Slot {this.LanceSlotNumber}");
+            this.MetaData.Add(Keywords.Name, $"{this.Id} - Slot {this.LanceSlotNumber}");
 
             base.AddMetaData();
 
@@ -52,25 +52,29 @@
             var unitId = lanceUnit.unitId.ToString();
             var pilotId = lanceUnit.pilotId.ToString();
 
+            var idKeyword = string.Empty;
+
+            switch (unitType)
+            {
+                case "Mech":
+                    this.LanceSlotObjectType = ObjectType.MechDef;
+                    idKeyword = Keywords.MechDefId;
+                    break;
+                case "Turret":
+                    this.LanceSlotObjectType = ObjectType.TurretDef;
+                    idKeyword = Keywords.TurretId;
+                    break;
+                case "Vehicle":
+                    this.LanceSlotObjectType = ObjectType.VehicleDef;
+                    idKeyword = Keywords.VehicleId;
+                    break;
+                case "UNDEFINED":
+                    throw new InvalidProgramException();
+            }
+
             if (unitId != "Tagged")
             {
-                switch (unitType)
-                {
-                    case "Mech":
-                        this.LanceSlotObjectType = ObjectType.MechDef;
-                        this.MetaData.Add(Keywords.MechDefId, this.UnitId);
-                        break;
-                    case "Turret":
-                        this.LanceSlotObjectType = ObjectType.TurretDef;
-                        this.MetaData.Add(Keywords.TurretId, this.UnitId);
-                        break;
-                    case "Vehicle":
-                        this.LanceSlotObjectType = ObjectType.VehicleDef;
-                        this.MetaData.Add(Keywords.VehicleId, this.UnitId);
-                        break;
-                    case "UNDEFINED":
-                        throw new InvalidProgramException();
-                }
+                this.MetaData.Add(idKeyword, unitId);
             }
 
             this.UnitId = unitId;

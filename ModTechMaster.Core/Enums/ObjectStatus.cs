@@ -1,4 +1,4 @@
-﻿namespace ModTechMaster.UI.Data.Enums
+﻿namespace ModTechMaster.Core.Enums
 {
     public enum ObjectStatus
     {

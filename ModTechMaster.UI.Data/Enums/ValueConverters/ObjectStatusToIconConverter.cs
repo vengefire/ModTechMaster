@@ -4,6 +4,8 @@
     using System.Globalization;
     using System.Windows.Data;
 
+    using ModTechMaster.Core.Enums;
+
     [ValueConversion(typeof(ObjectStatus), typeof(string))]
     public class ObjectStatusToIconConverter : IValueConverter
     {

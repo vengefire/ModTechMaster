@@ -5,6 +5,8 @@
     using System.ComponentModel;
     using System.Windows;
 
+    using ModTechMaster.Core;
+    using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.UI.Data.Enums;
 

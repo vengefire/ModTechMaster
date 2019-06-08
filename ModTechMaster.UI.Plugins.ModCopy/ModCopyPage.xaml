@@ -12,6 +12,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:converters="clr-namespace:ModTechMaster.UI.Core.Converters;assembly=ModTechMaster.UI.Core"
              xmlns:specialisedNodes="clr-namespace:ModTechMaster.UI.Plugins.ModCopy.Nodes.SpecialisedNodes"
+             xmlns:coreControls="clr-namespace:ModTechMaster.UI.Core.Controls;assembly=ModTechMaster.UI.Core"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
@@ -21,7 +22,7 @@
         <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
     </UserControl.Resources>
     <Grid Visibility="{Binding ModCopyModel.ModCollectionNode, Converter={StaticResource NullVisibilityConverter}}">
-        <xctk:WindowContainer Name="WindowContainer" ZIndex="999"></xctk:WindowContainer>
+        <xctk:WindowContainer Name="WindowContainer" ZIndex="999" />
         <DockPanel>
             <Grid DockPanel.Dock="Top" utils:MarginSetter.Margin="5">
                 <Grid.ColumnDefinitions>
@@ -31,10 +32,10 @@
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">Filter Text:</Label>
                 <TextBox Name="txtFilter" Grid.Column="1"
-                     Text="{Binding ModCopyModel.FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=750}"
-                     VerticalAlignment="Center" />
+                         Text="{Binding ModCopyModel.FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=750}"
+                         VerticalAlignment="Center" />
                 <Button Grid.Column="2" Content="Clear Filter" VerticalAlignment="Center"
-                    VerticalContentAlignment="Center">
+                        VerticalContentAlignment="Center">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
                             <ei:ChangePropertyAction TargetName="txtFilter" PropertyName="Text" Value="" />
@@ -54,26 +55,28 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <TreeView Name="tvModControl" Grid.Column="0" Grid.Row="0"
-                      PreviewMouseRightButtonDown="TvModControl_PreviewMouseRightButtonDown">
+                          PreviewMouseRightButtonDown="TvModControl_PreviewMouseRightButtonDown">
                     <TreeView.Resources>
                         <Style TargetType="CheckBox">
-                            <Setter Property="IsThreeState" Value="{Binding IsThreeState,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Setter Property="IsThreeState"
+                                    Value="{Binding IsThreeState,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Style>
                         <DataTemplate x:Key="ItemStatusTemplate" DataType="{x:Type nodes:MtmTreeViewItem}">
                             <StackPanel Orientation="Horizontal">
                                 <Image
-                                Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}, UpdateSourceTrigger=PropertyChanged}"
-                                Width="15" IsEnabled="False" />
+                                    Source="{Binding SelectionStatus, Converter={StaticResource SelectionStatusToIconConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                    Width="15" IsEnabled="False" />
                                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                 <Image
-                                Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}"
-                                Width="15" IsEnabled="False" />
+                                    Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}"
+                                    Width="15" IsEnabled="False" />
                                 <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                                <CheckBox IsChecked="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <CheckBox
+                                    IsChecked="{Binding IsChecked,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
                         </DataTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type nodes:MtmTreeViewItem}"
-                                              ItemsSource="{Binding Children}">
+                                                  ItemsSource="{Binding Children}">
                             <StackPanel Orientation="Horizontal">
                                 <ContentPresenter ContentTemplate="{StaticResource ItemStatusTemplate}" />
                                 <TextBlock Text="{Binding Name}" />
@@ -98,7 +101,7 @@
                     </TreeView.ItemContainerStyle>
                 </TreeView>
                 <GridSplitter Grid.Column="1" Width="5" Grid.Row="0" VerticalAlignment="Stretch"
-                          HorizontalAlignment="Center" />
+                              HorizontalAlignment="Center" />
                 <Grid Grid.Column="2" Grid.Row="0">
                     <TabControl>
                         <TabItem Header="Summary">
@@ -114,8 +117,8 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.ColumnSpan="4" Grid.RowSpan="3" VerticalAlignment="Top"
-                                  utils:MarginSetter.Margin="1"
-                                  DataContext="{Binding ModCopyModel.ModCollectionNode, UpdateSourceTrigger=PropertyChanged}">
+                                      utils:MarginSetter.Margin="1"
+                                      DataContext="{Binding ModCopyModel.ModCollectionNode, UpdateSourceTrigger=PropertyChanged}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />
@@ -134,12 +137,12 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Separator Grid.Row="0" Grid.Column="1" Grid.RowSpan="10"
-                                           Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                               Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                     <TextBlock Grid.Row="0" Text="Selected Mod Count" />
                                     <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
                                         <TextBlock
-                                                   Text="{Binding SelectedMods.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Text=" / "></TextBlock>
+                                            Text="{Binding SelectedMods.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / " />
                                         <TextBlock
                                             Text="{Binding TotalMods, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
@@ -147,73 +150,73 @@
                                     <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal">
                                         <TextBlock Grid.Row="1" Grid.Column="2"
                                                    Text="{Binding SelectedModSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,#.00}}" />
-                                        <TextBlock Text=" / "></TextBlock>
+                                        <TextBlock Text=" / " />
                                         <TextBlock Grid.Row="1" Grid.Column="2"
                                                    Text="{Binding TotalModSize, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:#,#.00}}" />
                                     </StackPanel>
                                     <TextBlock Grid.Row="2" Text="Selected Item Count" />
                                     <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock 
-                                                   Text="{Binding SelectedModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Text=" / "></TextBlock>
-                                        <TextBlock 
+                                        <TextBlock
+                                            Text="{Binding SelectedModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / " />
+                                        <TextBlock
                                             Text="{Binding TotalModObjectCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
-                                    
+
                                     <Separator Grid.Row="3" Grid.ColumnSpan="4" />
                                     <TextBlock Grid.Row="4" Text="Number of Mech Definitions" />
                                     <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock 
-                                                   Text="{Binding SelectedMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Text=" / "></TextBlock>
-                                        <TextBlock 
+                                        <TextBlock
+                                            Text="{Binding SelectedMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / " />
+                                        <TextBlock
                                             Text="{Binding TotalMechCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
-                                    
+
                                     <TextBlock Grid.Row="5" Text="Number of Vehicle Definitions" />
                                     <StackPanel Grid.Row="5" Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock 
-                                                   Text="{Binding SelectedVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Text=" / "></TextBlock>
-                                        <TextBlock 
+                                        <TextBlock
+                                            Text="{Binding SelectedVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / " />
+                                        <TextBlock
                                             Text="{Binding TotalVehicleCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
 
                                     <TextBlock Grid.Row="6" Text="Number of Turret Definitions" />
                                     <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock 
-                                           Text="{Binding SelectedTurretCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Text=" / "></TextBlock>
-                                        <TextBlock 
+                                        <TextBlock
+                                            Text="{Binding SelectedTurretCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / " />
+                                        <TextBlock
                                             Text="{Binding TotalTurretCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                     <TextBlock Grid.Row="7" Text="Number of Weapon Definitions" />
                                     <StackPanel Grid.Row="7" Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock 
-                                               Text="{Binding SelectedWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Text=" / "></TextBlock>
-                                        <TextBlock 
+                                        <TextBlock
+                                            Text="{Binding SelectedWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / " />
+                                        <TextBlock
                                             Text="{Binding TotalWeaponCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                     <TextBlock Grid.Row="8" Text="Number of Upgrade Definitions" />
                                     <StackPanel Grid.Row="8" Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock 
-                                           Text="{Binding SelectedUpgradeCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Text=" / "></TextBlock>
-                                        <TextBlock 
+                                        <TextBlock
+                                            Text="{Binding SelectedUpgradeCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / " />
+                                        <TextBlock
                                             Text="{Binding TotalUpgradeCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                     <TextBlock Grid.Row="9" Text="Number of Cooling Definitions" />
                                     <StackPanel Grid.Row="9" Grid.Column="2" Orientation="Horizontal">
-                                        <TextBlock 
-                                           Text="{Binding SelectedCoolingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Text=" / "></TextBlock>
-                                        <TextBlock 
+                                        <TextBlock
+                                            Text="{Binding SelectedCoolingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Text=" / " />
+                                        <TextBlock
                                             Text="{Binding TotalCoolingCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </Grid>
                                 <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4"
-                                  DataContext="{Binding ModCopyModel.Settings}" utils:MarginSetter.Margin="5">
+                                      DataContext="{Binding ModCopyModel.Settings}" utils:MarginSetter.Margin="5">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="2*" />
@@ -226,28 +229,28 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <CheckBox Grid.Row="0" Grid.Column="0" Content="Auto Include Dependents"
-                                          IsChecked="{Binding AutoIncludeDependents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          VerticalAlignment="Center" />
+                                              IsChecked="{Binding AutoIncludeDependents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              VerticalAlignment="Center" />
                                     <Label Grid.Row="0" Grid.Column="2" Content="Output Directory"
-                                       VerticalAlignment="Center" />
+                                           VerticalAlignment="Center" />
                                     <TextBox Grid.Row="0" Grid.Column="3"
-                                         Text="{Binding OutputDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         VerticalAlignment="Center" />
+                                             Text="{Binding OutputDirectory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             VerticalAlignment="Center" />
                                     <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
-                                          ItemsSource="{Binding AlwaysIncludedMods}">
+                                              ItemsSource="{Binding AlwaysIncludedMods}">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Auto Included Mod"
-                                                            DisplayMemberBinding="{Binding}" />
+                                                                DisplayMemberBinding="{Binding}" />
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
                                     <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
-                                          ItemsSource="{Binding DependentTypesToIgnore}">
+                                              ItemsSource="{Binding DependentTypesToIgnore}">
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Dependent Types to Ignore"
-                                                            DisplayMemberBinding="{Binding Name}" />
+                                                                DisplayMemberBinding="{Binding Name}" />
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
@@ -263,14 +266,54 @@
                                         </StackPanel>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type specialisedNodes:LanceDefNode}">
-                                        <StackPanel>
-                                            <TextBox Text="LanceDef" />
-                                            <TextBox Text="{Binding Name, Mode=OneWay}" />
-                                        </StackPanel>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+                                            <utils:LayoutGroup utils:MarginSetter.Margin="2,2,0,0">
+                                                <coreControls:LabelledTextBox Label="Id:" Text="{Binding LanceDefObject.Id, Mode=OneWay}" />
+                                                <coreControls:LabelledTextBox Label="Name:" Text="{Binding LanceDefObject.Name, Mode=OneWay}" />
+                                                <coreControls:LabelledTextBox Label="Difficulty: "
+                                                                  Text="{Binding LanceDefObject.Difficulty, Mode=OneWay}" />
+                                                <utils:LayoutGroup>
+                                                    <Label Content="Lance Tags" />
+                                                    <ListView ItemsSource="{Binding LanceDefObject.LanceTags, Mode=OneWay}" />
+                                                </utils:LayoutGroup>
+
+                                            </utils:LayoutGroup>
+                                            <StackPanel Grid.Row="1">
+                                            <Label Content="Lance Slots" />
+                                                <ListView ItemsSource="{Binding LanceDefObject.LanceSlots}">
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Expander>
+                                                                <Expander.Header>
+                                                                    <StackPanel Orientation="Horizontal">
+                                                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                        <coreControls:LabelledTextBox IsReadOnly="True" Label="Lance Slot - " Text="{Binding LanceSlotNumber, Mode=OneWay}"></coreControls:LabelledTextBox>
+                                                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                        <coreControls:LabelledTextBox IsReadOnly="True" Label="Slot Type - " Text="{Binding LanceSlotObjectType, Mode=OneWay}"></coreControls:LabelledTextBox>
+                                                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                        <Image Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}" Width="15" IsEnabled="False" />
+                                                                    </StackPanel>
+                                                                </Expander.Header>
+                                                                <StackPanel>
+                                                                    <coreControls:LabelledTextBox IsReadOnly="True" Label="Lance Slot Data Label" Text="Lance Slot Data"></coreControls:LabelledTextBox>
+                                                                </StackPanel>
+                                                            </Expander>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
+                                            </StackPanel>
+                                        </Grid>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type nodes:ModNode}">
                                         <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                                  VerticalScrollBarVisibility="Auto">
+                                                      VerticalScrollBarVisibility="Auto">
                                             <StackPanel>
                                                 <TextBox Text="{Binding Name, Mode=OneWay}" />
                                                 <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
@@ -279,7 +322,7 @@
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type nodes:MtmTreeViewItem}">
                                         <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                                  VerticalScrollBarVisibility="Auto">
+                                                      VerticalScrollBarVisibility="Auto">
                                             <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
                                         </ScrollViewer>
                                     </DataTemplate>
@@ -297,9 +340,9 @@
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Object Type"
-                                                            DisplayMemberBinding="{Binding ReferenceObject.ObjectType}" />
+                                                                DisplayMemberBinding="{Binding ReferenceObject.ObjectType}" />
                                                 <GridViewColumn Header="Object Name"
-                                                            DisplayMemberBinding="{Binding ReferenceObject.Id}" />
+                                                                DisplayMemberBinding="{Binding ReferenceObject.Id}" />
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
@@ -309,19 +352,59 @@
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Object Type"
-                                                            DisplayMemberBinding="{Binding ReferenceObject.ObjectType}" />
+                                                                DisplayMemberBinding="{Binding ReferenceObject.ObjectType}" />
                                                 <GridViewColumn Header="Object Name"
-                                                            DisplayMemberBinding="{Binding ReferenceObject.Id}" />
+                                                                DisplayMemberBinding="{Binding ReferenceObject.Id}" />
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
                                 </Expander>
                             </Grid>
                         </TabItem>
+                        <TabItem Header="Lance Automagicator">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <utils:LayoutGroup utils:MarginSetter.Margin="2,2,0,0">
+                                    <coreControls:LabelledTextBox Label="Id:" Text="{Binding LanceDefObject.Id, Mode=OneWay}" />
+                                    <coreControls:LabelledTextBox Label="Name:" Text="{Binding LanceDefObject.Name, Mode=OneWay}" />
+                                    <coreControls:LabelledTextBox Label="Difficulty: "
+                                                                  Text="{Binding LanceDefObject.Difficulty, Mode=OneWay}" />
+                                    <utils:LayoutGroup>
+                                        <Label Content="Lance Tags" />
+                                        <ListView ItemsSource="{Binding LanceDefObject.LanceTags, Mode=OneWay}" />
+                                    </utils:LayoutGroup>
+                                    <Label Content="Lance Slots" />
+                                    <utils:LayoutGroup>
+                                        <Expander IsExpanded="True">
+                                            <utils:LayoutGroup>
+                                            </utils:LayoutGroup>
+                                        </Expander>
+                                        <ListView ItemsSource="{Binding LanceDefObject.LanceSlots}">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Expander>
+                                                        <utils:LayoutGroup>
+                                                            <coreControls:LabelledTextBox Label="Lance Slot Number" Content="{Binding LanceSlotNumber, Mode=OneWay, diag:PresentationTraceSources.TraceLevel=High}"></coreControls:LabelledTextBox>
+                                                            <coreControls:LabelledTextBox Label="Lance Slot Type" Content="{Binding LanceSlotObjectType, Mode=OneWay}"></coreControls:LabelledTextBox>
+                                                        </utils:LayoutGroup>
+                                                    </Expander>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </utils:LayoutGroup>
+                                </utils:LayoutGroup>
+                            </Grid>
+                        </TabItem>
                     </TabControl>
                 </Grid>
                 <GridSplitter Grid.Column="0" Grid.Row="1" Height="5" Grid.ColumnSpan="3"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                              HorizontalAlignment="Stretch" VerticalAlignment="Center" />
                 <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" />
             </Grid>
         </DockPanel>

@@ -1,5 +1,6 @@
 ﻿namespace ModTechMaster.Data.Models.Mods.TypedObjectDefinitions
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -22,11 +23,14 @@
 
         public List<LanceSlotDefinition> LanceSlots { get; } = new List<LanceSlotDefinition>();
 
-        public override string Name { get; }
+        public int Difficulty { get; set; }
+
+        public List<string> LanceTags => this.Tags[Keywords.MyTags];
 
         public override void AddMetaData()
         {
             base.AddMetaData();
+            this.Difficulty = Convert.ToInt32(this.JsonObject.Difficulty.ToString());
 
             var i = 0;
             foreach (var lanceUnit in this.JsonObject.LanceUnits)

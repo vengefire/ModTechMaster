@@ -6,6 +6,7 @@
     using System.Linq;
 
     using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
 
@@ -49,6 +50,8 @@
         public abstract string Name { get; }
 
         public IObjectDefinitionDescription ObjectDescription => null;
+
+        public ObjectStatus ObjectStatus { get; set; } = ObjectStatus.Nominal;
 
         public ObjectType ObjectType { get; }
 

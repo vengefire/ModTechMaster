@@ -11,6 +11,7 @@
     using System.Windows.Data;
     using System.Windows.Input;
 
+    using ModTechMaster.Core;
     using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
@@ -211,7 +212,7 @@
             }
         }
 
-        public ObjectStatus ObjectStatus { get; set; } = ObjectStatus.Nominal;
+        public ObjectStatus ObjectStatus => this.Object is IObjectDefinition obj ? obj.ObjectStatus : ObjectStatus.Nominal;
 
         public IMtmTreeViewItem Parent { get; }
 
