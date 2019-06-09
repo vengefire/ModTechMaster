@@ -11,7 +11,6 @@
     using System.Windows.Data;
     using System.Windows.Input;
 
-    using ModTechMaster.Core;
     using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
@@ -113,6 +112,7 @@
                                     this.OnPropertyChanged();
                                     this.OnPropertyChanged("Selected");
                                     this.OnPropertyChanged("SelectionStatus");
+                                    this.OnPropertyChanged("ObjectStatus");
                                 });
                     }
                     else
@@ -122,6 +122,7 @@
                         this.OnPropertyChanged();
                         this.OnPropertyChanged("Selected");
                         this.OnPropertyChanged("SelectionStatus");
+                        this.OnPropertyChanged("ObjectStatus");
                     }
                 }
             }
@@ -212,7 +213,9 @@
             }
         }
 
-        public ObjectStatus ObjectStatus => this.Object is IObjectDefinition obj ? obj.ObjectStatus : ObjectStatus.Nominal;
+        public virtual ObjectStatus ObjectStatus =>
+            this.Children.Any() ? this.Children.Where(item => item.IsChecked != false).All(item => item.ObjectStatus == ObjectStatus.Nominal) ? ObjectStatus.Nominal : ObjectStatus.Error :
+            this.Object is IObjectDefinition obj ? obj.ObjectStatus : ObjectStatus.Nominal;
 
         public IMtmTreeViewItem Parent { get; }
 
@@ -288,7 +291,7 @@
                 }
             }
 
-            List<IObjectReference<IReferenceableObject>> objects = new List<IObjectReference<IReferenceableObject>>();
+            var objects = new List<IObjectReference<IReferenceableObject>>();
 
             // We check for not true so that we will select dependencies for partially selected mods.
             // Never select dependencies for mods. Handled elsewhere.
@@ -355,18 +358,19 @@
         public void SelectAbsentModDependencies()
         {
             // Check if any partially selected mods are missing dependencies and select them.
-            int lastCount = 0;
+            var lastCount = 0;
             var referencedDependencies = new List<IMtmTreeViewItem>();
             do
             {
                 lastCount = 0;
-                this.TopNode.Children.Where(item => item.IsChecked == null || referencedDependencies.Contains(item)).SelectMany(item => item.Dependencies).Distinct()
-                    .ToList().ForEach(
+                this.TopNode.Children.Where(item => item.IsChecked == null || referencedDependencies.Contains(item))
+                    .SelectMany(item => item.Dependencies).Distinct().ToList().ForEach(
                         dependency =>
                             {
                                 IMtmTreeViewItem modDependencyNode;
-                                if (DictRefsToTreeViewItems.TryGetValue(dependency.ReferenceObject, out modDependencyNode)
-                                    && modDependencyNode.IsChecked == false)
+                                if (DictRefsToTreeViewItems.TryGetValue(
+                                        dependency.ReferenceObject,
+                                        out modDependencyNode) && modDependencyNode.IsChecked == false)
                                 {
                                     modDependencyNode.IsChecked = true;
                                     lastCount += 1;
@@ -415,6 +419,7 @@
                         modNode.Children.Where(viewItem => viewItem is ResourceNode).ToList()
                             .ForEach(viewItem => { viewItem.IsChecked = valueSet != false; });
                     }
+
                     currentNode = currentNode.Parent;
                 }
             }

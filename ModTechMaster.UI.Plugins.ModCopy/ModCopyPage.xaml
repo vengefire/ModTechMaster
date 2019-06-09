@@ -102,6 +102,7 @@
                 </TreeView>
                 <GridSplitter Grid.Column="1" Width="5" Grid.Row="0" VerticalAlignment="Stretch"
                               HorizontalAlignment="Center" />
+                <xctk:WindowContainer Grid.Column="2" Grid.Row="0" Name="TabWindowContainer" ZIndex="999" />
                 <Grid Grid.Column="2" Grid.Row="0">
                     <TabControl>
                         <TabItem Header="Summary">
@@ -258,76 +259,176 @@
                             </Grid>
                         </TabItem>
                         <TabItem Header="Selected Item Details">
-                            <ContentPresenter Content="{Binding ElementName=tvModControl, Path=SelectedItem}">
-                                <ContentPresenter.Resources>
-                                    <DataTemplate DataType="{x:Type nodes:ModCollectionNode}">
-                                        <StackPanel>
-                                            <TextBox Text="{Binding Name, Mode=OneWay}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type specialisedNodes:LanceDefNode}">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <utils:LayoutGroup utils:MarginSetter.Margin="2,2,0,0">
-                                                <coreControls:LabelledTextBox Label="Id:" Text="{Binding LanceDefObject.Id, Mode=OneWay}" />
-                                                <coreControls:LabelledTextBox Label="Name:" Text="{Binding LanceDefObject.Name, Mode=OneWay}" />
-                                                <coreControls:LabelledTextBox Label="Difficulty: "
-                                                                  Text="{Binding LanceDefObject.Difficulty, Mode=OneWay}" />
-                                                <utils:LayoutGroup>
-                                                    <Label Content="Lance Tags" />
-                                                    <ListView ItemsSource="{Binding LanceDefObject.LanceTags, Mode=OneWay}" />
-                                                </utils:LayoutGroup>
-
-                                            </utils:LayoutGroup>
-                                            <StackPanel Grid.Row="1">
-                                            <Label Content="Lance Slots" />
-                                                <ListView ItemsSource="{Binding LanceDefObject.LanceSlots}">
-                                                    <ListView.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <Expander>
-                                                                <Expander.Header>
-                                                                    <StackPanel Orientation="Horizontal">
-                                                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                                                                        <coreControls:LabelledTextBox IsReadOnly="True" Label="Lance Slot - " Text="{Binding LanceSlotNumber, Mode=OneWay}"></coreControls:LabelledTextBox>
-                                                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                                                                        <coreControls:LabelledTextBox IsReadOnly="True" Label="Slot Type - " Text="{Binding LanceSlotObjectType, Mode=OneWay}"></coreControls:LabelledTextBox>
-                                                                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-                                                                        <Image Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}}" Width="15" IsEnabled="False" />
-                                                                    </StackPanel>
-                                                                </Expander.Header>
-                                                                <StackPanel>
-                                                                    <coreControls:LabelledTextBox IsReadOnly="True" Label="Lance Slot Data Label" Text="Lance Slot Data"></coreControls:LabelledTextBox>
-                                                                </StackPanel>
-                                                            </Expander>
-                                                        </DataTemplate>
-                                                    </ListView.ItemTemplate>
-                                                </ListView>
-                                            </StackPanel>
-                                        </Grid>
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type nodes:ModNode}">
-                                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                                      VerticalScrollBarVisibility="Auto">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <ContentPresenter Grid.Row="0" Content="{Binding ElementName=tvModControl, Path=SelectedItem}">
+                                    <ContentPresenter.Resources>
+                                        <DataTemplate DataType="{x:Type nodes:ModCollectionNode}">
                                             <StackPanel>
                                                 <TextBox Text="{Binding Name, Mode=OneWay}" />
-                                                <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
                                             </StackPanel>
-                                        </ScrollViewer>
-                                    </DataTemplate>
-                                    <DataTemplate DataType="{x:Type nodes:MtmTreeViewItem}">
-                                        <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                                      VerticalScrollBarVisibility="Auto">
-                                            <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
-                                        </ScrollViewer>
-                                    </DataTemplate>
-                                </ContentPresenter.Resources>
-                            </ContentPresenter>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type specialisedNodes:LanceDefNode}">
+                                            <Grid utils:MarginSetter.Margin="2">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <utils:LayoutGroup utils:MarginSetter.Margin="2,2,0,0">
+                                                    <coreControls:LabelledTextBox Label="Id:"
+                                                                                  Text="{Binding LanceDefObjectDefinition.Id, Mode=OneWay}" />
+                                                    <coreControls:LabelledTextBox Label="Name:"
+                                                                                  Text="{Binding LanceDefObjectDefinition.Name, Mode=OneWay}" />
+                                                    <coreControls:LabelledTextBox Label="Difficulty: "
+                                                                                  Text="{Binding LanceDefObjectDefinition.Difficulty, Mode=OneWay}" />
+                                                    <utils:LayoutGroup>
+                                                        <Label Content="Lance Tags" />
+                                                        <ListView
+                                                            ItemsSource="{Binding LanceDefObjectDefinition.LanceTags, Mode=OneWay}" />
+                                                    </utils:LayoutGroup>
+
+                                                </utils:LayoutGroup>
+
+                                                <Label Grid.Row="1" Content="Lance Slots" Margin="0,5,0,0"/>
+                                                <Grid Grid.Row="2" utils:MarginSetter.Margin="2">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                                  VerticalScrollBarVisibility="Visible"
+                                                                  CanContentScroll="True">
+                                                        <ListView ItemsSource="{Binding LanceSlots}"
+                                                                  HorizontalContentAlignment="Stretch">
+                                                            <ListView.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Expander>
+                                                                        <Expander.Header>
+                                                                            <Grid>
+                                                                                <Grid.ColumnDefinitions>
+                                                                                    <ColumnDefinition Width="*" />
+                                                                                </Grid.ColumnDefinitions>
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <Separator
+                                                                                        Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                                    <coreControls:LabelledTextBox
+                                                                                        IsReadOnly="True"
+                                                                                        Label="Lance Slot - "
+                                                                                        Text="{Binding LanceSlotDefinition.LanceSlotNumber, Mode=OneWay}" />
+                                                                                    <Separator
+                                                                                        Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                                    <coreControls:LabelledTextBox
+                                                                                        IsReadOnly="True"
+                                                                                        Label="Slot Type - "
+                                                                                        Text="{Binding LanceSlotDefinition.LanceSlotObjectType, Mode=OneWay}" />
+                                                                                    <Separator
+                                                                                        Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                                    <Image
+                                                                                        Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                                                        Width="15" IsEnabled="False" />
+                                                                                </StackPanel>
+                                                                            </Grid>
+                                                                        </Expander.Header>
+                                                                        <StackPanel HorizontalAlignment="Stretch"
+                                                                                    utils:MarginSetter.Margin="2">
+                                                                            <Border BorderBrush="LightGray"
+                                                                                    BorderThickness="1">
+                                                                                <GroupBox Header="Units">
+                                                                                    <utils:LayoutGroup
+                                                                                        HorizontalAlignment="Stretch"
+                                                                                        utils:MarginSetter.Margin="1">
+                                                                                        <coreControls:LabelledTextBox
+                                                                                            IsReadOnly="True"
+                                                                                            Label="Unit Id:"
+                                                                                            Text="{Binding LanceSlotDefinition.UnitId}" />
+                                                                                        <Label Content="Unit Tags:" />
+                                                                                        <ListView
+                                                                                            ItemsSource="{Binding LanceSlotDefinition.UnitTags}" />
+                                                                                        <Label
+                                                                                            Content="Excluded Unit Tags:" />
+                                                                                        <ListView
+                                                                                            ItemsSource="{Binding LanceSlotDefinition.ExcludedUnitTags}" />
+                                                                                        <coreControls:LabelledTextBox
+                                                                                            Label="Eligible Units:"
+                                                                                            Text="{Binding EligibleUnits.Count, Mode=OneWay}" />
+                                                                                        <coreControls:LabelledTextBox
+                                                                                            Label="Selected Eligible Units"
+                                                                                            Text="{Binding SelectedEligibleUnits.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                                                        <StackPanel
+                                                                                            HorizontalAlignment="Left"
+                                                                                            Orientation="Horizontal"
+                                                                                            utils:MarginSetter.Margin="1">
+                                                                                            <Button Content="Select Eligible Units" Command="{Binding SelectEligibleUnitsCommand}" />
+                                                                                        </StackPanel>
+                                                                                    </utils:LayoutGroup>
+                                                                                </GroupBox>
+                                                                            </Border>
+                                                                            <GroupBox Header="Pilots">
+                                                                                <utils:LayoutGroup
+                                                                                        HorizontalAlignment="Stretch"
+                                                                                        utils:MarginSetter.Margin="1">
+                                                                                    <coreControls:LabelledTextBox
+                                                                                            IsReadOnly="True"
+                                                                                            Label="Pilot Id:"
+                                                                                            Text="{Binding LanceSlotDefinition.PilotId}" />
+                                                                                    <Label Content="Pilot Tags:" />
+                                                                                    <ListView
+                                                                                            ItemsSource="{Binding LanceSlotDefinition.PilotTags}" />
+                                                                                    <Label
+                                                                                            Content="Excluded Pilot Tags:" />
+                                                                                    <ListView
+                                                                                            ItemsSource="{Binding LanceSlotDefinition.ExcludedPilotTags}" />
+                                                                                    <coreControls:LabelledTextBox
+                                                                                            Label="Eligible Pilots:"
+                                                                                            Text="{Binding EligiblePilots.Count, Mode=OneWay}" />
+                                                                                    <coreControls:LabelledTextBox
+                                                                                            Label="Selected Eligible Pilots"
+                                                                                            Text="{Binding SelectedEligiblePilots.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                                                    <StackPanel
+                                                                                            HorizontalAlignment="Left"
+                                                                                            Orientation="Horizontal"
+                                                                                            utils:MarginSetter.Margin="1">
+                                                                                        <Button Content="Select Eligible Pilots" Command="{Binding SelectEligiblePilotsCommand}" />
+                                                                                    </StackPanel>
+                                                                                </utils:LayoutGroup>
+                                                                            </GroupBox>
+                                                                        </StackPanel>
+                                                                    </Expander>
+                                                                </DataTemplate>
+                                                            </ListView.ItemTemplate>
+                                                        </ListView>
+                                                    </ScrollViewer>
+                                                </Grid>
+                                            </Grid>
+
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type nodes:ModNode}">
+                                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                          VerticalScrollBarVisibility="Auto">
+                                                <StackPanel>
+                                                    <TextBox Text="{Binding Name, Mode=OneWay}" />
+                                                    <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
+                                                </StackPanel>
+                                            </ScrollViewer>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type nodes:MtmTreeViewItem}">
+                                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                          VerticalScrollBarVisibility="Auto">
+                                                <TextBox Text="{Binding HumanReadableContent, Mode=OneWay}" />
+                                            </ScrollViewer>
+                                        </DataTemplate>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+
+                            </Grid>
                         </TabItem>
                         <TabItem Header="Selected Item Dependencies">
                             <Grid>
@@ -359,46 +460,6 @@
                                         </ListView.View>
                                     </ListView>
                                 </Expander>
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="Lance Automagicator">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <utils:LayoutGroup utils:MarginSetter.Margin="2,2,0,0">
-                                    <coreControls:LabelledTextBox Label="Id:" Text="{Binding LanceDefObject.Id, Mode=OneWay}" />
-                                    <coreControls:LabelledTextBox Label="Name:" Text="{Binding LanceDefObject.Name, Mode=OneWay}" />
-                                    <coreControls:LabelledTextBox Label="Difficulty: "
-                                                                  Text="{Binding LanceDefObject.Difficulty, Mode=OneWay}" />
-                                    <utils:LayoutGroup>
-                                        <Label Content="Lance Tags" />
-                                        <ListView ItemsSource="{Binding LanceDefObject.LanceTags, Mode=OneWay}" />
-                                    </utils:LayoutGroup>
-                                    <Label Content="Lance Slots" />
-                                    <utils:LayoutGroup>
-                                        <Expander IsExpanded="True">
-                                            <utils:LayoutGroup>
-                                            </utils:LayoutGroup>
-                                        </Expander>
-                                        <ListView ItemsSource="{Binding LanceDefObject.LanceSlots}">
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Expander>
-                                                        <utils:LayoutGroup>
-                                                            <coreControls:LabelledTextBox Label="Lance Slot Number" Content="{Binding LanceSlotNumber, Mode=OneWay, diag:PresentationTraceSources.TraceLevel=High}"></coreControls:LabelledTextBox>
-                                                            <coreControls:LabelledTextBox Label="Lance Slot Type" Content="{Binding LanceSlotObjectType, Mode=OneWay}"></coreControls:LabelledTextBox>
-                                                        </utils:LayoutGroup>
-                                                    </Expander>
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
-                                    </utils:LayoutGroup>
-                                </utils:LayoutGroup>
                             </Grid>
                         </TabItem>
                     </TabControl>

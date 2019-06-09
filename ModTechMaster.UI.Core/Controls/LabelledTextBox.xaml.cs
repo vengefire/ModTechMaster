@@ -22,9 +22,9 @@
 
         public static readonly DependencyProperty ReadOnlyProperty = DependencyProperty.Register(
             "IsReadOnly",
-            typeof(string),
+            typeof(bool),
             typeof(LabelledTextBox),
-            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public LabelledTextBox()
         {

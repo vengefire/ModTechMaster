@@ -84,6 +84,9 @@
     <Compile Include="Modals\MechSelector\MechSelectorWindow.xaml.cs">
       <DependentUpon>MechSelectorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modals\SimpleObjectSelectorWindow.xaml.cs">
+      <DependentUpon>SimpleObjectSelectorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ModCopyPage.xaml.cs">
       <DependentUpon>ModCopyPage.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,7 @@
     <Compile Include="Nodes\ResourceNode.cs" />
     <Compile Include="Nodes\ObjectDefinitionNode.cs" />
     <Compile Include="Nodes\SpecialisedNodes\LanceDefNode.cs" />
+    <Compile Include="Nodes\SpecialisedNodes\LanceSlotModel.cs" />
     <Compile Include="Nodes\TreeViewContextMenuSelector.cs" />
     <Compile Include="Plugin\ModCopyPlugin.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -126,6 +130,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Modals\MechSelector\MechSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\SimpleObjectSelectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

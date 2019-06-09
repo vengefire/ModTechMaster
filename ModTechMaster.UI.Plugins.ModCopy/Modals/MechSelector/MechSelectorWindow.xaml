@@ -150,8 +150,7 @@
             <Button Content="Load Mech File..." Command="local:MechSelectorCommands.ProcessMechSelectionFileCommand"
                     CommandParameter="{Binding MechSelectorModel}" />
             <Button Content="Select 'Mechs in Collection" Click="SelectMechsAndCloseButtonClick" />
-            <Button Content="Discard and return to ModCopy" />
+            <Button Content="Discard and return to ModCopy" Click="ButtonBase_OnClick"/>
         </StackPanel>
-        <!--<DataGrid Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="5" ItemsSource="{Binding MechSelectorModel.MechModels, UpdateSourceTrigger=PropertyChanged}"></DataGrid>-->
     </Grid>
 </xctk:ChildWindow>

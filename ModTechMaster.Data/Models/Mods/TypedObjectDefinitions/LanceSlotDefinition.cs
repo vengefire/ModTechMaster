@@ -88,7 +88,12 @@
             {
                 foreach (var tagItem in lanceUnit.unitTagSet.items)
                 {
-                    this.UnitTags.Add(tagItem.ToString());
+                    var tag = tagItem.ToString();
+                    if (tag.Contains("{CUR_TEAM"))
+                    {
+                        continue;
+                    }
+                    this.UnitTags.Add(tag);
                 }
             }
 
@@ -96,7 +101,12 @@
             {
                 foreach (var tagItem in lanceUnit.excludedUnitTagSet.items)
                 {
-                    this.ExcludedUnitTags.Add(tagItem.ToString());
+                    var tag = tagItem.ToString();
+                    if (tag.Contains("{CUR_TEAM"))
+                    {
+                        continue;
+                    }
+                    this.ExcludedUnitTags.Add(tag);
                 }
             }
 
@@ -104,7 +114,12 @@
             {
                 foreach (var tagItem in lanceUnit.pilotTagSet.items)
                 {
-                    this.PilotTags.Add(tagItem.ToString());
+                    var tag = tagItem.ToString();
+                    if (tag.Contains("{CUR_TEAM"))
+                    {
+                        continue;
+                    }
+                    this.PilotTags.Add(tag);
                 }
             }
 
@@ -112,7 +127,12 @@
             {
                 foreach (var tagItem in lanceUnit.excludedPilotTagSet.items)
                 {
-                    this.ExcludedPilotTags.Add(tagItem.ToString());
+                    var tag = tagItem.ToString();
+                    if (tag.Contains("{CUR_TEAM"))
+                    {
+                        continue;
+                    }
+                    this.ExcludedPilotTags.Add(tag);
                 }
             }
 

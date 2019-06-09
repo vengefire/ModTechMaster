@@ -1,0 +1,36 @@
+﻿<xctk:ChildWindow x:Class="ModTechMaster.UI.Plugins.ModCopy.Modals.SimpleObjectSelectorWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:local="clr-namespace:ModTechMaster.UI.Plugins.ModCopy.Modals"
+                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                  xmlns:utils="clr-namespace:ModTechMaster.UI.Core.Utils;assembly=ModTechMaster.UI.Core"
+                  xmlns:converters="clr-namespace:ModTechMaster.UI.Core.Converters;assembly=ModTechMaster.UI.Core"
+                  mc:Ignorable="d"
+                  Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                         AncestorType={x:Type xctk:WindowContainer}},
+                                                         Path=ActualHeight}"
+                  Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                         AncestorType={x:Type xctk:WindowContainer}},
+                                                         Path=ActualWidth}"
+                  IsModal="True">
+    <Grid utils:MarginSetter.Margin="5">
+        <Grid.Resources>
+            <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <xctk:CheckListBox ItemsSource="{Binding Objects}" DisplayMemberPath="Id" SelectedItemsOverride="{Binding SelectedItems, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        </xctk:CheckListBox>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" utils:MarginSetter.Margin="0,0,5,0">
+            <Button Content="Ok" Click="ButtonOkOnClick"></Button>
+            <Button Content="Cancel" Click="ButtonCancelOnClick"></Button>
+        </StackPanel>
+    </Grid>
+</xctk:ChildWindow>

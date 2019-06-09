@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-/*public class DelegateCommand : DelegateCommand<object>
+public class DelegateCommand : DelegateCommand<object>
 {
     public DelegateCommand(Action executeMethod)
         : base(o => executeMethod())
@@ -12,7 +12,7 @@ using System.Windows.Input;
         : base(o => executeMethod(), o => canExecuteMethod())
     {
     }
-}*/
+}
 
 /// <summary>
 ///     A command that calls the specified delegate when the command is executed.
