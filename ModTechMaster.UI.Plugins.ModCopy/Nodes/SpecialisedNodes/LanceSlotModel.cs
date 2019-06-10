@@ -20,13 +20,14 @@
     {
         private readonly LanceDefNode lanceNode;
 
-        private List<ObjectDefinitionNode> eligiblePilotNodes;
+        private List<ObjectDefinitionNode> eligiblePilotNodes = new List<ObjectDefinitionNode>();
 
-        private List<ObjectDefinitionNode> eligibleUnitNodes;
+        private List<ObjectDefinitionNode> eligibleUnitNodes = new List<ObjectDefinitionNode>();
 
         private ObjectStatus previousObjectStatus = ObjectStatus.Warning;
 
         private int previousSelectedPilotsCount = -1;
+
         private int previousSelectedUnitsCount = -1;
 
         private ICommand selectEligiblePilotsCommand;
@@ -42,14 +43,12 @@
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<ObjectDefinitionNode> EligiblePilotNodes =>
-            this.eligiblePilotNodes ?? (this.eligiblePilotNodes = this.GetEligiblePilots());
+        public List<ObjectDefinitionNode> EligiblePilotNodes => this.eligiblePilotNodes;
 
         public List<IObjectDefinition> EligiblePilots =>
             this.EligiblePilotNodes.Select(node => node.ObjectDefinition).ToList();
 
-        public List<ObjectDefinitionNode> EligibleUnitNodes =>
-            this.eligibleUnitNodes ?? (this.eligibleUnitNodes = this.GetEligibleUnits());
+        public List<ObjectDefinitionNode> EligibleUnitNodes => this.eligibleUnitNodes;
 
         public List<IObjectDefinition> EligibleUnits =>
             this.EligibleUnitNodes.Select(node => node.ObjectDefinition).ToList();
@@ -83,6 +82,12 @@
                 this.previousObjectStatus = this.ObjectStatus;
                 this.OnPropertyChanged(nameof(this.ObjectStatus));
             }
+        }
+
+        public void LoadEligibleUnitsAndPilots()
+        {
+            this.eligibleUnitNodes = this.GetEligibleUnits();
+            this.eligiblePilotNodes = this.GetEligiblePilots();
         }
 
         [NotifyPropertyChangedInvocator]
@@ -175,7 +180,9 @@
                                                 model =>
                                                     {
                                                         model.OnPropertyChanged(nameof(this.SelectedEligibleUnits));
-                                                        model.CheckObjectStatusChanged();
+                                                        model.OnPropertyChanged(nameof(this.ObjectStatus));
+
+                                                        // model.CheckObjectStatusChanged();
                                                     });
                                         }
 
@@ -183,14 +190,19 @@
                                         {
                                             this.previousSelectedPilotsCount = this.SelectedEligiblePilots.Count;
                                             this.OnPropertyChanged(nameof(this.SelectedEligiblePilots));
-                                            this.lanceNode.LanceSlots.Where(model => model != this).ToList().ForEach(model =>
-                                                {
-                                                    model.OnPropertyChanged(nameof(this.SelectedEligiblePilots));
-                                                    model.CheckObjectStatusChanged();
-                                                });
+                                            this.lanceNode.LanceSlots.Where(model => model != this).ToList().ForEach(
+                                                model =>
+                                                    {
+                                                        model.OnPropertyChanged(nameof(this.SelectedEligiblePilots));
+                                                        model.OnPropertyChanged(nameof(this.ObjectStatus));
+
+                                                        // model.CheckObjectStatusChanged();
+                                                    });
                                         }
 
-                                        this.CheckObjectStatusChanged();
+                                        this.OnPropertyChanged(nameof(this.ObjectStatus));
+
+                                        // this.CheckObjectStatusChanged();
                                     });
                         }
                         finally

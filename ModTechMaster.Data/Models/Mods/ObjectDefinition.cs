@@ -10,7 +10,8 @@
 
     using Newtonsoft.Json.Linq;
 
-    public class ObjectDefinition : JsonObjectSourcedFromFile, IObjectDefinition
+    public class 
+        ObjectDefinition : JsonObjectSourcedFromFile, IObjectDefinition
     {
         public ObjectDefinition(
             ObjectType objectType,

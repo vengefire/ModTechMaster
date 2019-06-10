@@ -7,6 +7,7 @@
 
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.UI.Plugins.ModCopy.Nodes.SpecialisedNodes;
 
     public class ModCollectionNode : MtmTreeViewItem
     {
@@ -32,6 +33,47 @@
                                 this.OnPropertyChanged(nameof(this.TotalCoolingCount));
                             };
                     });
+
+            // Hook up interdependent properties
+            // When Pilots/Units are selected, notify lances
+            // TODO: Formalize this into a modeled relationship so we can refactor properly
+            // and reuse the concept.
+            var lanceDependencyProperties = new List<ObjectType>
+                                                {
+                                                    ObjectType.MechDef,
+                                                    ObjectType.TurretDef,
+                                                    ObjectType.VehicleDef,
+                                                    ObjectType.PilotDef
+                                                };
+            var sourceObjects = this.AllChildren.Where(
+                item => item.Object is IObjectDefinition obj && lanceDependencyProperties.Contains(obj.ObjectType));
+            var targetObjects = this.AllChildren.Where(item => item is LanceDefNode obj).Cast<LanceDefNode>()
+                .SelectMany(node => node.LanceSlots);
+
+            targetObjects.AsParallel().ForAll(
+                target =>
+                    {
+                        target.LoadEligibleUnitsAndPilots();
+                        sourceObjects.AsParallel().ForAll(
+                            source =>
+                                {
+                                    var propertyName = nameof(LanceSlotModel.SelectedEligibleUnits);
+                                    if (((IObjectDefinition)source.Object).ObjectType == ObjectType.PilotDef)
+                                    {
+                                        propertyName = nameof(LanceSlotModel.SelectedEligiblePilots);
+                                    }
+
+                                    source.PropertyChanged += (sender, args) =>
+                                        {
+                                            if (args.PropertyName == nameof(IMtmTreeViewItem.IsChecked))
+                                            {
+                                                target.OnPropertyChanged(propertyName);
+                                                target.OnPropertyChanged(nameof(LanceSlotModel.ObjectStatus));
+                                            }
+                                        };
+                                });
+                    });
+
             this.IsExpanded = true;
         }
 

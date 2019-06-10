@@ -289,17 +289,21 @@
                                                                                   Text="{Binding LanceDefObjectDefinition.Difficulty, Mode=OneWay}" />
                                                     <utils:LayoutGroup>
                                                         <Label Content="Lance Tags" />
+                                                        <Expander IsExpanded="False" Margin="0,2,0,0">
                                                         <ListView
                                                             ItemsSource="{Binding LanceDefObjectDefinition.LanceTags, Mode=OneWay}" />
+                                                        </Expander>
                                                     </utils:LayoutGroup>
 
                                                 </utils:LayoutGroup>
 
                                                 <Label Grid.Row="1" Content="Lance Slots" Margin="0,5,0,0"/>
-                                                <Grid Grid.Row="2" utils:MarginSetter.Margin="2">
+                                                <Border Grid.Row="2" BorderBrush="LightGray"
+                                                        BorderThickness="1">
+                                                <Grid utils:MarginSetter.Margin="2">
                                                     <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*" />
-                                                    </Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        </Grid.RowDefinitions>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*" />
                                                     </Grid.ColumnDefinitions>
@@ -310,7 +314,7 @@
                                                                   HorizontalContentAlignment="Stretch">
                                                             <ListView.ItemTemplate>
                                                                 <DataTemplate>
-                                                                    <Expander>
+                                                                    <Expander Margin="0,2,0,2">
                                                                         <Expander.Header>
                                                                             <Grid>
                                                                                 <Grid.ColumnDefinitions>
@@ -339,8 +343,6 @@
                                                                         </Expander.Header>
                                                                         <StackPanel HorizontalAlignment="Stretch"
                                                                                     utils:MarginSetter.Margin="2">
-                                                                            <Border BorderBrush="LightGray"
-                                                                                    BorderThickness="1">
                                                                                 <GroupBox Header="Units">
                                                                                     <utils:LayoutGroup
                                                                                         HorizontalAlignment="Stretch"
@@ -370,7 +372,6 @@
                                                                                         </StackPanel>
                                                                                     </utils:LayoutGroup>
                                                                                 </GroupBox>
-                                                                            </Border>
                                                                             <GroupBox Header="Pilots">
                                                                                 <utils:LayoutGroup
                                                                                         HorizontalAlignment="Stretch"
@@ -407,6 +408,7 @@
                                                         </ListView>
                                                     </ScrollViewer>
                                                 </Grid>
+                                                </Border>
                                             </Grid>
 
                                         </DataTemplate>
