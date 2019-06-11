@@ -335,6 +335,12 @@
                                                                                         Text="{Binding LanceSlotDefinition.LanceSlotObjectType, Mode=OneWay}" />
                                                                                     <Separator
                                                                                         Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                                    <coreControls:LabelledTextBox
+                                                                                        IsReadOnly="True"
+                                                                                        Label="Ineligible Factions - "
+                                                                                        Text="{Binding IneligibleFactions.Count, Mode=OneWay}" />
+                                                                                        <Separator
+                                                                                        Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                                                                                     <Image
                                                                                         Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}, UpdateSourceTrigger=PropertyChanged}"
                                                                                         Width="15" IsEnabled="False" />
@@ -364,6 +370,12 @@
                                                                                         <coreControls:LabelledTextBox
                                                                                             Label="Selected Eligible Units"
                                                                                             Text="{Binding SelectedEligibleUnits.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                                                        <Expander IsExpanded="False">
+                                                                                            <Expander.Header>
+                                                                                                <coreControls:LabelledTextBox Label="Ineligible Factions : " Text="{Binding IneligibleFactions.Count, Mode=OneWay}" IsReadOnly="True"></coreControls:LabelledTextBox>
+                                                                                            </Expander.Header>
+                                                                                            <ListView ItemsSource="{Binding IneligibleFactions}"></ListView>
+                                                                                        </Expander>
                                                                                         <StackPanel
                                                                                             HorizontalAlignment="Left"
                                                                                             Orientation="Horizontal"

@@ -5,17 +5,21 @@
 
     using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
+    using ModTechMaster.Logic.Services;
 
     public class LanceDefNode : ObjectDefinitionNode
     {
+        private static IFactionService factionService = new FactionService();
+
         public LanceDefNode(IMtmTreeViewItem parent, LanceDefObjectDefinition objectDefinition)
             : base(parent, objectDefinition)
         {
             objectDefinition.LanceSlots.ForEach(
                 definition =>
                     {
-                        var slot = new LanceSlotModel(definition, this);
+                        var slot = new LanceSlotModel(definition, this, LanceDefNode.factionService);
                         this.LanceSlots.Add(slot);
                         slot.PropertyChanged += (sender, args) =>
                             {
