@@ -179,8 +179,8 @@
 
             if (this.LanceSlotDefinition.RestrictByFaction)
             {
-                //filteredEligibleUnits.AsParallel().ForAll(
-                filteredEligibleUnits.ToList().ForEach(
+                filteredEligibleUnits.AsParallel().ForAll(
+                // filteredEligibleUnits.ToList().ForEach(
                     unit =>
                         {
                             var unitTags = unit.ObjectDefinition.Tags[Keywords.MyTags];

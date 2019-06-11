@@ -24,7 +24,6 @@
                             CommonReferenceProcessor.FindReferences<IReferenceableObject>(modCollection, o, null);
                     });
 
-            // allReferences.ForEach(o => { dictRefs[o] = CommonReferenceProcessor.FindReferences<IReferenceableObject>(modCollection, o, null); });
             sw.Stop();
             return sw.ElapsedMilliseconds;
         }

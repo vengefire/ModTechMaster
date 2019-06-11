@@ -77,6 +77,7 @@
             ResetSelectionsCommand = new ResetSelectionsCommand(this);
             SelectMechsFromDataFileCommand = new SelectMechsFromDataFileCommand(this);
             BuildCustomCollectionCommand = new BuildCustomCollectionCommand(this);
+            ValidateLanceDefinitionsCommand = new ValidateLanceDefinitionsCommand(this);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -86,6 +87,8 @@
         public static IPluginCommand ResetSelectionsCommand { get; private set; }
 
         public static IPluginCommand SelectMechsFromDataFileCommand { get; private set; }
+
+        public static IPluginCommand ValidateLanceDefinitionsCommand { get; private set; }
 
         public IMtmTreeViewItem CurrentSelectedItem
         {
@@ -367,7 +370,11 @@
 
                                 foreach (var assetDirectory in assetDirectories)
                                 {
-                                    DirectoryUtils.DirectoryCopy(Path.Combine(mod.SourceDirectoryPath, assetDirectory), Path.Combine(modDestinationDirectory, assetDirectory), true, null);
+                                    DirectoryUtils.DirectoryCopy(
+                                        Path.Combine(mod.SourceDirectoryPath, assetDirectory),
+                                        Path.Combine(modDestinationDirectory, assetDirectory),
+                                        true,
+                                        null);
                                 }
                             }
 

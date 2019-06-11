@@ -11,7 +11,10 @@
 
     public class ModCollectionNode : MtmTreeViewItem
     {
-        public ModCollectionNode(IModCollection modCollection, MtmTreeViewItem parent)
+        public ModCollectionNode(
+            IModCollection modCollection,
+            MtmTreeViewItem parent,
+            bool preProcessRelationships = false)
             : base(parent, modCollection)
         {
             this.ModCollection = modCollection;
@@ -34,6 +37,11 @@
                             };
                     });
 
+            if (preProcessRelationships)
+            {
+                PreProcessRefs(this);
+            }
+
             // Hook up interdependent properties
             // When Pilots/Units are selected, notify lances
             // TODO: Formalize this into a modeled relationship so we can refactor properly
@@ -50,8 +58,8 @@
             var targetObjects = this.AllChildren.Where(item => item is LanceDefNode obj).Cast<LanceDefNode>()
                 .SelectMany(node => node.LanceSlots);
 
-            //targetObjects.AsParallel().ForAll(
-            targetObjects.ToList().ForEach(
+            targetObjects.AsParallel().ForAll(
+                // targetObjects.ToList().ForEach(
                 target =>
                     {
                         target.LoadEligibleUnitsAndPilots();
@@ -178,6 +186,12 @@
         {
             this.Children.Where(item => item.IsChecked == false && settingsAlwaysIncludedMods.Contains(item.Name))
                 .ToList().ForEach(item => item.IsChecked = true);
+        }
+
+        private static void PreProcessRefs(IMtmTreeViewItem curNode)
+        {
+            var references = curNode.ObjectReferences;
+            curNode.Children.ToList().ForEach(PreProcessRefs);
         }
     }
 }

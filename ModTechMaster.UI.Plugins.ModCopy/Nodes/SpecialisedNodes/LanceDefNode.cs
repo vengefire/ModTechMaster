@@ -1,6 +1,7 @@
 ﻿namespace ModTechMaster.UI.Plugins.ModCopy.Nodes.SpecialisedNodes
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Linq;
 
     using ModTechMaster.Core.Enums;
@@ -43,5 +44,8 @@
             this.LanceSlots.All(model => model.ObjectStatus == ObjectStatus.Nominal)
                 ? ObjectStatus.Nominal
                 : ObjectStatus.Error;
+
+        public ObservableCollection<LanceSlotModel> InvalidLanceSlots =>
+            new ObservableCollection<LanceSlotModel>(this.LanceSlots.Where(model => model.ObjectStatus != ObjectStatus.Nominal));
     }
 }

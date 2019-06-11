@@ -5,7 +5,6 @@
     using System.ComponentModel;
     using System.Windows;
 
-    using ModTechMaster.Core;
     using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.UI.Data.Enums;
@@ -21,6 +20,8 @@
         List<IObjectReference<IReferenceableObject>> Dependents { get; }
 
         bool HasCheck { get; }
+
+        IMtmTreeViewItem HostingModNode { get; }
 
         string HumanReadableContent { get; }
 

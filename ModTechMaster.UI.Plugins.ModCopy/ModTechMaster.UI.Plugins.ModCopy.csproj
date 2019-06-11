@@ -76,6 +76,7 @@
     <Compile Include="Commands\BuildCustomCollectionCommand.cs" />
     <Compile Include="Commands\ResetSelectionsCommand.cs" />
     <Compile Include="Commands\SelectMechsFromDataFileCommand.cs" />
+    <Compile Include="Commands\ValidateLanceDefinitionsCommand.cs" />
     <Compile Include="Commands\ValidateModsCommand.cs" />
     <Compile Include="Modals\MechSelector\FilterOption.cs" />
     <Compile Include="Modals\MechSelector\MechModel.cs" />
@@ -87,6 +88,10 @@
     <Compile Include="Modals\SimpleObjectSelectorWindow.xaml.cs">
       <DependentUpon>SimpleObjectSelectorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modals\Validators\ValidateLanceDefsWindow.xaml.cs">
+      <DependentUpon>ValidateLanceDefsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modals\Validators\ValidateLanceDefViewModel.cs" />
     <Compile Include="ModCopyPage.xaml.cs">
       <DependentUpon>ModCopyPage.xaml</DependentUpon>
     </Compile>
@@ -98,6 +103,7 @@
     <Compile Include="Nodes\ModCollectionNode.cs" />
     <Compile Include="Nodes\ModNode.cs" />
     <Compile Include="Nodes\MTMTreeViewItem.cs" />
+    <Compile Include="Nodes\NodeTemplateSelector.cs" />
     <Compile Include="Nodes\ResourceNode.cs" />
     <Compile Include="Nodes\ObjectDefinitionNode.cs" />
     <Compile Include="Nodes\SpecialisedNodes\LanceDefNode.cs" />
@@ -134,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Modals\SimpleObjectSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modals\Validators\ValidateLanceDefsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

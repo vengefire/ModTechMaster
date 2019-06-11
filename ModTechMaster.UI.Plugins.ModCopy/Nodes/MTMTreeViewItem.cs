@@ -242,6 +242,25 @@
             this.IsChecked == null ? SelectionStatus.PartiallySelected :
             this.IsChecked.Value ? SelectionStatus.Selected : SelectionStatus.Unselected;
 
+        public IMtmTreeViewItem HostingModNode
+        {
+            get
+            {
+                var curNode = this as IMtmTreeViewItem;
+                while (curNode.Parent != null)
+                {
+                    if (curNode.Parent is ModNode)
+                    {
+                        return curNode.Parent;
+                    }
+
+                    curNode = curNode.Parent;
+                }
+
+                return this is ModNode ? this : null;
+            }
+        }
+
         public IMtmTreeViewItem TopNode
         {
             get

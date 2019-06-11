@@ -34,7 +34,7 @@
                             {
                                 if (!line.IsNullOrEmpty() && !line.StartsWith("--"))
                                 {
-                                    this.factionsList.Add(line);
+                                    this.factionsList.Add(line.Trim());
                                 }
                             }
                         }

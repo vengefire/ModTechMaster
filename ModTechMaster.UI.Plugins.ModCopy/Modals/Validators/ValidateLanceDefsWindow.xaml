@@ -1,0 +1,178 @@
+﻿<xctk:ChildWindow x:Class="ModTechMaster.UI.Plugins.ModCopy.Modals.Validators.ValidateLanceDefsWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:local="clr-namespace:ModTechMaster.UI.Plugins.ModCopy.Modals.Validators"
+                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                  xmlns:utils="clr-namespace:ModTechMaster.UI.Core.Utils;assembly=ModTechMaster.UI.Core"
+                  xmlns:controls="clr-namespace:ModTechMaster.UI.Core.Controls;assembly=ModTechMaster.UI.Core"
+                  xmlns:specialisedNodes="clr-namespace:ModTechMaster.UI.Plugins.ModCopy.Nodes.SpecialisedNodes"
+                  xmlns:valueConverters="clr-namespace:ModTechMaster.UI.Data.Enums.ValueConverters;assembly=ModTechMaster.UI.Data"
+                  xmlns:converters="clr-namespace:ModTechMaster.UI.Core.Converters;assembly=ModTechMaster.UI.Core"
+                  mc:Ignorable="d"
+                  Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                         AncestorType={x:Type xctk:WindowContainer}},
+                                                         Path=ActualHeight}"
+                  Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,
+                                                         AncestorType={x:Type xctk:WindowContainer}},
+                                                         Path=ActualWidth}"
+                  IsModal="False">
+    <xctk:ChildWindow.Resources>
+        <valueConverters:SelectionStatusToIconConverter x:Key="SelectionStatusToIconConverter" />
+        <valueConverters:ObjectStatusToIconConverter x:Key="ObjectStatusConverter" />
+        <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+    </xctk:ChildWindow.Resources>
+    <Grid>
+        <DataGrid AutoGenerateColumns="False" Margin="0,1,0,-1" ItemsSource="{Binding InvalidLanceDefs}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding LanceDefObjectDefinition.Id, Mode=OneWay}" />
+                <DataGridTextColumn Header="Name" Binding="{Binding LanceDefObjectDefinition.Name, Mode=OneWay}" />
+                <DataGridTextColumn Header="Difficulty"
+                                    Binding="{Binding LanceDefObjectDefinition.Difficulty, Mode=OneWay}" />
+                <DataGridTextColumn Header="Hosting Mod"
+                                    Binding="{Binding HostingModNode.Id, Mode=OneWay}" />
+            </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate DataType="{x:Type specialisedNodes:LanceDefNode}">
+                    <Grid utils:MarginSetter.Margin="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <utils:LayoutGroup>
+                            <Expander IsExpanded="True" Margin="0,2,0,0">
+                                <Expander.Header>
+                                    <Label Content="Lance Tags" />
+                                </Expander.Header>
+                                <ListView
+                                    ItemsSource="{Binding LanceDefObjectDefinition.LanceTags, Mode=OneWay}" />
+                            </Expander>
+                        </utils:LayoutGroup>
+
+                        <Label Grid.Row="1" Content="Lance Slots" Margin="0,5,0,0" />
+                        <Border Grid.Row="2" BorderBrush="LightGray"
+                                BorderThickness="1">
+                            <Grid utils:MarginSetter.Margin="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                              VerticalScrollBarVisibility="Visible"
+                                              CanContentScroll="True">
+                                    <ListView ItemsSource="{Binding InvalidLanceSlots}"
+                                              HorizontalContentAlignment="Stretch">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Expander Margin="0,2,0,2">
+                                                    <Expander.Header>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Separator
+                                                                    Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                <controls:LabelledTextBox
+                                                                    IsReadOnly="True"
+                                                                    Label="Lance Slot - "
+                                                                    Text="{Binding LanceSlotDefinition.LanceSlotNumber, Mode=OneWay}" />
+                                                                <Separator
+                                                                    Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                <controls:LabelledTextBox
+                                                                    IsReadOnly="True"
+                                                                    Label="Slot Type - "
+                                                                    Text="{Binding LanceSlotDefinition.LanceSlotObjectType, Mode=OneWay}" />
+                                                                <Separator
+                                                                    Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                <controls:LabelledTextBox
+                                                                    IsReadOnly="True"
+                                                                    Label="Ineligible Factions - "
+                                                                    Text="{Binding IneligibleFactions.Count, Mode=OneWay}" />
+                                                                <Separator
+                                                                    Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                                <Image
+                                                                    Source="{Binding ObjectStatus, Converter={StaticResource ObjectStatusConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                                                    Width="15" IsEnabled="False" />
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </Expander.Header>
+                                                    <StackPanel HorizontalAlignment="Stretch"
+                                                                utils:MarginSetter.Margin="2">
+                                                        <GroupBox Header="Units">
+                                                            <utils:LayoutGroup
+                                                                HorizontalAlignment="Stretch"
+                                                                utils:MarginSetter.Margin="1">
+                                                                <controls:LabelledTextBox
+                                                                    IsReadOnly="True"
+                                                                    Label="Unit Id:"
+                                                                    Text="{Binding LanceSlotDefinition.UnitId}" />
+                                                                <Label Content="Unit Tags:" />
+                                                                <ListView
+                                                                    ItemsSource="{Binding LanceSlotDefinition.UnitTags}" />
+                                                                <Label
+                                                                    Content="Excluded Unit Tags:" />
+                                                                <ListView
+                                                                    ItemsSource="{Binding LanceSlotDefinition.ExcludedUnitTags}" />
+                                                                <controls:LabelledTextBox
+                                                                    Label="Eligible Units:"
+                                                                    Text="{Binding EligibleUnits.Count, Mode=OneWay}" />
+                                                                <controls:LabelledTextBox
+                                                                    Label="Selected Eligible Units"
+                                                                    Text="{Binding SelectedEligibleUnits.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                                <Expander IsExpanded="False">
+                                                                    <Expander.Header>
+                                                                        <controls:LabelledTextBox
+                                                                            Label="Ineligible Factions : "
+                                                                            Text="{Binding IneligibleFactions.Count, Mode=OneWay}"
+                                                                            IsReadOnly="True" />
+                                                                    </Expander.Header>
+                                                                    <ListView
+                                                                        ItemsSource="{Binding IneligibleFactions}" />
+                                                                </Expander>
+                                                            </utils:LayoutGroup>
+                                                        </GroupBox>
+                                                        <GroupBox Header="Pilots">
+                                                            <utils:LayoutGroup
+                                                                HorizontalAlignment="Stretch"
+                                                                utils:MarginSetter.Margin="1">
+                                                                <controls:LabelledTextBox
+                                                                    IsReadOnly="True"
+                                                                    Label="Pilot Id:"
+                                                                    Text="{Binding LanceSlotDefinition.PilotId}" />
+                                                                <Label Content="Pilot Tags:" />
+                                                                <ListView
+                                                                    ItemsSource="{Binding LanceSlotDefinition.PilotTags}" />
+                                                                <Label
+                                                                    Content="Excluded Pilot Tags:" />
+                                                                <ListView
+                                                                    ItemsSource="{Binding LanceSlotDefinition.ExcludedPilotTags}" />
+                                                                <controls:LabelledTextBox
+                                                                    Label="Eligible Pilots:"
+                                                                    Text="{Binding EligiblePilots.Count, Mode=OneWay}" />
+                                                                <controls:LabelledTextBox
+                                                                    Label="Selected Eligible Pilots"
+                                                                    Text="{Binding SelectedEligiblePilots.Count, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                            </utils:LayoutGroup>
+                                                        </GroupBox>
+                                                    </StackPanel>
+                                                </Expander>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
+        </DataGrid>
+    </Grid>
+</xctk:ChildWindow>
