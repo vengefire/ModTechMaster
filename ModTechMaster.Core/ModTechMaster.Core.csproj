@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\Models\ISourcedFromFile.cs" />
     <Compile Include="Interfaces\Models\IReferenceableObject.cs" />
     <Compile Include="Interfaces\Processors\IManifestEntryProcessor.cs" />
+    <Compile Include="Interfaces\Services\IFactionService.cs" />
     <Compile Include="Interfaces\Services\IMessageService.cs" />
     <Compile Include="Interfaces\Services\IModService.cs" />
     <Compile Include="Interfaces\Processors\IObjectDefinitionProcessor.cs" />

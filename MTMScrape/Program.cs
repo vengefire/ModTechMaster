@@ -27,7 +27,7 @@
 
             void RecurseDirectories(DirectoryInfo di, int maxDepth, int depth = 0)
             {
-                di.GetFiles("*.json").ToList().ForEach(
+                di.GetFiles("*.json").AsParallel().ForAll(
                                                        info =>
                                                        {
                                                            try

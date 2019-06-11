@@ -22,6 +22,8 @@
             this.LanceSlotNumber = lanceSlotNumber;
         }
 
+        public bool RestrictByFaction { get; set; } = false;
+
         public List<string> ExcludedPilotTags { get; } = new List<string>();
 
         public List<string> ExcludedUnitTags { get; } = new List<string>();
@@ -91,6 +93,7 @@
                     var tag = tagItem.ToString();
                     if (tag.Contains("{CUR_TEAM"))
                     {
+                        this.RestrictByFaction = true;
                         continue;
                     }
                     this.UnitTags.Add(tag);

@@ -145,6 +145,7 @@
     <Content Include="Resources\BattleMech_Unit_Listing - test.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Resources\factions.csv" />
     <None Include="Resources\masterunitlist_vees.csv" />
   </ItemGroup>
   <ItemGroup>

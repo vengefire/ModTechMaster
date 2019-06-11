@@ -181,8 +181,6 @@
                                                     {
                                                         model.OnPropertyChanged(nameof(this.SelectedEligibleUnits));
                                                         model.OnPropertyChanged(nameof(this.ObjectStatus));
-
-                                                        // model.CheckObjectStatusChanged();
                                                     });
                                         }
 
@@ -195,14 +193,10 @@
                                                     {
                                                         model.OnPropertyChanged(nameof(this.SelectedEligiblePilots));
                                                         model.OnPropertyChanged(nameof(this.ObjectStatus));
-
-                                                        // model.CheckObjectStatusChanged();
                                                     });
                                         }
 
                                         this.OnPropertyChanged(nameof(this.ObjectStatus));
-
-                                        // this.CheckObjectStatusChanged();
                                     });
                         }
                         finally
