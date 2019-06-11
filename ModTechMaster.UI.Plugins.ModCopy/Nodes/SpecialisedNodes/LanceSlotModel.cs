@@ -77,7 +77,7 @@
 
         public List<string> IneligibleFactions =>
             this.LanceSlotDefinition.RestrictByFaction
-                ? this.factionUnitDictionary.Where(pair => pair.Value > 0).Select(pair => pair.Key).ToList()
+                ? this.factionUnitDictionary.Where(pair => pair.Value <= 0).Select(pair => pair.Key).ToList()
                 : new List<string>();
 
         public LanceSlotDefinition LanceSlotDefinition { get; }
@@ -179,7 +179,8 @@
 
             if (this.LanceSlotDefinition.RestrictByFaction)
             {
-                filteredEligibleUnits.AsParallel().ForAll(
+                //filteredEligibleUnits.AsParallel().ForAll(
+                filteredEligibleUnits.ToList().ForEach(
                     unit =>
                         {
                             var unitTags = unit.ObjectDefinition.Tags[Keywords.MyTags];

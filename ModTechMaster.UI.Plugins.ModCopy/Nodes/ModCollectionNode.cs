@@ -50,8 +50,8 @@
             var targetObjects = this.AllChildren.Where(item => item is LanceDefNode obj).Cast<LanceDefNode>()
                 .SelectMany(node => node.LanceSlots);
 
-            targetObjects.AsParallel().ForAll(
-            //targetObjects.ToList().ForEach(
+            //targetObjects.AsParallel().ForAll(
+            targetObjects.ToList().ForEach(
                 target =>
                     {
                         target.LoadEligibleUnitsAndPilots();
