@@ -36,6 +36,16 @@
 
         private ICommand selectEligibleUnitsCommand;
 
+        public List<string> LanceSlotUnitTags
+        {
+            get
+            {
+                var list = this.LanceSlotDefinition.UnitTags;
+                list.Remove("{CUR_TEAM.faction}");
+                return list;
+            }
+        }
+
         public LanceSlotModel(
             LanceSlotDefinition lanceSlotDefinition,
             LanceDefNode lanceNode,
@@ -160,7 +170,9 @@
                 .Cast<ObjectDefinitionNode>();
 
             var eligibleUnits = candidates.Where(
-                o => !this.LanceSlotDefinition.UnitTags.Except(o.ObjectDefinition.Tags[Keywords.MyTags]).Any());
+                o => !this.LanceSlotDefinition.UnitTags.Except(new[] { "{CUR_TEAM.faction}" })
+                         .Except(o.ObjectDefinition.Tags[Keywords.MyTags]).Any());
+
             var filteredEligibleUnits = eligibleUnits.Where(
                 o => !o.ObjectDefinition.Tags[Keywords.MyTags]
                          .Any(s => this.LanceSlotDefinition.ExcludedUnitTags.Contains(s))).ToList();

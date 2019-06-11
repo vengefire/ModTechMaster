@@ -94,7 +94,6 @@
                     if (tag.Contains("{CUR_TEAM"))
                     {
                         this.RestrictByFaction = true;
-                        continue;
                     }
                     this.UnitTags.Add(tag);
                 }
