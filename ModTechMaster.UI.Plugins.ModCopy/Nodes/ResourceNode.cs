@@ -3,11 +3,12 @@
     using System.IO;
 
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
 
     public class ResourceNode : MtmTreeViewItem
     {
-        public ResourceNode(IMtmTreeViewItem parent, IResourceDefinition resourceDefinition)
-            : base(parent, resourceDefinition)
+        public ResourceNode(IMtmTreeViewItem parent, IResourceDefinition resourceDefinition, IReferenceFinderService referenceFinderService)
+            : base(parent, resourceDefinition, referenceFinderService)
         {
         }
 

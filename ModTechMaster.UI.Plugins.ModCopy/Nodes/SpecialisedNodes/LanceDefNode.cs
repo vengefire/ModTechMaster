@@ -14,8 +14,8 @@
     {
         private static IFactionService factionService = new FactionService();
 
-        public LanceDefNode(IMtmTreeViewItem parent, LanceDefObjectDefinition objectDefinition)
-            : base(parent, objectDefinition)
+        public LanceDefNode(IMtmTreeViewItem parent, LanceDefObjectDefinition objectDefinition, IReferenceFinderService referenceFinderService)
+            : base(parent, objectDefinition, referenceFinderService)
         {
             objectDefinition.LanceSlots.ForEach(
                 definition =>

@@ -7,6 +7,7 @@
 
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.UI.Plugins.ModCopy.Nodes.SpecialisedNodes;
 
     public class ModCollectionNode : MtmTreeViewItem
@@ -14,14 +15,15 @@
         public ModCollectionNode(
             IModCollection modCollection,
             MtmTreeViewItem parent,
+            IReferenceFinderService referenceFinderService,
             bool preProcessRelationships = false)
-            : base(parent, modCollection)
+            : base(parent, modCollection, referenceFinderService)
         {
             this.ModCollection = modCollection;
             this.ModCollection.Mods.OrderBy(mod => mod.Name).ToList().ForEach(
                 mod =>
                     {
-                        var modNode = new ModNode(mod, this);
+                        var modNode = new ModNode(mod, this, referenceFinderService);
                         this.Children.Add(modNode);
                         modNode.PropertyChanged += (sender, args) =>
                             {

@@ -14,7 +14,7 @@
     using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
-    using ModTechMaster.Logic.Processors;
+    using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.UI.Data.Enums;
 
     public abstract class MtmTreeViewItem : IMtmTreeViewItem
@@ -34,10 +34,11 @@
 
         private Visibility visibility = Visibility.Visible;
 
-        public MtmTreeViewItem(IMtmTreeViewItem parent, object o)
+        public MtmTreeViewItem(IMtmTreeViewItem parent, object o, IReferenceFinderService referenceFinderService)
         {
             this.Parent = parent;
             this.Object = o;
+            this.ReferenceFinderService = referenceFinderService;
             if (this.Object is IReferenceableObject referenceableObject)
             {
                 DictRefsToTreeViewItems.Add(referenceableObject, this);
@@ -86,6 +87,25 @@
                 .ToList();
 
         public bool HasCheck => false;
+
+        public IMtmTreeViewItem HostingModNode
+        {
+            get
+            {
+                var curNode = this as IMtmTreeViewItem;
+                while (curNode.Parent != null)
+                {
+                    if (curNode.Parent is ModNode)
+                    {
+                        return curNode.Parent;
+                    }
+
+                    curNode = curNode.Parent;
+                }
+
+                return this is ModNode ? this : null;
+            }
+        }
 
         public abstract string HumanReadableContent { get; }
 
@@ -188,10 +208,8 @@
             {
                 if (this.objectReferences == null)
                 {
-                    this.objectReferences = CommonReferenceProcessor.FindReferences<IReferenceableObject>(
-                        this.TopNode.ReferenceableObjectProvider,
-                        this.Object as IReferenceableObject,
-                        new List<ObjectType> { ObjectType.MechDef, ObjectType.Mod }); // TBD
+                    this.objectReferences =
+                        this.ReferenceFinderService.GetObjectReferences(this.Object as IReferenceableObject);
                     this.objectReferences.Sort(
                         (reference, objectReference) => string.CompareOrdinal(
                             reference.ReferenceObject.ObjectType.ToString(),
@@ -214,12 +232,19 @@
         }
 
         public virtual ObjectStatus ObjectStatus =>
-            this.Children.Any() ? this.Children.Where(item => item.IsChecked != false).All(item => item.ObjectStatus == ObjectStatus.Nominal) ? ObjectStatus.Nominal : ObjectStatus.Error :
-            this.Object is IObjectDefinition obj ? obj.ObjectStatus : ObjectStatus.Nominal;
+            this.Children.Any()
+                ?
+                this.Children.Where(item => item.IsChecked != false)
+                    .All(item => item.ObjectStatus == ObjectStatus.Nominal) ? ObjectStatus.Nominal : ObjectStatus.Error
+                : this.Object is IObjectDefinition obj
+                    ? obj.ObjectStatus
+                    : ObjectStatus.Nominal;
 
         public IMtmTreeViewItem Parent { get; }
 
         public virtual IReferenceableObjectProvider ReferenceableObjectProvider => throw new NotImplementedException();
+
+        public IReferenceFinderService ReferenceFinderService { get; }
 
         public ObservableCollection<IMtmTreeViewItem> SelectedObjects
         {
@@ -241,25 +266,6 @@
         public SelectionStatus SelectionStatus =>
             this.IsChecked == null ? SelectionStatus.PartiallySelected :
             this.IsChecked.Value ? SelectionStatus.Selected : SelectionStatus.Unselected;
-
-        public IMtmTreeViewItem HostingModNode
-        {
-            get
-            {
-                var curNode = this as IMtmTreeViewItem;
-                while (curNode.Parent != null)
-                {
-                    if (curNode.Parent is ModNode)
-                    {
-                        return curNode.Parent;
-                    }
-
-                    curNode = curNode.Parent;
-                }
-
-                return this is ModNode ? this : null;
-            }
-        }
 
         public IMtmTreeViewItem TopNode
         {

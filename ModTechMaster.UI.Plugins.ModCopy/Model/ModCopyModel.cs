@@ -58,6 +58,8 @@
 
         private readonly ILogger logger;
 
+        public IReferenceFinderService ReferenceFinderService { get; private set; }
+
         private readonly IModService modService;
 
         private IMtmTreeViewItem currentSelectedItem;
@@ -68,10 +70,11 @@
 
         private ModCopySettings settings;
 
-        public ModCopyModel(IModService modService, ILogger logger, IMtmMainModel mainModel)
+        public ModCopyModel(IModService modService, ILogger logger, IMtmMainModel mainModel, IReferenceFinderService referenceFinderService)
         {
             this.modService = modService;
             this.logger = logger;
+            this.ReferenceFinderService = referenceFinderService;
             this.MainModel = mainModel;
             this.modService.PropertyChanged += this.ModServiceOnPropertyChanged;
             ResetSelectionsCommand = new ResetSelectionsCommand(this);
@@ -469,7 +472,9 @@
         {
             if (e.PropertyName == "ModCollection")
             {
-                this.ModCollectionNode = new ModCollectionNode(this.modService.ModCollection, null);
+                this.ReferenceFinderService.ReferenceableObjectProvider = this.modService.ModCollection;
+                var elapsedTime = this.ReferenceFinderService.ProcessAllReferences();
+                this.ModCollectionNode = new ModCollectionNode(this.modService.ModCollection, null, this.ReferenceFinderService);
                 this.modCollectionData = new ObservableCollection<MtmTreeViewItem> { this.ModCollectionNode };
                 this.OnPropertyChanged("ModCollectionNode");
             }

@@ -72,7 +72,8 @@
                                                     (TType)candidate,
                                                     ObjectReferenceType.Dependent,
                                                     relationship,
-                                                    false));
+                                                    false,
+                                                    true));
                                         }
                                     }
                                 });
@@ -116,7 +117,8 @@
                                                     (TType)candidate,
                                                     ObjectReferenceType.Dependency,
                                                     relationship,
-                                                    false));
+                                                    false,
+                                                    true));
                                         }
                                     }
                                 });

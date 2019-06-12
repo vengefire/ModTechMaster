@@ -7,6 +7,7 @@
     using Castle.Core.Logging;
 
     using ModTechMaster.Core.Interfaces.Services;
+    using ModTechMaster.Logic.Services;
 
     using MTM.Init;
 
@@ -45,7 +46,10 @@
                                 logger.Info($"{stopwatch.ElapsedMilliseconds} ms");
                                 stopwatch.Reset();
                             });*/
-            var refService = container.GetInstance<IReferenceFinderService>();
+            //var refService = container.GetInstance<IReferenceFinderService>();
+
+            var refService = new ReferenceFinderService();
+            refService.ReferenceableObjectProvider = modCollection;
             logger.Info("Processing Mod Collection object relationships...");
             elapsedTime = refService.ProcessModCollectionReferences(modCollection);
             logger.Info($"Object relationships processed in [{elapsedTime}] ms.");

@@ -10,12 +10,14 @@
             TType referenceObject,
             ObjectReferenceType objectReferenceType,
             IRelationship relationship,
-            bool isActive)
+            bool isActive,
+            bool isValid)
         {
             this.ReferenceObject = referenceObject;
             this.ObjectReferenceType = objectReferenceType;
             this.Relationship = relationship;
             this.IsActive = isActive;
+            this.IsValid = isValid;
         }
 
         public bool IsActive { get; set; }

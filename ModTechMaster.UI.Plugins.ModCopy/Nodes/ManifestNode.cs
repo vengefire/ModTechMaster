@@ -4,13 +4,14 @@
     using System.Linq;
 
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
 
     public sealed class ManifestNode : MtmTreeViewItem
     {
         private readonly List<IMtmTreeViewItem> children = new List<IMtmTreeViewItem>();
 
-        public ManifestNode(IManifest modManifest, MtmTreeViewItem parent)
-            : base(parent, modManifest)
+        public ManifestNode(IManifest modManifest, MtmTreeViewItem parent, IReferenceFinderService referenceFinderService)
+            : base(parent, modManifest, referenceFinderService)
         {
             this.Manifest = modManifest;
             var groupedManifestEntries =
@@ -18,7 +19,7 @@
 
             foreach (var groupedManifestEntry in groupedManifestEntries)
             {
-                this.Children.Add(new ManifestEntryNode(this, groupedManifestEntry.Select(entry => entry).ToList(), groupedManifestEntry.Key));
+                this.Children.Add(new ManifestEntryNode(this, groupedManifestEntry.Select(entry => entry).ToList(), groupedManifestEntry.Key, referenceFinderService));
             }
         }
 

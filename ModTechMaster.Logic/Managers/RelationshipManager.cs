@@ -474,7 +474,6 @@
                         ObjectType.ItemCollectionDef,
                         new List<IObjectRelationship>
                             {
-                                /*
                                 new ObjectRelationship(
                                     ObjectType.ItemCollectionDef,
                                     ObjectType.MechDef,
@@ -486,14 +485,14 @@
                                     ObjectType.UpgradeDef,
                                     Keywords.UpgradeDefId,
                                     Keywords.Id,
-                                    true),*/
+                                    true),
                                 new ObjectRelationship(
                                     ObjectType.ItemCollectionDef,
                                     ObjectType.ItemCollectionDef,
                                     Keywords.ItemCollectionId,
                                     Keywords.Id,
                                     true),
-                                /*new ObjectRelationship(
+                                new ObjectRelationship(
                                     ObjectType.ItemCollectionDef,
                                     ObjectType.WeaponDef,
                                     Keywords.WeaponDefId,
@@ -516,7 +515,7 @@
                                     ObjectType.JumpJetDef,
                                     Keywords.JumpJetDefId,
                                     Keywords.Id,
-                                    true)*/
+                                    true)
                             }
                     },
                     {

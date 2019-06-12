@@ -10,6 +10,7 @@
     using Castle.Core.Logging;
 
     using ModTechMaster.Core.Interfaces.Services;
+    using ModTechMaster.Logic.Services;
     using ModTechMaster.UI.Plugins.Core.Interfaces;
     using ModTechMaster.UI.Plugins.ModCopy.Model;
     using ModTechMaster.UI.Plugins.ModCopy.Nodes;
@@ -22,7 +23,7 @@
         public ModCopyPage(IModService modService, ILogger logger, IMtmMainModel mainModel)
         {
             Self = this;
-            this.ModCopyModel = new ModCopyModel(modService, logger, mainModel);
+            this.ModCopyModel = new ModCopyModel(modService, logger, mainModel, new ReferenceFinderService());
             this.InitializeComponent();
             this.ModCopyModel.PropertyChanged += (sender, args) =>
                 {
