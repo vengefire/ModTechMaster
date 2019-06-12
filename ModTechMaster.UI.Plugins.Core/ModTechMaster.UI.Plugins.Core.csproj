@@ -57,6 +57,10 @@
       <Project>{10BE1F82-995B-4A1B-AE48-AFF3B784F24B}</Project>
       <Name>Framework.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.Core\ModTechMaster.Core.csproj">
+      <Project>{F1C5C7C8-C8F3-46FC-9339-746DC0A2A185}</Project>
+      <Name>ModTechMaster.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

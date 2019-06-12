@@ -20,10 +20,24 @@
     /// </summary>
     public partial class ModCopyPage : UserControl, IPluginControl
     {
-        public ModCopyPage(IModService modService, ILogger logger, IMtmMainModel mainModel)
+        public IMessageService MessageService { get; }
+
+        public ModCopyPage(
+            IModService modService,
+            ILogger logger,
+            IMtmMainModel mainModel,
+            IMessageService messageService)
         {
+            this.MessageService = messageService;
             Self = this;
-            this.ModCopyModel = new ModCopyModel(modService, logger, mainModel, new ReferenceFinderService());
+
+            this.ModCopyModel = new ModCopyModel(
+                modService,
+                logger,
+                mainModel,
+                new ReferenceFinderService(),
+                messageService);
+
             this.InitializeComponent();
             this.ModCopyModel.PropertyChanged += (sender, args) =>
                 {
@@ -34,7 +48,13 @@
                     }
                 };
             this.tvModControl.SelectedItemChanged += this.ModCopyModel.OnSelectedItemChanged;
-            this.PluginCommands = new List<IPluginCommand> { ModCopyModel.ResetSelectionsCommand, ModCopyModel.SelectMechsFromDataFileCommand, ModCopyModel.BuildCustomCollectionCommand, ModCopyModel.ValidateLanceDefinitionsCommand };
+            this.PluginCommands = new List<IPluginCommand>
+                                      {
+                                          ModCopyModel.ResetSelectionsCommand,
+                                          ModCopyModel.SelectMechsFromDataFileCommand,
+                                          ModCopyModel.BuildCustomCollectionCommand,
+                                          ModCopyModel.ValidateLanceDefinitionsCommand
+                                      };
             this.DataContext = this;
         }
 

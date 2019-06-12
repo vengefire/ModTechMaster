@@ -18,10 +18,13 @@
     /// </summary>
     public partial class ModTechMasterHome : UserControl, IPluginControl
     {
-        public ModTechMasterHome(IModService modService, IMtmMainModel mainModel)
+        public IMessageService MessageService { get; }
+
+        public ModTechMasterHome(IModService modService, IMtmMainModel mainModel, IMessageService messageService)
         {
+            this.MessageService = messageService;
             this.InitializeComponent();
-            this.Model = new HomeModel(modService, mainModel);
+            this.Model = new HomeModel(modService, mainModel, MessageService);
             this.PluginCommands = new List<IPluginCommand> { new LoadModsCommand(this.Model) };
             this.DataContext = this.Model;
         }

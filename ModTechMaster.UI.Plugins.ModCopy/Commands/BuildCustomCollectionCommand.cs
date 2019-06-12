@@ -25,7 +25,7 @@
 
         private static bool CanExecute(ModCopyModel model)
         {
-            return model?.ModCollectionNode.SelectedModObjectCount > 0;
+            return model?.ModCollectionNode?.SelectedModObjectCount > 0;
         }
 
         private static async Task Execute(ModCopyModel model)

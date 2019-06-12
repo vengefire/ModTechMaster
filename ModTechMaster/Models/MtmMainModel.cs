@@ -4,6 +4,7 @@
     using System.Runtime.CompilerServices;
 
     using ModTechMaster.Annotations;
+    using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.UI.Plugins.Core.Interfaces;
 
     using IContainer = Framework.Interfaces.Injection.IContainer;
@@ -14,14 +15,17 @@
 
         private bool isBusy;
 
-        public MtmMainModel(IContainer container)
+        public MtmMainModel(IContainer container, IMessageService messageService)
         {
             this.Container = container;
+            this.MessageService = messageService;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public IContainer Container { get; }
+
+        public IMessageService MessageService { get; }
 
         public IPluginControl CurrentPluginControl
         {

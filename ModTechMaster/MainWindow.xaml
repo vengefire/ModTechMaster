@@ -23,34 +23,52 @@
             <MenuItem Header="_Plugins" />
             <MenuItem Header="_About" />
         </Menu>
-        <StatusBar DockPanel.Dock="Bottom">
-            <StatusBar.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ItemsPanelTemplate>
-            </StatusBar.ItemsPanel>
-            <StatusBarItem>
-                <TextBlock Name="lblStatus">
-                    Ready
-                </TextBlock>
-            </StatusBarItem>
-            <Separator Grid.Column="1" />
-            <StatusBarItem Grid.Column="2">
-                <TextBlock Text="c:\path\of\current\file.txt" />
-            </StatusBarItem>
-            <Separator Grid.Column="3" />
-            <StatusBarItem Grid.Column="4">
-                <ProgressBar Value="50" Width="90" Height="16" />
-            </StatusBarItem>
-        </StatusBar>
+        <Grid DockPanel.Dock="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Expander Grid.Row="0" ExpandDirection="Up">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Messages"></Label>
+                        <Button Content="Clear List" Margin="5,2,0,2" Click="ClearMessages_OnClick"></Button>
+                    </StackPanel>
+                </Expander.Header>
+                <ListView ItemsSource="{Binding MessageService.Messages, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></ListView>
+            </Expander>
+            <StatusBar Grid.Row="1">
+                <StatusBar.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                    </ItemsPanelTemplate>
+                </StatusBar.ItemsPanel>
+                <StatusBarItem>
+                    <TextBlock Name="lblStatus">
+                        Ready
+                    </TextBlock>
+                </StatusBarItem>
+                <Separator Grid.Column="1" />
+                <StatusBarItem Grid.Column="2">
+                    <TextBlock Text="c:\path\of\current\file.txt" />
+                </StatusBarItem>
+                <Separator Grid.Column="3" />
+                <StatusBarItem Grid.Column="4">
+                    <ProgressBar Value="50" Width="90" Height="16" />
+                </StatusBarItem>
+            </StatusBar>
+        </Grid>
         <xctk:BusyIndicator Name="busyIndicator" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
             <xctk:BusyIndicator.Content>
                 <DockPanel>

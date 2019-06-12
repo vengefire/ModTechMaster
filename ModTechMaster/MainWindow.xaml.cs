@@ -30,6 +30,11 @@
             this.DataContext = mainModel;
         }
 
+        private void ClearMessages_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.mainModel.MessageService.ClearMessages();
+        }
+
         private void InitializePlugins()
         {
             this.pluginService = new PluginService();

@@ -17,6 +17,7 @@
 
     using Framework.Utils.Directory;
 
+    using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Services;
@@ -58,8 +59,6 @@
 
         private readonly ILogger logger;
 
-        public IReferenceFinderService ReferenceFinderService { get; private set; }
-
         private readonly IModService modService;
 
         private IMtmTreeViewItem currentSelectedItem;
@@ -70,11 +69,17 @@
 
         private ModCopySettings settings;
 
-        public ModCopyModel(IModService modService, ILogger logger, IMtmMainModel mainModel, IReferenceFinderService referenceFinderService)
+        public ModCopyModel(
+            IModService modService,
+            ILogger logger,
+            IMtmMainModel mainModel,
+            IReferenceFinderService referenceFinderService,
+            IMessageService messageService)
         {
             this.modService = modService;
             this.logger = logger;
             this.ReferenceFinderService = referenceFinderService;
+            this.MessageService = messageService;
             this.MainModel = mainModel;
             this.modService.PropertyChanged += this.ModServiceOnPropertyChanged;
             ResetSelectionsCommand = new ResetSelectionsCommand(this);
@@ -125,6 +130,8 @@
 
         public IMtmMainModel MainModel { get; }
 
+        public IMessageService MessageService { get; }
+
         public ObservableCollection<MtmTreeViewItem> ModCollectionData
         {
             get => this.modCollectionData;
@@ -141,6 +148,8 @@
         }
 
         public ModCollectionNode ModCollectionNode { get; private set; }
+
+        public IReferenceFinderService ReferenceFinderService { get; }
 
         public ModCopySettings Settings
         {
@@ -415,9 +424,20 @@
             await Task.Run(
                 () =>
                     {
-                        this.MainModel.IsBusy = true;
-                        this.ModCollectionNode.SelectMods(this.Settings.AlwaysIncludedMods);
-                        this.MainModel.IsBusy = false;
+                        try
+                        {
+                            this.MainModel.IsBusy = true;
+                            this.ModCollectionNode.SelectMods(this.Settings.AlwaysIncludedMods);
+                        }
+                        catch (Exception ex)
+                        {
+                            this.MessageService.PushMessage(ex.Message, MessageType.Error);
+                            this.MessageService.PushMessage(ex.StackTrace, MessageType.Error);
+                        }
+                        finally
+                        {
+                            this.MainModel.IsBusy = false;
+                        }
                     }).ConfigureAwait(false);
         }
 
@@ -472,9 +492,21 @@
         {
             if (e.PropertyName == "ModCollection")
             {
+                this.MessageService.PushMessage("Mod Collection updated. Processing References...", MessageType.Info);
                 this.ReferenceFinderService.ReferenceableObjectProvider = this.modService.ModCollection;
                 var elapsedTime = this.ReferenceFinderService.ProcessAllReferences();
-                this.ModCollectionNode = new ModCollectionNode(this.modService.ModCollection, null, this.ReferenceFinderService);
+                this.MessageService.PushMessage($"References processed in [{elapsedTime}]ms.", MessageType.Info);
+                this.MessageService.PushMessage("Building Mod Collection views...", MessageType.Info);
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
+                this.ModCollectionNode = new ModCollectionNode(
+                    this.modService.ModCollection,
+                    null,
+                    this.ReferenceFinderService);
+                stopwatch.Stop();
+                this.MessageService.PushMessage(
+                    $"Building Mod Collection complete. Process took {stopwatch.ElapsedMilliseconds}ms",
+                    MessageType.Info);
                 this.modCollectionData = new ObservableCollection<MtmTreeViewItem> { this.ModCollectionNode };
                 this.OnPropertyChanged("ModCollectionNode");
             }

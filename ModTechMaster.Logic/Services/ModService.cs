@@ -50,7 +50,7 @@
         {
             if (!DirectoryUtils.Exists(path))
             {
-                return null;
+                throw new Exception($@"The specified directory [{path}] does not exist.");
             }
 
             var di = new DirectoryInfo(path);
