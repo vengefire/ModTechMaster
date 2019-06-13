@@ -11,6 +11,7 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Data;
+    using System.Windows.Forms;
     using System.Windows.Input;
 
     using Castle.Core.Logging;
@@ -22,6 +23,7 @@
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
+    using ModTechMaster.UI.Core.WinForms.Extensions;
     using ModTechMaster.UI.Plugins.Core.Interfaces;
     using ModTechMaster.UI.Plugins.ModCopy.Annotations;
     using ModTechMaster.UI.Plugins.ModCopy.Commands;
@@ -86,6 +88,7 @@
             SelectMechsFromDataFileCommand = new SelectMechsFromDataFileCommand(this);
             BuildCustomCollectionCommand = new BuildCustomCollectionCommand(this);
             ValidateLanceDefinitionsCommand = new ValidateLanceDefinitionsCommand(this);
+            SelectVeesFromDataFileCommand = new SelectVeesFromDataFileCommand(this);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -97,6 +100,8 @@
         public static IPluginCommand SelectMechsFromDataFileCommand { get; private set; }
 
         public static IPluginCommand ValidateLanceDefinitionsCommand { get; private set; }
+
+        public static IPluginCommand SelectVeesFromDataFileCommand { get; private set; }
 
         public IMtmTreeViewItem CurrentSelectedItem
         {
@@ -177,6 +182,41 @@
             mechSelectorWindow.Closed += MechSelectorWindowOnClosed;
             ModCopyPage.Self.WindowContainer.Children.Add(mechSelectorWindow);
             mechSelectorWindow.Show();
+        }
+
+        public static void SelectVeesFromDataFile(ModCopyModel modCopyModel)
+        {
+            using (var fileDialog = new OpenFileDialog())
+            {
+                var result = fileDialog.ShowDialog(ModCopyPage.Self.GetIWin32Window());
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    var vehicleList = File.ReadAllLines(fileDialog.FileName).Select(s => s.Split(',')[0]).ToList();
+                    Task.Run(() => modCopyModel.SelectVehiclesBySourceFileName(vehicleList));
+                }
+            }
+        }
+
+        private void SelectVehiclesBySourceFileName(List<string> vehicleList)
+        {
+            try
+            {
+                this.MainModel.IsBusy = true;
+                this.ModCollectionNode.AllChildren
+                    .Where(
+                        item => item is ObjectDefinitionNode obj
+                                && obj.ObjectDefinition.ObjectType == ObjectType.VehicleDef
+                                && vehicleList.Contains(obj.ObjectDefinition.SourceFileName)).ToList()
+                    .ForEach(item => item.IsChecked = true);
+            }
+            catch (Exception ex)
+            {
+                this.MessageService.PushMessage(ex.Message, MessageType.Error);
+            }
+            finally
+            {
+                this.MainModel.IsBusy = false;
+            }
         }
 
         public void BuildCustomCollection()

@@ -39,10 +39,10 @@
                             };
                     });
 
-            if (preProcessRelationships)
+            /*if (preProcessRelationships)
             {
                 PreProcessRefs(this);
-            }
+            }*/
 
             // Hook up interdependent properties
             // When Pilots/Units are selected, notify lances

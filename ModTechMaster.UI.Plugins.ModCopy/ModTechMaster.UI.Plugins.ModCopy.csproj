@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Commands\BuildCustomCollectionCommand.cs" />
     <Compile Include="Commands\ResetSelectionsCommand.cs" />
+    <Compile Include="Commands\SelectVeesFromDataFileCommand.cs" />
     <Compile Include="Commands\SelectMechsFromDataFileCommand.cs" />
     <Compile Include="Commands\ValidateLanceDefinitionsCommand.cs" />
     <Compile Include="Commands\ValidateModsCommand.cs" />

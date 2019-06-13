@@ -147,6 +147,9 @@
     </Content>
     <EmbeddedResource Include="Resources\factions.csv" />
     <None Include="Resources\masterunitlist_vees.csv" />
+    <None Include="Resources\VehicleAppearanceDates_JK.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
