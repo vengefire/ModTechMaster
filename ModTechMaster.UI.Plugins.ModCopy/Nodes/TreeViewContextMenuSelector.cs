@@ -46,6 +46,17 @@
                         });
             }
 
+            if (type == typeof(ObjectDefinitionNode))
+            {
+                contextMenu.Items.Add(
+                    new MenuItem
+                        {
+                            Header = "Select sibling objects with same ManifestEntry",
+                            Command = ModCopyModel.AddObjectsFromHostManifestCommand,
+                            CommandParameter = new Tuple<ModCopyPage, ObjectDefinitionNode>(ModCopyPage.Self, value as ObjectDefinitionNode)
+                        });
+            }
+
             return contextMenu;
         }
     }

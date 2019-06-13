@@ -59,6 +59,19 @@
                         mod.IsChecked = false;
                     });
 
+        public static readonly ICommand AddObjectsFromHostManifestCommand =
+            new DelegateCommand<Tuple<ModCopyPage, ObjectDefinitionNode>>(
+                parameters =>
+                    {
+                        var model = parameters.Item1;
+                        var objectDefinitionNode = parameters.Item2;
+                        var groupedManifestEntryNode = objectDefinitionNode.Parent as ManifestEntryNode;
+                        var owningManifestNodeObjects = groupedManifestEntryNode.ManifestEntryLookupByObject
+                            .Where(pair => pair.Value == groupedManifestEntryNode.ManifestEntryLookupByObject[objectDefinitionNode])
+                            .Select(pair => pair.Key);
+                        owningManifestNodeObjects.ToList().ForEach(item => item.IsChecked = true);
+                    });
+
         private readonly ILogger logger;
 
         private readonly IModService modService;
