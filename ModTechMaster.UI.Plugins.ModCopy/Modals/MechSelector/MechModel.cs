@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq;
     using System.Runtime.CompilerServices;
 
     using ModTechMaster.Core.Interfaces.Models;
@@ -16,17 +15,6 @@
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string BaseModel { get; set; }
-
-        public string PrimitiveBaseModel
-        {
-            get
-            {
-                var iterativeIndex = this.BaseModel.IndexOf(" II", StringComparison.OrdinalIgnoreCase);
-                return iterativeIndex == -1 ? this.BaseModel : this.BaseModel.Substring(0, iterativeIndex);
-            }
-        }
-
-        public string PossibleClanName { get; set; } = string.Empty;
 
         public long BattleValue { get; set; }
 
@@ -45,6 +33,19 @@
         public string HeroName { get; set; } = string.Empty;
 
         public string Name { get; set; }
+
+        public List<IReferenceableObject> ObjectDefinitions { get; set; }
+
+        public string PossibleClanName { get; set; } = string.Empty;
+
+        public string PrimitiveBaseModel
+        {
+            get
+            {
+                var iterativeIndex = this.BaseModel.IndexOf(" II", StringComparison.OrdinalIgnoreCase);
+                return iterativeIndex == -1 ? this.BaseModel : this.BaseModel.Substring(0, iterativeIndex);
+            }
+        }
 
         public string Rating { get; set; }
 
@@ -75,14 +76,14 @@
 
         public long Year { get; set; }
 
-        public List<IReferenceableObject> ObjectDefinitions { get; set; }
-
         public static MechModel FromCsv(string csvData, char separator = ',')
         {
             var parts = csvData.Split(separator);
             if (parts.Length != 12)
             {
-                throw new ArgumentException(@"Insufficient columns in CSV data to construct new Mech.", nameof(csvData));
+                throw new ArgumentException(
+                    @"Insufficient columns in CSV data to construct new Mech.",
+                    nameof(csvData));
             }
 
             var mech = new MechModel
@@ -107,7 +108,6 @@
             var delim = ")";
 
             // var isClanName = heroIndex != -1 && name.Substring(0, heroIndex).Count(c => c == ' ') == 1; // Can't do this... Black Hawk has 2 spaces ffs
-
             if (heroIndex == -1)
             {
                 heroIndex = name.IndexOf("\"\"");

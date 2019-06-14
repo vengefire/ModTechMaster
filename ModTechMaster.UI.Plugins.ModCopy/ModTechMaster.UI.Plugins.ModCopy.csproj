@@ -79,7 +79,10 @@
     <Compile Include="Commands\SelectMechsFromDataFileCommand.cs" />
     <Compile Include="Commands\ValidateLanceDefinitionsCommand.cs" />
     <Compile Include="Commands\ValidateModsCommand.cs" />
-    <Compile Include="Modals\MechSelector\FilterOption.cs" />
+    <Compile Include="Floaters\ObjectSummaryViewModel.cs" />
+    <Compile Include="Floaters\ObjectSummaryWindow.xaml.cs">
+      <DependentUpon>ObjectSummaryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modals\MechSelector\MechModel.cs" />
     <Compile Include="Modals\MechSelector\MechSelectorCommands.cs" />
     <Compile Include="Modals\MechSelector\MechSelectorModel.cs" />
@@ -136,6 +139,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Floaters\ObjectSummaryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modals\MechSelector\MechSelectorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -45,13 +45,15 @@
     <Compile Include="Interfaces\IPluginCommand.cs" />
     <Compile Include="Interfaces\IPluginCommandCategory.cs" />
     <Compile Include="Interfaces\IPluginControl.cs" />
+    <Compile Include="Logic\DelegatePluginCommand.cs" />
+    <Compile Include="Logic\PluginCommand.cs" />
     <Compile Include="Logic\PluginControl.cs" />
+    <Compile Include="Models\FilterOption.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\PluginService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Framework\Framework.Interfaces\Framework.Interfaces.csproj">
       <Project>{10BE1F82-995B-4A1B-AE48-AFF3B784F24B}</Project>
@@ -60,6 +62,10 @@
     <ProjectReference Include="..\ModTechMaster.Core\ModTechMaster.Core.csproj">
       <Project>{F1C5C7C8-C8F3-46FC-9339-746DC0A2A185}</Project>
       <Name>ModTechMaster.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ModTechMaster.UI.Core\ModTechMaster.UI.Core.csproj">
+      <Project>{2517EF78-4C4F-4F3A-A245-31CCBC0E2003}</Project>
+      <Name>ModTechMaster.UI.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

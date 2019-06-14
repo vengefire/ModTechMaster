@@ -25,8 +25,10 @@
     using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
     using ModTechMaster.UI.Core.WinForms.Extensions;
     using ModTechMaster.UI.Plugins.Core.Interfaces;
+    using ModTechMaster.UI.Plugins.Core.Logic;
     using ModTechMaster.UI.Plugins.ModCopy.Annotations;
     using ModTechMaster.UI.Plugins.ModCopy.Commands;
+    using ModTechMaster.UI.Plugins.ModCopy.Floaters;
     using ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector;
     using ModTechMaster.UI.Plugins.ModCopy.Nodes;
 
@@ -47,6 +49,21 @@
                         mod.IsChecked = true;
                     });
 
+        public static readonly ICommand AddObjectsFromHostManifestCommand =
+            new DelegateCommand<Tuple<ModCopyPage, ObjectDefinitionNode>>(
+                parameters =>
+                    {
+                        var model = parameters.Item1;
+                        var objectDefinitionNode = parameters.Item2;
+                        var groupedManifestEntryNode = objectDefinitionNode.Parent as ManifestEntryNode;
+                        var owningManifestNodeObjects = groupedManifestEntryNode.ManifestEntryLookupByObject
+                            .Where(
+                                pair => pair.Value
+                                        == groupedManifestEntryNode.ManifestEntryLookupByObject[objectDefinitionNode])
+                            .Select(pair => pair.Key);
+                        owningManifestNodeObjects.ToList().ForEach(item => item.IsChecked = true);
+                    });
+
         public static readonly ICommand RemoveModFromImperativeListCommand =
             new DelegateCommand<Tuple<ModCopyPage, ModNode>>(
                 parameters =>
@@ -57,19 +74,6 @@
                         Debug.Assert(settings != null, nameof(settings) + " != null");
                         settings.RemoveImperativeMod(mod.Mod);
                         mod.IsChecked = false;
-                    });
-
-        public static readonly ICommand AddObjectsFromHostManifestCommand =
-            new DelegateCommand<Tuple<ModCopyPage, ObjectDefinitionNode>>(
-                parameters =>
-                    {
-                        var model = parameters.Item1;
-                        var objectDefinitionNode = parameters.Item2;
-                        var groupedManifestEntryNode = objectDefinitionNode.Parent as ManifestEntryNode;
-                        var owningManifestNodeObjects = groupedManifestEntryNode.ManifestEntryLookupByObject
-                            .Where(pair => pair.Value == groupedManifestEntryNode.ManifestEntryLookupByObject[objectDefinitionNode])
-                            .Select(pair => pair.Key);
-                        owningManifestNodeObjects.ToList().ForEach(item => item.IsChecked = true);
                     });
 
         private readonly ILogger logger;
@@ -102,19 +106,41 @@
             BuildCustomCollectionCommand = new BuildCustomCollectionCommand(this);
             ValidateLanceDefinitionsCommand = new ValidateLanceDefinitionsCommand(this);
             SelectVeesFromDataFileCommand = new SelectVeesFromDataFileCommand(this);
+            ViewObjectSummaryWindow = new DelegatePluginCommand(
+                () =>
+                    {
+                        if (ObjectSummaryWindow == null)
+                        {
+                            ObjectSummaryWindow = new ObjectSummaryWindow(this);
+                            ObjectSummaryWindow.Topmost = true;
+                            ObjectSummaryWindow.Show();
+                        }
+                        else
+                        {
+                            ObjectSummaryWindow.Activate();
+                        }
+                    },
+                () => true,
+                this,
+                @"Show Object Summary Window");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public static IPluginCommand BuildCustomCollectionCommand { get; private set; }
 
+        // ToDo: Make this a list of floaties...
+        public static ObjectSummaryWindow ObjectSummaryWindow { get; private set; }
+
         public static IPluginCommand ResetSelectionsCommand { get; private set; }
 
         public static IPluginCommand SelectMechsFromDataFileCommand { get; private set; }
 
+        public static IPluginCommand SelectVeesFromDataFileCommand { get; private set; }
+
         public static IPluginCommand ValidateLanceDefinitionsCommand { get; private set; }
 
-        public static IPluginCommand SelectVeesFromDataFileCommand { get; private set; }
+        public static IPluginCommand ViewObjectSummaryWindow { get; private set; }
 
         public IMtmTreeViewItem CurrentSelectedItem
         {
@@ -167,6 +193,8 @@
 
         public ModCollectionNode ModCollectionNode { get; private set; }
 
+        public bool ProcessRefsOnLoad { get; set; } = false;
+
         public IReferenceFinderService ReferenceFinderService { get; }
 
         public ModCopySettings Settings
@@ -202,33 +230,11 @@
             using (var fileDialog = new OpenFileDialog())
             {
                 var result = fileDialog.ShowDialog(ModCopyPage.Self.GetIWin32Window());
-                if (result == System.Windows.Forms.DialogResult.OK)
+                if (result == DialogResult.OK)
                 {
                     var vehicleList = File.ReadAllLines(fileDialog.FileName).Select(s => s.Split(',')[0]).ToList();
                     Task.Run(() => modCopyModel.SelectVehiclesBySourceFileName(vehicleList));
                 }
-            }
-        }
-
-        private void SelectVehiclesBySourceFileName(List<string> vehicleList)
-        {
-            try
-            {
-                this.MainModel.IsBusy = true;
-                this.ModCollectionNode.AllChildren
-                    .Where(
-                        item => item is ObjectDefinitionNode obj
-                                && obj.ObjectDefinition.ObjectType == ObjectType.VehicleDef
-                                && vehicleList.Contains(obj.ObjectDefinition.SourceFileName)).ToList()
-                    .ForEach(item => item.IsChecked = true);
-            }
-            catch (Exception ex)
-            {
-                this.MessageService.PushMessage(ex.Message, MessageType.Error);
-            }
-            finally
-            {
-                this.MainModel.IsBusy = false;
             }
         }
 
@@ -547,9 +553,17 @@
             {
                 this.MessageService.PushMessage("Mod Collection updated. Processing References...", MessageType.Info);
                 this.ReferenceFinderService.ReferenceableObjectProvider = this.modService.ModCollection;
-                var elapsedTime = this.ReferenceFinderService.ProcessAllReferences();
-                this.MessageService.PushMessage($"References processed in [{elapsedTime}]ms.", MessageType.Info);
-                this.MessageService.PushMessage("Building Mod Collection views...", MessageType.Info);
+                if (this.ProcessRefsOnLoad)
+                {
+                    var elapsedTime = this.ReferenceFinderService.ProcessAllReferences();
+                    this.MessageService.PushMessage($"References processed in [{elapsedTime}]ms.", MessageType.Info);
+                    this.MessageService.PushMessage("Building Mod Collection views...", MessageType.Info);
+                }
+                else
+                {
+                    this.MessageService.PushMessage("Skipping pre-processing of relationships...", MessageType.Info);
+                }
+
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
                 this.ModCollectionNode = new ModCollectionNode(
@@ -569,6 +583,28 @@
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void SelectVehiclesBySourceFileName(List<string> vehicleList)
+        {
+            try
+            {
+                this.MainModel.IsBusy = true;
+                this.ModCollectionNode.AllChildren
+                    .Where(
+                        item => item is ObjectDefinitionNode obj
+                                && obj.ObjectDefinition.ObjectType == ObjectType.VehicleDef
+                                && vehicleList.Contains(obj.ObjectDefinition.SourceFileName)).ToList()
+                    .ForEach(item => item.IsChecked = true);
+            }
+            catch (Exception ex)
+            {
+                this.MessageService.PushMessage(ex.Message, MessageType.Error);
+            }
+            finally
+            {
+                this.MainModel.IsBusy = false;
+            }
         }
     }
 }

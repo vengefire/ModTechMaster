@@ -13,6 +13,7 @@
 
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.UI.Plugins.Core.Models;
     using ModTechMaster.UI.Plugins.ModCopy.Annotations;
     using ModTechMaster.UI.Plugins.ModCopy.Model;
 
@@ -198,7 +199,7 @@
                                 collectionView.SortDescriptions.Add(
                                     new SortDescription(nameof(MechModel.Name), ListSortDirection.Ascending));
 
-                                this.OnPropertyChanged(nameof(this.UnfilteredMechs));
+                                this.OnPropertyChanged(nameof(this.FilteredMechs));
                                 this.OnPropertyChanged(nameof(this.MechModels));
                             });
                 }
@@ -267,7 +268,7 @@
             }
         }
 
-        public List<MechModel> UnfilteredMechs
+        public List<MechModel> FilteredMechs
         {
             get
             {
@@ -353,7 +354,7 @@
 
                     return true;
                 };
-            this.OnPropertyChanged(nameof(this.UnfilteredMechs));
+            this.OnPropertyChanged(nameof(this.FilteredMechs));
         }
 
         internal static bool CanProcessMechSelectionFile(MechSelectorModel mechSelectorModel)

@@ -1,9 +1,9 @@
-﻿namespace ModTechMaster.UI.Plugins.ModCopy.Modals.MechSelector
+﻿namespace ModTechMaster.UI.Plugins.Core.Models
 {
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
 
-    using ModTechMaster.UI.Plugins.ModCopy.Annotations;
+    using ModTechMaster.UI.Plugins.Core.Annotations;
 
     public class FilterOption : INotifyPropertyChanged
     {
@@ -11,10 +11,13 @@
 
         private bool selected;
 
-        public FilterOption(string name, bool selected)
+        private object value;
+
+        public FilterOption(string name, bool selected = false, object value = null)
         {
             this.name = name;
             this.selected = selected;
+            this.value = value;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -45,6 +48,21 @@
                 }
 
                 this.selected = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public object Value
+        {
+            get => this.value;
+            set
+            {
+                if (value == this.value)
+                {
+                    return;
+                }
+
+                this.value = value;
                 this.OnPropertyChanged();
             }
         }

@@ -27,7 +27,6 @@
 
             var modService = container.GetInstance<IModService>();
 
-            // IModCollection modCollection = new ModCollection("MTM Mod Collection", di.FullName);
             logger.Info($"Processing mods from [{di.FullName}]");
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -35,18 +34,6 @@
             stopwatch.Stop();
             var elapsedTime = stopwatch.ElapsedMilliseconds;
             logger.Info($"Mods processed in [{elapsedTime}] ms.");
-
-            /*di.GetDirectories().ToList().ForEach(
-                            sub =>
-                            {
-                                stopwatch.Start();
-                                logger.Info($"Processing [{sub.Name}]...");
-                                modCollection.AddModToCollection(modService.TryLoadFromPath(sub.FullName));
-                                stopwatch.Stop();
-                                logger.Info($"{stopwatch.ElapsedMilliseconds} ms");
-                                stopwatch.Reset();
-                            });*/
-            //var refService = container.GetInstance<IReferenceFinderService>();
 
             var refService = new ReferenceFinderService();
             refService.ReferenceableObjectProvider = modCollection;

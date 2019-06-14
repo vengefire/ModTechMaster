@@ -54,7 +54,8 @@
                                           ModCopyModel.SelectMechsFromDataFileCommand,
                                           ModCopyModel.BuildCustomCollectionCommand,
                                           ModCopyModel.ValidateLanceDefinitionsCommand,
-                                          ModCopyModel.SelectVeesFromDataFileCommand
+                                          ModCopyModel.SelectVeesFromDataFileCommand,
+                                          ModCopyModel.ViewObjectSummaryWindow
                                       };
             this.DataContext = this;
         }
