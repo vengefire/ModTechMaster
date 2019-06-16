@@ -181,7 +181,19 @@
                                     ObjectType.VehicleDef,
                                     ObjectType.VehicleChassisDef,
                                     Keywords.ChassisId,
-                                    Keywords.Id)
+                                    Keywords.Id),
+                                new ObjectRelationship(
+                                    ObjectType.VehicleDef,
+                                    ObjectType.UpgradeDef,
+                                    Keywords.UpgradeDefId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.VehicleDef,
+                                    ObjectType.HeatSinkDef,
+                                    Keywords.HeatSinkDefId,
+                                    Keywords.Id,
+                                    true),
                             }
                     },
                     {
@@ -230,7 +242,19 @@
                                     ObjectType.TurretDef,
                                     ObjectType.TurretChassisDef,
                                     Keywords.ChassisId,
-                                    Keywords.Id)
+                                    Keywords.Id),
+                                new ObjectRelationship(
+                                    ObjectType.TurretDef,
+                                    ObjectType.UpgradeDef,
+                                    Keywords.UpgradeDefId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.TurretDef,
+                                    ObjectType.HeatSinkDef,
+                                    Keywords.HeatSinkDefId,
+                                    Keywords.Id,
+                                    true),
                             }
                     },
                     {
