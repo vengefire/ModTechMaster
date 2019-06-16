@@ -23,8 +23,7 @@
 
         public ObservableCollection<IObjectDefinition> Objects { get; }
 
-        public ObservableCollection<IObjectDefinition> SelectedItems { get; set; } =
-            new ObservableCollection<IObjectDefinition>();
+        public ObservableCollection<IObjectDefinition> SelectedItems { get; set; } = new ObservableCollection<IObjectDefinition>();
 
         private void ButtonOkOnClick(object sender, RoutedEventArgs e)
         {

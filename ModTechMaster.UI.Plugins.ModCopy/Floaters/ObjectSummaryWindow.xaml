@@ -1,0 +1,65 @@
+﻿<Window x:Class="ModTechMaster.UI.Plugins.ModCopy.Floaters.ObjectSummaryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ModTechMaster.UI.Plugins.ModCopy.Floaters"
+        xmlns:controls="clr-namespace:ModTechMaster.UI.Core.Controls;assembly=ModTechMaster.UI.Core"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:nodes="clr-namespace:ModTechMaster.UI.Plugins.ModCopy.Nodes"
+        mc:Ignorable="d"
+        Title="Object Summary" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Object Type Filter:"></Label>
+            <xctk:CheckComboBox Grid.Row="0" Grid.Column="1"
+                                ItemsSource="{Binding FilterableObjectTypeOptions}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                DisplayMemberPath="Name"
+                                SelectedMemberPath="Selected"
+                                ValueMemberPath="Value"
+                                SelectedItemsOverride="{Binding SelectedObjectTypeFilters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                />
+            <Label Grid.Row="0" Grid.Column="3" Content="Selected Only"></Label>
+            <CheckBox Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding SelectedOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+        </Grid>
+        <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ObjectNodes, UpdateSourceTrigger=PropertyChanged}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="nodes:ObjectDefinitionNode">
+                                <CheckBox IsChecked="{Binding IsChecked, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"></CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="ObjectType" DisplayMemberBinding="{Binding ObjectDefinition.ObjectType, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></GridViewColumn>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding ObjectDefinition.ObjectType, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></GridViewColumn>
+                    <GridViewColumn Header="Hosting Mod" DisplayMemberBinding="{Binding HostingModNode.Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

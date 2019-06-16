@@ -39,11 +39,6 @@
                             };
                     });
 
-            /*if (preProcessRelationships)
-            {
-                PreProcessRefs(this);
-            }*/
-
             // Hook up interdependent properties
             // When Pilots/Units are selected, notify lances
             // TODO: Formalize this into a modeled relationship so we can refactor properly

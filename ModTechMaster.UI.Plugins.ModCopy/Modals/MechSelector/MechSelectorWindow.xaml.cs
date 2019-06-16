@@ -30,7 +30,7 @@
             this.SelectAllCommand = new AwaitableDelegateCommand<bool>(
                 b =>
                     {
-                        var unfilteredMechs = this.MechSelectorModel.UnfilteredMechs;
+                        var unfilteredMechs = this.MechSelectorModel.FilteredMechs;
                         return Task.Run(() => this.MechSelectorModel.SelectAllMechs(b, unfilteredMechs));
                     });
             this.DataContext = this;

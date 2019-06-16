@@ -146,6 +146,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\factions.csv" />
+    <None Include="Resources\Gear.xlsx" />
     <None Include="Resources\masterunitlist_vees.csv" />
     <None Include="Resources\VehicleAppearanceDates_JK.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
