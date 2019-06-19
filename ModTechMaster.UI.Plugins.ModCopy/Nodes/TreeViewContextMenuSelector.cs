@@ -37,11 +37,20 @@
                             Command = ModCopyModel.AddModToImperativeListCommand,
                             CommandParameter = new Tuple<ModCopyPage, ModNode>(ModCopyPage.Self, value as ModNode)
                         });
+
                 contextMenu.Items.Add(
                     new MenuItem
                         {
                             Header = "Remove from Imperative Mods List",
                             Command = ModCopyModel.RemoveModFromImperativeListCommand,
+                            CommandParameter = new Tuple<ModCopyPage, ModNode>(ModCopyPage.Self, value as ModNode)
+                        });
+
+                contextMenu.Items.Add(
+                    new MenuItem
+                        {
+                            Header = "Remove all mods from Imperative Mods List",
+                            Command = ModCopyModel.RemoveAllModsFromImperativeListCommand,
                             CommandParameter = new Tuple<ModCopyPage, ModNode>(ModCopyPage.Self, value as ModNode)
                         });
             }

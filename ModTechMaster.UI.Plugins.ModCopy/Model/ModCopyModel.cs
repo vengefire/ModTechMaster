@@ -23,6 +23,7 @@
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
+    using ModTechMaster.UI.Core.Async;
     using ModTechMaster.UI.Core.WinForms.Extensions;
     using ModTechMaster.UI.Plugins.Core.Interfaces;
     using ModTechMaster.UI.Plugins.Core.Logic;
@@ -37,6 +38,48 @@
 
     public sealed class ModCopyModel : INotifyPropertyChanged
     {
+    	public static readonly ICommand RemoveAllModsFromImperativeListCommand =
+            new DelegateCommand<Tuple<ModCopyPage, ModNode>>(
+                parameters =>
+                    {
+                        var model = parameters.Item1;
+                        var mods = model.ModCopyModel.ModCollectionNode.Children.Cast<ModNode>();
+                        var settings = model.Settings as ModCopySettings;
+                        Debug.Assert(settings != null, nameof(settings) + " != null");
+                        try
+                        {
+                            model.ModCopyModel.MainModel.IsBusy = true;
+                            Task.Run(
+                                () =>
+                                    {
+                                        foreach (var modNode in mods)
+                                        {
+                                            model.Dispatcher.Invoke(
+                                                () =>
+                                                    {
+                                                        settings.RemoveImperativeMod(modNode.Mod);
+                                                        modNode.IsChecked = false;
+                                                    });
+                                        }
+                                    });
+                        }
+                        finally
+                        {
+                            model.ModCopyModel.MainModel.IsBusy = false;
+                        }
+                    });
+
+        public ICommand 
+            InitModCopyCommand { get; }
+            = new AwaitableDelegateCommand<ModCopyModel>(
+            parm =>
+                {
+                    var model = parm;
+                    return Task.Run(parm.InitModCollectionNodes).ContinueWith(task => parm.SelectImperativeMods());
+                },
+            model => model?.ModService?.ModCollection?.Mods?.Count > 0);
+
+
         public static readonly ICommand AddModToImperativeListCommand =
             new DelegateCommand<Tuple<ModCopyPage, ModNode>>(
                 parameters =>
@@ -79,6 +122,8 @@
         private readonly ILogger logger;
 
         private readonly IModService modService;
+
+        public IModService ModService => this.modService;
 
         private IMtmTreeViewItem currentSelectedItem;
 
@@ -208,12 +253,15 @@
                 }
 
                 this.settings = value;
-                Task.Run(
-                    async () =>
-                        {
-                            await this.SelectImperativeMods().ConfigureAwait(false);
-                            this.OnPropertyChanged();
-                        });
+                if (this.ModCollectionNode != null)
+                {
+                    Task.Run(
+                        async () =>
+                            {
+                                await this.SelectImperativeMods().ConfigureAwait(false);
+                                this.OnPropertyChanged();
+                            });
+                }
             }
         }
 
@@ -551,6 +599,15 @@
         {
             if (e.PropertyName == "ModCollection")
             {
+                // ToDo: set some indicator of mod collection availability, and reset etc.
+            }
+        }
+
+        private void InitModCollectionNodes()
+        {
+            try
+            {
+                this.MainModel.IsBusy = true;
                 this.MessageService.PushMessage("Mod Collection updated. Processing References...", MessageType.Info);
                 this.ReferenceFinderService.ReferenceableObjectProvider = this.modService.ModCollection;
                 if (this.ProcessRefsOnLoad)
@@ -576,6 +633,10 @@
                     MessageType.Info);
                 this.modCollectionData = new ObservableCollection<MtmTreeViewItem> { this.ModCollectionNode };
                 this.OnPropertyChanged("ModCollectionNode");
+            }
+            finally
+            {
+                this.MainModel.IsBusy = false;
             }
         }
 

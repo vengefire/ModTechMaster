@@ -48,6 +48,7 @@
             }
         }
 
+        // TODO: this needs to go into a single activation spot
         private void TabPages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var tabControl = sender as TabControl;
@@ -84,7 +85,10 @@
 
             // Init settings and commands...
             this.mainModel.CurrentPluginControl = pluginModule;
-            CommonCommands.LoadCurrentSettingsCommand.Execute(pluginModule);
+            if (pluginModule.Settings == null)
+            {
+                CommonCommands.LoadCurrentSettingsCommand.Execute(pluginModule);
+            }
         }
     }
 }
