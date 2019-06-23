@@ -2,6 +2,7 @@
 {
     using System.IO;
 
+    using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Processors;
     using ModTechMaster.Core.Interfaces.Services;
@@ -16,7 +17,8 @@
             IManifestEntry manifestEntry,
             DirectoryInfo di,
             FileInfo fi,
-            IReferenceFinderService referenceFinderService)
+            IReferenceFinderService referenceFinderService,
+            ObjectType? objectTypeOverride = null)
         {
             dynamic json = JsonConvert.DeserializeObject(File.ReadAllText(fi.FullName));
             return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(

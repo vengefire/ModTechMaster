@@ -25,6 +25,7 @@
         public override void AddMetaData()
         {
             base.AddMetaData();
+            var ammoBoxes = new HashSet<string>();
             var weapons = new HashSet<string>();
             var upgrades = new HashSet<string>();
             var mechs = new HashSet<string>();
@@ -33,7 +34,11 @@
 
             foreach (var item in this.JsonObject.Inventory)
             {
-                if (item.Type == "Weapon")
+                if (item.Type == "AmmunitionBox")
+                {
+                    ammoBoxes.Add(item.ID.ToString());
+                }
+                else if (item.Type == "Weapon")
                 {
                     weapons.Add(item.ID.ToString());
                 }
@@ -61,7 +66,11 @@
 
             foreach (var special in this.JsonObject.Specials)
             {
-                if (special.Type == "Weapon")
+                if (special.Type == "AmmunitionBox")
+                {
+                    ammoBoxes.Add(special.ID.ToString());
+                }
+                else if (special.Type == "Weapon")
                 {
                     weapons.Add(special.ID.ToString());
                 }
@@ -87,6 +96,7 @@
                 }
             }
 
+            this.MetaData.Add(Keywords.AmmoBoxId, new List<string>(ammoBoxes));
             this.MetaData.Add(Keywords.WeaponDefId, new List<string>(weapons));
             this.MetaData.Add(Keywords.UpgradeDefId, new List<string>(upgrades));
             this.MetaData.Add(Keywords.MechDefId, new List<string>(mechs));

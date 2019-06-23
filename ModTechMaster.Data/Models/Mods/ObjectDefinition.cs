@@ -102,7 +102,14 @@
         {
             if (this.ObjectDescription?.Id != null)
             {
-                this.MetaData.Add(Keywords.Id, this.ObjectDescription.Id);
+                if (!this.MetaData.ContainsKey(Keywords.Id))
+                {
+                    this.MetaData.Add(Keywords.Id, this.ObjectDescription.Id);
+                }
+                else
+                {
+                    this.MetaData[Keywords.Id] = this.ObjectDescription.Id;
+                }
             }
             else if (this.JsonObject?.Id != null)
             {

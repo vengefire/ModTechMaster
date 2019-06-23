@@ -140,9 +140,29 @@
                     fileData,
                     hostDirectory,
                     this.referenceFinderService);
+
+                if (retVal != null)
+                {
+                    if (retVal is IObjectDefinition obj)
+                    {
+                        newEntry.Objects.Add(obj);
+                    }
+                    else if (retVal is IResourceDefinition res)
+                    {
+                        newEntry.Resources.Add(res);
+                    }
+                    else
+                    {
+                        throw new InvalidProgramException($"Unknown streaming asset object.");
+                    }
+                }
             }
 
-            di.GetDirectories().ToList().ForEach(subdi => this.RecurseStreamingAssetsDirectory(subdi.FullName, newEntry));
+            di
+                .GetDirectories()
+                //.ToList().ForEach(
+                .AsParallel().ForAll(
+                    subdi => this.RecurseStreamingAssetsDirectory(subdi.FullName, newEntry));
         }
 
         private Mod InitModFromJson(dynamic src, string path)
@@ -256,7 +276,7 @@
             // Process implicits like StreamingAssets folder...
             // Special handling for sim game constants...
             var streamingAssetsPath = mod.IsBattleTech ? @"BattleTech_Data\\StreamingAssets\\data" : @"StreamingAssets";
-            var fullPath = Path.Combine(mod.SourceDirectoryPath, streamingAssetsPath);
+            var fullPath = Path.Combine(mod.SourceDirectoryPath, mod.IsBattleTech ? "BattleTech" : string.Empty, streamingAssetsPath);
             if (Directory.Exists(fullPath))
             {
                 this.AddStreamingAssetsManifestEntry(fullPath, mod, manifest);

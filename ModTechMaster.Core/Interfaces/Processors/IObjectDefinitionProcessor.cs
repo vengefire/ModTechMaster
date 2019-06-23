@@ -2,6 +2,7 @@
 {
     using System.IO;
 
+    using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Services;
 
@@ -11,6 +12,7 @@
             IManifestEntry manifestEntry,
             DirectoryInfo di,
             FileInfo fi,
-            IReferenceFinderService referenceFinderService);
+            IReferenceFinderService referenceFinderService,
+            ObjectType? objectTypeOverride = null);
     }
 }

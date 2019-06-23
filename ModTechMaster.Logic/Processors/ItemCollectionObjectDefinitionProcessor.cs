@@ -14,7 +14,8 @@
             IManifestEntry manifestEntry,
             DirectoryInfo di,
             FileInfo fi,
-            IReferenceFinderService referenceFinderService)
+            IReferenceFinderService referenceFinderService,
+            ObjectType? objectTypeOverride = null)
         {
             var csvText = File.ReadAllText(fi.FullName);
             var itemCollection = new ItemCollectionObjectDefinition(ObjectType.ItemCollectionDef, csvText, fi.FullName);

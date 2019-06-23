@@ -22,7 +22,7 @@
         public override void AddMetaData()
         {
             base.AddMetaData();
-            if (this.JsonObject.Custom.Lootable?.ItemID != null)
+            if (this.JsonObject.Custom?.Lootable?.ItemID != null)
             {
                 this.MetaData.Add(Keywords.LootableId, this.JsonObject.Custom.Lootable?.ItemID);
             }

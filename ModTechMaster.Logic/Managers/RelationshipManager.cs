@@ -590,6 +590,12 @@
                             {
                                 new ObjectRelationship(
                                     ObjectType.ShopDef,
+                                    ObjectType.AmmunitionBoxDef,
+                                    Keywords.AmmoBoxId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.ShopDef,
                                     ObjectType.WeaponDef,
                                     Keywords.WeaponDefId,
                                     Keywords.Id,
