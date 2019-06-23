@@ -75,7 +75,7 @@
             parm =>
                 {
                     var model = parm;
-                    return Task.Run(parm.InitModCollectionNodes).ContinueWith(task => parm.SelectImperativeMods());
+                    return Task.Run((Action)parm.InitModCollectionNodes).ContinueWith(task => parm.SelectImperativeMods());
                 },
             model => model?.ModService?.ModCollection?.Mods?.Count > 0);
 

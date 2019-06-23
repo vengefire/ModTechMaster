@@ -79,11 +79,11 @@
             new ObservableCollection<IMtmTreeViewItem>();
 
         public List<IObjectReference<IReferenceableObject>> Dependencies =>
-            this.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency)
+            this.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency && reference.IsValid)
                 .ToList();
 
         public List<IObjectReference<IReferenceableObject>> Dependents =>
-            this.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent)
+            this.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent && reference.IsValid)
                 .ToList();
 
         public bool HasCheck => false;
@@ -211,9 +211,9 @@
                     this.objectReferences =
                         this.ReferenceFinderService.GetObjectReferences(this.Object as IReferenceableObject);
                     this.objectReferences.Sort(
-                        (reference, objectReference) => string.CompareOrdinal(
-                            reference.ReferenceObject.ObjectType.ToString(),
-                            objectReference.ReferenceObject.ObjectType.ToString()));
+                        (reference, objectReference) => reference.ReferenceObject == null ? 1 :
+                                                        objectReference.ReferenceObject == null ? -1 : 
+                                                        string.CompareOrdinal(reference.ReferenceObject.ObjectType.ToString(), objectReference.ReferenceObject.ObjectType.ToString()));
 
                     this.OnPropertyChanged();
                     if (this.Dependencies.Any())
@@ -324,9 +324,9 @@
             {
                 objects = value == true
                               ? node.ObjectReferences.Where(
-                                  reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency).ToList()
+                                  reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency && reference.IsValid).ToList()
                               : node.ObjectReferences.Where(
-                                  reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent).ToList();
+                                  reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent && reference.IsValid).ToList();
             }
 
             // Add any item collections our object may belong to

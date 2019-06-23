@@ -51,13 +51,16 @@
                     MessageType.Info);
                 this.ModCollection = modCollection;
                 this.OnPropertyChanged(nameof(this.ModCollection));
-                this.mainModel.IsBusy = false;
                 return this.ModCollection;
             }
             catch (Exception ex)
             {
                 this.MessageService.PushMessage(ex.Message, MessageType.Error);
                 return null;
+            }
+            finally
+            {
+                this.mainModel.IsBusy = false;
             }
         }
 
