@@ -55,6 +55,7 @@
     <Compile Include="Processors\PrefabManifestEntryProcessor.cs" />
     <Compile Include="Processors\AssetBundleManifestEntryProcessor.cs" />
     <Compile Include="Processors\ResourceManifestEntryProcessor.cs" />
+    <Compile Include="Processors\StreamingAssetProcessor.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Processors\ManifestEntryProcessor.cs" />

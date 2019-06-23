@@ -84,6 +84,8 @@
 
         public string Website { get; }
 
+        public bool IsBattleTech { get; set; }
+
         public void AddMetaData()
         {
             this.MetaData.Add(Keywords.Id, this.GetId);

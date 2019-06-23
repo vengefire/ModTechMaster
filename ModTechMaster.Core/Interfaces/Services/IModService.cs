@@ -8,8 +8,8 @@
     {
         IModCollection ModCollection { get; }
 
-        IModCollection LoadCollectionFromPath(string path, string name);
+        IModCollection LoadCollectionFromPath(string battleTechPath, string modsPath, string name);
 
-        IMod TryLoadFromPath(string path);
+        IMod TryLoadFromPath(string path, bool isBattleTechData);
     }
 }

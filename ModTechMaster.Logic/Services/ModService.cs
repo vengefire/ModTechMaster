@@ -18,6 +18,9 @@
     using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Annotations;
     using ModTechMaster.Data.Models.Mods;
+    using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
+    using ModTechMaster.Logic.Factories;
+    using ModTechMaster.Logic.Processors;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -49,26 +52,35 @@
 
         public IModCollection ModCollection { get; }
 
-        public IModCollection LoadCollectionFromPath(string path, string name)
+        public IModCollection LoadCollectionFromPath(string battleTechPath, string modsPath, string name)
         {
-            if (!DirectoryUtils.Exists(path))
+            if (!DirectoryUtils.Exists(modsPath))
             {
-                throw new Exception($@"The specified directory [{path}] does not exist.");
+                throw new Exception($@"The specified Mods directory [{modsPath}] does not exist.");
             }
 
-            var di = new DirectoryInfo(path);
+            if (!DirectoryUtils.Exists(battleTechPath))
+            {
+                throw new Exception($@"The specified Battle Tech directory [{battleTechPath}] does not exist.");
+            }
+
+            /*var modsDirectoryInfo = new DirectoryInfo(modsPath);
             this.ModCollection.Name = name;
-            this.ModCollection.Path = path;
+            this.ModCollection.Path = modsPath;
 
-            this.logger.Info($"Processing mods from [{di.FullName}]");
+            this.logger.Info($"Processing mods from [{modsDirectoryInfo.FullName}]");
 
-            di.GetDirectories().AsParallel().ForAll(
+            modsDirectoryInfo.GetDirectories().AsParallel().ForAll(
                 sub =>
                     {
                         this.logger.Debug(".");
-                        var mod = this.TryLoadFromPath(sub.FullName);
+                        var mod = this.TryLoadFromPath(sub.FullName, false);
                         this.ModCollection.AddModToCollection(mod);
-                    });
+                    });*/
+
+            var gameDirectoryInfo = new DirectoryInfo(battleTechPath);
+            this.logger.Info($"Processing BattleTech from [{gameDirectoryInfo.FullName}]");
+            var battleTechMod = this.TryLoadFromPath(gameDirectoryInfo.FullName, true);
 
             this.ModCollection.Mods.Sort(
                 (mod, mod1) => string.Compare(mod.Name, mod1.Name, StringComparison.OrdinalIgnoreCase));
@@ -78,14 +90,14 @@
             return this.ModCollection;
         }
 
-        public IMod TryLoadFromPath(string path)
+        public IMod TryLoadFromPath(string path, bool isBattleTechData)
         {
-            if (!DirectoryUtils.Exists(path) || !File.Exists(ModFilePath(path)))
+            if (!DirectoryUtils.Exists(path) || (!isBattleTechData && !File.Exists(ModFilePath(path))))
             {
                 return null;
             }
 
-            return this.LoadFromPath(path);
+            return this.LoadFromPath(path, isBattleTechData);
         }
 
         [NotifyPropertyChangedInvocator]
@@ -107,8 +119,30 @@
                 simPath,
                 null,
                 this.referenceFinderService);
-            newEntry.ParseStreamingAssets();
+            //newEntry.ParseStreamingAssets();
+            this.RecurseStreamingAssetsDirectory(simPath, newEntry);
             manifest.Entries.Add(newEntry);
+        }
+
+        private void RecurseStreamingAssetsDirectory(string path, ManifestEntry newEntry)
+        {
+            var di = new DirectoryInfo(path);
+            foreach (var fi in di.EnumerateFiles())
+            {
+                var fileName = fi.Name;
+                var fileData = File.ReadAllText(fi.FullName);
+                var hostDirectory = di.Name;
+
+                var retVal = StreamingAssetProcessor.ProcessFile(
+                    newEntry,
+                    di,
+                    fi.FullName,
+                    fileData,
+                    hostDirectory,
+                    this.referenceFinderService);
+            }
+
+            di.GetDirectories().ToList().ForEach(subdi => this.RecurseStreamingAssetsDirectory(subdi.FullName, newEntry));
         }
 
         private Mod InitModFromJson(dynamic src, string path)
@@ -145,11 +179,22 @@
                 dll);
         }
 
-        private IMod LoadFromPath(string path)
+        private IMod LoadFromPath(string path, bool isBattleTechData)
         {
-            dynamic src = JsonConvert.DeserializeObject(File.ReadAllText(ModFilePath(path)));
+            Mod mod;
+            if (!isBattleTechData)
+            {
+                dynamic src = JsonConvert.DeserializeObject(File.ReadAllText(ModFilePath(path)));
+                mod = this.InitModFromJson(src, ModFilePath(path));
+            }
+            else
+            {
+                mod = new Mod("Battle Tech", true, "N/A", "Base Game Data", "HBS", "N/A", string.Empty, new HashSet<string>(), new HashSet<string>(), path, null, -1, null)
+                          {
+                              IsBattleTech = true
+                          };
+            }
 
-            var mod = this.InitModFromJson(src, ModFilePath(path));
             this.ProcessModConfig(mod);
 
             return mod;
@@ -197,12 +242,20 @@
 
         private void ProcessModConfig(Mod mod)
         {
-            // Process Manifest
-            var manifest = this.ProcessManifest(mod);
+            Manifest manifest;
+            if (!mod.IsBattleTech)
+            {
+                // Process Manifest
+                manifest = this.ProcessManifest(mod);
+            }
+            else
+            {
+                manifest = new Manifest(mod, null);
+            }
 
             // Process implicits like StreamingAssets folder...
             // Special handling for sim game constants...
-            var streamingAssetsPath = @"StreamingAssets";
+            var streamingAssetsPath = mod.IsBattleTech ? @"BattleTech_Data\\StreamingAssets\\data" : @"StreamingAssets";
             var fullPath = Path.Combine(mod.SourceDirectoryPath, streamingAssetsPath);
             if (Directory.Exists(fullPath))
             {
@@ -214,19 +267,26 @@
                 mod.Manifest = manifest;
             }
 
-            var di = new DirectoryInfo(mod.SourceDirectoryPath);
-            foreach (var file in di.EnumerateFiles())
+            if (!mod.IsBattleTech)
             {
-                switch (file.Extension.ToLower())
+                var di = new DirectoryInfo(mod.SourceDirectoryPath);
+                foreach (var file in di.EnumerateFiles())
                 {
-                    case ".dll":
-                        mod.ResourceFiles.Add(
-                            new ResourceDefinition(ObjectType.Dll, file.FullName, file.Name, file.Name));
-                        break;
-                    default:
-                        mod.ResourceFiles.Add(
-                            new ResourceDefinition(ObjectType.UnhandledResource, file.FullName, file.Name, file.Name));
-                        break;
+                    switch (file.Extension.ToLower())
+                    {
+                        case ".dll":
+                            mod.ResourceFiles.Add(
+                                new ResourceDefinition(ObjectType.Dll, file.FullName, file.Name, file.Name));
+                            break;
+                        default:
+                            mod.ResourceFiles.Add(
+                                new ResourceDefinition(
+                                    ObjectType.UnhandledResource,
+                                    file.FullName,
+                                    file.Name,
+                                    file.Name));
+                            break;
+                    }
                 }
             }
         }

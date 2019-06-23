@@ -18,19 +18,26 @@
             var container = new Bootstrap().RegisterContainer();
             var logger = container.GetInstance<ILogger>();
 
-            var di = new DirectoryInfo(args[0]);
-            if (!di.Exists)
+            var modsDirectoryInfo = new DirectoryInfo(args[0]);
+            if (!modsDirectoryInfo.Exists)
             {
-                logger.Info($"The target directory [{di.FullName}] foes not exist.");
+                logger.Info($"The target Mods directory [{modsDirectoryInfo.FullName}] does not exist.");
+                return -1;
+            }
+
+            var btDirectoryInfo = new DirectoryInfo(args[1]);
+            if (!btDirectoryInfo.Exists)
+            {
+                logger.Info($"The target Battle Tech directory [{btDirectoryInfo.FullName}] does not exist.");
                 return -1;
             }
 
             var modService = container.GetInstance<IModService>();
 
-            logger.Info($"Processing mods from [{di.FullName}]");
+            logger.Info($"Processing mods from [{modsDirectoryInfo.FullName}]");
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            var modCollection = modService.LoadCollectionFromPath(di.FullName, "MTM Mod Collection");
+            var modCollection = modService.LoadCollectionFromPath(btDirectoryInfo.FullName, modsDirectoryInfo.FullName, "MTM Mod Collection");
             stopwatch.Stop();
             var elapsedTime = stopwatch.ElapsedMilliseconds;
             logger.Info($"Mods processed in [{elapsedTime}] ms.");

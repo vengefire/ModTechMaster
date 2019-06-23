@@ -27,5 +27,7 @@
         string Version { get; }
 
         string Website { get; }
+
+        bool IsBattleTech { get; }
     }
 }
