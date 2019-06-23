@@ -7,6 +7,7 @@
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Processors;
+    using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Models.Mods;
     using ModTechMaster.Logic.Factories;
 
@@ -16,9 +17,10 @@
             IManifest manifest,
             ObjectType entryType,
             string path,
-            dynamic jsonObject)
+            dynamic jsonObject,
+            IReferenceFinderService referenceFinderService)
         {
-            var manifestEntry = new ManifestEntry(manifest, entryType, path, jsonObject);
+            var manifestEntry = new ManifestEntry(manifest, entryType, path, jsonObject, referenceFinderService);
 
             var objectDefinitionProcessor =
                 ObjectDefinitionProcessorFactory.ObjectDefinitionProcessorFactorySingleton.Get(entryType);
@@ -34,7 +36,11 @@
             di.GetFiles("*.*").ToList().ForEach(
                 fi =>
                     {
-                        var objectDefinition = objectDefinitionProcessor.ProcessObjectDefinition(manifestEntry, di, fi);
+                        var objectDefinition = objectDefinitionProcessor.ProcessObjectDefinition(
+                            manifestEntry,
+                            di,
+                            fi,
+                            referenceFinderService);
                         if (objectDefinition != null)
                         {
                             manifestEntry.Objects.Add(objectDefinition);

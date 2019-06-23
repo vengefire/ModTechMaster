@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
 
+    using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
 
     public interface IReferenceFinderService
@@ -14,5 +15,9 @@
             IReferenceableObject referenceableObject);
 
         long ProcessAllReferences();
+
+        List<IObjectRelationship> GetDependencyRelationships(ObjectType objectType);
+
+        List<IObjectRelationship> GetDependentRelationships(ObjectType objectType);
     }
 }

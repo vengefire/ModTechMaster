@@ -2,6 +2,7 @@
 {
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
 
     using Newtonsoft.Json.Linq;
 
@@ -11,8 +12,9 @@
             ObjectType objectType,
             IObjectDefinitionDescription objectDescription,
             dynamic jsonObject,
-            string filePath)
-            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
+            string filePath,
+            IReferenceFinderService referenceFinderService)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath, referenceFinderService)
         {
         }
 

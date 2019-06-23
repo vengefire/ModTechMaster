@@ -6,6 +6,7 @@
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Processors;
+    using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Models.Mods;
     using ModTechMaster.Logic.Factories;
 
@@ -17,9 +18,10 @@
             IManifest manifest,
             ObjectType entryType,
             string path,
-            dynamic jsonObject)
+            dynamic jsonObject,
+            IReferenceFinderService referenceFinderService)
         {
-            var manifestEntry = new ManifestEntry(manifest, entryType, path, jsonObject);
+            var manifestEntry = new ManifestEntry(manifest, entryType, path, jsonObject, referenceFinderService);
             var di = new DirectoryInfo(Path.Combine(manifest.Mod.SourceDirectoryPath, manifestEntry.Path));
             if (!di.Exists)
             {
@@ -34,7 +36,8 @@
                             entryType,
                             new ObjectDefinitionDescription(identifier, identifier, jsonObject),
                             (JObject)jsonObject,
-                            fi.FullName);
+                            fi.FullName,
+                            referenceFinderService);
                         manifestEntry.Objects.Add(objectDefinition);
                     });
             return manifestEntry;

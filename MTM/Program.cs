@@ -35,11 +35,14 @@
             var elapsedTime = stopwatch.ElapsedMilliseconds;
             logger.Info($"Mods processed in [{elapsedTime}] ms.");
 
-            var refService = new ReferenceFinderService();
+            var refService = container.GetInstance<IReferenceFinderService>();
             refService.ReferenceableObjectProvider = modCollection;
             logger.Info("Processing Mod Collection object relationships...");
             elapsedTime = refService.ProcessModCollectionReferences(modCollection);
             logger.Info($"Object relationships processed in [{elapsedTime}] ms.");
+
+            logger.Info("Running validation procedure...");
+            var validateResult = modCollection.ValidateMods();
 
             logger.Info("Press any key to exit.");
             Console.ReadKey();

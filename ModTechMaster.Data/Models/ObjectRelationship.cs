@@ -16,9 +16,5 @@
             this.DependentType = dependentType;
             this.DependencyType = dependencyType;
         }
-
-        public ObjectType DependencyType { get; }
-
-        public ObjectType DependentType { get; }
     }
 }

@@ -7,6 +7,7 @@
     using ModTechMaster.Core.Constants;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
 
     using Newtonsoft.Json.Linq;
 
@@ -16,8 +17,9 @@
             ObjectType objectType,
             IObjectDefinitionDescription objectDescription,
             dynamic jsonObject,
-            string filePath)
-            : base(objectType, objectDescription, (JObject)jsonObject, filePath)
+            string filePath,
+            IReferenceFinderService referenceFinderService)
+            : base(objectType, objectDescription, (JObject)jsonObject, filePath, referenceFinderService)
         {
         }
 
@@ -35,7 +37,7 @@
             var i = 0;
             foreach (var lanceUnit in this.JsonObject.LanceUnits)
             {
-                var slot = new LanceSlotDefinition(ObjectType.LanceSlotDef, null, lanceUnit, this.SourceFilePath, i++);
+                var slot = new LanceSlotDefinition(ObjectType.LanceSlotDef, null, lanceUnit, this.SourceFilePath, i++, this.ReferenceFinderService);
                 slot.AddMetaData();
                 this.LanceSlots.Add(slot);
             }

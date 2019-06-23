@@ -14,6 +14,8 @@
 
         ObjectReferenceType ObjectReferenceType { get; }
 
+        string ReferenceKey { get; }
+
         TType ReferenceObject { get; }
 
         IRelationship Relationship { get; }

@@ -22,7 +22,7 @@
                 Component.For<IExceptionLogger>().ImplementedBy<ExceptionLogger>(),
                 Component.For<IMessageService>().ImplementedBy<MessageService>(),
                 Component.For<IModService>().ImplementedBy<ModService>(),
-                Component.For<IReferenceFinderService>().ImplementedBy<ReferenceFinderService>(),
+                Component.For<IReferenceFinderService>().ImplementedBy<ReferenceFinderService>().LifestyleSingleton(),
                 Component.For<IManifestEntryProcessorFactory>().ImplementedBy<ManifestEntryProcessorFactory>());
         }
     }

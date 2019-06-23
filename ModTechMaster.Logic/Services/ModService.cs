@@ -6,7 +6,6 @@
     using System.IO;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using System.Threading.Tasks;
 
     using Castle.Core.Logging;
 
@@ -31,14 +30,18 @@
 
         private readonly IMessageService messageService;
 
+        private readonly IReferenceFinderService referenceFinderService;
+
         public ModService(
             IMessageService messageService,
             IManifestEntryProcessorFactory manifestEntryProcessorFactory,
-            ILogger logger)
+            ILogger logger,
+            IReferenceFinderService referenceFinderService)
         {
             this.messageService = messageService;
             this.manifestEntryProcessorFactory = manifestEntryProcessorFactory;
             this.logger = logger;
+            this.referenceFinderService = referenceFinderService;
             this.ModCollection = new ModCollection("Unknown Mod Collection", string.Empty);
         }
 
@@ -98,7 +101,12 @@
 
         private void AddStreamingAssetsManifestEntry(string simPath, Mod mod, Manifest manifest)
         {
-            var newEntry = new ManifestEntry(manifest, ObjectType.StreamingAssetsData, simPath, null);
+            var newEntry = new ManifestEntry(
+                manifest,
+                ObjectType.StreamingAssetsData,
+                simPath,
+                null,
+                this.referenceFinderService);
             newEntry.ParseStreamingAssets();
             manifest.Entries.Add(newEntry);
         }
@@ -183,7 +191,8 @@
                 manifest,
                 entryType,
                 (string)manifestEntrySrc.Path,
-                manifestEntrySrc);
+                manifestEntrySrc,
+                this.referenceFinderService);
         }
 
         private void ProcessModConfig(Mod mod)

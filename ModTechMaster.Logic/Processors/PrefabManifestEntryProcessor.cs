@@ -3,6 +3,7 @@
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Processors;
+    using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Models.Mods;
     using ModTechMaster.Logic.Factories;
 
@@ -14,15 +15,17 @@
             IManifest manifest,
             ObjectType entryType,
             string path,
-            dynamic jsonObject)
+            dynamic jsonObject,
+            IReferenceFinderService referenceFinderService)
         {
-            var manifestEntry = new ManifestEntry(manifest, entryType, path, jsonObject);
+            var manifestEntry = new ManifestEntry(manifest, entryType, path, jsonObject, referenceFinderService);
 
             var objectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
                 entryType,
                 new ObjectDefinitionDescription(null, null, null, null, (JObject)jsonObject),
                 (JObject)jsonObject,
-                path);
+                path,
+                referenceFinderService);
             manifestEntry.Objects.Add(objectDefinition);
             return manifestEntry;
         }

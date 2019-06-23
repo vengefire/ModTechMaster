@@ -1,29 +1,52 @@
 ﻿namespace ModTechMaster.Data.Models.Mods
 {
+    using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
+    using System.Runtime.CompilerServices;
 
     using ModTechMaster.Core.Constants;
     using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
 
     using Newtonsoft.Json.Linq;
 
-    public class 
-        ObjectDefinition : JsonObjectSourcedFromFile, IObjectDefinition
+    public class ObjectDefinition : JsonObjectSourcedFromFile, IObjectDefinition, INotifyPropertyChanged
     {
+        private List<IObjectReference<IReferenceableObject>> objectReferences;
+
         public ObjectDefinition(
             ObjectType objectType,
             IObjectDefinitionDescription objectDescription,
             dynamic jsonObject,
-            string filePath)
+            string filePath,
+            IReferenceFinderService referenceFinderService)
             : base(objectType, filePath, (JObject)jsonObject)
         {
+            this.ReferenceFinderService = referenceFinderService;
             this.ObjectDescription = objectDescription;
             this.MetaData = new Dictionary<string, dynamic>();
             this.Tags = new Dictionary<string, List<string>>();
+            this.DependencyRelationships = referenceFinderService.GetDependencyRelationships(this.ObjectType);
+            this.DependentRelationships = referenceFinderService.GetDependentRelationships(this.ObjectType);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public List<IObjectReference<IReferenceableObject>> Dependencies =>
+            this.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependency)
+                .ToList();
+
+        public List<IObjectRelationship> DependencyRelationships { get; }
+
+        public List<IObjectRelationship> DependentRelationships { get; }
+
+        public List<IObjectReference<IReferenceableObject>> Dependents =>
+            this.ObjectReferences.Where(reference => reference.ObjectReferenceType == ObjectReferenceType.Dependent)
+                .ToList();
 
         public string HumanReadableText => this.JsonString;
 
@@ -36,11 +59,42 @@
 
         public IObjectDefinitionDescription ObjectDescription { get; }
 
+        public List<IObjectReference<IReferenceableObject>> ObjectReferences
+        {
+            get
+            {
+                if (this.objectReferences == null)
+                {
+                    this.objectReferences = this.ReferenceFinderService.GetObjectReferences(this);
+                    this.objectReferences.Sort(
+                        (reference, objectReference) => 
+                            reference.ReferenceObject == null ? 1 : 
+                            objectReference.ReferenceObject == null ? -1 : 
+                            string.CompareOrdinal(reference.ReferenceObject.ObjectType.ToString(), objectReference?.ReferenceObject?.ObjectType.ToString()));
+
+                    this.OnPropertyChanged();
+                    if (this.Dependencies.Any())
+                    {
+                        this.OnPropertyChanged(nameof(this.Dependencies));
+                    }
+
+                    if (this.Dependents.Any())
+                    {
+                        this.OnPropertyChanged(nameof(this.Dependents));
+                    }
+                }
+
+                return this.objectReferences;
+            }
+        }
+
         public ObjectStatus ObjectStatus
         {
             get => ObjectStatus.Nominal;
             set => this.ObjectStatus = value;
         }
+
+        public IReferenceFinderService ReferenceFinderService { get; }
 
         public Dictionary<string, List<string>> Tags { get; }
 
@@ -104,7 +158,28 @@
 
         public override IValidationResult ValidateObject()
         {
-            throw new System.NotImplementedException();
+            // Check each dependency is satisfied...
+            var unsatisfiedDependencies = this.Dependencies.Where(reference => !reference.IsValid).ToList();
+            if (unsatisfiedDependencies.Any())
+            {
+                return new ValidationResult
+                           {
+                               Result = ValidationResultEnum.Failure,
+                               ValidationResultReasons = unsatisfiedDependencies.Select(
+                                       reference => new ValidationResultReason(
+                                           this,
+                                           $"This [{this.ObjectType}]-[{this.Name}] failed to satisfy dependency of [{reference.Relationship.DependencyType}]-[{reference.ReferenceKey}] via [{reference.Relationship.DependentKey}]."))
+                                   .Cast<IValidationResultReason>().ToList()
+                           };
+            }
+
+            return ValidationResult.SuccessValidationResult();
+        }
+
+        // [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

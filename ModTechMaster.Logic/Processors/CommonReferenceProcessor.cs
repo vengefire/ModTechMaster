@@ -17,7 +17,7 @@
             IReferenceableObjectProvider objectProvider,
             IReferenceableObject objectDefinition,
             List<ObjectType> dependantTypesToIgnore)
-            where TType : IReferenceableObject
+            where TType : class, IReferenceableObject
         {
             if (objectDefinition == null)
             {
@@ -26,7 +26,7 @@
 
             // dependantTypesToIgnore = dependantTypesToIgnore ?? new List<ObjectType>();
             var dependenciesRels = RelationshipManager.GetDependenciesRelationshipsForType(objectDefinition.ObjectType);
-            var dependantRels = RelationshipManager.GetDependantRelationShipsForType(objectDefinition.ObjectType);
+            var dependantRels = RelationshipManager.GetDependentRelationShipsForType(objectDefinition.ObjectType);
 
             if (!dependantRels.Any() && !dependenciesRels.Any())
             {
@@ -73,7 +73,8 @@
                                                     ObjectReferenceType.Dependent,
                                                     relationship,
                                                     false,
-                                                    true));
+                                                    true,
+                                                    objectKey));
                                         }
                                     }
                                 });
@@ -85,12 +86,14 @@
             candidates = objectProvider.GetReferenceableObjects().Where(o => targetObjectTypes.Contains(o.ObjectType)).ToList();
 
             var dependencyRecs = new List<ObjectReference<TType>>();
-            Parallel.ForEach(
-                dependenciesRels,
+
+            dependenciesRels.ToList().ForEach(
+            // dependenciesRels.AsParallel().ForAll(
                 relationship =>
                     {
-                        Parallel.ForEach(
-                            candidates,
+
+                        candidates.ToList().ForEach(
+                        // candidates.AsParallel().ForAll(
                             candidate =>
                                 {
                                     if (candidate.ObjectType != relationship.DependencyType)
@@ -118,7 +121,35 @@
                                                     ObjectReferenceType.Dependency,
                                                     relationship,
                                                     false,
-                                                    true));
+                                                    true,
+                                                    dependencyKey));
+                                        }
+                                    }
+                                });
+
+                        // Add an invalid entry for each specified dependency that was not matched...
+                        List<string> keys = !objectDefinition.MetaData.ContainsKey(relationship.DependentKey)
+                                                ?
+                                                new List<string>()
+                                                : !relationship.HasMultipleDependencies
+                                                    ? new List<string>(new string[] {objectDefinition.MetaData[relationship.DependentKey].ToString()})
+                                                    : new List<string>((List<string>)objectDefinition.MetaData[relationship.DependentKey]);
+
+                        keys.ForEach(
+                            s =>
+                                {
+                                    if (!dependencyRecs.Any(reference => reference.Relationship == relationship && reference.ReferenceKey == s))
+                                    {
+                                        lock (dependencyRecs)
+                                        {
+                                            dependencyRecs.Add(
+                                                new ObjectReference<TType>(
+                                                    null,
+                                                    ObjectReferenceType.Dependency,
+                                                    relationship,
+                                                    false,
+                                                    false,
+                                                    s));
                                         }
                                     }
                                 });

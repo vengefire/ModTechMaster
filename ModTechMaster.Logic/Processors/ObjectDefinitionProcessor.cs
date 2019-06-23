@@ -4,6 +4,7 @@
 
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Processors;
+    using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Models.Mods;
     using ModTechMaster.Logic.Factories;
 
@@ -11,14 +12,19 @@
 
     internal class FactionObjectDefinitionProcessor : IObjectDefinitionProcessor
     {
-        public IObjectDefinition ProcessObjectDefinition(IManifestEntry manifestEntry, DirectoryInfo di, FileInfo fi)
+        public IObjectDefinition ProcessObjectDefinition(
+            IManifestEntry manifestEntry,
+            DirectoryInfo di,
+            FileInfo fi,
+            IReferenceFinderService referenceFinderService)
         {
             dynamic json = JsonConvert.DeserializeObject(File.ReadAllText(fi.FullName));
             return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
                 manifestEntry.EntryType,
                 ProcessObjectDescription(json),
                 json,
-                fi.FullName);
+                fi.FullName,
+                referenceFinderService);
         }
 
         private static IObjectDefinitionDescription ProcessObjectDescription(dynamic description)

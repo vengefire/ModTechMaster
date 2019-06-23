@@ -60,9 +60,9 @@
             throw new NotImplementedException();
         }
 
-        public bool ValidateMods()
+        public IValidationResult ValidateMods()
         {
-            throw new NotImplementedException();
+            return ValidationResult.AggregateResults(this.Mods.Select(mod => mod.ValidateObject()));
         }
 
         [NotifyPropertyChangedInvocator]

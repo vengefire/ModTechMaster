@@ -10,12 +10,18 @@
     {
         public ValidationResultEnum Result { get; set; }
 
-        public List<IValidationResultReason> ValidationResultReasons { get; } = new List<IValidationResultReason>();
+        public List<IValidationResultReason> ValidationResultReasons { get; set; } = new List<IValidationResultReason>();
 
         public static ValidationResult AggregateResults(IEnumerable<IValidationResult> results)
         {
             var result = new ValidationResult();
-            results.ToList().ForEach(validationResult => result.ValidationResultReasons.AddRange(validationResult.ValidationResultReasons));
+            results.ToList().ForEach(validationResult =>
+                {
+                    if (validationResult != null && validationResult.Result != ValidationResultEnum.Success)
+                    {
+                        result.ValidationResultReasons.AddRange(validationResult.ValidationResultReasons);
+                    }
+                });
             result.Result = result.ValidationResultReasons.Any()
                                 ? ValidationResultEnum.Failure
                                 : ValidationResultEnum.Success;

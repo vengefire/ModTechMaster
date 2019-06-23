@@ -17,6 +17,6 @@
 
         void RemoveModFromCollection(IMod mod);
 
-        bool ValidateMods();
+        IValidationResult ValidateMods();
     }
 }

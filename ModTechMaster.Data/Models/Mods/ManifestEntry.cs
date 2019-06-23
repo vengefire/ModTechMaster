@@ -7,6 +7,7 @@
 
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
 
     using Newtonsoft.Json;
@@ -14,9 +15,12 @@
 
     public class ManifestEntry : JsonObjectBase, IManifestEntry
     {
-        public ManifestEntry(IManifest manifest, ObjectType entryType, string path, dynamic jsonObject)
+        private readonly IReferenceFinderService referenceFinderService;
+
+        public ManifestEntry(IManifest manifest, ObjectType entryType, string path, dynamic jsonObject, IReferenceFinderService referenceFinderService)
             : base((JObject)jsonObject, ObjectType.ManifestEntry)
         {
+            this.referenceFinderService = referenceFinderService;
             this.Manifest = manifest;
             this.EntryType = entryType;
             this.Path = path;
@@ -86,21 +90,23 @@
                                 ObjectType.StreamingAssetsData,
                                 description,
                                 jsonData,
-                                fi.FullName);
+                                fi.FullName, this.referenceFinderService);
                             break;
                         case "pilot":
                             objectDefinition = new PilotObjectDefinition(
                                 ObjectType.PilotDef,
                                 description,
                                 jsonData,
-                                fi.FullName);
+                                fi.FullName,
+                                this.referenceFinderService);
                             break;
                         case "simgameconstants":
                             objectDefinition = new SimGameConstantsObjectDefinition(
                                 ObjectType.SimGameConstants,
                                 ObjectDefinitionDescription.CreateDefault(jsonData.Description),
                                 jsonData,
-                                fi.FullName);
+                                fi.FullName,
+                                this.referenceFinderService);
                             break;
                         default:
                             throw new InvalidProgramException(

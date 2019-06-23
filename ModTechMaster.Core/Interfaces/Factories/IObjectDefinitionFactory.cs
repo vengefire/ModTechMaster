@@ -2,6 +2,7 @@
 {
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
 
     public interface IObjectDefinitionFactory
     {
@@ -9,6 +10,7 @@
             ObjectType entryType,
             IObjectDefinitionDescription objectDescription,
             dynamic jsonObject,
-            string filePath);
+            string filePath,
+            IReferenceFinderService referenceFinderService);
     }
 }

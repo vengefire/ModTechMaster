@@ -3,9 +3,14 @@
     using System.IO;
 
     using ModTechMaster.Core.Interfaces.Models;
+    using ModTechMaster.Core.Interfaces.Services;
 
     public interface IObjectDefinitionProcessor
     {
-        IObjectDefinition ProcessObjectDefinition(IManifestEntry manifestEntry, DirectoryInfo di, FileInfo fi);
+        IObjectDefinition ProcessObjectDefinition(
+            IManifestEntry manifestEntry,
+            DirectoryInfo di,
+            FileInfo fi,
+            IReferenceFinderService referenceFinderService);
     }
 }

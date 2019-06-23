@@ -622,7 +622,7 @@
                     }
                 };
 
-        public static List<IObjectRelationship> GetDependantRelationShipsForType(ObjectType objectType)
+        public static List<IObjectRelationship> GetDependentRelationShipsForType(ObjectType objectType)
         {
             var lstDependentRelationships = new List<IObjectRelationship>();
             foreach (var objectRelationship in ObjectRelationships)
