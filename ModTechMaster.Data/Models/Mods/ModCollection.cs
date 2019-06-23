@@ -60,6 +60,11 @@
             throw new NotImplementedException();
         }
 
+        public bool ValidateMods()
+        {
+            throw new NotImplementedException();
+        }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

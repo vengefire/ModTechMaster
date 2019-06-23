@@ -9,5 +9,7 @@
         string Name { get; }
 
         ObjectType ObjectType { get; }
+
+        IValidationResult ValidateObject();
     }
 }

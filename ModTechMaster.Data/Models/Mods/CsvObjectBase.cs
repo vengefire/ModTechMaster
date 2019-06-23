@@ -55,6 +55,8 @@
 
         public ObjectType ObjectType { get; }
 
+        public IValidationResult ValidateObject() => ValidationResult.SuccessValidationResult();
+
         public string SourceDirectoryPath => new FileInfo(this.SourceFilePath).DirectoryName;
 
         public string SourceFileExtension => new FileInfo(this.SourceFilePath).Extension;

@@ -30,5 +30,10 @@
             return this.Entries
                 .SelectMany(entry => entry.Objects.Select(definition => definition as IReferenceableObject)).ToList();
         }
+
+        public override IValidationResult ValidateObject()
+        {
+            return ValidationResult.AggregateResults(this.Entries.Select(entry => entry.ValidateObject()));
+        }
     }
 }

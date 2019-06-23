@@ -22,5 +22,7 @@
         public abstract string Name { get; }
 
         public ObjectType ObjectType { get; }
+
+        public abstract IValidationResult ValidateObject();
     }
 }

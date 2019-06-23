@@ -101,5 +101,10 @@
 
             this.Tags.Add(Keywords.MyTags, tagList);
         }
+
+        public override IValidationResult ValidateObject()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

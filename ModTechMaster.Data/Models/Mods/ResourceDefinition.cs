@@ -4,6 +4,7 @@
     using System.Collections.Generic;
 
     using ModTechMaster.Core.Constants;
+    using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
 
@@ -26,6 +27,8 @@
         public string Name { get; }
 
         public ObjectType ObjectType { get; }
+
+        public IValidationResult ValidateObject() => ValidationResult.SuccessValidationResult();
 
         public void AddMetaData()
         {

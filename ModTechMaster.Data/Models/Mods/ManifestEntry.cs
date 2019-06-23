@@ -48,6 +48,11 @@
             this.RecurseStreamingAssetsDirectory(this.Path);
         }
 
+        public override IValidationResult ValidateObject()
+        {
+            return ValidationResult.AggregateResults(this.Objects.Select(definition => definition.ValidateObject()));
+        }
+
         private void RecurseStreamingAssetsDirectory(string path)
         {
             var di = new DirectoryInfo(path);

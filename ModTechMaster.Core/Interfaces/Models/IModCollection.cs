@@ -16,5 +16,7 @@
         void AddModToCollection(IMod mod);
 
         void RemoveModFromCollection(IMod mod);
+
+        bool ValidateMods();
     }
 }

@@ -31,6 +31,8 @@
 
         public override string Name { get; }
 
+        public override IValidationResult ValidateObject() => ValidationResult.SuccessValidationResult();
+
         public static ObjectDefinitionDescription CreateDefault(dynamic description)
         {
             if (description == null || description is JValue)

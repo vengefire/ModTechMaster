@@ -41,6 +41,7 @@
     <Compile Include="Enums\Mods\ObjectType.cs" />
     <Compile Include="Enums\ObjectReferenceType.cs" />
     <Compile Include="Enums\RelationshipType.cs" />
+    <Compile Include="Enums\ValidationResultEnum.cs" />
     <Compile Include="Interfaces\Factories\IManifestEntryProcessorFactory.cs" />
     <Compile Include="Interfaces\Factories\IObjectDefinitionFactory.cs" />
     <Compile Include="Interfaces\Factories\IObjectDefinitionProcessorFactory.cs" />
@@ -60,6 +61,8 @@
     <Compile Include="Interfaces\Models\IResourceDefinition.cs" />
     <Compile Include="Interfaces\Models\ISourcedFromFile.cs" />
     <Compile Include="Interfaces\Models\IReferenceableObject.cs" />
+    <Compile Include="Interfaces\Models\IValidationResult.cs" />
+    <Compile Include="Interfaces\Models\IValidationResultReason.cs" />
     <Compile Include="Interfaces\Processors\IManifestEntryProcessor.cs" />
     <Compile Include="Interfaces\Services\IFactionService.cs" />
     <Compile Include="Interfaces\Services\IMessageService.cs" />

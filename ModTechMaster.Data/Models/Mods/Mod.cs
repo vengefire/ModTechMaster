@@ -70,6 +70,12 @@
 
         public override string Name { get; }
 
+        public override IValidationResult ValidateObject()
+        {
+            // TODO: Fix this up...
+            return this.Manifest.ValidateObject();
+        }
+
         public List<IResourceDefinition> ResourceFiles { get; } = new List<IResourceDefinition>();
 
         public double SizeOnDisk { get; }
