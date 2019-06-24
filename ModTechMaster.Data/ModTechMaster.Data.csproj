@@ -91,6 +91,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Framework\Framework.Utils\Framework.Utils.csproj">
+      <Project>{e851e212-1eb4-40b4-8596-31ff26ae2594}</Project>
+      <Name>Framework.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModTechMaster.Core\ModTechMaster.Core.csproj">
       <Project>{F1C5C7C8-C8F3-46FC-9339-746DC0A2A185}</Project>
       <Name>ModTechMaster.Core</Name>

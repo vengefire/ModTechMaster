@@ -74,6 +74,7 @@
                 var gameDirectoryInfo = new DirectoryInfo(battleTechPath);
                 this.logger.Info($"Processing BattleTech from [{gameDirectoryInfo.FullName}]");
                 var battleTechMod = this.TryLoadFromPath(gameDirectoryInfo.FullName, true);
+                this.ModCollection.AddModToCollection(battleTechMod);
             }
 
             var modsDirectoryInfo = new DirectoryInfo(modsPath);
@@ -134,42 +135,46 @@
         private void RecurseStreamingAssetsDirectory(string path, ManifestEntry newEntry)
         {
             var di = new DirectoryInfo(path);
-            foreach (var fi in di.EnumerateFiles())
-            {
-                var fileName = fi.Name;
-                var fileData = File.ReadAllText(fi.FullName);
-                var hostDirectory = di.Name;
-
-                var retVal = StreamingAssetProcessor.ProcessFile(
-                    newEntry,
-                    di,
-                    fi.FullName,
-                    fileData,
-                    hostDirectory,
-                    this.referenceFinderService,
-                    this.logger);
-
-                if (retVal != null)
-                {
-                    if (retVal is IObjectDefinition obj)
+            // foreach (var fi in di.EnumerateFiles())
+            di.EnumerateFiles()
+                .ToList().ForEach(
+                //.AsParallel().ForAll(
+                fi =>
                     {
-                        newEntry.Objects.Add(obj);
-                    }
-                    else if (retVal is IResourceDefinition res)
-                    {
-                        newEntry.Resources.Add(res);
-                    }
-                    else
-                    {
-                        throw new InvalidProgramException($"Unknown streaming asset object.");
-                    }
-                }
-            }
+                        var validExtensions = new List<string>(new[] {".json", ".csv"});
+                        var fileName = fi.Name;
+                        var fileData = validExtensions.Contains(fi.Extension) ? File.ReadAllText(fi.FullName) : null;
+                        var hostDirectory = di.Name;
 
-            di
-                .GetDirectories()
-                //.ToList().ForEach(
-                .AsParallel().ForAll(
+                        var retVal = StreamingAssetProcessor.ProcessFile(
+                            newEntry,
+                            di,
+                            fi.FullName,
+                            fileData,
+                            hostDirectory,
+                            this.referenceFinderService,
+                            this.logger);
+
+                        if (retVal != null)
+                        {
+                            if (retVal is IObjectDefinition obj)
+                            {
+                                newEntry.Objects.Add(obj);
+                            }
+                            else if (retVal is IResourceDefinition res)
+                            {
+                                newEntry.Resources.Add(res);
+                            }
+                            else
+                            {
+                                throw new InvalidProgramException($"Unknown streaming asset object.");
+                            }
+                        }
+                    });
+
+            di.GetDirectories()
+                .ToList().ForEach(
+                //.AsParallel().ForAll(
                     subdi => this.RecurseStreamingAssetsDirectory(subdi.FullName, newEntry));
         }
 

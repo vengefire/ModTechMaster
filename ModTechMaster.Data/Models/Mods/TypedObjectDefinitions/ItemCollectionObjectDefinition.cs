@@ -65,6 +65,8 @@
                     case "JumpJet":
                         jumpJets.Add(id);
                         break;
+                    case "None":
+                        break;
                     default:
                         throw new InvalidProgramException();
                 }

@@ -27,9 +27,9 @@
             this.factionService = factionService;
         }
 
-        public List<LanceSlotDefinition> LanceSlots { get; } = new List<LanceSlotDefinition>();
-
         public int Difficulty { get; set; }
+
+        public List<LanceSlotDefinition> LanceSlots { get; } = new List<LanceSlotDefinition>();
 
         public List<string> LanceTags => this.Tags[Keywords.MyTags];
 
@@ -41,7 +41,15 @@
             var i = 0;
             foreach (var lanceUnit in this.JsonObject.LanceUnits)
             {
-                var slot = new LanceSlotDefinition(ObjectType.LanceSlotDef, null, lanceUnit, this.SourceFilePath, i++, this.ReferenceFinderService, this, this.factionService);
+                var slot = new LanceSlotDefinition(
+                    ObjectType.LanceSlotDef,
+                    null,
+                    lanceUnit,
+                    this.SourceFilePath,
+                    i++,
+                    this.ReferenceFinderService,
+                    this,
+                    this.factionService);
                 slot.AddMetaData();
                 this.LanceSlots.Add(slot);
             }
@@ -53,13 +61,23 @@
 
             var slotMetas = this.LanceSlots.SelectMany(definition => definition.MetaData).ToList()
                 .Where(pair => slotMetaKeys.Contains(pair.Key)).Select(pair => pair).ToList();
-            slotMetas.ForEach(pair => { this.MetaData.Add(pair.Key, pair.Value); });
+            slotMetas.ForEach(
+                pair =>
+                    {
+                        if (!this.MetaData.ContainsKey(pair.Key))
+                        {
+                            this.MetaData.Add(pair.Key, new List<string>(new string[] { pair.Value.ToString() }));
+                        }
+                        else
+                        {
+                            this.MetaData[pair.Key].Add(pair.Value.ToString());
+                        }
+                    });
         }
 
         public override IValidationResult ValidateObject()
         {
-            return ValidationResult.AggregateResults(
-                this.LanceSlots.Select(definition => definition.ValidateObject()));
+            return ValidationResult.AggregateResults(this.LanceSlots.Select(definition => definition.ValidateObject()));
         }
     }
 }

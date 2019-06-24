@@ -625,7 +625,37 @@
                                     Keywords.Id,
                                     true)
                             }
-                    }
+                    },
+                    {
+                        ObjectType.LanceDef,
+                        new List<IObjectRelationship>
+                            {
+                                new ObjectRelationship(
+                                    ObjectType.LanceDef,
+                                    ObjectType.MechDef,
+                                    Keywords.MechDefId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.LanceDef,
+                                    ObjectType.TurretDef,
+                                    Keywords.TurretId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.LanceDef,
+                                    ObjectType.VehicleDef,
+                                    Keywords.VehicleId,
+                                    Keywords.Id,
+                                    true),
+                                new ObjectRelationship(
+                                    ObjectType.LanceDef,
+                                    ObjectType.PilotDef,
+                                    Keywords.PilotId,
+                                    Keywords.Id,
+                                    true),
+                            }
+                    },
                 };
 
         public static List<IObjectRelationship> GetDependentRelationShipsForType(ObjectType objectType)

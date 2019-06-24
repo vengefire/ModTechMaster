@@ -24,11 +24,15 @@
         public override void AddMetaData()
         {
             base.AddMetaData();
-            var abilityDefs = new List<string>();
-            this.MetaData.Add(Keywords.AbilityDefId, abilityDefs);
-            foreach (var item in this.JsonObject.abilityDefNames)
+
+            if (this.JsonObject.abilityDefNames != null)
             {
-                abilityDefs.Add(item.ToString());
+                var abilityDefs = new List<string>();
+                this.MetaData.Add(Keywords.AbilityDefId, abilityDefs);
+                foreach (var item in this.JsonObject.abilityDefNames)
+                {
+                    abilityDefs.Add(item.ToString());
+                }
             }
         }
     }

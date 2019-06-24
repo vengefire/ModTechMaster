@@ -59,7 +59,15 @@
                                         return;
                                     }
 
-                                    var objectKey = objectDefinition.MetaData[relationship.DependencyKey].ToString();
+                                    object objectKeyObject;
+                                    if (!objectDefinition.MetaData.TryGetValue(
+                                            relationship.DependencyKey,
+                                            out objectKeyObject))
+                                    {
+                                        return;
+                                    }
+
+                                    var objectKey = objectKeyObject as string;
                                     var dependentKeys = candidate.MetaData[relationship.DependentKey];
 
                                     if (dependentKeys == null)
@@ -120,7 +128,14 @@
                                         return;
                                     }
 
-                                    var dependencyKey = candidate.MetaData[relationship.DependencyKey].ToString();
+                                    object dependencyKeyObject; //= candidate.MetaData[relationship.DependencyKey].ToString();
+                                    if (!candidate.MetaData.TryGetValue(relationship.DependencyKey, out dependencyKeyObject))
+                                    {
+                                        return;
+                                    }
+
+                                    var dependencyKey = dependencyKeyObject as string;
+
                                     if ((relationship.HasMultipleDependencies && ((List<string>)objectKeys).Any(s => s.Equals(dependencyKey, StringComparison.OrdinalIgnoreCase))) 
                                         || string.Equals(dependencyKey, objectKeys.ToString(), StringComparison.OrdinalIgnoreCase))
                                     {

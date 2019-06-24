@@ -111,11 +111,17 @@
         Dll,
 
         DebugSettings,
+
         SimGameStatDescDef,
+
         GameTip,
+
         SoundBank,
+
         ModSettings,
 
-        LanceSlotDef // Custom Definition to support lance validation and control
+        LanceSlotDef,
+
+        TraitDef
     }
 }

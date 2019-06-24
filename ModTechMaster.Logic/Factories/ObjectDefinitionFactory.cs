@@ -269,6 +269,7 @@
                         referenceFinderService,
                         factionService);
                     break;
+                case ObjectType.TraitDef:
                 case ObjectType.AbilityDef:
                 case ObjectType.MovementCapabilitiesDef:
                 case ObjectType.ApplicationConstants:

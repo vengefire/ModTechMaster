@@ -19,9 +19,10 @@
         private static readonly Dictionary<string, ObjectType> streamingAssetsDirectoryToObjectTypes =
             new Dictionary<string, ObjectType>
                 {
+                    { "traits", ObjectType.TraitDef },
                     { "abilities", ObjectType.AbilityDef },
                     { "ammunition", ObjectType.AmmunitionDef },
-                    { "ammunitionBox", ObjectType.AmmunitionBoxDef },
+                    { "ammunitionbox", ObjectType.AmmunitionBoxDef },
                     { "assetbundles", ObjectType.AssetBundle },
                     { "backgrounds", ObjectType.BackgroundDef },
                     { "cast", ObjectType.CastDef },
@@ -30,21 +31,22 @@
                     { "hardpoints", ObjectType.HardpointDataDef },
                     { "heatsinks", ObjectType.HeatSinkDef },
                     { "heraldry", ObjectType.HeraldryDef },
-                    { "itemCollections", ObjectType.ItemCollectionDef },
+                    { "itemcollections", ObjectType.ItemCollectionDef },
                     { "jumpjets", ObjectType.JumpJetDef },
                     { "lance", ObjectType.LanceDef },
                     { "mech", ObjectType.MechDef },
                     { "movement", ObjectType.MovementCapabilitiesDef },
                     { "pilot", ObjectType.PilotDef },
-                    { "shipUpgrades", ObjectType.ShipModuleUpgrade },
+                    { "shipupgrades", ObjectType.ShipModuleUpgrade },
                     { "shops", ObjectType.ShopDef },
                     { "starsystem", ObjectType.StarSystemDef },
-                    { "turretChassis", ObjectType.TurretChassisDef },
+                    { "turretchassis", ObjectType.TurretChassisDef },
                     { "turrets", ObjectType.TurretDef },
                     { "upgrades", ObjectType.UpgradeDef },
                     { "vehicle", ObjectType.VehicleDef },
-                    { "vehicleChassis", ObjectType.VehicleChassisDef },
+                    { "vehiclechassis", ObjectType.VehicleChassisDef },
                     { "weapon", ObjectType.WeaponDef },
+                    { "pathing", ObjectType.PathingCapabilitiesDef },
                 };
 
         public static object ProcessFile(
@@ -61,7 +63,21 @@
             {
                 // Handle json object definition...
                 IObjectDefinition objectDefinition = null;
-                dynamic jsonData = JsonConvert.DeserializeObject(fileData);
+                dynamic jsonData = JsonConvert.DeserializeObject(fileData, new JsonSerializerSettings()
+                                                                               {
+                                                                                   Error = (sender, args) =>
+                                                                                       {
+                                                                                           logger.Warn($"Error deserializing [{fi.FullName}]", args.ErrorContext.Error);
+                                                                                           args.ErrorContext.Handled =
+                                                                                               true;
+                                                                                       }
+                                                                               });
+
+                if (jsonData == null)
+                {
+                    return null;
+                }
+
                 var description = ObjectDefinitionDescription.CreateDefault(jsonData.Description);
 
                 if (streamingAssetsDirectoryToObjectTypes.ContainsKey(hostDirectory.ToLower()))
@@ -126,6 +142,16 @@
             var identifier = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
             switch (hostDirectory.ToLower())
             {
+                case "assetbundles":
+                    var assetBundleDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
+                        ObjectType.AssetBundle,
+                        new ObjectDefinitionDescription(fi.Name, fi.Name, null),
+                        null,
+                        fi.FullName,
+                        referenceFinderService);
+                    return assetBundleDefinition;
+                    break;
+
                 case "mechportraits":
                     var objectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
                         ObjectType.Sprite,

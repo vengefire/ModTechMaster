@@ -32,6 +32,10 @@
             {
                 foreach (var skill in this.JsonObject.Progression)
                 {
+                    if (!((JProperty)skill).Name.EndsWith("Skills"))
+                    {
+                        continue;
+                    }
                     foreach (var level in skill)
                     {
                         foreach (var abilityList in level)

@@ -75,6 +75,7 @@
     <Compile Include="Extensions\Enumerable\EnumerableExtensions.cs" />
     <Compile Include="Extensions\Enums\EnumExtensions.cs" />
     <Compile Include="Extensions\File\FileExtensions.cs" />
+    <Compile Include="Extensions\Json\JsonExtensions.cs" />
     <Compile Include="Extensions\Queryable\QueryableExtensions.cs" />
     <Compile Include="Extensions\List\ListExtensions.cs" />
     <Compile Include="Extensions\MailMessage\MailMessageExtensions.cs" />

@@ -56,7 +56,11 @@
                 var invalidJsonFiles = jsonValidator.ValidateJsonFiles(options.ModsDirectory).ToList();
                 if (invalidJsonFiles.Any())
                 {
-                    logger.Error("Invalid JSON files were found:");
+                    logger.Error("Invalid JSON files were found (list):");
+
+                    Console.WriteLine(string.Join("\r\n", invalidJsonFiles.Select(tuple => $"{tuple.Item1}")));
+
+                    logger.Error("Invalid JSON files were found (details):");
                     Console.WriteLine(
                         string.Join("\r\n", invalidJsonFiles.Select(tuple => $"[{tuple.Item1}] - {tuple.Item2}")));
                     Console.WriteLine("Press any key to continue...");

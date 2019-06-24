@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Framework.Utils.Extensions.Json;
+
     using ModTechMaster.Core.Constants;
     using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Enums.Mods;
@@ -113,7 +115,21 @@
                 this.MetaData.Add(Keywords.PilotId, this.UnitId);
             }
 
-            if (lanceUnit.unitTagSet?.items != null)
+            bool CheckTagSet(dynamic val)
+            {
+                if (val is JValue jVal && !jVal.IsNullOrEmpty())
+                {
+                    return true;
+                }
+                else if (val is JToken jTok && !jTok.IsNullOrEmpty())
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            if (CheckTagSet(lanceUnit.unitTagSet) && lanceUnit.unitTagSet?.items != null)
             {
                 foreach (var tagItem in lanceUnit.unitTagSet.items)
                 {
@@ -127,7 +143,7 @@
                 }
             }
 
-            if (lanceUnit.excludedUnitTagSet?.items != null)
+            if (CheckTagSet(lanceUnit.excludedUnitTagSet) && lanceUnit.excludedUnitTagSet?.items != null)
             {
                 foreach (var tagItem in lanceUnit.excludedUnitTagSet.items)
                 {
@@ -141,7 +157,7 @@
                 }
             }
 
-            if (lanceUnit.pilotTagSet?.items != null)
+            if (CheckTagSet(lanceUnit.pilotTagSet) && lanceUnit.pilotTagSet?.items != null)
             {
                 foreach (var tagItem in lanceUnit.pilotTagSet.items)
                 {
@@ -155,7 +171,7 @@
                 }
             }
 
-            if (lanceUnit.excludedPilotTagSet?.items != null)
+            if (CheckTagSet(lanceUnit.excludedPilotTagSet) && lanceUnit.excludedPilotTagSet?.items != null)
             {
                 foreach (var tagItem in lanceUnit.excludedPilotTagSet.items)
                 {
