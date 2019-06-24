@@ -100,37 +100,42 @@
 
         public virtual void AddMetaData()
         {
-            if (this.ObjectDescription?.Id != null)
+            void UpsertKeyValue(string key, string value)
             {
-                if (!this.MetaData.ContainsKey(Keywords.Id))
+                if (!this.MetaData.ContainsKey(key))
                 {
-                    this.MetaData.Add(Keywords.Id, this.ObjectDescription.Id);
+                    this.MetaData.Add(key, value);
                 }
                 else
                 {
-                    this.MetaData[Keywords.Id] = this.ObjectDescription.Id;
+                    this.MetaData[key] = value;
                 }
+            }
+
+            if (this.ObjectDescription?.Id != null)
+            {
+                UpsertKeyValue(Keywords.Id, this.ObjectDescription.Id);
             }
             else if (this.JsonObject?.Id != null)
             {
-                this.MetaData.Add(Keywords.Id, this.JsonObject.Id);
+                UpsertKeyValue(Keywords.Id, this.JsonObject.Id);
             }
             else if (this.JsonObject?.identifier != null)
             {
-                this.MetaData.Add(Keywords.Id, this.JsonObject.identifier);
+                UpsertKeyValue(Keywords.Id, this.JsonObject.identifier);
             }
             else if (this.JsonObject?.ID != null)
             {
-                this.MetaData.Add(Keywords.Id, this.JsonObject.ID);
+                UpsertKeyValue(Keywords.Id, this.JsonObject.ID);
             }
 
             if (this.ObjectDescription?.Name != null)
             {
-                this.MetaData.Add(Keywords.Name, this.ObjectDescription.Name);
+                UpsertKeyValue(Keywords.Name, this.ObjectDescription.Name);
             }
             else if (this.JsonObject?.Name != null)
             {
-                this.MetaData.Add(Keywords.Name, this.JsonObject.Name);
+                UpsertKeyValue(Keywords.Name, this.JsonObject.Name);
             }
 
             // If we didn't find a Name in our json store (which may not be there if we're a resource object) then add our default name (FileName)
@@ -175,7 +180,7 @@
                                ValidationResultReasons = unsatisfiedDependencies.Select(
                                        reference => new ValidationResultReason(
                                            this,
-                                           $"This [{this.ObjectType}]-[{this.Name}] failed to satisfy dependency of [{reference.Relationship.DependencyType}]-[{reference.ReferenceKey}] via [{reference.Relationship.DependentKey}]."))
+                                           $"[{this.ObjectType}]-[{this.Id}] --> [{reference.Relationship.DependencyType}]-[{reference.ReferenceKey}] via [{reference.Relationship.DependentKey}]."))
                                    .Cast<IValidationResultReason>().ToList()
                            };
             }

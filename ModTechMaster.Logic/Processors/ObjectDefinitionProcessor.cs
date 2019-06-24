@@ -22,7 +22,7 @@
         {
             dynamic json = JsonConvert.DeserializeObject(File.ReadAllText(fi.FullName));
             return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
-                manifestEntry.EntryType,
+                objectTypeOverride ?? manifestEntry.EntryType,
                 ProcessObjectDescription(json),
                 json,
                 fi.FullName,

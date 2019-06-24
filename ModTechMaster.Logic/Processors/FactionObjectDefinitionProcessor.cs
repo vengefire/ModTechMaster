@@ -12,7 +12,8 @@
 
     using Newtonsoft.Json;
 
-    internal class ObjectDefinitionProcessor : IObjectDefinitionProcessor
+    internal class 
+        ObjectDefinitionProcessor : IObjectDefinitionProcessor
     {
         public IObjectDefinition ProcessObjectDefinition(
             IManifestEntry manifestEntry,

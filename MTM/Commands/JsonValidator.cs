@@ -6,17 +6,16 @@
     using System.Linq;
 
     using Castle.Core.Logging;
-    using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 
     using Framework.Utils.Instrumentation;
 
     using Newtonsoft.Json;
 
-    public class ValidateJsonCommand
+    public class JsonValidator
     {
         private readonly ILogger logger;
 
-        public ValidateJsonCommand(ILogger logger)
+        public JsonValidator(ILogger logger)
         {
             this.logger = logger;
         }
@@ -50,7 +49,7 @@
 
                 if (maxDepth == -1 || depth != maxDepth)
                 {
-                    di.GetDirectories().AsParallel().ForAll(subDi => RecurseDirectories(subDi, depth++, maxDepth));
+                    di.GetDirectories().Where(info => !info.Attributes.HasFlag(FileAttributes.Hidden)).AsParallel().ForAll(subDi => RecurseDirectories(subDi, depth++, maxDepth));
                 }
             }
 

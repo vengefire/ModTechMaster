@@ -52,7 +52,7 @@
 
             if (options.ValidateJson)
             {
-                var jsonValidator = new ValidateJsonCommand(logger);
+                var jsonValidator = new JsonValidator(logger);
                 var invalidJsonFiles = jsonValidator.ValidateJsonFiles(options.ModsDirectory).ToList();
                 if (invalidJsonFiles.Any())
                 {
@@ -100,11 +100,12 @@
                 logger.Info("Running validation procedure...");
                 var validateResult = modCollection.ValidateMods();
                 logger.Info($"Validation Result : {validateResult.Result}");
-                Console.WriteLine(
+                logger.Warn(
                     string.Join(
                         "\r\n",
                         validateResult.ValidationResultReasons.Select(
                             reason => $"[{reason.FailingObject}] - {reason.FailureReason}")));
+                logger.Info($"Total Validation Failures = [{validateResult.ValidationResultReasons.Count}]");
             }
 
             logger.Info("Press any key to exit.");

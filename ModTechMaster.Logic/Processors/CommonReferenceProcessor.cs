@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
 
     using ModTechMaster.Core.Enums;
@@ -61,6 +62,11 @@
                                     var objectKey = objectDefinition.MetaData[relationship.DependencyKey].ToString();
                                     var dependentKeys = candidate.MetaData[relationship.DependentKey];
 
+                                    if (dependentKeys == null)
+                                    {
+                                        return;
+                                    }
+
                                     if ((relationship.HasMultipleDependencies
                                         && ((List<string>)dependentKeys).Any(s => string.Equals(s, objectKey, StringComparison.OrdinalIgnoreCase)))
                                         || string.Compare(dependentKeys.ToString(), objectKey, StringComparison.InvariantCultureIgnoreCase) == 0)
@@ -109,6 +115,11 @@
 
                                     var objectKeys = objectDefinition.MetaData[relationship.DependentKey];
 
+                                    if (objectKeys == null)
+                                    {
+                                        return;
+                                    }
+
                                     var dependencyKey = candidate.MetaData[relationship.DependencyKey].ToString();
                                     if ((relationship.HasMultipleDependencies && ((List<string>)objectKeys).Any(s => s.Equals(dependencyKey, StringComparison.OrdinalIgnoreCase))) 
                                         || string.Equals(dependencyKey, objectKeys.ToString(), StringComparison.OrdinalIgnoreCase))
@@ -128,7 +139,7 @@
                                 });
 
                         // Add an invalid entry for each specified dependency that was not matched...
-                        List<string> keys = !objectDefinition.MetaData.ContainsKey(relationship.DependentKey)
+                        List<string> keys = !objectDefinition.MetaData.ContainsKey(relationship.DependentKey) || objectDefinition.MetaData[relationship.DependentKey] == null
                                                 ?
                                                 new List<string>()
                                                 : !relationship.HasMultipleDependencies

@@ -58,7 +58,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\ValidateJsonCommand.cs" />
+    <Compile Include="Commands\JsonValidator.cs" />
     <Compile Include="ExceptionLogger.cs" />
     <Compile Include="Init\Bootstrap.cs" />
     <Compile Include="Init\CastleWindsorContainer.cs" />
