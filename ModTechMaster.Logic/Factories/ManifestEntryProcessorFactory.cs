@@ -1,5 +1,7 @@
 ﻿namespace ModTechMaster.Logic.Factories
 {
+    using Castle.Core.Logging;
+
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Factories;
     using ModTechMaster.Core.Interfaces.Processors;
@@ -7,23 +9,23 @@
 
     public class ManifestEntryProcessorFactory : IManifestEntryProcessorFactory
     {
-        public IManifestEntryProcessor Get(ObjectType type)
+        public IManifestEntryProcessor Get(ObjectType type, ILogger logger)
         {
             switch (type)
             {
                 case ObjectType.SimGameConversations:
                 case ObjectType.Texture2D:
                 case ObjectType.Sprite:
-                    return new ResourceManifestEntryProcessor();
+                    return new ResourceManifestEntryProcessor(logger);
                 case ObjectType.AssetBundle:
-                    return new AssetBundleManifestEntryProcessor();
+                    return new AssetBundleManifestEntryProcessor(logger);
                 case ObjectType.Prefab:
-                    return new PrefabManifestEntryProcessor();
+                    return new PrefabManifestEntryProcessor(logger);
                 case ObjectType.CCDefaults:
                 case ObjectType.CCCategories:
-                    return new CustomComponentsManifestEntryProcessor();
+                    return new CustomComponentsManifestEntryProcessor(logger);
                 default:
-                    return new ManifestEntryProcessor();
+                    return new ManifestEntryProcessor(logger);
             }
         }
     }

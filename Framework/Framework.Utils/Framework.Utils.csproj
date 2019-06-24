@@ -80,6 +80,7 @@
     <Compile Include="Extensions\MailMessage\MailMessageExtensions.cs" />
     <Compile Include="Extensions\Object\ObjectExtensions.cs" />
     <Compile Include="Extensions\String\StringExtensions.cs" />
+    <Compile Include="Instrumentation\ScopedStopwatch.cs" />
     <Compile Include="Json\JsonUtils.cs" />
     <Compile Include="MSMQ\MessageQueueExtensions.cs" />
     <Compile Include="MSMQ\NativeMethods.cs" />

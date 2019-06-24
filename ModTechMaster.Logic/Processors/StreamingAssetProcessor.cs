@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.IO;
 
+    using Castle.Core.Logging;
+
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Services;
@@ -51,7 +53,8 @@
             string filename,
             string fileData,
             string hostDirectory,
-            IReferenceFinderService referenceFinderService)
+            IReferenceFinderService referenceFinderService,
+            ILogger logger)
         {
             var fi = new FileInfo(filename);
             if (fi.Extension == ".json")

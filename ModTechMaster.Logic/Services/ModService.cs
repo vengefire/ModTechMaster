@@ -54,19 +54,29 @@
 
         public IModCollection LoadCollectionFromPath(string battleTechPath, string modsPath, string name)
         {
+            this.ModCollection.Name = name;
+            this.ModCollection.Path = modsPath;
+
             if (!DirectoryUtils.Exists(modsPath))
             {
                 throw new Exception($@"The specified Mods directory [{modsPath}] does not exist.");
             }
 
+            var gameDirectoryValid = true;
             if (!DirectoryUtils.Exists(battleTechPath))
             {
-                throw new Exception($@"The specified Battle Tech directory [{battleTechPath}] does not exist.");
+                this.logger.Warn($"The Battle Tech Path [{battleTechPath}] could not be found.");
+                gameDirectoryValid = false;
             }
 
-            /*var modsDirectoryInfo = new DirectoryInfo(modsPath);
-            this.ModCollection.Name = name;
-            this.ModCollection.Path = modsPath;
+            if (gameDirectoryValid)
+            {
+                var gameDirectoryInfo = new DirectoryInfo(battleTechPath);
+                this.logger.Info($"Processing BattleTech from [{gameDirectoryInfo.FullName}]");
+                var battleTechMod = this.TryLoadFromPath(gameDirectoryInfo.FullName, true);
+            }
+
+            var modsDirectoryInfo = new DirectoryInfo(modsPath);
 
             this.logger.Info($"Processing mods from [{modsDirectoryInfo.FullName}]");
 
@@ -76,14 +86,10 @@
                         this.logger.Debug(".");
                         var mod = this.TryLoadFromPath(sub.FullName, false);
                         this.ModCollection.AddModToCollection(mod);
-                    });*/
-
-            var gameDirectoryInfo = new DirectoryInfo(battleTechPath);
-            this.logger.Info($"Processing BattleTech from [{gameDirectoryInfo.FullName}]");
-            var battleTechMod = this.TryLoadFromPath(gameDirectoryInfo.FullName, true);
+                    });
 
             this.ModCollection.Mods.Sort(
-                (mod, mod1) => string.Compare(mod.Name, mod1.Name, StringComparison.OrdinalIgnoreCase));
+                (mod, mod1) => mod.IsBattleTech ? 1 : string.Compare(mod.Name, mod1.Name, StringComparison.OrdinalIgnoreCase));
 
             this.OnPropertyChanged(nameof(this.ModCollection));
 
@@ -94,6 +100,7 @@
         {
             if (!DirectoryUtils.Exists(path) || (!isBattleTechData && !File.Exists(ModFilePath(path))))
             {
+                this.logger.Warn($"Path [{path}] does not exist. Returning null Mod.");
                 return null;
             }
 
@@ -119,7 +126,7 @@
                 simPath,
                 null,
                 this.referenceFinderService);
-            //newEntry.ParseStreamingAssets();
+
             this.RecurseStreamingAssetsDirectory(simPath, newEntry);
             manifest.Entries.Add(newEntry);
         }
@@ -139,7 +146,8 @@
                     fi.FullName,
                     fileData,
                     hostDirectory,
-                    this.referenceFinderService);
+                    this.referenceFinderService,
+                    this.logger);
 
                 if (retVal != null)
                 {
@@ -204,11 +212,14 @@
             Mod mod;
             if (!isBattleTechData)
             {
+                this.logger.Info($"Parsing mod config for [{ModFilePath(path)}]...");
                 dynamic src = JsonConvert.DeserializeObject(File.ReadAllText(ModFilePath(path)));
                 mod = this.InitModFromJson(src, ModFilePath(path));
+                this.logger.Info($"Processed mod config for [{mod.Name}].");
             }
             else
             {
+                this.logger.Info($"Indirecting BattleTech data to proxy mod...");
                 mod = new Mod("Battle Tech", true, "N/A", "Base Game Data", "HBS", "N/A", string.Empty, new HashSet<string>(), new HashSet<string>(), path, null, -1, null)
                           {
                               IsBattleTech = true
@@ -222,6 +233,7 @@
 
         private Manifest ProcessManifest(Mod mod)
         {
+            this.logger.Debug($"Processing Mod [{mod.Name}] manifest...");
             var manifest = new Manifest(mod, mod.JsonObject.Manifest);
             if (manifest.JsonObject != null)
             {
@@ -243,6 +255,7 @@
         private ManifestEntry ProcessManifestEntry(Manifest manifest, dynamic manifestEntrySrc)
         {
             ObjectType entryType;
+            this.logger.Debug($"Parsing manifest entry type [{(string)manifestEntrySrc.Type}]");
             if (!Enum.TryParse((string)manifestEntrySrc.Type, out entryType))
             {
                 this.messageService.PushMessage(
@@ -251,7 +264,8 @@
                 return null;
             }
 
-            var manifestEntryProcessor = this.manifestEntryProcessorFactory.Get(entryType);
+            this.logger.Debug($"Allocating entry type processor for [{entryType}]...");
+            var manifestEntryProcessor = this.manifestEntryProcessorFactory.Get(entryType, this.logger);
             return manifestEntryProcessor.ProcessManifestEntry(
                 manifest,
                 entryType,
@@ -270,6 +284,7 @@
             }
             else
             {
+                this.logger.Info($"Indirecting BattleTech data to proxy Manifest...");
                 manifest = new Manifest(mod, null);
             }
 
@@ -277,8 +292,10 @@
             // Special handling for sim game constants...
             var streamingAssetsPath = mod.IsBattleTech ? @"BattleTech_Data\\StreamingAssets\\data" : @"StreamingAssets";
             var fullPath = Path.Combine(mod.SourceDirectoryPath, mod.IsBattleTech ? "BattleTech" : string.Empty, streamingAssetsPath);
+            
             if (Directory.Exists(fullPath))
             {
+                this.logger.Info($"Trying to process streaming assets at [{fullPath}]...");
                 this.AddStreamingAssetsManifestEntry(fullPath, mod, manifest);
             }
 
@@ -289,6 +306,7 @@
 
             if (!mod.IsBattleTech)
             {
+                this.logger.Info($"Processing resource definitions from [{mod.SourceDirectoryPath}]...");
                 var di = new DirectoryInfo(mod.SourceDirectoryPath);
                 foreach (var file in di.EnumerateFiles())
                 {

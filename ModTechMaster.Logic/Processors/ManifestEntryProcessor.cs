@@ -4,6 +4,8 @@
     using System.IO;
     using System.Linq;
 
+    using Castle.Core.Logging;
+
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Core.Interfaces.Processors;
@@ -13,6 +15,13 @@
 
     public class ManifestEntryProcessor : IManifestEntryProcessor
     {
+        private readonly ILogger logger;
+
+        public ManifestEntryProcessor(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
         public IManifestEntry ProcessManifestEntry(
             IManifest manifest,
             ObjectType entryType,
