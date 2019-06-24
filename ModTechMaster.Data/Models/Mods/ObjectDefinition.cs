@@ -152,7 +152,7 @@
 
             // Add tag data. Not all relationships are defined via tight IDs. Some are defined by loose tags.
             var jobject = this.JsonObject as JObject;
-            var tags = jobject.Properties().FirstOrDefault(property => property.Name.Contains("Tags"))?.Value?.First;
+            var tags = jobject?.Properties().FirstOrDefault(property => property.Name.Contains("Tags"))?.Value?.First;
             var tagList = new List<string>();
             if (tags != null)
             {

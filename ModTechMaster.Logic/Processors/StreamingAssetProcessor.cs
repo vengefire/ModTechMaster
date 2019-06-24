@@ -44,7 +44,7 @@
                     { "upgrades", ObjectType.UpgradeDef },
                     { "vehicle", ObjectType.VehicleDef },
                     { "vehicleChassis", ObjectType.VehicleChassisDef },
-                    { "weapon", ObjectType.WeaponDef }
+                    { "weapon", ObjectType.WeaponDef },
                 };
 
         public static object ProcessFile(
@@ -123,8 +123,19 @@
                 return objectDefinition;
             }
 
+            var identifier = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
             switch (hostDirectory.ToLower())
             {
+                case "mechportraits":
+                    var objectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
+                        ObjectType.Sprite,
+                        new ObjectDefinitionDescription(identifier, identifier, null),
+                        null,
+                        fi.FullName,
+                        referenceFinderService);
+                    return objectDefinition;
+                    break;
+
                 case "itemcollections":
                     var itemCollection = new ItemCollectionObjectDefinition(
                         ObjectType.ItemCollectionDef,
@@ -150,7 +161,8 @@
                                 ObjectType.UnhandledResource,
                                 fi.FullName,
                                 fi.Name,
-                                fi.Name);
+                                identifier);
+                            resourceDefinition.AddMetaData();
                             break;
                     }
 

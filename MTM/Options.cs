@@ -13,7 +13,7 @@
         [Option('v', "val-refs", Required = false, Default = true, HelpText = "Validate Mod References")]
         public bool ValidateRefs { get; set; }
 
-        [Option('j', "val-json", Required = false, Default = true, HelpText = "Pre-validate Mod json files")]
+        [Option('j', "val-json", Required = false, Default = false, HelpText = "Pre-validate Mod json files")]
         public bool ValidateJson { get; set; }
     }
 }

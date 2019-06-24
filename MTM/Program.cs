@@ -104,7 +104,7 @@
                     string.Join(
                         "\r\n",
                         validateResult.ValidationResultReasons.Select(
-                            reason => $"[{reason.FailingObject}] - {reason.FailureReason}")));
+                            reason => $"[{reason.FailureReason}")));
                 logger.Info($"Total Validation Failures = [{validateResult.ValidationResultReasons.Count}]");
             }
 
