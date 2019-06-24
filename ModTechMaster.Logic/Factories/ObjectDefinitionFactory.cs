@@ -8,6 +8,7 @@
     using ModTechMaster.Core.Interfaces.Services;
     using ModTechMaster.Data.Models.Mods;
     using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
+    using ModTechMaster.Logic.Services;
 
     using Newtonsoft.Json.Linq;
 
@@ -17,6 +18,8 @@
 
         public static IObjectDefinitionFactory ObjectDefinitionFactorySingleton =>
             objectDefinitionFactorySingleton ?? (objectDefinitionFactorySingleton = new ObjectDefinitionFactory());
+
+        private static IFactionService factionService = new FactionService();
 
         public IObjectDefinition Get(
             ObjectType entryType,
@@ -263,7 +266,8 @@
                         objectDescription,
                         (JObject)jsonObject,
                         filePath,
-                        referenceFinderService);
+                        referenceFinderService,
+                        factionService);
                     break;
                 case ObjectType.AbilityDef:
                 case ObjectType.MovementCapabilitiesDef:

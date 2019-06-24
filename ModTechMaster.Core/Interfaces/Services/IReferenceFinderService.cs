@@ -18,5 +18,7 @@
         long ProcessAllReferences();
 
         long ProcessModCollectionReferences(IModCollection modCollection);
+
+        void ProcessModCollectionLanceSlotEligibility(IModCollection modCollection);
     }
 }

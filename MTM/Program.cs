@@ -108,6 +108,19 @@
                 logger.Info($"Total Validation Failures = [{validateResult.ValidationResultReasons.Count}]");
             }
 
+            if (options.ValidateLances)
+            {
+                logger.Info("Running lance validation procedure...");
+                var validateResult = modCollection.ValidateLances();
+                logger.Info($"Validation Result : {validateResult.Result}");
+                logger.Warn(
+                    string.Join(
+                        "\r\n",
+                        validateResult.ValidationResultReasons.Select(
+                            reason => $"[{reason.FailureReason}")));
+                logger.Info($"Total Lance Validation Failures = [{validateResult.ValidationResultReasons.Count}]");
+            }
+
             logger.Info("Press any key to exit.");
             Console.ReadKey();
 

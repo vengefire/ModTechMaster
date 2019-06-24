@@ -20,8 +20,6 @@
     /// </summary>
     public partial class ModCopyPage : UserControl, IPluginControl
     {
-        public IMessageService MessageService { get; }
-
         public ModCopyPage(
             IModService modService,
             ILogger logger,
@@ -35,7 +33,7 @@
                 modService,
                 logger,
                 mainModel,
-                new ReferenceFinderService(),
+                new ReferenceFinderService(logger),
                 messageService);
 
             this.InitializeComponent();
@@ -61,6 +59,8 @@
         }
 
         public static ModCopyPage Self { get; private set; }
+
+        public IMessageService MessageService { get; }
 
         public ModCopyModel ModCopyModel { get; }
 

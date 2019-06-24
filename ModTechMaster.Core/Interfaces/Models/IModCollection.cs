@@ -18,5 +18,7 @@
         void RemoveModFromCollection(IMod mod);
 
         IValidationResult ValidateMods();
+
+        IValidationResult ValidateLances();
     }
 }

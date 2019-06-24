@@ -6,8 +6,10 @@
     using System.Linq;
     using System.Runtime.CompilerServices;
 
+    using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
     using ModTechMaster.Data.Annotations;
+    using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
 
     public class ModCollection : IModCollection
     {
@@ -63,6 +65,11 @@
         public IValidationResult ValidateMods()
         {
             return ValidationResult.AggregateResults(this.Mods.Select(mod => mod.ValidateObject()));
+        }
+
+        public IValidationResult ValidateLances()
+        {
+            return ValidationResult.AggregateResults(this.GetReferenceableObjects().Where(o => o.ObjectType == ObjectType.LanceDef).Cast<LanceDefObjectDefinition>().Select(o => o.ValidateObject()));
         }
 
         [NotifyPropertyChangedInvocator]
