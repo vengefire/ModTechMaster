@@ -41,7 +41,8 @@
         }
 
         public List<IObjectReference<IReferenceableObject>> GetObjectReferences(
-            IReferenceableObject referenceableObject)
+            IReferenceableObject referenceableObject,
+            List<IReferenceableObject> baseReferences)
         {
             if (referenceableObject == null)
             {
@@ -53,7 +54,7 @@
                 var newReferences = CommonReferenceProcessor.FindReferences<IReferenceableObject>(
                     this.ReferenceableObjectProvider,
                     referenceableObject,
-                    null);
+                    baseReferences);
 
                 this.objectReferencesDictionary[referenceableObject] = newReferences;
             }
@@ -61,7 +62,7 @@
             return this.objectReferencesDictionary[referenceableObject];
         }
 
-        public long ProcessAllReferences()
+        public long ProcessAllReferences(List<IReferenceableObject> baseReferences)
         {
             var allReferences = this.ReferenceableObjectProvider.GetReferenceableObjects();
             var sw = new Stopwatch();
@@ -70,7 +71,7 @@
             allReferences.AsParallel().ForAll(
                 o =>
                     {
-                        var references = this.GetObjectReferences(o);
+                        var references = this.GetObjectReferences(o, baseReferences);
                     });
 
             sw.Stop();
@@ -99,15 +100,16 @@
         public long ProcessModCollectionReferences(IModCollection modCollection)
         {
             var allReferences = modCollection.GetReferenceableObjects();
+            var baseReferences = modCollection.Mods.FirstOrDefault(mod => mod.IsBattleTech)?.GetReferenceableObjects();
             var sw = new Stopwatch();
             sw.Start();
 
             allReferences.AsParallel().ForAll(
-                // allReferences.ToList().ForEach(
+            //allReferences.ToList().ForEach(
                 o =>
                     {
                         // allReferences.ForEach(o =>
-                        var references = this.GetObjectReferences(o);
+                        var references = this.GetObjectReferences(o, baseReferences);
                     });
 
             sw.Stop();

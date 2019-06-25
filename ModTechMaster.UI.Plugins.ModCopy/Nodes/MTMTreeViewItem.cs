@@ -209,7 +209,7 @@
                 if (this.objectReferences == null)
                 {
                     this.objectReferences =
-                        this.ReferenceFinderService.GetObjectReferences(this.Object as IReferenceableObject);
+                        this.ReferenceFinderService.GetObjectReferences(this.Object as IReferenceableObject, null);
                     this.objectReferences.Sort(
                         (reference, objectReference) => reference.ReferenceObject == null ? 1 :
                                                         objectReference.ReferenceObject == null ? -1 : 

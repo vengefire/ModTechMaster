@@ -65,7 +65,7 @@
             {
                 if (this.objectReferences == null)
                 {
-                    this.objectReferences = this.ReferenceFinderService.GetObjectReferences(this);
+                    this.objectReferences = this.ReferenceFinderService.GetObjectReferences(this, null);
                     this.objectReferences.Sort(
                         (reference, objectReference) => 
                             reference.ReferenceObject == null ? 1 : 

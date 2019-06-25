@@ -19,7 +19,7 @@
         private static readonly Dictionary<string, ObjectType> streamingAssetsDirectoryToObjectTypes =
             new Dictionary<string, ObjectType>
                 {
-                    { "traits", ObjectType.TraitDef },
+                    { "traits", ObjectType.AbilityDef },
                     { "abilities", ObjectType.AbilityDef },
                     { "ammunition", ObjectType.AmmunitionDef },
                     { "ammunitionbox", ObjectType.AmmunitionBoxDef },
@@ -43,6 +43,11 @@
                     { "turretchassis", ObjectType.TurretChassisDef },
                     { "turrets", ObjectType.TurretDef },
                     { "upgrades", ObjectType.UpgradeDef },
+                    { "actuators", ObjectType.UpgradeDef },
+                    { "cockpitmods", ObjectType.UpgradeDef },
+                    { "general", ObjectType.UpgradeDef },
+                    { "gyros", ObjectType.UpgradeDef },
+                    { "targettrackingsystem", ObjectType.UpgradeDef },
                     { "vehicle", ObjectType.VehicleDef },
                     { "vehiclechassis", ObjectType.VehicleChassisDef },
                     { "weapon", ObjectType.WeaponDef },
@@ -63,13 +68,14 @@
             {
                 // Handle json object definition...
                 IObjectDefinition objectDefinition = null;
-                dynamic jsonData = JsonConvert.DeserializeObject(fileData, new JsonSerializerSettings()
-                                                                               {
-                                                                                   Error = (sender, args) =>
+                dynamic jsonData = JsonConvert.DeserializeObject(
+                    fileData,
+                    new JsonSerializerSettings()
+                        {
+                            Error = (sender, args) =>
                                                                                        {
                                                                                            logger.Warn($"Error deserializing [{fi.FullName}]", args.ErrorContext.Error);
-                                                                                           args.ErrorContext.Handled =
-                                                                                               true;
+                                                                                           args.ErrorContext.Handled = true;
                                                                                        }
                                                                                });
 
@@ -139,6 +145,16 @@
                 return objectDefinition;
             }
 
+            if (di.FullName.ToLower().Contains("emblems"))
+            {
+                hostDirectory = "emblems";
+            }
+
+            if (di.FullName.ToLower().Contains("sprites"))
+            {
+                hostDirectory = "sprites";
+            }
+
             var identifier = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
             switch (hostDirectory.ToLower())
             {
@@ -169,6 +185,28 @@
                         fi.FullName);
                     itemCollection.AddMetaData();
                     return itemCollection;
+                    break;
+
+                case "emblems":
+                    var texIdentifier = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+                    var resourceObjectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
+                        ObjectType.Texture2D,
+                        new ObjectDefinitionDescription(texIdentifier, texIdentifier, null),
+                        null,
+                        fi.FullName,
+                        referenceFinderService);
+                    return resourceObjectDefinition;
+                    break;
+
+                case "sprites":
+                    var spriteIdentifier = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
+                    var spriteObject = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
+                        ObjectType.Sprite,
+                        new ObjectDefinitionDescription(spriteIdentifier, spriteIdentifier, null),
+                        null,
+                        fi.FullName,
+                        referenceFinderService);
+                    return spriteObject;
                     break;
 
                 default:

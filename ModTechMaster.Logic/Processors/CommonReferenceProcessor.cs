@@ -6,6 +6,8 @@
     using System.Net;
     using System.Threading.Tasks;
 
+    using Castle.Core.Internal;
+
     using ModTechMaster.Core.Enums;
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
@@ -17,7 +19,7 @@
         public static List<IObjectReference<TType>> FindReferences<TType>(
             IReferenceableObjectProvider objectProvider,
             IReferenceableObject objectDefinition,
-            List<ObjectType> dependantTypesToIgnore)
+            List<IReferenceableObject> baseReferences)
             where TType : class, IReferenceableObject
         {
             if (objectDefinition == null)
@@ -153,6 +155,26 @@
                                     }
                                 });
 
+                        var ignoreList = new List<Tuple<ObjectType, ObjectType>>(new []
+                                                                                     {
+                                                                                         new Tuple<ObjectType, ObjectType>(ObjectType.ShopDef, ObjectType.WeaponDef),           // HBS Shopdefs contain refs to non-existant weapons
+                                                                                         new Tuple<ObjectType, ObjectType>(ObjectType.HardpointDataDef, ObjectType.Prefab),     // Ball ache to identify prefabs, and unnecessary.
+                                                                                         new Tuple<ObjectType, ObjectType>(ObjectType.TurretChassisDef, ObjectType.Prefab),     // Ball ache to identify prefabs, and unnecessary.
+                                                                                         new Tuple<ObjectType, ObjectType>(ObjectType.ShopDef, ObjectType.MechDef),             // Stupid Templates.
+                                                                                     });
+
+                        if (baseReferences != null && 
+                            baseReferences.Contains(objectDefinition))
+                        {
+                            if (ignoreList.Any(
+                                ignoreEntry =>
+                                    objectDefinition.ObjectType == ignoreEntry.Item1
+                                    && relationship.DependencyType == ignoreEntry.Item2))
+                            {
+                                return;
+                            }
+                        }
+
                         // Add an invalid entry for each specified dependency that was not matched...
                         List<string> keys = !objectDefinition.MetaData.ContainsKey(relationship.DependentKey) || objectDefinition.MetaData[relationship.DependentKey] == null
                                                 ?
@@ -161,10 +183,10 @@
                                                     ? new List<string>(new string[] {objectDefinition.MetaData[relationship.DependentKey].ToString()})
                                                     : new List<string>((List<string>)objectDefinition.MetaData[relationship.DependentKey]);
 
-                        keys.ForEach(
+                        keys.Where(s => !s.IsNullOrEmpty()).ToList().ForEach(
                             s =>
                                 {
-                                    if (!dependencyRecs.Any(reference => reference.Relationship == relationship && reference.ReferenceKey == s))
+                                    if (!dependencyRecs.Any(reference => reference.Relationship == relationship && string.Equals(reference.ReferenceKey.ToString(), s, StringComparison.InvariantCultureIgnoreCase)))
                                     {
                                         lock (dependencyRecs)
                                         {

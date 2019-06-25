@@ -13,9 +13,9 @@
 
         List<IObjectRelationship> GetDependentRelationships(ObjectType objectType);
 
-        List<IObjectReference<IReferenceableObject>> GetObjectReferences(IReferenceableObject referenceableObject);
+        List<IObjectReference<IReferenceableObject>> GetObjectReferences(IReferenceableObject referenceableObject, List<IReferenceableObject> baseReferences);
 
-        long ProcessAllReferences();
+        long ProcessAllReferences(List<IReferenceableObject> baseReferences);
 
         long ProcessModCollectionReferences(IModCollection modCollection);
 

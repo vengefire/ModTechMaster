@@ -22,8 +22,8 @@
         public override void AddMetaData()
         {
             base.AddMetaData();
-            this.MetaData.Add(Keywords.HardpointDataDefId, this.JsonObject.HardpointDataDefID);
-            this.MetaData.Add(Keywords.PrefabId, this.JsonObject.PrefabIdentifier);
+            this.MetaData.Add(Keywords.HardpointDataDefId, this.JsonObject.HardpointDataDefID?.ToString());
+            this.MetaData.Add(Keywords.PrefabId, this.JsonObject.PrefabIdentifier?.ToString());
         }
     }
 }

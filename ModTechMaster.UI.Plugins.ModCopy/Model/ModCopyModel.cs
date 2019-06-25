@@ -612,7 +612,7 @@
                 this.ReferenceFinderService.ReferenceableObjectProvider = this.modService.ModCollection;
                 if (this.ProcessRefsOnLoad)
                 {
-                    var elapsedTime = this.ReferenceFinderService.ProcessAllReferences();
+                    var elapsedTime = this.ReferenceFinderService.ProcessAllReferences(this.modService.ModCollection.Mods.FirstOrDefault(mod => mod.IsBattleTech)?.GetReferenceableObjects());
                     this.MessageService.PushMessage($"References processed in [{elapsedTime}]ms.", MessageType.Info);
                     this.MessageService.PushMessage("Building Mod Collection views...", MessageType.Info);
                 }

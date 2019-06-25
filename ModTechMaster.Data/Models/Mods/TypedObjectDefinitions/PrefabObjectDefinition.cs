@@ -22,7 +22,7 @@
         public override void AddMetaData()
         {
             // We us the asset bundle name as the ID so chassis defs can link to all the required prefabs, which will link to the required asset bundle.
-            var assetBundleName = this.JsonObject.AssetBundleName;
+            var assetBundleName = this.JsonObject.AssetBundleName.ToString();
             this.MetaData.Add(Keywords.Id, this.SourceFileName);
             this.MetaData.Add(Keywords.Name, this.SourceFileName);
             base.AddMetaData();

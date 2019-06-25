@@ -160,6 +160,18 @@
                             if (retVal is IObjectDefinition obj)
                             {
                                 newEntry.Objects.Add(obj);
+
+                                if (retVal is AssetBundleObjectDefinition assetBundleObjectDefinition)
+                                {
+                                    var stubJsonObject = JsonConvert.DeserializeObject($"{{\"AssetBundleName\": \"{assetBundleObjectDefinition.Id}\"}}");
+                                    var prefabObjectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
+                                        ObjectType.Prefab,
+                                        new ObjectDefinitionDescription(null, null, null, null, (JObject)stubJsonObject),
+                                        (JObject)stubJsonObject,
+                                        Path.Combine(path, assetBundleObjectDefinition.Name),
+                                        referenceFinderService);
+                                    newEntry.Objects.Add(prefabObjectDefinition);
+                                }
                             }
                             else if (retVal is IResourceDefinition res)
                             {
@@ -225,7 +237,7 @@
             else
             {
                 this.logger.Info($"Indirecting BattleTech data to proxy mod...");
-                mod = new Mod("Battle Tech", true, "N/A", "Base Game Data", "HBS", "N/A", string.Empty, new HashSet<string>(), new HashSet<string>(), path, null, -1, null)
+                mod = new Mod("Battle Tech", true, "N/A", "Base Game Data", "HBS", "N/A", string.Empty, new HashSet<string>(), new HashSet<string>(), Path.Combine(path, @"fake.json"), null, -1, null)
                           {
                               IsBattleTech = true
                           };
@@ -295,8 +307,8 @@
 
             // Process implicits like StreamingAssets folder...
             // Special handling for sim game constants...
-            var streamingAssetsPath = mod.IsBattleTech ? @"BattleTech_Data\\StreamingAssets\\data" : @"StreamingAssets";
-            var fullPath = Path.Combine(mod.SourceDirectoryPath, mod.IsBattleTech ? "BattleTech" : string.Empty, streamingAssetsPath);
+            var streamingAssetsPath = mod.IsBattleTech ? @"BattleTech_Data\\StreamingAssets" : @"StreamingAssets";
+            var fullPath = Path.Combine(mod.SourceDirectoryPath, streamingAssetsPath);
             
             if (Directory.Exists(fullPath))
             {

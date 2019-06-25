@@ -26,10 +26,10 @@
         public override void AddMetaData()
         {
             base.AddMetaData();
-            this.MetaData.Add(Keywords.MovementCapDefId, this.JsonObject.MovementCapDefID);
-            this.MetaData.Add(Keywords.PathingCapDefId, this.JsonObject.PathingCapDefID);
-            this.MetaData.Add(Keywords.HardpointDataDefId, this.JsonObject.HardpointDataDefID);
-            this.MetaData.Add(Keywords.PrefabId, this.JsonObject.PrefabIdentifier);
+            this.MetaData.Add(Keywords.MovementCapDefId, this.JsonObject.MovementCapDefID.ToString());
+            this.MetaData.Add(Keywords.PathingCapDefId, this.JsonObject.PathingCapDefID.ToString());
+            this.MetaData.Add(Keywords.HardpointDataDefId, this.JsonObject.HardpointDataDefID.ToString());
+            this.MetaData.Add(Keywords.PrefabId, this.JsonObject.PrefabIdentifier.ToString());
 
             var componentIdList = new Dictionary<string, HashSet<string>>
                                       {
