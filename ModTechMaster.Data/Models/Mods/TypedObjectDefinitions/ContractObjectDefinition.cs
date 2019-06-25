@@ -25,12 +25,28 @@
         public override void AddMetaData()
         {
             base.AddMetaData();
+
+            var dynamicIdsList = new List<string>()
+                                     {
+                                         "UseLance",
+                                         "mechDef_InheritLance",
+                                         "pilotDef_InheritLance",
+                                         "vehicleDef_InheritLance",
+                                         "Tagged",
+                                         "mechDef_None",
+                                         "turretDef_InheritLance",
+                                         "castDef_None"
+                                     };
+
             var castList = new HashSet<string>();
             foreach (var dialog in this.JsonObject.dialogueList)
             {
                 foreach (var dialogueContent in dialog.dialogueContent)
                 {
-                    castList.Add(dialogueContent.selectedCastDefId.ToString());
+                    if (!dynamicIdsList.Contains(dialogueContent.selectedCastDefId.ToString()))
+                    {
+                        castList.Add(dialogueContent.selectedCastDefId.ToString());
+                    }
                 }
             }
 
@@ -44,14 +60,6 @@
             {
                 this.MetaData.Add(Keywords.DialogBucketId, this.JsonObject.overrideAutoCompleteDialogueId);
             }
-
-            var dynamicIdsList = new List<string>()
-                                     {
-                                         "UseLance",
-                                         "mechDef_InheritLance",
-                                         "pilotDef_InheritLance",
-                                         "vehicleDef_InheritLance",
-                                     };
 
             var lanceDefs = new HashSet<string>();
             var heraldryDefs = new HashSet<string>();

@@ -47,7 +47,11 @@
                         }
                         else if (action.Type == "Flashpoint_AddContract" || action.Type == "Flashpoint_StartContract")
                         {
-                            contracts.Add(action.additionalValues[2].ToString());
+                            var value = action.additionalValues[2].ToString();
+                            if (!string.IsNullOrEmpty(value)  && value != "(required)")
+                            {
+                                contracts.Add(value);
+                            }
                         }
                         else if (action.Type == "ForceEvents")
                         {

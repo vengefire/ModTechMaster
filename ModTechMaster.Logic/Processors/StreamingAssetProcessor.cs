@@ -48,10 +48,13 @@
                     { "general", ObjectType.UpgradeDef },
                     { "gyros", ObjectType.UpgradeDef },
                     { "targettrackingsystem", ObjectType.UpgradeDef },
+                    { "sensortech", ObjectType.UpgradeDef },
                     { "vehicle", ObjectType.VehicleDef },
                     { "vehiclechassis", ObjectType.VehicleChassisDef },
                     { "weapon", ObjectType.WeaponDef },
                     { "pathing", ObjectType.PathingCapabilitiesDef },
+                    { "conversationbuckets", ObjectType.DialogBucketDef },
+                    // { "conver", ObjectType.DialogBucketDef },
                 };
 
         public static object ProcessFile(
@@ -85,6 +88,11 @@
                 }
 
                 var description = ObjectDefinitionDescription.CreateDefault(jsonData.Description);
+
+                if (di.FullName.ToLower().Contains("conversationbuckets"))
+                {
+                    hostDirectory = "conversationbuckets";
+                }
 
                 if (streamingAssetsDirectoryToObjectTypes.ContainsKey(hostDirectory.ToLower()))
                 {
@@ -149,10 +157,13 @@
             {
                 hostDirectory = "emblems";
             }
-
-            if (di.FullName.ToLower().Contains("sprites"))
+            else if (di.FullName.ToLower().Contains("sprites"))
             {
                 hostDirectory = "sprites";
+            }
+            else if (di.FullName.ToLower().Contains("conversationBuckets"))
+            {
+                hostDirectory = "conversationBuckets";
             }
 
             var identifier = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);

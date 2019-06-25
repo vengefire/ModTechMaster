@@ -35,7 +35,10 @@
             }
 
             this.MetaData.Add(Keywords.RepresentativeCastDefId, this.JsonObject.DefaultRepresentativeCastDefId);
-            this.MetaData.Add(Keywords.HeraldryDefId, this.JsonObject.HeraldryDefId);
+            if (this.JsonObject.HeraldryDefId != null && this.JsonObject.HeraldryDefId.ToString() != "heraldrydef_random")
+            {
+                this.MetaData.Add(Keywords.HeraldryDefId, this.JsonObject.HeraldryDefId);
+            }
 
             var enemies = new List<string>();
             foreach (var enemy in this.JsonObject.Enemies)

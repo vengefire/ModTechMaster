@@ -160,11 +160,18 @@
 
                         var ignoreList = new List<Tuple<ObjectType, ObjectType>>(new []
                                                                                      {
-                                                                                         new Tuple<ObjectType, ObjectType>(ObjectType.ShopDef, ObjectType.WeaponDef),           // HBS Shopdefs contain refs to non-existant weapons
+                                                                                         new Tuple<ObjectType, ObjectType>(ObjectType.ShopDef, ObjectType.WeaponDef),           // HBS Shopdefs contain refs to non-existent weapons
                                                                                          new Tuple<ObjectType, ObjectType>(ObjectType.HardpointDataDef, ObjectType.Prefab),     // Ball ache to identify prefabs, and unnecessary.
                                                                                          new Tuple<ObjectType, ObjectType>(ObjectType.TurretChassisDef, ObjectType.Prefab),     // Ball ache to identify prefabs, and unnecessary.
                                                                                          new Tuple<ObjectType, ObjectType>(ObjectType.ShopDef, ObjectType.MechDef),             // Stupid Templates.
                                                                                      });
+
+                        var tempIgnoreList = new List<ObjectType>() { ObjectType.Prefab, ObjectType.AssetBundle, ObjectType.HardpointDataDef, ObjectType.MovementCapabilitiesDef };
+
+                        if (tempIgnoreList.Contains(relationship.DependencyType))
+                        {
+                            return;
+                        }
 
                         if (baseReferences != null && 
                             baseReferences.Contains(objectDefinition))
