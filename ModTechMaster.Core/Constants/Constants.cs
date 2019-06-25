@@ -42,8 +42,6 @@
 
         public static readonly string EventId = "EventId";
 
-        public static readonly string Faction = "Faction";
-
         public static readonly string FactionId = "FactionId";
 
         public static readonly string HardpointDataDefId = "HardpointDataDefID";

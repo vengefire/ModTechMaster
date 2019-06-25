@@ -412,13 +412,13 @@
                                     ObjectType.FactionDef,
                                     ObjectType.FactionDef,
                                     Keywords.EnemyFactionId,
-                                    Keywords.Faction,
+                                    Keywords.FactionId,
                                     true),
                                 new ObjectRelationship(
                                     ObjectType.FactionDef,
                                     ObjectType.FactionDef,
                                     Keywords.AlliedFactionId,
-                                    Keywords.Faction,
+                                    Keywords.FactionId,
                                     true)
                             }
                     },
@@ -429,7 +429,7 @@
                                 new ObjectRelationship(
                                     ObjectType.CastDef,
                                     ObjectType.FactionDef,
-                                    Keywords.Faction,
+                                    Keywords.FactionId,
                                     Keywords.FactionId,
                                     false)
                             }

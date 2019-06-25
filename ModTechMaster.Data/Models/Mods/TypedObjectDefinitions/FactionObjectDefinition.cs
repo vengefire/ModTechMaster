@@ -24,15 +24,23 @@
         public override void AddMetaData()
         {
             base.AddMetaData();
-            this.MetaData.Add(Keywords.FactionId, this.JsonObject.Faction);
-            this.MetaData.Add(Keywords.CombatLeaderCastDefId, this.JsonObject.DefaultCombatLeaderCastDefId);
+            var jobject = (JObject)this.JsonObject;
+
+
+            this.MetaData.Add(Keywords.FactionId, this.JsonObject.Faction != null ? this.JsonObject.Faction : this.JsonObject.ID.ToString().Replace("faction_", string.Empty));
+
+            if (this.JsonObject?.DefaultCombatLeaderCastDefId != null && this.JsonObject.DefaultCombatLeaderCastDefId.ToString() != "castDef_None")
+            {
+                this.MetaData.Add(Keywords.CombatLeaderCastDefId, this.JsonObject.DefaultCombatLeaderCastDefId);
+            }
+
             this.MetaData.Add(Keywords.RepresentativeCastDefId, this.JsonObject.DefaultRepresentativeCastDefId);
             this.MetaData.Add(Keywords.HeraldryDefId, this.JsonObject.HeraldryDefId);
 
             var enemies = new List<string>();
             foreach (var enemy in this.JsonObject.Enemies)
             {
-                enemies.Add(enemy as string);
+                enemies.Add(enemy.ToString());
             }
 
             this.MetaData.Add(Keywords.EnemyFactionId, new List<string>(enemies));
@@ -40,7 +48,7 @@
             var allies = new List<string>();
             foreach (var ally in this.JsonObject.Allies)
             {
-                allies.Add(ally as string);
+                allies.Add(ally.ToString());
             }
 
             this.MetaData.Add(Keywords.AlliedFactionId, new List<string>(allies));

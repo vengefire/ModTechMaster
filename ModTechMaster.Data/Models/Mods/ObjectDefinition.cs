@@ -120,6 +120,10 @@
             {
                 UpsertKeyValue(Keywords.Id, this.JsonObject.Id);
             }
+            else if (this.JsonObject?.id != null)
+            {
+                UpsertKeyValue(Keywords.Id, this.JsonObject.id);
+            }
             else if (this.JsonObject?.identifier != null)
             {
                 UpsertKeyValue(Keywords.Id, this.JsonObject.identifier);
