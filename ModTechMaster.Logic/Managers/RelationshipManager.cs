@@ -546,12 +546,12 @@
                         ObjectType.SimGameMilestoneSet,
                         new List<IObjectRelationship>
                             {
-                                new ObjectRelationship(
+                                /*new ObjectRelationship(
                                     ObjectType.SimGameMilestoneSet,
                                     ObjectType.SimGameMilestoneDef,
                                     Keywords.MilestoneId,
                                     Keywords.Id,
-                                    true),
+                                    true),*/
                                 new ObjectRelationship(
                                     ObjectType.SimGameMilestoneSet,
                                     ObjectType.ContractOverride,

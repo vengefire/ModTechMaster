@@ -45,6 +45,14 @@
                 this.MetaData.Add(Keywords.DialogBucketId, this.JsonObject.overrideAutoCompleteDialogueId);
             }
 
+            var dynamicIdsList = new List<string>()
+                                     {
+                                         "UseLance",
+                                         "mechDef_InheritLance",
+                                         "pilotDef_InheritLance",
+                                         "vehicleDef_InheritLance",
+                                     };
+
             var lanceDefs = new HashSet<string>();
             var heraldryDefs = new HashSet<string>();
             var mechDefs = new HashSet<string>();
@@ -65,24 +73,27 @@
                         heraldryDefs.Add(unitSpawn.customHeraldryDefId.ToString());
                     }
 
-                    if (unitSpawn.unitType == "Mech")
+                    if (unitSpawn.unitType == "Mech" && !dynamicIdsList.Contains(unitSpawn.unitDefId.ToString()))
                     {
                         mechDefs.Add(unitSpawn.unitDefId.ToString());
                     }
-                    else if (unitSpawn.unitType == "Turret")
+                    else if (unitSpawn.unitType == "Turret" && !dynamicIdsList.Contains(unitSpawn.unitDefId.ToString()))
                     {
                         turretDefs.Add(unitSpawn.unitDefId.ToString());
                     }
-                    else if (unitSpawn.unitType == "Vehicle")
+                    else if (unitSpawn.unitType == "Vehicle" && !dynamicIdsList.Contains(unitSpawn.unitDefId.ToString()))
                     {
                         vehicleDefs.Add(unitSpawn.unitDefId.ToString());
                     }
-                    else
+                    /*else
                     {
                         throw new NotImplementedException();
-                    }
+                    }*/
 
-                    pilotDefs.Add(unitSpawn.pilotDefId.ToString());
+                    if (!dynamicIdsList.Contains(unitSpawn.pilotDefId.ToString()))
+                    {
+                        pilotDefs.Add(unitSpawn.pilotDefId.ToString());
+                    }
                 }
             }
 

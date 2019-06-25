@@ -145,13 +145,15 @@
             // If we didn't find a Name in our json store (which may not be there if we're a resource object) then add our default name (FileName)
             if (!this.MetaData.ContainsKey(Keywords.Name))
             {
-                this.MetaData.Add(Keywords.Name, this.Name);
+                // this.MetaData.Add(Keywords.Name, this.Name);
+                this.MetaData.Add(Keywords.Name, this.SourceFileNameWithoutExtension);
             }
 
             // Similarly if we didnt find an ID, use the name as ID.
             if (!this.MetaData.ContainsKey(Keywords.Id))
             {
-                this.MetaData.Add(Keywords.Id, this.Name);
+                // this.MetaData.Add(Keywords.Id, this.Name);
+                this.MetaData.Add(Keywords.Id, this.SourceFileNameWithoutExtension);
             }
 
             // Add tag data. Not all relationships are defined via tight IDs. Some are defined by loose tags.

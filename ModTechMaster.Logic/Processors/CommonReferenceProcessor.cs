@@ -27,7 +27,6 @@
                 return new List<IObjectReference<TType>>();
             }
 
-            // dependantTypesToIgnore = dependantTypesToIgnore ?? new List<ObjectType>();
             var dependenciesRels = RelationshipManager.GetDependenciesRelationshipsForType(objectDefinition.ObjectType);
             var dependantRels = RelationshipManager.GetDependentRelationShipsForType(objectDefinition.ObjectType);
 
@@ -47,7 +46,7 @@
                 relationship =>
                     {
                         Parallel.ForEach(
-                            candidates,
+                            candidates.Where(o => o.ObjectType == relationship.DependentType),
                             candidate =>
                                 {
                                     if (candidate.ObjectType != relationship.DependentType)
@@ -107,8 +106,7 @@
             // dependenciesRels.AsParallel().ForAll(
                 relationship =>
                     {
-
-                        candidates.ToList().ForEach(
+                        candidates.Where(o => o.ObjectType == relationship.DependencyType).ToList().ForEach(
                         // candidates.AsParallel().ForAll(
                             candidate =>
                                 {

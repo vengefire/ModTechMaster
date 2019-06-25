@@ -64,7 +64,7 @@
                 }
             }
 
-            this.MetaData.Add(Keywords.MilestoneId, new List<string>(milestones));
+            // this.MetaData.Add(Keywords.MilestoneId, new List<string>(milestones));
             this.MetaData.Add(Keywords.ContractId, new List<string>(contracts));
             this.MetaData.Add(Keywords.EventId, new List<string>(events));
             this.MetaData.Add(Keywords.ItemCollectionId, new List<string>(itemCollections));

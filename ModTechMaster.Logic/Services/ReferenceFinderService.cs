@@ -104,11 +104,10 @@
             var sw = new Stopwatch();
             sw.Start();
 
-            //allReferences.AsParallel().ForAll(
-            allReferences.ToList().ForEach(
+            allReferences.AsParallel().ForAll(
+            //allReferences.ToList().ForEach(
                 o =>
                     {
-                        // allReferences.ForEach(o =>
                         var references = this.GetObjectReferences(o, baseReferences);
                     });
 
