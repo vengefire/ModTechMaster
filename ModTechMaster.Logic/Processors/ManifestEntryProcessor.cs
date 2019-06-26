@@ -42,7 +42,7 @@
             }
 
             var di = new DirectoryInfo(targetDirectory);
-            di.GetFiles("*.*").ToList().ForEach(
+            di.GetFiles("*.*", SearchOption.AllDirectories).ToList().ForEach(
                 fi =>
                     {
                         var objectDefinition = objectDefinitionProcessor.ProcessObjectDefinition(

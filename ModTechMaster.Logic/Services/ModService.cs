@@ -21,6 +21,7 @@
     using ModTechMaster.Data.Models.Mods.TypedObjectDefinitions;
     using ModTechMaster.Logic.Factories;
     using ModTechMaster.Logic.Processors;
+    using ModTechMaster.Logic.Util;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -78,11 +79,48 @@
                 this.ModCollection.AddModToCollection(battleTechMod);
             }
 
+            // find all sub-directories that have a mod.json file
+            var modDirectories = Directory.GetDirectories(modsPath).Where(x => File.Exists(Path.Combine(x, "mod.json"))).ToArray();
+
+            // create ModDef objects for each mod.json file
+            HashSet<string> FailedToLoadMods = new HashSet<string>();
+            Dictionary<string, ModDef> ModDefs = new Dictionary<string, ModDef>();
+            foreach (var modDirectory in modDirectories)
+            {
+                ModDef modDef;
+                var modDefPath = Path.Combine(modDirectory, "mod.json");
+
+                try
+                {
+                    modDef = ModDef.CreateFromPath(modDefPath);
+                }
+                catch (Exception e)
+                {
+                    FailedToLoadMods.Add(modDefPath);
+                    continue;
+                }
+
+                if (!modDef.ShouldTryLoad(ModDefs.Keys.ToList(), out var reason))
+                {
+                    if (!modDef.IgnoreLoadFailure)
+                    {
+                        FailedToLoadMods.Add(modDef.Name);
+                    }
+
+                    continue;
+                }
+
+                ModDefs.Add(modDef.Name, modDef);
+            }
+
+            // get a load order and remove mods that won't be loaded
+            var ModLoadOrder = LoadOrder.CreateLoadOrder(ModDefs, out var notLoaded, new List<string>());
+
             var modsDirectoryInfo = new DirectoryInfo(modsPath);
 
             this.logger.Info($"Processing mods from [{modsDirectoryInfo.FullName}]");
 
-            modsDirectoryInfo.GetDirectories()
+            /*modsDirectoryInfo.GetDirectories()
                 //.AsParallel().ForAll(
                 .ToList().ForEach(
                 sub =>
@@ -90,10 +128,17 @@
                         this.logger.Debug(".");
                         var mod = this.TryLoadFromPath(sub.FullName, false);
                         this.ModCollection.AddModToCollection(mod);
+                    });*/
+            ModLoadOrder.ForEach(
+                s =>
+                    {
+                        var def = ModDefs.First(pair => pair.Key == s).Value;
+                        var mod = this.TryLoadFromPath(def.Directory, false);
+                        this.ModCollection.AddModToCollection(mod);
                     });
 
-            this.ModCollection.Mods.Sort(
-                (mod, mod1) => mod.IsBattleTech ? 1 : string.Compare(mod.Name, mod1.Name, StringComparison.OrdinalIgnoreCase));
+            /*this.ModCollection.Mods.Sort(
+                (mod, mod1) => mod.IsBattleTech ? 1 : string.Compare(mod.Name, mod1.Name, StringComparison.OrdinalIgnoreCase));*/
 
             this.OnPropertyChanged(nameof(this.ModCollection));
 

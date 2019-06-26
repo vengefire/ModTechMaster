@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\Dependencies\1.6\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\Dependencies\1.6\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -42,6 +48,8 @@
   <ItemGroup>
     <Compile Include="Models\Mods\CsvObjectBase.cs" />
     <Compile Include="Models\Mods\ModCollection.cs" />
+    <Compile Include="Models\Mods\ModDef.cs" />
+    <Compile Include="Models\Mods\ModEntry.cs" />
     <Compile Include="Models\Mods\ResourceDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\LanceDefObjectDefinition.cs" />
     <Compile Include="Models\Mods\TypedObjectDefinitions\CcCategoryObjectDefinition.cs" />

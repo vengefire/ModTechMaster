@@ -199,7 +199,7 @@
 
         private List<PilotObjectDefinition> GetEligiblePilots(IReferenceableObjectProvider objectProvider)
         {
-            var candidates = objectProvider.GetReferenceableObjects().Where(o => o.ObjectType == ObjectType.PilotDef);
+            var candidates = objectProvider.GetReferenceableObjects().Where(o => o.ObjectType == ObjectType.PilotDef && o.Tags.ContainsKey(Keywords.MyTags));
 
             var eligible = candidates.Where(
                 o => !this.PilotTags.Any() || o.Tags.ContainsKey(Keywords.MyTags)

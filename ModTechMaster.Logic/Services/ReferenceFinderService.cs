@@ -87,8 +87,8 @@
                     .Where(o => o.ObjectType == ObjectType.LanceDef).Cast<LanceDefObjectDefinition>()
                     .SelectMany(definition => definition.LanceSlots);
                 lanceSlots
-                    .AsParallel().ForAll(
-                    //.ToList().ForEach(
+                    //.AsParallel().ForAll(
+                    .ToList().ForEach(
                     o =>
                         {
                             this.logger.Debug($"Processing lance slot eligibility for Lance [{o.LanceDefObjectDefinition.Id}] - Slot [{o.LanceSlotNumber}]...");

@@ -166,7 +166,8 @@
                                                                                          new Tuple<ObjectType, ObjectType>(ObjectType.ShopDef, ObjectType.MechDef),             // Stupid Templates.
                                                                                      });
 
-                        var tempIgnoreList = new List<ObjectType>() { ObjectType.Prefab, ObjectType.AssetBundle, ObjectType.HardpointDataDef, ObjectType.MovementCapabilitiesDef };
+                        var tempIgnoreList = new List<ObjectType>();
+                        tempIgnoreList.AddRange(new []{ ObjectType.Prefab, ObjectType.AssetBundle, ObjectType.HardpointDataDef, ObjectType.MovementCapabilitiesDef });
 
                         if (tempIgnoreList.Contains(relationship.DependencyType))
                         {

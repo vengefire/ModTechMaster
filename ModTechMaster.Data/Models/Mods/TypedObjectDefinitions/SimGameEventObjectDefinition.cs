@@ -26,9 +26,13 @@
             base.AddMetaData();
             var requiredTags = new List<string>();
             this.MetaData.Add(Keywords.RequiredTags, requiredTags);
-            foreach (var req in this.JsonObject.Requirements.RequirementTags.items)
+
+            if (this.JsonObject.Requirements.RequirementTags.items != null)
             {
-                requiredTags.Add(req.ToString());
+                foreach (var req in this.JsonObject.Requirements.RequirementTags.items)
+                {
+                    requiredTags.Add(req.ToString());
+                }
             }
         }
     }

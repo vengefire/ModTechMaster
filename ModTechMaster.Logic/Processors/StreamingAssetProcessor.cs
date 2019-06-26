@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
 
     using Castle.Core.Logging;
 
@@ -53,8 +54,10 @@
                     { "vehiclechassis", ObjectType.VehicleChassisDef },
                     { "weapon", ObjectType.WeaponDef },
                     { "pathing", ObjectType.PathingCapabilitiesDef },
-                    { "conversationbuckets", ObjectType.DialogBucketDef }
-
+                    { "conversationbuckets", ObjectType.DialogBucketDef },
+                    { "contracts", ObjectType.ContractOverride },
+                    { "events", ObjectType.SimGameEventDef },
+                    { "milestones", ObjectType.SimGameMilestoneDef},
                     // { "conver", ObjectType.DialogBucketDef },
                 };
 
@@ -90,10 +93,16 @@
 
                 var description = ObjectDefinitionDescription.CreateDefault(jsonData.Description);
 
-                if (di.FullName.ToLower().Contains("conversationbuckets"))
-                {
-                    hostDirectory = "conversationbuckets";
-                }
+                var directoryMarkers = new List<string>() { "conversationbuckets", "contracts", "events" };
+
+                directoryMarkers.ForEach(
+                    s =>
+                        {
+                            if (di.FullName.Split('\\').Any(part => part.ToLower() == s.ToLower()))
+                            {
+                                hostDirectory = s;
+                            }
+                        });
 
                 if (manifestEntry.Manifest.Mod.IsBattleTech && streamingAssetsDirectoryToObjectTypes.ContainsKey(hostDirectory.ToLower()))
                 {

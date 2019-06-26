@@ -60,7 +60,11 @@
                         {
                             var path = instruction.JSONPath.ToString();
                             var action = instruction.Action.ToString();
-                            var value = instruction.Value.ToString();
+                            string value = string.Empty;
+                            if (action != "Remove")
+                            {
+                                value = instruction.Value.ToString();
+                            }
 
                             var token = ((JObject)parsedObject.JsonObject).SelectToken(path);
                             token = value;
@@ -81,7 +85,7 @@
             {
                 var parsedObject = referenceFinderService.ReferenceableObjectProvider.GetReferenceableObjects().FirstOrDefault(o => o is ISourcedFromFile file && file.SourceFileName == fi.Name) as ObjectDefinition;
 
-                if (parsedObject == null)
+                /*if (parsedObject == null)
                 {
                     IObjectDefinition testObject = null;
                     try
@@ -108,7 +112,7 @@
                     {
                         return testObject;
                     }
-                }
+                }*/
 
                 if (parsedObject != null)
                 {

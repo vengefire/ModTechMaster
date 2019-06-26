@@ -66,6 +66,7 @@
     <Compile Include="Processors\ObjectDefinitionProcessor.cs" />
     <Compile Include="Services\ReferenceFinderService.cs" />
     <Compile Include="Services\SettingsService.cs" />
+    <Compile Include="Util\LoadOrder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework\Framework.Utils\Framework.Utils.csproj">
