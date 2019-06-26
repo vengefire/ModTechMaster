@@ -53,7 +53,8 @@
                     { "vehiclechassis", ObjectType.VehicleChassisDef },
                     { "weapon", ObjectType.WeaponDef },
                     { "pathing", ObjectType.PathingCapabilitiesDef },
-                    { "conversationbuckets", ObjectType.DialogBucketDef },
+                    { "conversationbuckets", ObjectType.DialogBucketDef }
+
                     // { "conver", ObjectType.DialogBucketDef },
                 };
 
@@ -73,14 +74,14 @@
                 IObjectDefinition objectDefinition = null;
                 dynamic jsonData = JsonConvert.DeserializeObject(
                     fileData,
-                    new JsonSerializerSettings()
+                    new JsonSerializerSettings
                         {
                             Error = (sender, args) =>
-                                                                                       {
-                                                                                           logger.Warn($"Error deserializing [{fi.FullName}]", args.ErrorContext.Error);
-                                                                                           args.ErrorContext.Handled = true;
-                                                                                       }
-                                                                               });
+                                {
+                                    logger.Warn($"Error deserializing [{fi.FullName}]", args.ErrorContext.Error);
+                                    args.ErrorContext.Handled = true;
+                                }
+                        });
 
                 if (jsonData == null)
                 {
@@ -94,7 +95,7 @@
                     hostDirectory = "conversationbuckets";
                 }
 
-                if (streamingAssetsDirectoryToObjectTypes.ContainsKey(hostDirectory.ToLower()))
+                if (manifestEntry.Manifest.Mod.IsBattleTech && streamingAssetsDirectoryToObjectTypes.ContainsKey(hostDirectory.ToLower()))
                 {
                     var objectType = streamingAssetsDirectoryToObjectTypes[hostDirectory.ToLower()];
                     var objectDefinitionProcessor =

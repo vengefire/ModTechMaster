@@ -17,7 +17,10 @@
 
         public dynamic JsonObject { get; }
 
-        public string JsonString => JsonConvert.SerializeObject(this.JsonObject, Formatting.Indented);
+        public string JsonString
+        {
+            get => JsonConvert.SerializeObject(this.JsonObject, Formatting.Indented);
+        }
 
         public abstract string Name { get; }
 

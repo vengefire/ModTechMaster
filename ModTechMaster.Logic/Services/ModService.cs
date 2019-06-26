@@ -46,6 +46,7 @@
             this.logger = logger;
             this.referenceFinderService = referenceFinderService;
             this.ModCollection = new ModCollection("Unknown Mod Collection", string.Empty);
+            this.referenceFinderService.ReferenceableObjectProvider = this.ModCollection;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -81,7 +82,9 @@
 
             this.logger.Info($"Processing mods from [{modsDirectoryInfo.FullName}]");
 
-            modsDirectoryInfo.GetDirectories().AsParallel().ForAll(
+            modsDirectoryInfo.GetDirectories()
+                //.AsParallel().ForAll(
+                .ToList().ForEach(
                 sub =>
                     {
                         this.logger.Debug(".");
@@ -257,12 +260,10 @@
                 foreach (var manifestEntrySrc in manifest.JsonObject)
                 {
                     ManifestEntry manifestEntry = this.ProcessManifestEntry(manifest, manifestEntrySrc);
-                    if (manifestEntry == null)
+                    if (manifestEntry != null)
                     {
-                        throw new InvalidProgramException();
+                        manifest.Entries.Add(manifestEntry);
                     }
-
-                    manifest.Entries.Add(manifestEntry);
                 }
             }
 

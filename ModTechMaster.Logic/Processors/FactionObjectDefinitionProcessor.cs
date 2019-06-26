@@ -1,7 +1,10 @@
 ﻿namespace ModTechMaster.Logic.Processors
 {
+    using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
 
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
@@ -11,6 +14,7 @@
     using ModTechMaster.Logic.Factories;
 
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     internal class 
         ObjectDefinitionProcessor : IObjectDefinitionProcessor
@@ -29,12 +33,107 @@
             }
 
             dynamic json = JsonConvert.DeserializeObject(File.ReadAllText(fi.FullName));
-            return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
-                objectTypeOverride ?? manifestEntry.EntryType,
-                ProcessObjectDescription(json.Description),
-                json,
-                fi.FullName,
-                referenceFinderService);
+
+            if (manifestEntry.EntryType == ObjectType.AdvancedJSONMerge)
+            {
+                var targetIds = new List<string>();
+                if (json.TargetID != null)
+                {
+                    targetIds.Add(json.TargetID.ToString());
+                }
+                else
+                {
+                    foreach (var id in json.TargetIDs)
+                    {
+                        targetIds.Add(id.ToString());
+                    }
+                }
+
+                foreach (var targetId in targetIds)
+                {
+
+                    if (referenceFinderService.ReferenceableObjectProvider.GetReferenceableObjects().FirstOrDefault(
+                                o => o is ObjectDefinition objectDefinition && objectDefinition.Id == targetId) is
+                            ObjectDefinition parsedObject)
+                    {
+                        foreach (var instruction in json.Instructions)
+                        {
+                            var path = instruction.JSONPath.ToString();
+                            var action = instruction.Action.ToString();
+                            var value = instruction.Value.ToString();
+
+                            var token = ((JObject)parsedObject.JsonObject).SelectToken(path);
+                            token = value;
+                        }
+
+                        parsedObject.MetaData.Clear();
+                        parsedObject.Tags.Clear();
+                        parsedObject.AddMetaData();
+                    }
+                    else
+                    {
+                        // Schedule a post completion update...
+                        int i = 666;
+                    }
+                }
+            }
+            else if ((manifestEntry.JsonObject?.ShouldMergeJSON ?? false) == true)
+            {
+                var parsedObject = referenceFinderService.ReferenceableObjectProvider.GetReferenceableObjects().FirstOrDefault(o => o is ISourcedFromFile file && file.SourceFileName == fi.Name) as ObjectDefinition;
+
+                if (parsedObject == null)
+                {
+                    IObjectDefinition testObject = null;
+                    try
+                    {
+                        testObject = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
+                            objectTypeOverride ?? manifestEntry.EntryType,
+                            ProcessObjectDescription(json.Description),
+                            json,
+                            fi.FullName,
+                            referenceFinderService);
+
+                        parsedObject = referenceFinderService
+                                               .ReferenceableObjectProvider.GetReferenceableObjects().FirstOrDefault(
+                                                   o => o is ObjectDefinition objectDef
+                                                        && objectDef.Id == testObject.Id) as
+                                           ObjectDefinition;
+                    }
+                    catch (Exception)
+                    {
+                        // Man Fuck You.
+                    }
+
+                    if (parsedObject == null)
+                    {
+                        return testObject;
+                    }
+                }
+
+                if (parsedObject != null)
+                {
+                    ((JObject)parsedObject.JsonObject).Merge(json);
+                    parsedObject.MetaData.Clear();
+                    parsedObject.Tags.Clear();
+                    parsedObject.AddMetaData();
+                }
+                else
+                {
+                    // Schedule a post completion update...
+                    int i = 666;
+                }
+            }
+            else
+            {
+                return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
+                    objectTypeOverride ?? manifestEntry.EntryType,
+                    ProcessObjectDescription(json.Description),
+                    json,
+                    fi.FullName,
+                    referenceFinderService);
+            }
+
+            return null;
         }
 
         private static IObjectDefinitionDescription ProcessObjectDescription(dynamic description)
