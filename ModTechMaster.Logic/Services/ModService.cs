@@ -114,7 +114,7 @@
             }
 
             // get a load order and remove mods that won't be loaded
-            var ModLoadOrder = LoadOrder.CreateLoadOrder(ModDefs, out var notLoaded, new List<string>());
+            var ModLoadOrder = LoadOrder.CreateLoadOrder(ModDefs, out var notLoaded, new List<string>(), this.logger);
 
             var modsDirectoryInfo = new DirectoryInfo(modsPath);
 

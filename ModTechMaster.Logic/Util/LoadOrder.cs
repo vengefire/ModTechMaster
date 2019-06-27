@@ -5,13 +5,15 @@ namespace ModTechMaster.Logic.Util
     using System.IO;
     using System.Linq;
 
+    using Castle.Core.Logging;
+
     using ModTechMaster.Data.Models.Mods;
 
     using Newtonsoft.Json;
 
     internal static class LoadOrder
     {
-        public static List<string> CreateLoadOrder(Dictionary<string, ModDef> modDefs, out List<string> unloaded, List<string> cachedOrder)
+        public static List<string> CreateLoadOrder(Dictionary<string, ModDef> modDefs, out List<string> unloaded, List<string> cachedOrder, ILogger logger)
         {
             var modDefsCopy = new Dictionary<string, ModDef>(modDefs);
             var loadOrder = new List<string>();
@@ -26,6 +28,7 @@ namespace ModTechMaster.Logic.Util
                     continue;
                 }
 
+                logger.Warn($"Mod [{modDef.Name}] has conflicts and will not load.");
                 modDefsCopy.Remove(modDef.Name);
                 hasConflicts.Add(modDef.Name);
             }
@@ -37,6 +40,7 @@ namespace ModTechMaster.Logic.Util
             {
                 if (!modDefsCopy.ContainsKey(modName) || !modDefsCopy[modName].AreDependenciesResolved(loadOrder))
                 {
+                    logger.Warn($"Mod [{modName}] is missing dependencies. It will not be loaded.");
                     continue;
                 }
 

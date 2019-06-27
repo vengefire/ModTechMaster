@@ -19,10 +19,10 @@
 
             this.CsvString = csvString;
             this.CsvData = new List<List<string>>();
-            this.CsvString.Split('\n').ToList().ForEach(
+            this.CsvString.Split(new [] { '\n' }).ToList().ForEach(
                 s =>
                     {
-                        if (!string.IsNullOrEmpty(s.Trim()))
+                        if (!string.IsNullOrEmpty(s.Trim().Trim(',')))
                         {
                             s = s.Trim().Trim(new[] { '\r', '\n' });
                             var lineData = new List<string>();
