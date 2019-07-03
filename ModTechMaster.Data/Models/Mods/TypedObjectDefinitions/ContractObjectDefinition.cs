@@ -34,6 +34,7 @@
                                          "vehicleDef_InheritLance",
                                          "Tagged",
                                          "mechDef_None",
+                                         "vehicleDef_None",
                                          "turretDef_InheritLance",
                                          "castDef_None"
                                      };

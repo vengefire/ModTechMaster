@@ -121,7 +121,8 @@
                 {
                     return true;
                 }
-                else if (val is JToken jTok && !jTok.IsNullOrEmpty())
+
+                if (val is JToken jTok && !jTok.IsNullOrEmpty())
                 {
                     return true;
                 }
@@ -197,9 +198,42 @@
             this.EligiblePilots = this.GetEligiblePilots(objectProvider);
         }
 
+        public override IValidationResult ValidateObject()
+        {
+            var result = ValidationResult.SuccessValidationResult();
+            var failReasons = new List<string>();
+            if (!this.EligiblePilots.Any())
+            {
+                failReasons.Add(
+                    "No eligible pilots." + $"\r\nPilots tags = [{string.Join(", ", this.PilotTags)}]"
+                                          + $"\r\nExcluded Tags = [{string.Join(", ", this.ExcludedPilotTags)}]");
+            }
+
+            if (!this.EligibleUnits.Any())
+            {
+                failReasons.Add(
+                    "No eligible units." + $"\r\nUnit tags = [{string.Join(", ", this.UnitTags)}]"
+                                         + $"\r\nExcluded Tags = [{string.Join(", ", this.ExcludedUnitTags)}]");
+
+                if (this.RestrictByFaction)
+                {
+                    failReasons.Add($"Ineligible factions: [{string.Join(", ", this.IneligibleFactions)}] ");
+                }
+            }
+
+            result.Result = failReasons.Any() ? ValidationResultEnum.Failure : ValidationResultEnum.Success;
+            result.ValidationResultReasons.Add(
+                new ValidationResultReason(
+                    this,
+                    $"Lance [{this.LanceDefObjectDefinition.Id}] - Slot [{this.LanceSlotNumber}] failed validation due to:\r\n{string.Join("\r\n", failReasons)}"));
+
+            return result;
+        }
+
         private List<PilotObjectDefinition> GetEligiblePilots(IReferenceableObjectProvider objectProvider)
         {
-            var candidates = objectProvider.GetReferenceableObjects().Where(o => o.ObjectType == ObjectType.PilotDef && o.Tags.ContainsKey(Keywords.MyTags));
+            var candidates = objectProvider.GetReferenceableObjects().Where(
+                o => o.ObjectType == ObjectType.PilotDef && o.Tags.ContainsKey(Keywords.MyTags));
 
             var eligible = candidates.Where(
                 o => !this.PilotTags.Any() || o.Tags.ContainsKey(Keywords.MyTags)
@@ -236,30 +270,6 @@
             }
 
             return filteredEligibleUnits.Cast<ObjectDefinition>().ToList();
-        }
-
-        public override IValidationResult ValidateObject()
-        {
-            var result = ValidationResult.SuccessValidationResult();
-
-            if (!this.EligiblePilots.Any())
-            {
-                result.Result = ValidationResultEnum.Failure;
-                result.ValidationResultReasons.Add(new ValidationResultReason(this, $"No eligible pilots."));
-            }
-
-            if (!this.EligibleUnits.Any())
-            {
-                result.Result = ValidationResultEnum.Failure;
-                result.ValidationResultReasons.Add(new ValidationResultReason(this, $"No eligible units."));
-
-                if (this.RestrictByFaction)
-                {
-                    result.ValidationResultReasons.Add(new ValidationResultReason(this, $"Ineligible factions: [{string.Join(", ", this.IneligibleFactions)}] "));
-                }
-            }
-
-            return result;
         }
     }
 }

@@ -187,7 +187,6 @@
                         fi.FullName,
                         referenceFinderService);
                     return assetBundleDefinition;
-                    break;
 
                 case "mechportraits":
                     var objectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
@@ -197,7 +196,6 @@
                         fi.FullName,
                         referenceFinderService);
                     return objectDefinition;
-                    break;
 
                 case "itemcollections":
                     var itemCollection = new ItemCollectionObjectDefinition(
@@ -206,7 +204,6 @@
                         fi.FullName);
                     itemCollection.AddMetaData();
                     return itemCollection;
-                    break;
 
                 case "emblems":
                     var texIdentifier = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
@@ -217,7 +214,6 @@
                         fi.FullName,
                         referenceFinderService);
                     return resourceObjectDefinition;
-                    break;
 
                 case "sprites":
                     var spriteIdentifier = fi.Name.Substring(0, fi.Name.Length - fi.Extension.Length);
@@ -228,7 +224,6 @@
                         fi.FullName,
                         referenceFinderService);
                     return spriteObject;
-                    break;
 
                 default:
                     if (manifestEntry.Manifest.Mod.IsBattleTech)
@@ -252,11 +247,6 @@
                     }
 
                     return resourceDefinition;
-
-                    // this.Resources.Add(resourceDefinition);
-
-                    // TBD: Add Note here -- throw new InvalidProgramException();
-                    break;
             }
         }
     }
