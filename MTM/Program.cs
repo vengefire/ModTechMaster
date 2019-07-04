@@ -120,7 +120,7 @@
                 logger.Warn(
                     string.Join(
                         "\r\n",
-                        validateResult.ValidationResultReasons.Select(
+                        validateResult.ValidationResultReasons.OrderBy(reason => reason.FailingObject.ObjectType).ThenBy(reason => reason.FailingObject.Id).Select(
                             reason => $"[{reason.FailureReason}")));
                 logger.Info($"Total Lance Validation Failures = [{validateResult.ValidationResultReasons.Count}]");
             }

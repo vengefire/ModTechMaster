@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -18,13 +19,16 @@
             di.GetFiles("*.dll").ToList().ForEach(
                 fi =>
                     {
-                        var assembly = Assembly.LoadFile(fi.FullName);
-                        var pluginTypes = assembly.GetTypes().Where(
-                            type => !type.IsInterface && !type.IsAbstract && pluginType.IsAssignableFrom(type));
-                        foreach (var type in pluginTypes)
+                        try
                         {
-                            var plugin = (IPlugin)Activator.CreateInstance(type);
-                            pluginList.Add(plugin);
+                            var assembly = Assembly.LoadFile(fi.FullName);
+                            var pluginTypes = assembly.GetTypes().Where(
+                                type => !type.IsInterface && !type.IsAbstract && pluginType.IsAssignableFrom(type));
+                            pluginList.AddRange(pluginTypes.Select(type => (IPlugin)Activator.CreateInstance(type)));
+                        }
+                        catch(Exception ex)
+                        {
+                            Debug.WriteLine($"Failed to load assembly {fi.FullName}, error = [{ex.ToString()}]");
                         }
                     });
             return pluginList;
