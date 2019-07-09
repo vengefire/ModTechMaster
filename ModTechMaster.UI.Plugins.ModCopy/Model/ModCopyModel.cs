@@ -69,8 +69,7 @@
                         }
                     });
 
-        public ICommand 
-            InitModCopyCommand { get; }
+        public ICommand InitModCopyCommand { get; }
             = new AwaitableDelegateCommand<ModCopyModel>(
             parm =>
                 {
@@ -305,7 +304,7 @@
                         });
 
                 // Copy partially selected mod packages...
-                this.ModCollectionNode.SelectedMods.Where(node => !node.IsChecked.HasValue).ToList().ForEach(
+                this.ModCollectionNode.SelectedMods.Where(node => !node.IsChecked.HasValue && !node.Mod.IsBattleTech).ToList().ForEach(
                     node =>
                         {
                             var mod = node.Mod;

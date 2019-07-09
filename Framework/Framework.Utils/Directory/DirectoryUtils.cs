@@ -25,7 +25,7 @@
                     {
                         if (filesToCopy == null || filesToCopy.Contains(fi.Name))
                         {
-                            File.Copy(fi.FullName, Path.Combine(dest, fi.Name));
+                            File.Copy(fi.FullName, Path.Combine(dest, fi.Name), true);
                         }
                     });
 

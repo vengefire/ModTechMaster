@@ -5,6 +5,7 @@
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     using ModTechMaster.Core.Enums.Mods;
     using ModTechMaster.Core.Interfaces.Models;
@@ -32,7 +33,10 @@
                 return null;
             }
 
-            dynamic json = JsonConvert.DeserializeObject(File.ReadAllText(fi.FullName));
+            // add missing commas, this only fixes if there is a newline
+            var rgx = new Regex(@"(\]|\}|""|[A-Za-z0-9])\s*\n\s*(\[|\{|"")", RegexOptions.Singleline);
+            var commasAdded = rgx.Replace(File.ReadAllText(fi.FullName), "$1,\n$2");
+            dynamic json = JsonConvert.DeserializeObject(commasAdded);
 
             if (manifestEntry.EntryType == ObjectType.AdvancedJSONMerge)
             {

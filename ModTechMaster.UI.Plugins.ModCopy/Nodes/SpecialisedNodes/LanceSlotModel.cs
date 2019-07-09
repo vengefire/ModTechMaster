@@ -151,8 +151,7 @@
                 o => !this.LanceSlotDefinition.PilotTags.Any() || o.ObjectDefinition.Tags.ContainsKey(Keywords.MyTags)
                      && !this.LanceSlotDefinition.PilotTags.Except(o.ObjectDefinition.Tags[Keywords.MyTags]).Any());
             var filteredEligible = eligible.Where(
-                o => !o.ObjectDefinition.Tags[Keywords.MyTags]
-                         .Any(s => this.LanceSlotDefinition.ExcludedPilotTags.Contains(s)));
+                o => !this.LanceSlotDefinition.PilotTags.Any() || !o.ObjectDefinition.Tags[Keywords.MyTags].Any(s => this.LanceSlotDefinition.ExcludedPilotTags.Contains(s)));
             return filteredEligible.ToList();
         }
 

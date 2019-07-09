@@ -43,7 +43,8 @@
                 stopwatch.Start();
                 this.mainModel.IsBusy = true;
                 var modCollection = this.modService.LoadCollectionFromPath(
-                    @"C:\Games\Steam\steamapps\common\BATTLETECH",
+                    //@"C:\Games\Steam\steamapps\common\BATTLETECH",
+                    @"",
                     this.HomeSettings.ModDirectory,
                     this.HomeSettings.ModCollectionName);
                 stopwatch.Stop();

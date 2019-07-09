@@ -56,7 +56,7 @@
                 .SelectMany(node => node.LanceSlots);
 
             targetObjects.AsParallel().ForAll(
-                // targetObjects.ToList().ForEach(
+            //    targetObjects.ToList().ForEach(
                 target =>
                     {
                         target.LoadEligibleUnitsAndPilots();

@@ -34,28 +34,37 @@
             var manifestEntry = new ManifestEntry(manifest, entryType, path, jsonObject, referenceFinderService);
 
             var di = new DirectoryInfo(Path.Combine(manifest.Mod.SourceDirectoryPath, manifestEntry.Path));
-            var files = di.EnumerateFiles();
 
-            if (entryType == ObjectType.CCDefaults && files.Count() > 1)
+            try
             {
-                throw new InvalidProgramException(
-                    $"Encountered more than ONE CC settings files for a CC Manifest Entry at [{di.FullName}]");
-            }
+                var files = di.EnumerateFiles();
 
-            files.ToList().ForEach(file =>
+                if (entryType == ObjectType.CCDefaults && files.Count() > 1)
                 {
-                    dynamic ccSettingsData = JsonConvert.DeserializeObject(File.ReadAllText(file.FullName));
-                    foreach (var ccSetting in ccSettingsData.Settings)
-                    {
-                        var objectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
-                            entryType,
-                            null,
-                            ccSetting,
-                            file.FullName,
-                            referenceFinderService);
-                        manifestEntry.Objects.Add(objectDefinition);
-                    }
-                });
+                    throw new InvalidProgramException(
+                        $"Encountered more than ONE CC settings files for a CC Manifest Entry at [{di.FullName}]");
+                }
+
+                files.ToList().ForEach(
+                    file =>
+                        {
+                            dynamic ccSettingsData = JsonConvert.DeserializeObject(File.ReadAllText(file.FullName));
+                            foreach (var ccSetting in ccSettingsData.Settings)
+                            {
+                                var objectDefinition = ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
+                                    entryType,
+                                    null,
+                                    ccSetting,
+                                    file.FullName,
+                                    referenceFinderService);
+                                manifestEntry.Objects.Add(objectDefinition);
+                            }
+                        });
+            }
+            catch (Exception ex)
+            {
+                this.logger.Error($"An exception occurred trying to process manifestEntry.", ex);
+            }
 
             return manifestEntry;
         }
