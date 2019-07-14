@@ -5,6 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
 
     using Framework.Utils.Directory;
     using Newtonsoft.Json;
@@ -24,21 +25,45 @@
             // Stuff we're scraping...
             var uniqueTypes = new HashSet<string>();
             var invalidJsonFiles = new List<string>();
+            var invalidUINames = new List<string>();
 
             void RecurseDirectories(DirectoryInfo di, int maxDepth, int depth = 0)
             {
-                di.GetFiles("*.json").AsParallel().ForAll(
+                di.GetFiles("*.json")
+                    //.AsParallel().ForAll(
+                    .ToList().ForEach(
                                                        info =>
                                                        {
                                                            try
                                                            {
-                                                               dynamic modConfig = JsonConvert.DeserializeObject(File.ReadAllText(info.FullName));
+                                                               var rgx = new Regex(@"(\]|\}|""|[A-Za-z0-9])\s*\n\s*(\[|\{|"")", RegexOptions.Singleline);
+                                                               var commasAdded = rgx.Replace(File.ReadAllText(info.FullName), "$1,\n$2");
+                                                               dynamic json = JsonConvert.DeserializeObject(commasAdded);
                                                                if (info.Name == "mod.json")
                                                                {
-                                                                   if (modConfig.Manifest != null)
+                                                                   if (json.Manifest != null)
                                                                    {
-                                                                       ((JArray)modConfig.Manifest)
+                                                                       ((JArray)json.Manifest)
                                                                            .Select(token => (dynamic)token).ToList().ForEach(token => { uniqueTypes.Add(token.Type.ToString()); });
+                                                                   }
+                                                               }
+                                                               else if (info.Name.ToLower().StartsWith("mechdef_"))
+                                                               {
+                                                                   try
+                                                                   {
+                                                                       var jobject = (JObject)json;
+                                                                       if (jobject.ContainsKey("Description"))
+                                                                       {
+                                                                           var description = (JObject)jobject["Description"];
+                                                                           if (!description.ContainsKey("UIName"))
+                                                                           {
+                                                                               invalidUINames.Add(info.FullName);
+                                                                           }
+                                                                       }
+                                                                   }
+                                                                   catch (Exception ex)
+                                                                   {
+                                                                       invalidUINames.Add(info.FullName);
                                                                    }
                                                                }
                                                            }
@@ -89,6 +114,8 @@
             Console.WriteLine();
             Console.WriteLine("Invalid .json files:");
             Console.WriteLine(string.Join(",\r\n", invalidJsonFiles.Select(s => s)));
+            Console.WriteLine("Invalid mechdef files:");
+            Console.WriteLine(string.Join(",\r\n", invalidUINames.Select(s => s)));
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
 
