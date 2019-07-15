@@ -26,6 +26,7 @@
             var uniqueTypes = new HashSet<string>();
             var invalidJsonFiles = new List<string>();
             var invalidUINames = new List<string>();
+            var fixedUINames = new List<string>();
 
             void RecurseDirectories(DirectoryInfo di, int maxDepth, int depth = 0)
             {
@@ -55,9 +56,43 @@
                                                                        if (jobject.ContainsKey("Description"))
                                                                        {
                                                                            var description = (JObject)jobject["Description"];
-                                                                           if (!description.ContainsKey("UIName"))
+                                                                           if (description.ContainsKey("Id") && !description.ContainsKey("UIName"))
                                                                            {
-                                                                               invalidUINames.Add(info.FullName);
+                                                                               var id = description["Id"].ToString();
+                                                                               var idString = id;
+                                                                               id = id.Replace("mechdef_", string.Empty);
+                                                                               var model = id.Substring(0, id.IndexOf("_"));
+                                                                               id = id.Replace(model + "_", string.Empty);
+                                                                               model = $"{char.ToUpper(model[0])}{model.Substring(1)}";
+
+                                                                               var variantEndIndex = id.IndexOf('_');
+                                                                               var hasHeroName = true;
+                                                                               if (variantEndIndex == -1)
+                                                                               {
+                                                                                   variantEndIndex = id.Length;
+                                                                                   hasHeroName = false;
+                                                                               }
+
+                                                                               var variant = id.Substring(0, variantEndIndex);
+                                                                               string heroName = string.Empty;
+                                                                               if (hasHeroName)
+                                                                               {
+                                                                                   id = id.Replace(variant + "_", string.Empty);
+                                                                                   heroName = id.Replace("_", " ");
+                                                                               }
+
+                                                                               var uiName = $"{model} {variant}";
+                                                                               if (hasHeroName)
+                                                                               {
+                                                                                   uiName = $"{uiName} {heroName}";
+                                                                               }
+                                                                               Console.WriteLine($"[{info.FullName}] - Inferred UIName [{uiName}] for [{idString}]");
+                                                                               description.Add("UIName", uiName);
+                                                                               Console.WriteLine($"Backing up [{info.FullName}] as [{info.FullName}.bak]");
+                                                                               File.Copy(info.FullName, $"{info.FullName}.bak");
+                                                                               Console.WriteLine($"Writing [{info.FullName}] with UIName for [{idString}] as [{uiName}]");
+                                                                               File.WriteAllText(info.FullName, JsonConvert.SerializeObject(jobject, Formatting.Indented));
+                                                                               fixedUINames.Add(info.FullName);
                                                                            }
                                                                        }
                                                                    }
@@ -116,6 +151,8 @@
             Console.WriteLine(string.Join(",\r\n", invalidJsonFiles.Select(s => s)));
             Console.WriteLine("Invalid mechdef files:");
             Console.WriteLine(string.Join(",\r\n", invalidUINames.Select(s => s)));
+            Console.WriteLine("Fixed UI name files:");
+            Console.WriteLine(string.Join(",\r\n", fixedUINames.Select(s => s)));
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
 
