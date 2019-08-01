@@ -19,8 +19,9 @@
                     }
 
                     return null;
-                }).Where(arg => arg != null).ToList();
-            var chassisFilesById = chassisDefinitionFiles.GroupBy(s => s.Id, s => s, (s, enumerable) => new { Id = s, data = enumerable });
+                }).Where(arg => arg != null)
+                .GroupBy(s => s.Id, s => s, (s, enumerable) => new { Id = s, data = enumerable })
+                .ToList();
 
             var mechDefinitionFiles = Directory.GetFiles(modCollectionPath, "mechdef*.json", SearchOption.AllDirectories).Select(
                 s =>
@@ -29,7 +30,7 @@
                     if (jsonObject.ContainsKey("ChassisID"))
                     {
                         var linkedChassisId = jsonObject["ChassisID"].ToString();
-                        if (chassisFilesById.Any(arg => arg.Id == linkedChassisId))
+                        if (chassisDefinitionFiles.Any(arg => arg.Id == linkedChassisId))
                         {
                             var fi = new FileInfo(s);
                             return new { Id = fi.Name.Remove(fi.Name.Length - fi.Extension.Length), FilePath = s, ChassisId = linkedChassisId, mechDefinitionObject = jsonObject };
@@ -37,8 +38,10 @@
                     }
 
                     return null;
-                }).Where(arg => arg != null).ToList();
-            var mechFilesById = mechDefinitionFiles.GroupBy(arg => arg.Id, arg => arg, (s, enumerable) => new { Id = s, data = enumerable });
+                })
+                .Where(arg => arg != null)
+                .GroupBy(arg => arg.Id, arg => arg, (s, enumerable) => new { Id = s, data = enumerable })
+                .ToList();
 
             /*
             chassisDefinitionFiles.ForEach(

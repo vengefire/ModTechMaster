@@ -129,11 +129,11 @@ namespace ModTechMaster.Data.Models.Mods
             }
 
             // check game version vs. specific version or against min/max
-            if (!string.IsNullOrEmpty(this.BattleTechVersion) && !VersionInfo.ProductVersion.StartsWith(this.BattleTechVersion))
+            /*if (!string.IsNullOrEmpty(this.BattleTechVersion) && !VersionInfo.ProductVersion.StartsWith(this.BattleTechVersion))
             {
                 reason = $"it specifies a game version and this isn't it ({this.BattleTechVersion} vs. game {VersionInfo.ProductVersion})";
                 return false;
-            }
+            }*/
 
             /*var btgVersion = new Version(VersionInfo.ProductVersion);
             if (!string.IsNullOrEmpty(this.BattleTechVersionMin) && btgVersion < new Version(this.BattleTechVersionMin))

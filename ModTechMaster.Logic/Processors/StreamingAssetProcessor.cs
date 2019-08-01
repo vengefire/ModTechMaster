@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     using Castle.Core.Logging;
 
@@ -14,6 +15,7 @@
     using ModTechMaster.Logic.Factories;
 
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
 
     public class StreamingAssetProcessor
     {
@@ -61,6 +63,8 @@
                     // { "conver", ObjectType.DialogBucketDef },
                 };
 
+        private static readonly Regex Regex = new Regex(@"(\]|\}|""|[A-Za-z0-9])\s*\n\s*(\[|\{|"")", RegexOptions.Singleline);
+
         public static object ProcessFile(
             IManifestEntry manifestEntry,
             DirectoryInfo di,
@@ -73,10 +77,12 @@
             var fi = new FileInfo(filename);
             if (fi.Extension == ".json")
             {
+                var commasAdded = StreamingAssetProcessor.Regex.Replace(fileData, "$1,\n$2");
+
                 // Handle json object definition...
                 IObjectDefinition objectDefinition = null;
                 dynamic jsonData = JsonConvert.DeserializeObject(
-                    fileData,
+                    commasAdded,
                     new JsonSerializerSettings
                         {
                             Error = (sender, args) =>

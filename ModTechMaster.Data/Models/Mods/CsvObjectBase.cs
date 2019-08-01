@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
 
@@ -76,6 +77,11 @@
 
         public virtual void AddMetaData()
         {
+            if (this.CsvData.Count == 0)
+            {
+                Debug.WriteLine($"WRN - {this.SourceFilePath} contained no data.");
+                return;
+            }
             this.MetaData.Add(Keywords.Id, this.CsvData[0][0].Replace(".csv", string.Empty));
             this.MetaData.Add(Keywords.Name, this.CsvData[0][0]);
         }

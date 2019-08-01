@@ -1,6 +1,5 @@
 ﻿namespace ModTechMaster.Logic.Processors
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
@@ -17,15 +16,9 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    internal class 
-        ObjectDefinitionProcessor : IObjectDefinitionProcessor
+    internal class ObjectDefinitionProcessor : IObjectDefinitionProcessor
     {
-        public IObjectDefinition ProcessObjectDefinition(
-            IManifestEntry manifestEntry,
-            DirectoryInfo di,
-            FileInfo fi,
-            IReferenceFinderService referenceFinderService,
-            ObjectType? objectTypeOverride = null)
+        public IObjectDefinition ProcessObjectDefinition(IManifestEntry manifestEntry, DirectoryInfo di, FileInfo fi, IReferenceFinderService referenceFinderService, ObjectType? objectTypeOverride = null)
         {
             if (fi.Extension != ".json")
             {
@@ -55,23 +48,20 @@
 
                 foreach (var targetId in targetIds)
                 {
-
-                    if (referenceFinderService.ReferenceableObjectProvider.GetReferenceableObjects().FirstOrDefault(
-                                o => o is ObjectDefinition objectDefinition && objectDefinition.Id == targetId) is
-                            ObjectDefinition parsedObject)
+                    if (referenceFinderService.ReferenceableObjectProvider.GetReferenceableObjects().FirstOrDefault(o => o is ObjectDefinition objectDefinition && (objectDefinition.Id == targetId)) is ObjectDefinition parsedObject)
                     {
                         foreach (var instruction in json.Instructions)
                         {
                             var path = instruction.JSONPath.ToString();
                             var action = instruction.Action.ToString();
-                            string value = string.Empty;
+                            var value = string.Empty;
                             if (action != "Remove")
                             {
                                 value = instruction.Value.ToString();
                             }
 
-                            var token = ((JObject)parsedObject.JsonObject).SelectToken(path);
-                            token = value;
+                            IEnumerable<JToken> tokens = ((JObject)parsedObject.JsonObject).SelectTokens(path);
+                            tokens.ToList().ForEach(token => token = value);
                         }
 
                         parsedObject.MetaData.Clear();
@@ -81,13 +71,13 @@
                     else
                     {
                         // Schedule a post completion update...
-                        int i = 666;
+                        var i = 666;
                     }
                 }
             }
             else if ((manifestEntry.JsonObject?.ShouldMergeJSON ?? false) == true)
             {
-                var parsedObject = referenceFinderService.ReferenceableObjectProvider.GetReferenceableObjects().FirstOrDefault(o => o is ISourcedFromFile file && file.SourceFileName == fi.Name) as ObjectDefinition;
+                var parsedObject = referenceFinderService.ReferenceableObjectProvider.GetReferenceableObjects().FirstOrDefault(o => o is ISourcedFromFile file && (file.SourceFileName == fi.Name)) as ObjectDefinition;
 
                 /*if (parsedObject == null)
                 {
@@ -117,10 +107,9 @@
                         return testObject;
                     }
                 }*/
-
                 if (parsedObject != null)
                 {
-                    ((JObject)parsedObject.JsonObject).Merge(json);
+                    ((JObject)parsedObject.JsonObject).Merge(json, new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Union });
                     parsedObject.MetaData.Clear();
                     parsedObject.Tags.Clear();
                     parsedObject.AddMetaData();
@@ -128,17 +117,12 @@
                 else
                 {
                     // Schedule a post completion update...
-                    int i = 666;
+                    var i = 666;
                 }
             }
             else
             {
-                return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(
-                    objectTypeOverride ?? manifestEntry.EntryType,
-                    ProcessObjectDescription(json.Description),
-                    json,
-                    fi.FullName,
-                    referenceFinderService);
+                return ObjectDefinitionFactory.ObjectDefinitionFactorySingleton.Get(objectTypeOverride ?? manifestEntry.EntryType, ObjectDefinitionProcessor.ProcessObjectDescription(json.Description), json, fi.FullName, referenceFinderService);
             }
 
             return null;
