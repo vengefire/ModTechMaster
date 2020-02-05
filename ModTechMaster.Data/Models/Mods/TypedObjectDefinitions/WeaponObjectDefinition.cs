@@ -22,7 +22,8 @@
         public override void AddMetaData()
         {
             base.AddMetaData();
-            this.MetaData.Add(Keywords.AmmoCategory, this.JsonObject.AmmoCategory.ToString());
+            var ammoCategory = this.JsonObject.AmmoCategory ?? this.JsonObject.ammoCategoryID;
+            this.MetaData.Add(Keywords.AmmoCategory, ammoCategory.ToString());
         }
     }
 }
