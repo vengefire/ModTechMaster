@@ -22,7 +22,10 @@
         public override void AddMetaData()
         {
             base.AddMetaData();
-            this.MetaData.Add(Keywords.Category, this.JsonObject.Category.ToString());
+            if (this.JsonObject.Category != null)
+            {
+                this.MetaData.Add(Keywords.Category, this.JsonObject.Category.ToString());
+            }
         }
     }
 }

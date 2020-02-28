@@ -290,6 +290,7 @@
                 case ObjectType.SimGameStatDescDef:
                 case ObjectType.GameTip:
                 case ObjectType.SoundBank:
+                case ObjectType.SimGameConstants:
                     objectDefinition = new ObjectDefinition(
                         entryType,
                         objectDescription,
