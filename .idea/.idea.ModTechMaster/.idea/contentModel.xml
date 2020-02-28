@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Games\Steam\steamapps\common\BATTLETECH\Repository\ModTechMaster" t="IncludeFlat">
+      <e p="Framework" t="Include">
+        <e p="Framework.DAL" t="IncludeRecursive">
+          <e p="App.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Framework.Data.csproj" t="IncludeRecursive" />
+          <e p="MessageQueue" t="Include">
+            <e p="MessageQueueDal.cs" t="Include" />
+            <e p="Model" t="Include">
+              <e p="Maps" t="Include">
+                <e p="MessageAuditMap.cs" t="Include" />
+                <e p="MessageProcessingErrorMap.cs" t="Include" />
+              </e>
+              <e p="MessageAudit.cs" t="Include" />
+              <e p="MessageProcessingError.cs" t="Include" />
+            </e>
+          </e>
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="ServiceLogging" t="Include">
+            <e p="Model" t="Include">
+              <e p="Maps" t="Include">
+                <e p="ServiceMethodLogMap.cs" t="Include" />
+              </e>
+              <e p="ServiceMethodLog.cs" t="Include" />
+            </e>
+            <e p="ServiceMethodLogService.cs" t="Include" />
+          </e>
+          <e p="WindsorInstaller.cs" t="Include" />
+        </e>
+        <e p="Framework.Domain" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Email" t="Include">
+            <e p="Models" t="Include">
+              <e p="Email.cs" t="Include" />
+              <e p="EmailFileAttachment.cs" t="Include" />
+            </e>
+          </e>
+          <e p="EnvironmentType.cs" t="Include" />
+          <e p="Framework.Domain.csproj" t="IncludeRecursive" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="Queue" t="Include">
+            <e p="MessageAudit.cs" t="Include" />
+            <e p="MessageProcessingError.cs" t="Include" />
+            <e p="MessageProcessingMode.cs" t="Include" />
+            <e p="MessageStatus.cs" t="Include" />
+          </e>
+          <e p="Services" t="Include">
+            <e p="ServiceMethodLog.cs" t="Include" />
+          </e>
+          <e p="Tasks" t="Include">
+            <e p="TaskSchedulerType.cs" t="Include" />
+            <e p="TaskTriggerType.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Framework.Interfaces" t="IncludeRecursive">
+          <e p="Async" t="Include">
+            <e p="ICancellationTokenProvider.cs" t="Include" />
+            <e p="ICancellationTokenSourceProvider.cs" t="Include" />
+          </e>
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Data" t="Include">
+            <e p="Services" t="Include">
+              <e p="IMessageQueueService.cs" t="Include" />
+              <e p="IServiceMethodLogService.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Email" t="Include">
+            <e p="IEmailDomain.cs" t="Include" />
+            <e p="IEmailPersistence.cs" t="Include" />
+            <e p="IExchangeHandler.cs" t="Include" />
+          </e>
+          <e p="Environment" t="Include">
+            <e p="IEnvironment.cs" t="Include" />
+          </e>
+          <e p="Factories" t="Include">
+            <e p="IDbConnectionFactory.cs" t="Include" />
+            <e p="IGenericFactory.cs" t="Include" />
+            <e p="IMessageQueueServiceFactory.cs" t="Include" />
+            <e p="IQueueProcessorFactory.cs" t="Include" />
+            <e p="IQueueProcessorNodeFactory.cs" t="Include" />
+            <e p="IReadQueueFactory.cs" t="Include" />
+            <e p="IWriteQueueFactory.cs" t="Include" />
+          </e>
+          <e p="Framework.Interfaces.csproj" t="IncludeRecursive" />
+          <e p="Injection" t="Include">
+            <e p="Container.cs" t="Include" />
+            <e p="IBootstrap.cs" t="Include" />
+            <e p="IContainer.cs" t="Include" />
+          </e>
+          <e p="Logging" t="Include">
+            <e p="IExceptionLogger.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="Providers" t="Include">
+            <e p="IBusinessDayProvider.cs" t="Include" />
+            <e p="IDateTimeProvider.cs" t="Include" />
+          </e>
+          <e p="Queue" t="Include">
+            <e p="IMessageProcessingLogic.cs" t="Include" />
+            <e p="IQueueBase.cs" t="Include" />
+            <e p="IQueueProcessor.cs" t="Include" />
+            <e p="IQueueProcessorNode.cs" t="Include" />
+            <e p="IReadQueue.cs" t="Include" />
+            <e p="IWritableQueueProcessorNode.cs" t="Include" />
+            <e p="IWriteQueue.cs" t="Include" />
+          </e>
+          <e p="Repositories" t="Include">
+            <e p="IDapperRepository.cs" t="Include" />
+            <e p="IRepository.cs" t="Include" />
+            <e p="ITaskRepository.cs" t="Include" />
+          </e>
+          <e p="Services" t="Include">
+            <e p="IDataService.cs" t="Include" />
+            <e p="IService.cs" t="Include" />
+          </e>
+          <e p="Tasks" t="Include">
+            <e p="IBackgroundServiceTask.cs" t="Include" />
+            <e p="IScheduledTask.cs" t="Include" />
+            <e p="IServiceBatchTask.cs" t="Include" />
+            <e p="IServiceTask.cs" t="Include" />
+            <e p="IServiceTaskRunner.cs" t="Include" />
+            <e p="ITaskEventTrigger.cs" t="Include" />
+            <e p="ITaskScheduler.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Framework.Logic" t="IncludeRecursive">
+          <e p="App.config" t="Include" />
+          <e p="Aspose.Total.lic" t="Include" />
+          <e p="Async" t="Include">
+            <e p="CancellationTokenSourceProvider.cs" t="Include" />
+          </e>
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Email" t="Include">
+            <e p="EmailBasePersistence.cs" t="Include" />
+            <e p="EmailDatabasePersistence.cs" t="Include" />
+            <e p="EmailDiskPersistence.cs" t="Include" />
+            <e p="EmailDomain.cs" t="Include" />
+            <e p="EmailUtilities.cs" t="Include" />
+            <e p="ExchangeHandler.cs" t="Include" />
+            <e p="Mapping" t="Include">
+              <e p="EmailFileAttachmentTypeConverter.cs" t="Include" />
+              <e p="EmailMessageTypeConverter.cs" t="Include" />
+            </e>
+            <e p="WebServiceProxy" t="Include">
+              <e p="EmailServiceProxy.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Environment" t="Include">
+            <e p="EnvironmentImpl.cs" t="Include" />
+            <e p="WindsorInstaller.cs" t="Include" />
+          </e>
+          <e p="Framework.Logic.csproj" t="IncludeRecursive" />
+          <e p="IOC" t="Include">
+            <e p="BaseCastleWindsorContainer.cs" t="Include" />
+            <e p="InstanceProvider.cs" t="Include" />
+            <e p="IocExtension.cs" t="Include" />
+            <e p="RenewableInstanceInterceptor.cs" t="Include" />
+            <e p="ServiceBehavior.cs" t="Include" />
+            <e p="ServiceHost.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="Queue" t="Include">
+            <e p="AutoTypeRegisters" t="Include">
+              <e p="GenericFactoryAutoRegister.cs" t="Include" />
+              <e p="MessageLogicHandlerAutoRegister.cs" t="Include" />
+              <e p="MessageQueueAutoRegister.cs" t="Include" />
+              <e p="OpenQueueProcessorNodeFactoryAutoRegister - Copy.cs" t="Include" />
+              <e p="QueueFactoryAutoRegister.cs" t="Include" />
+              <e p="QueueProcessorAutoRegister.cs" t="Include" />
+            </e>
+            <e p="Config" t="Include">
+              <e p="MessageLogicHandler" t="Include">
+                <e p="MessageLogicHandlerCollection.cs" t="Include" />
+                <e p="MessageLogicHandlerElement.cs" t="Include" />
+              </e>
+              <e p="MessageType" t="Include">
+                <e p="MessageTypeCollection.cs" t="Include" />
+                <e p="MessageTypeElement.cs" t="Include" />
+              </e>
+              <e p="Queue" t="Include">
+                <e p="MessageQueueCollection.cs" t="Include" />
+                <e p="MessageQueueElement.cs" t="Include" />
+                <e p="QueueConfigSectionHandler.cs" t="Include" />
+              </e>
+              <e p="QueueConfigSectionHandler.cs" t="Include" />
+              <e p="QueueProcessor" t="Include">
+                <e p="QueueProcessorCollection.cs" t="Include" />
+                <e p="QueueProcessorConfigSectionHandler.cs" t="Include" />
+                <e p="QueueProcessorElement.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Interceptors" t="Include" />
+            <e p="QueueBase.cs" t="Include" />
+            <e p="QueueProcessor.cs" t="Include" />
+            <e p="QueueProcessorNode.cs" t="Include" />
+            <e p="QueueSubResolver.cs" t="Include" />
+            <e p="ReadQueue.cs" t="Include" />
+            <e p="SubResolvers" t="Include">
+              <e p="OpenQueueProcessorArraySubResolver.cs" t="Include" />
+              <e p="OpenQueueProcessorNodeSubResolver.cs" t="Include" />
+            </e>
+            <e p="WindsorInstaller.cs" t="Include" />
+            <e p="WritableQueueProcessorNode.cs" t="Include" />
+            <e p="WriteQueue.cs" t="Include" />
+          </e>
+          <e p="Repository" t="Include">
+            <e p="DapperRepositoryBase.cs" t="Include" />
+          </e>
+          <e p="Services" t="Include">
+            <e p="NullServiceMethodLogService.cs" t="Include" />
+            <e p="ServiceProgram.cs" t="Include" />
+            <e p="ServiceProxy.cs" t="Include" />
+            <e p="ServiceState.cs" t="Include" />
+          </e>
+          <e p="Tasks" t="Include">
+            <e p="Async" t="Include">
+              <e p="BackgroundServiceTask.cs" t="Include" />
+              <e p="BackgroundTaskRunner.cs" t="Include" />
+              <e p="ScheduledTask.cs" t="Include" />
+              <e p="ScheduledTaskRunner.cs" t="Include" />
+            </e>
+            <e p="AutoTypeRegisters" t="Include">
+              <e p="ScheduledTaskAutoRegister.cs" t="Include" />
+            </e>
+            <e p="BackgroundEventTriggers" t="Include">
+              <e p="FileWatchEventTrigger.cs" t="Include" />
+            </e>
+            <e p="Config" t="Include">
+              <e p="Background" t="Include">
+                <e p="Task" t="Include">
+                  <e p="BackgroundTaskCollection.cs" t="Include" />
+                  <e p="BackgroundTaskElement.cs" t="Include" />
+                </e>
+                <e p="Trigger" t="Include">
+                  <e p="TaskTriggerCollection.cs" t="Include" />
+                  <e p="TaskTriggerElement.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Scheduled" t="Include">
+                <e p="ScheduledTaskCollection.cs" t="Include" />
+                <e p="ScheduledTaskElement.cs" t="Include" />
+              </e>
+              <e p="ServiceTaskConfigSectionHandler.cs" t="Include" />
+              <e p="TaskConfigSectionHandler.cs" t="Include" />
+            </e>
+            <e p="Schedulers" t="Include">
+              <e p="DateEveryYearTaskScheduler.cs" t="Include" />
+              <e p="EveryDayTaskScheduler.cs" t="Include" />
+              <e p="EveryMonthTaskScheduler.cs" t="Include" />
+              <e p="IntervalTaskScheduler.cs" t="Include" />
+            </e>
+            <e p="TaskRunner.cs" t="Include" />
+          </e>
+          <e p="WCF" t="Include">
+            <e p="DispatchMessageInspector" t="Include">
+              <e p="MessageInspector.cs" t="Include" />
+              <e p="MessageInspectorBehavior.cs" t="Include" />
+              <e p="MessageInspectorBehaviorExtensionElement.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Framework.Utils" t="IncludeRecursive">
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Collections" t="Include">
+            <e p="SerializableDictionary.cs" t="Include" />
+          </e>
+          <e p="Compression" t="Include">
+            <e p="CheckSumUtils.cs" t="Include" />
+            <e p="GZipUtils.cs" t="Include" />
+          </e>
+          <e p="Directory" t="Include">
+            <e p="DirectoryUtils.cs" t="Include" />
+          </e>
+          <e p="DPHelper" t="Include">
+            <e p="DPHelper.cs" t="Include" />
+          </e>
+          <e p="Email" t="Include">
+            <e p="EmailUtilities.cs" t="Include" />
+          </e>
+          <e p="Enums" t="Include">
+            <e p="EnumHelper.cs" t="Include" />
+          </e>
+          <e p="Extensions" t="Include">
+            <e p="DateTime" t="Include">
+              <e p="DateTimeExtensions.cs" t="Include" />
+            </e>
+            <e p="Dictionary" t="Include">
+              <e p="DictionaryExtensionMethods.cs" t="Include" />
+            </e>
+            <e p="Enumerable" t="Include">
+              <e p="EnumerableExtensions.cs" t="Include" />
+            </e>
+            <e p="Enums" t="Include">
+              <e p="EnumExtensions.cs" t="Include" />
+            </e>
+            <e p="File" t="Include">
+              <e p="FileExtensions.cs" t="Include" />
+            </e>
+            <e p="Json" t="Include">
+              <e p="JsonExtensions.cs" t="Include" />
+            </e>
+            <e p="List" t="Include">
+              <e p="ListExtensions.cs" t="Include" />
+            </e>
+            <e p="MailMessage" t="Include">
+              <e p="MailMessageExtensions.cs" t="Include" />
+            </e>
+            <e p="Object" t="Include">
+              <e p="ObjectExtensions.cs" t="Include" />
+            </e>
+            <e p="Queryable" t="Include">
+              <e p="QueryableExtensions.cs" t="Include" />
+            </e>
+            <e p="String" t="Include">
+              <e p="StringExtensions.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Framework.Utils.csproj" t="IncludeRecursive" />
+          <e p="Instrumentation" t="Include">
+            <e p="ScopedStopwatch.cs" t="Include" />
+          </e>
+          <e p="Json" t="Include">
+            <e p="JsonUtils.cs" t="Include" />
+          </e>
+          <e p="MSMQ" t="Include">
+            <e p="MessageQueueExtensions.cs" t="Include" />
+            <e p="NativeMethods.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="Validation" t="Include">
+            <e p="SouthAfricanIdentityNumber.cs" t="Include" />
+          </e>
+          <e p="XML" t="Include">
+            <e p="XMLHelper.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Framework.Windsor" t="IncludeRecursive">
+          <e p="App.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="Framework.Windsor.csproj" t="IncludeRecursive" />
+          <e p="Installer" t="Include">
+            <e p="AspectsInstaller.cs" t="Include" />
+          </e>
+          <e p="Interceptors" t="Include">
+            <e p="EFDBEntityValidationExceptionAspect.cs" t="Include" />
+            <e p="LogAspect.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="packages.config" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+          <e p="Selectors" t="Include">
+            <e p="TypeExclusionSelector.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="ModTechMaster" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="App.xaml" t="Include" />
+        <e p="App.xaml.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Commands" t="Include">
+          <e p="CommonCommands.cs" t="Include" />
+          <e p="LoadSettingsCommand.cs" t="Include" />
+          <e p="SaveSettingsCommand.cs" t="Include" />
+        </e>
+        <e p="ExceptionLogger.cs" t="Include" />
+        <e p="Init" t="Include">
+          <e p="Bootstrap.cs" t="Include" />
+          <e p="CastleWindsorContainer.cs" t="Include" />
+          <e p="Installer.cs" t="Include" />
+        </e>
+        <e p="MainWindow.xaml" t="Include" />
+        <e p="MainWindow.xaml.cs" t="Include" />
+        <e p="Models" t="Include">
+          <e p="MtmMainModel.cs" t="Include" />
+        </e>
+        <e p="ModTechMaster.UI.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="App.g.cs" t="Include" />
+            <e p="MainWindow.g.cs" t="Include" />
+            <e p="ModTechMaster.UI_Content.g.cs" t="Include" />
+          </e>
+        </e>
+        <e p="packages.config" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="Annotations.cs" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+        <e p="Resources" t="Include">
+          <e p="BattleMech_Unit_Listing - canon.csv" t="Include" />
+          <e p="BattleMech_Unit_Listing - test.csv" t="Include" />
+          <e p="BattleMech_Unit_Listing.csv" t="Include" />
+          <e p="factions.csv" t="Include" />
+          <e p="Gear.xlsx" t="Include" />
+          <e p="masterunitlist_vees.csv" t="Include" />
+          <e p="MasterUnitList_Vees.html" t="Include" />
+          <e p="VehicleAppearanceDates_JK.csv" t="Include" />
+        </e>
+      </e>
+      <e p="ModTechMaster.Core" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Constants" t="Include">
+          <e p="Constants.cs" t="Include" />
+        </e>
+        <e p="Enums" t="Include">
+          <e p="MessageType.cs" t="Include" />
+          <e p="Mods" t="Include">
+            <e p="ObjectType.cs" t="Include" />
+          </e>
+          <e p="ObjectReferenceType.cs" t="Include" />
+          <e p="ObjectStatus.cs" t="Include" />
+          <e p="RelationshipType.cs" t="Include" />
+          <e p="ValidationResultEnum.cs" t="Include" />
+        </e>
+        <e p="Interfaces" t="Include">
+          <e p="Factories" t="Include">
+            <e p="IManifestEntryProcessorFactory.cs" t="Include" />
+            <e p="IObjectDefinitionFactory.cs" t="Include" />
+            <e p="IObjectDefinitionProcessorFactory.cs" t="Include" />
+          </e>
+          <e p="Models" t="Include">
+            <e p="ICsvObjectBase.cs" t="Include" />
+            <e p="IJsonObjectBase.cs" t="Include" />
+            <e p="IManifest.cs" t="Include" />
+            <e p="IManifestEntry.cs" t="Include" />
+            <e p="IMod.cs" t="Include" />
+            <e p="IModCollection.cs" t="Include" />
+            <e p="IObject.cs" t="Include" />
+            <e p="IObjectDefinition.cs" t="Include" />
+            <e p="IObjectDefinitionDescription.cs" t="Include" />
+            <e p="IObjectReference.cs" t="Include" />
+            <e p="IObjectRelationship.cs" t="Include" />
+            <e p="IReferenceableObject.cs" t="Include" />
+            <e p="IReferenceableObjectProvider.cs" t="Include" />
+            <e p="IRelationship.cs" t="Include" />
+            <e p="IResourceDefinition.cs" t="Include" />
+            <e p="ISourcedFromFile.cs" t="Include" />
+            <e p="IValidationResult.cs" t="Include" />
+            <e p="IValidationResultReason.cs" t="Include" />
+          </e>
+          <e p="Processors" t="Include">
+            <e p="IManifestEntryProcessor.cs" t="Include" />
+            <e p="IObjectDefinitionProcessor.cs" t="Include" />
+          </e>
+          <e p="Services" t="Include">
+            <e p="IFactionService.cs" t="Include" />
+            <e p="IMessageService.cs" t="Include" />
+            <e p="IModService.cs" t="Include" />
+            <e p="IReferenceFinderService.cs" t="Include" />
+            <e p="ISettingsService.cs" t="Include" />
+          </e>
+        </e>
+        <e p="ModTechMaster.Core.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="ModTechMaster.Data" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Models" t="Include">
+          <e p="Mods" t="Include">
+            <e p="CsvObjectBase.cs" t="Include" />
+            <e p="JsonObjectBase.cs" t="Include" />
+            <e p="JsonObjectSourcedFromFile.cs" t="Include" />
+            <e p="Manifest.cs" t="Include" />
+            <e p="ManifestEntry.cs" t="Include" />
+            <e p="Mod.cs" t="Include" />
+            <e p="ModCollection.cs" t="Include" />
+            <e p="ModDef.cs" t="Include" />
+            <e p="ModEntry.cs" t="Include" />
+            <e p="ObjectDefinition.cs" t="Include" />
+            <e p="ObjectDefinitionDescription.cs" t="Include" />
+            <e p="ResourceDefinition.cs" t="Include" />
+            <e p="SourcedFromFile.cs" t="Include" />
+            <e p="TypedObjectDefinitions" t="Include">
+              <e p="AmmunitionBoxObjectDefinition.cs" t="Include" />
+              <e p="AmmunitionObjectDefinition.cs" t="Include" />
+              <e p="AssetBundleObjectDefinition.cs" t="Include" />
+              <e p="CastObjectDefinition.cs" t="Include" />
+              <e p="CcCategoryObjectDefinition.cs" t="Include" />
+              <e p="CCDefaultsObjectDefinition.cs" t="Include" />
+              <e p="ChassisObjectDefinition.cs" t="Include" />
+              <e p="ContractObjectDefinition.cs" t="Include" />
+              <e p="ConversationObjectDefinition.cs" t="Include" />
+              <e p="DialogObjectDefinition.cs" t="Include" />
+              <e p="FactionObjectDefinition.cs" t="Include" />
+              <e p="FlashpointObjectDefinition.cs" t="Include" />
+              <e p="HardpointDataObjectDefinition.cs" t="Include" />
+              <e p="HeraldryObjectDefinition.cs" t="Include" />
+              <e p="ItemCollectionObjectDefinition.cs" t="Include" />
+              <e p="LanceDefObjectDefinition.cs" t="Include" />
+              <e p="LanceSlotDefinition.cs" t="Include" />
+              <e p="MechObjectDefinition.cs" t="Include" />
+              <e p="MilestoneSetObjectDefinition.cs" t="Include" />
+              <e p="PilotObjectDefinition.cs" t="Include" />
+              <e p="PrefabObjectDefinition.cs" t="Include" />
+              <e p="ResourceObjectDefinition.cs" t="Include" />
+              <e p="ShopDefObjectDefinition.cs" t="Include" />
+              <e p="SimGameConstantsObjectDefinition.cs" t="Include" />
+              <e p="SimGameEventObjectDefinition.cs" t="Include" />
+              <e p="TurretChassisObjectDefinition.cs" t="Include" />
+              <e p="TurretObjectDefinition.cs" t="Include" />
+              <e p="UpgradeObjectDefinition.cs" t="Include" />
+              <e p="VehicleChassisObjectDefinition.cs" t="Include" />
+              <e p="VehicleObjectDefinition.cs" t="Include" />
+              <e p="WeaponObjectDefinition.cs" t="Include" />
+            </e>
+          </e>
+          <e p="ObjectReference.cs" t="Include" />
+          <e p="ObjectRelationship.cs" t="Include" />
+          <e p="Relationship.cs" t="Include" />
+          <e p="ValidationResult.cs" t="Include" />
+          <e p="ValidationResultReason.cs" t="Include" />
+        </e>
+        <e p="ModTechMaster.Data.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="Annotations.cs" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="Resources" t="Include">
+          <e p="factions.csv" t="Include" />
+        </e>
+      </e>
+      <e p="ModTechMaster.Logic" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Factories" t="Include">
+          <e p="ManifestEntryProcessorFactory.cs" t="Include" />
+          <e p="ObjectDefinitionFactory.cs" t="Include" />
+          <e p="ObjectDefinitionProcessorFactory.cs" t="Include" />
+        </e>
+        <e p="Managers" t="Include">
+          <e p="RelationshipManager.cs" t="Include" />
+        </e>
+        <e p="ModTechMaster.Logic.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Processors" t="Include">
+          <e p="AssetBundleManifestEntryProcessor.cs" t="Include" />
+          <e p="CommonReferenceProcessor.cs" t="Include" />
+          <e p="CustomComponentsManifestEntryProcessor.cs" t="Include" />
+          <e p="FactionObjectDefinitionProcessor.cs" t="Include" />
+          <e p="ItemCollectionObjectDefinitionProcessor.cs" t="Include" />
+          <e p="ManifestEntryProcessor.cs" t="Include" />
+          <e p="ModReferenceProcessor.cs" t="Include" />
+          <e p="ObjectDefinitionProcessor.cs" t="Include" />
+          <e p="PrefabManifestEntryProcessor.cs" t="Include" />
+          <e p="ResourceManifestEntryProcessor.cs" t="Include" />
+          <e p="StreamingAssetProcessor.cs" t="Include" />
+        </e>
+        <e p="Properties" t="Include">
+          <e p="Annotations.cs" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="Services" t="Include">
+          <e p="FactionService.cs" t="Include" />
+          <e p="MessageService.cs" t="Include" />
+          <e p="ModService.cs" t="Include" />
+          <e p="ReferenceFinderService.cs" t="Include" />
+          <e p="SettingsService.cs" t="Include" />
+        </e>
+        <e p="Util" t="Include">
+          <e p="LoadOrder.cs" t="Include" />
+        </e>
+      </e>
+      <e p="ModTechMaster.sln" t="IncludeFlat" />
+      <e p="ModTechMaster.UI.Core" t="IncludeRecursive">
+        <e p="Async" t="Include">
+          <e p="AwaitableDelegateCommand.cs" t="Include" />
+          <e p="DelegateCommand.cs" t="Include" />
+          <e p="IAsyncCommand.cs" t="Include" />
+          <e p="IRaiseCanExecuteChanged.cs" t="Include" />
+          <e p="NotifyTaskCompletion.cs" t="Include" />
+        </e>
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controls" t="Include">
+          <e p="LabelledTextBox.xaml" t="Include" />
+          <e p="LabelledTextBox.xaml.cs" t="Include" />
+        </e>
+        <e p="Converters" t="Include">
+          <e p="NullVisibilityConverter.cs" t="Include" />
+          <e p="ReverseNullVisibilityConverter.cs" t="Include" />
+        </e>
+        <e p="ModTechMaster.UI.Core.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="Controls" t="Include">
+              <e p="LabelledTextBox.g.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="Resources" t="Include">
+          <e p="Images" t="Include">
+            <e p="anchors.png" t="Include" />
+            <e p="arrows-1.png" t="Include" />
+            <e p="arrows-2.png" t="Include" />
+            <e p="arrows-3.png" t="Include" />
+            <e p="arrows.png" t="Include" />
+            <e p="back.png" t="Include" />
+            <e p="battery-1.png" t="Include" />
+            <e p="battery-2.png" t="Include" />
+            <e p="battery-3.png" t="Include" />
+            <e p="battery.png" t="Include" />
+            <e p="bluetooth.png" t="Include" />
+            <e p="cancel.png" t="Include" />
+            <e p="center-alignment.png" t="Include" />
+            <e p="checked.png" t="Include" />
+            <e p="close.png" t="Include" />
+            <e p="cloud-computing-1.png" t="Include" />
+            <e p="cloud-computing-2.png" t="Include" />
+            <e p="cloud-computing-3.png" t="Include" />
+            <e p="cloud-computing-4.png" t="Include" />
+            <e p="cloud-computing.png" t="Include" />
+            <e p="division.png" t="Include" />
+            <e p="download (1).png" t="Include" />
+            <e p="download-1.png" t="Include" />
+            <e p="download-2.png" t="Include" />
+            <e p="download.png" t="Include" />
+            <e p="eject.png" t="Include" />
+            <e p="empty-battery.png" t="Include" />
+            <e p="equal.png" t="Include" />
+            <e p="exclamation-mark.png" t="Include" />
+            <e p="expand.png" t="Include" />
+            <e p="fast-forward.png" t="Include" />
+            <e p="grid-1.png" t="Include" />
+            <e p="grid.png" t="Include" />
+            <e p="justify.png" t="Include" />
+            <e p="left-alignment.png" t="Include" />
+            <e p="list.png" t="Include" />
+            <e p="marquee.png" t="Include" />
+            <e p="minimize.png" t="Include" />
+            <e p="minus.png" t="Include" />
+            <e p="move.png" t="Include" />
+            <e p="muted.png" t="Include" />
+            <e p="narrow.png" t="Include" />
+            <e p="next-1.png" t="Include" />
+            <e p="next.png" t="Include" />
+            <e p="number-1.png" t="Include" />
+            <e p="number-2.png" t="Include" />
+            <e p="number-3.png" t="Include" />
+            <e p="number-4.png" t="Include" />
+            <e p="number-5.png" t="Include" />
+            <e p="number-6.png" t="Include" />
+            <e p="number-7.png" t="Include" />
+            <e p="number-8.png" t="Include" />
+            <e p="number-9.png" t="Include" />
+            <e p="number.png" t="Include" />
+            <e p="pause.png" t="Include" />
+            <e p="play.png" t="Include" />
+            <e p="plus.png" t="Include" />
+            <e p="power-button.png" t="Include" />
+            <e p="previous-1.png" t="Include" />
+            <e p="previous.png" t="Include" />
+            <e p="record.png" t="Include" />
+            <e p="refresh-1.png" t="Include" />
+            <e p="refresh.png" t="Include" />
+            <e p="repeat.png" t="Include" />
+            <e p="resize-1.png" t="Include" />
+            <e p="resize.png" t="Include" />
+            <e p="rewind.png" t="Include" />
+            <e p="right-alignment.png" t="Include" />
+            <e p="shuffle.png" t="Include" />
+            <e p="sitemap-1.png" t="Include" />
+            <e p="sitemap-2.png" t="Include" />
+            <e p="sitemap.png" t="Include" />
+            <e p="stop.png" t="Include" />
+            <e p="trash.png" t="Include" />
+            <e p="up-arrow-1.png" t="Include" />
+            <e p="up-arrow-2.png" t="Include" />
+            <e p="up-arrow.png" t="Include" />
+            <e p="volume-1.png" t="Include" />
+            <e p="volume-2.png" t="Include" />
+            <e p="volume-3.png" t="Include" />
+            <e p="volume-4.png" t="Include" />
+            <e p="volume.png" t="Include" />
+            <e p="wifi.png" t="Include" />
+          </e>
+        </e>
+        <e p="Utils" t="Include">
+          <e p="LayoutGroup.cs" t="Include" />
+          <e p="MarginSetter.cs" t="Include" />
+        </e>
+        <e p="WinForms" t="Include">
+          <e p="Extensions" t="Include">
+            <e p="CommonDialogExtensions.cs" t="Include" />
+            <e p="WpfExtensions.cs" t="Include" />
+          </e>
+          <e p="Wpf32Window.cs" t="Include" />
+        </e>
+      </e>
+      <e p="ModTechMaster.UI.Data" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Enums" t="Include">
+          <e p="PluginCommandCategoryType.cs" t="Include" />
+          <e p="SelectionStatus.cs" t="Include" />
+          <e p="ValueConverters" t="Include">
+            <e p="ObjectStatusToIconConverter.cs" t="Include" />
+            <e p="SelectionStatusToIconConverter.cs" t="Include" />
+          </e>
+        </e>
+        <e p="ModTechMaster.UI.Data.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="ModTechMaster.UI.Plugins.Core" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Interfaces" t="Include">
+          <e p="IMtmMainModel.cs" t="Include" />
+          <e p="INavPluginCommand.cs" t="Include" />
+          <e p="IPlugin.cs" t="Include" />
+          <e p="IPluginCommand.cs" t="Include" />
+          <e p="IPluginCommandCategory.cs" t="Include" />
+          <e p="IPluginControl.cs" t="Include" />
+        </e>
+        <e p="Logic" t="Include">
+          <e p="DelegatePluginCommand.cs" t="Include" />
+          <e p="PluginCommand.cs" t="Include" />
+          <e p="PluginControl.cs" t="Include" />
+        </e>
+        <e p="Models" t="Include">
+          <e p="FilterOption.cs" t="Include" />
+        </e>
+        <e p="ModTechMaster.UI.Plugins.Core.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="Annotations.cs" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="Services" t="Include">
+          <e p="PluginService.cs" t="Include" />
+        </e>
+      </e>
+      <e p="ModTechMaster.UI.Plugins.Home" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Commands" t="Include">
+          <e p="LoadModsCommand.cs" t="Include" />
+          <e p="SaveSettingsCommand.cs" t="Include" />
+        </e>
+        <e p="HomePlugin.cs" t="Include" />
+        <e p="Models" t="Include">
+          <e p="HomeModel.cs" t="Include" />
+          <e p="HomeSettings.cs" t="Include" />
+        </e>
+        <e p="ModTechMaster.UI.Plugins.Home.csproj" t="IncludeRecursive" />
+        <e p="ModTechMasterHome.xaml" t="Include" />
+        <e p="ModTechMasterHome.xaml.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="ModTechMasterHome.g.cs" t="Include" />
+          </e>
+        </e>
+        <e p="packages.config" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="Annotations.cs" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+      </e>
+      <e p="ModTechMaster.UI.Plugins.ModCopy" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Commands" t="Include">
+          <e p="BuildCustomCollectionCommand.cs" t="Include" />
+          <e p="ResetSelectionsCommand.cs" t="Include" />
+          <e p="SelectMechsFromDataFileCommand.cs" t="Include" />
+          <e p="SelectVeesFromDataFileCommand.cs" t="Include" />
+          <e p="ValidateLanceDefinitionsCommand.cs" t="Include" />
+          <e p="ValidateModsCommand.cs" t="Include" />
+        </e>
+        <e p="Floaters" t="Include">
+          <e p="ObjectSummaryViewModel.cs" t="Include" />
+          <e p="ObjectSummaryWindow.xaml" t="Include" />
+          <e p="ObjectSummaryWindow.xaml.cs" t="Include" />
+        </e>
+        <e p="Modals" t="Include">
+          <e p="MechSelector" t="Include">
+            <e p="MechModel.cs" t="Include" />
+            <e p="MechSelectorCommands.cs" t="Include" />
+            <e p="MechSelectorModel.cs" t="Include" />
+            <e p="MechSelectorWindow.xaml" t="Include" />
+            <e p="MechSelectorWindow.xaml.cs" t="Include" />
+          </e>
+          <e p="SimpleObjectSelectorWindow.xaml" t="Include" />
+          <e p="SimpleObjectSelectorWindow.xaml.cs" t="Include" />
+          <e p="Validators" t="Include">
+            <e p="ValidateLanceDefsWindow.xaml" t="Include" />
+            <e p="ValidateLanceDefsWindow.xaml.cs" t="Include" />
+            <e p="ValidateLanceDefViewModel.cs" t="Include" />
+          </e>
+        </e>
+        <e p="ModCopyPage.xaml" t="Include" />
+        <e p="ModCopyPage.xaml.cs" t="Include" />
+        <e p="Model" t="Include">
+          <e p="ModCopyModel.cs" t="Include" />
+          <e p="ModCopySettings.cs" t="Include" />
+        </e>
+        <e p="ModTechMaster.UI.Plugins.ModCopy.csproj" t="IncludeRecursive" />
+        <e p="Nodes" t="Include">
+          <e p="IMTMTreeViewItem.cs" t="Include" />
+          <e p="ManifestEntryNode.cs" t="Include" />
+          <e p="ManifestNode.cs" t="Include" />
+          <e p="ModCollectionNode.cs" t="Include" />
+          <e p="ModNode.cs" t="Include" />
+          <e p="MTMTreeViewItem.cs" t="Include" />
+          <e p="NodeTemplateSelector.cs" t="Include" />
+          <e p="ObjectDefinitionNode.cs" t="Include" />
+          <e p="ResourceNode.cs" t="Include" />
+          <e p="SpecialisedNodes" t="Include">
+            <e p="LanceDefNode.cs" t="Include" />
+            <e p="LanceSlotModel.cs" t="Include" />
+          </e>
+          <e p="TreeViewContextMenuSelector.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="Floaters" t="Include">
+              <e p="ObjectSummaryWindow.g.cs" t="Include" />
+            </e>
+            <e p="GeneratedInternalTypeHelper.g.cs" t="Include" />
+            <e p="Modals" t="Include">
+              <e p="MechSelector" t="Include">
+                <e p="MechSelectorWindow.g.cs" t="Include" />
+              </e>
+              <e p="SimpleObjectSelectorWindow.g.cs" t="Include" />
+              <e p="Validators" t="Include">
+                <e p="ValidateLanceDefsWindow.g.cs" t="Include" />
+              </e>
+            </e>
+            <e p="ModCopyPage.g.cs" t="Include" />
+          </e>
+        </e>
+        <e p="packages.config" t="Include" />
+        <e p="Plugin" t="Include">
+          <e p="ModCopyPlugin.cs" t="Include" />
+          <e p="Modules" t="Include" />
+        </e>
+        <e p="Properties" t="Include">
+          <e p="Annotations.cs" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+      </e>
+      <e p="MTM" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Commands" t="Include">
+          <e p="JsonValidator.cs" t="Include" />
+        </e>
+        <e p="ExceptionLogger.cs" t="Include" />
+        <e p="Init" t="Include">
+          <e p="Bootstrap.cs" t="Include" />
+          <e p="CastleWindsorContainer.cs" t="Include" />
+          <e p="Installer.cs" t="Include" />
+        </e>
+        <e p="MTM.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Options.cs" t="Include" />
+        <e p="packages.config" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="MTMFixer" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ChassisGearToMechFixer.cs" t="Include" />
+        <e p="IFixer.cs" t="Include" />
+        <e p="JsonHelper.cs" t="Include" />
+        <e p="MTMFixer.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+        <e p="UINameFixer.cs" t="Include" />
+      </e>
+      <e p="MTMScrape" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="FixYourCommaShit.cs" t="Include" />
+        <e p="MTMScrape.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="MTMScrapeJKRarity" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="MTMScrapeJKRarity.csproj" t="IncludeRecursive" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="AssemblyInfo.cs" t="Include" />
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive">
+        <e p="AutoMapper.3.3.1\lib\net40" t="Include">
+          <e p="AutoMapper.Net4.dll" t="Include" />
+        </e>
+      </e>
+      <e p="scratch.txt" t="Include" />
+      <e p="settings.stylecop" t="Include" />
+      <e p="Solution Files" t="Include" />
+      <e p="Utils" t="Include">
+        <e p="MTMParseMUTableData" t="IncludeRecursive">
+          <e p="App.config" t="Include" />
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="MTMParseMUTableData.csproj" t="IncludeRecursive" />
+          <e p="obj" t="ExcludeRecursive" />
+          <e p="Program.cs" t="Include" />
+          <e p="Properties" t="Include">
+            <e p="AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
+    <e p="C:\Users\venge\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\venge\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_ModTechMaster.-857913827.00" t="ExcludeRecursive" />
+  </component>
+</project>
